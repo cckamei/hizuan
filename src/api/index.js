@@ -83,15 +83,15 @@ axios.interceptors.response.use(
 //检查接口请求状态
 function checkStatus(resolve, reject, response) {
   if (response && response.status === 200) {
-    if (response.data.status === 10000000) {
+    if (response.data.status === 0) {
       resolve(response.data.data);
     } else {
-      MintUI.Toast(response.message);
-      reject(response.message);
+      MintUI.Toast(response.msg);
+      reject(response.msg);
     }
   } else {
-    MintUI.Toast(response.message);
-    reject(response.message);
+    MintUI.Toast(response.msg);
+    reject(response.msg);
   }
 }
 
@@ -134,8 +134,8 @@ let xhr = config => {
           axios
             .post(api[name].url, JSON.stringify(data), {
               headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-                csrfToken: 'hElWtFdBvFnyyFIXE167ISx8'
+                // 'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
               }
             })
             .then(res => {

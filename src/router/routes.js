@@ -2,7 +2,7 @@ const router = [
   {
     name: 'index',
     path: '/',
-    component: () => import('@/views/index')
+    component: () => import('@/views/home')
   },
   {
     name: 'introduction',
