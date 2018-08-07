@@ -9,7 +9,7 @@
       <div class="activity"><img src="~assets/home/pic_ccx.png" alt=""></div>
       <ul>
         <li class="row1" v-for="(item, index) in imgList">
-          <img @click="switchImg(item)" src="~assets/home/pic_cc1.png" alt="">
+          <img @click="switchImg(item, index)" src="~assets/home/pic_cc1.png" alt="">
           <v-popup-list v-model="item.display" :goods="item.goodsList" @close="item.display = false"></v-popup-list>
         </li>
       </ul>
@@ -111,18 +111,19 @@
     },
     methods: {
       ...mapActions(['ajax']),
-      switchImg(item) {
-        console.log(1);
+      switchImg(item, index) {
         let temp = item.display;
         this.imgList.forEach(img => {
           img.display = false;
         });
         item.display = !temp;
         setTimeout(() => {
-          // $('.content').stop(true, true).animate({
-          //   scrollTop: 0 + 'px'
-          // }, 200);
-          $('.content').offset();
+          let top = $('.content').scrollTop();
+          let rect = $('.popup').get(index).getBoundingClientRect();
+          let resultTop = top + rect.top - window.screen.height / 2 + rect.height / 2;
+          $('.content').stop(true, true).animate({
+            scrollTop: resultTop + 'px'
+          }, 200);
         }, 300);
       },
       getAuthCode() {
