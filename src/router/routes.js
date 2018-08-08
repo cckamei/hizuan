@@ -5,43 +5,29 @@ const router = [
     component: () => import('@/views/home')
   },
   {
-    name: 'introduction',
-    path: '/introduction',
-    component: () => import('@/views/introduction')
+    name: 'login',
+    path: '/login',
+    component: () => import('@/views/login')
   },
   {
-    name: 'lifecycle',
-    path: '/lifecycle',
-    component: () => import('@/views/lifecycle')
+    name: 'register',
+    path: '/login/register',
+    component: () => import('@/views/register')
   },
   {
-    name: 'render',
-    path: '/render',
-    component: () => import('@/views/render')
+    name: 'verifyphone',
+    path: '/login/verifyphone',
+    component: () => import('@/views/verifyphone')
   },
   {
-    name: 'event',
-    path: '/event',
-    component: () => import('@/views/event')
-  },
-  {
-    name: 'component',
-    path: '/component',
-    component: () => import('@/views/component')
-  },
-  {
-    name: 'questions',
-    path: '/questions',
-    component: () => import('@/views/questions')
+    name: 'perfectinfo',
+    path: '/login/verifyphone/perfectinfo',
+    component: () => import('@/views/perfectinfo')
   },
   {
     path: '*',
     redirect: '/'
   }
-  // {
-  //   path: '/',
-  //   redirect: '/index'
-  // }
 ];
 
 export default router;

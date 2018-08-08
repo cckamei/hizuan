@@ -58,7 +58,7 @@
       text-align: center;
       color: #cdb49b;
       background: linear-gradient(rgba(0, 0, 0, 0.1) 10%, #fff 40%);
-      border-bottom: 2px solid #f0f0f0;
+      border-bottom: 1px solid #f0f0f0; /*no*/
       img {
         width: 18px;
         height: 18px;

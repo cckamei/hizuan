@@ -1,9 +1,14 @@
 import header from './header';
-import lifecycle from './lifecycle';
 import popupList from './popup-list';
-
+import inputText from './input-text';
+import inputPwd from './input-pwd';
+import inputCode from './input-code';
+import agreement from './agreement';
 export default {
   header,
-  lifecycle,
-  popupList
+  popupList,
+  inputText,
+  inputPwd,
+  inputCode,
+  agreement
 };

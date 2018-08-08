@@ -106,9 +106,6 @@
         }]
       };
     },
-    created() {
-      // this.getAuthCode();
-    },
     methods: {
       ...mapActions(['ajax']),
       switchImg(item, index) {
@@ -125,18 +122,6 @@
             scrollTop: resultTop + 'px'
           }, 200);
         }, 300);
-      },
-      getAuthCode() {
-        this.ajax({
-          name: 'authCode',
-          method: 'get',
-          data: {
-            action: 'register',
-            phone: '18702913241'
-          }
-        }).then(res => {
-          console.log(res);
-        });
       }
     }
   };

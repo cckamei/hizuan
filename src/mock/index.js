@@ -1,3 +1,1 @@
-export default {
-  getDeviceInfo: require('./getDeviceInfo')
-};
+export default {};

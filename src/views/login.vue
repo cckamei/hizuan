@@ -1,0 +1,105 @@
+<template>
+  <div class="">
+    <div class="content">
+      <div class="logo">
+        <img src="~assets/home/logo.png" alt="">
+      </div>
+      <ul class="form">
+        <li>
+          <v-input-text placeholder="请输入手机号码" v-model="account" clear maxlength="16" class="input"></v-input-text>
+        </li>
+        <li>
+          <v-input-pwd placeholder="请输入账户密码" v-model="password" eye maxlength="16" class="input"></v-input-pwd>
+        </li>
+      </ul>
+      <div class="btns">
+        <button class="btn login" :class="{active: isActive}" @click="isActive && login()">登录</button>
+        <router-link tag="button" class="btn wechat" :to="{name: 'verifyphone'}">使用微信账户登录</router-link>
+      </div>
+      <div class="links clearfix">
+        <span v-if="0">忘记密码</span>
+        <router-link tag="span" :to="{name: 'register'}" class="right">注册账户</router-link>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import { mapActions } from 'vuex';
+
+  export default {
+    data() {
+      return {
+        account: '',
+        password: ''
+      };
+    },
+    computed: {
+      isActive() {
+        return this.account.length && this.password.length;
+      }
+    },
+    methods: {
+      ...mapActions(['ajax']),
+      login() {
+        this.$router.push('home');
+      }
+    }
+  };
+</script>
+
+<style lang="less" scoped>
+  .content {
+    background-color: #fff;
+  }
+
+  .logo {
+    padding: 100px 0 90px 0;
+    img {
+      width: 360px;
+      height: 170px;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  .form {
+    padding: 0 30px;
+    li {
+      border-bottom: 1px solid #ccc; /*no*/
+      height: 100px;
+      padding: 0 10px;
+      .input {
+        height: 100%;
+      }
+    }
+  }
+
+  .btns {
+    padding: 30px 40px 40px 40px;
+    .btn {
+      width: 100%;
+      height: 90px;
+      border: none;
+      font-size: 36px;
+      color: #fff;
+      margin-top: 30px;
+      &.login {
+        background-color: #ccc;
+        border-radius: 45px;
+        &.active {
+          background: ~"url('~assets/home/button_login.png') no-repeat center center/100%";
+        }
+      }
+      &.wechat {
+        background: ~"url('~assets/home/button_login_w.png') no-repeat center center/100%";
+      }
+    }
+  }
+
+  .links {
+    color: #cdb49b;
+    font-size: 28px;
+    padding: 0 40px;
+  }
+</style>
