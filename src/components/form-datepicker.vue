@@ -1,43 +1,29 @@
 <template>
-  <div class="flex">
+  <div class="flex arrow">
     <div class="label">{{label}}</div>
     <input type="text" :value="text" :placeholder="placeholder" @click="open" readonly />
-    <mt-datetime-picker ref="picker" v-model="date" type="date" @confirm="handleConfirm"></mt-datetime-picker>
+    <mt-datetime-picker ref="picker" v-model="date" type="date" :startDate="new Date('1900/01/01')" :endDate="new Date()" @confirm="handleConfirm"></mt-datetime-picker>
   </div>
 </template>
 
 <script>
+  import { formatDate } from '../utils';
+
   export default {
-    props: ['placeholder', 'label'],
+    props: ['placeholder', 'label', 'format'],
     data() {
       return {
         text: '',
-        date: ''
+        date: new Date('1980/01/01')
       };
-    },
-    created() {
-      // this.actions = this.list.map(item => {
-      //   let name = '';
-      //   let sheet = {};
-      //   if(typeof item === 'string') {
-      //     name = item;
-      //   } else {
-      //     sheet = item;
-      //     name = item.name;
-      //   }
-      //   return {
-      //     ...sheet,
-      //     name,
-      //     method: this.select
-      //   };
-      // });
     },
     methods: {
       open() {
         this.$refs.picker.open();
       },
       handleConfirm() {
-        this.$emit('input', this.date);
+        this.text = formatDate(this.date, this.format);
+        this.$emit('input', this.text);
       }
     }
   };

@@ -15,7 +15,7 @@
               <v-form-select label="性别*" v-model="sex" :list="['男', '女']" placeholder="请选择您的性别"></v-form-select>
             </li>
             <li>
-              <v-form-datepicker label="生日*" v-model="birthday" placeholder="1900 年 00 月 00 日"></v-form-datepicker>
+              <v-form-datepicker label="生日*" v-model="birthday" format="yyyy 年 MM 月 dd 日" placeholder="1900 年 00 月 00 日"></v-form-datepicker>
             </li>
             <li>
               <v-form-input label="身份证号*" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
