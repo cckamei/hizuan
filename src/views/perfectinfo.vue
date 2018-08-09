@@ -6,20 +6,69 @@
         <li class="section">
           <ul class="form">
             <li>
-              <v-form-input label="昵称*" :placeholder="请填写您的昵称"></v-form-input>
+              <v-form-input label="昵称*" maxlength="20" placeholder="请填写您的账户昵称"></v-form-input>
             </li>
             <li>
-              <v-form-input label="姓名*" :placeholder="请填写您的真实昵称"></v-form-input>
+              <v-form-input label="姓名*" maxlength="20" placeholder="请填写您的真实昵称"></v-form-input>
+            </li>
+            <li>
+              <v-form-select label="性别*" v-model="sex" :list="['男', '女']" placeholder="请选择您的性别"></v-form-select>
+            </li>
+            <li>
+              <v-form-datepicker label="生日*" v-model="birthday" placeholder="1900 年 00 月 00 日"></v-form-datepicker>
+            </li>
+            <li>
+              <v-form-input label="身份证号*" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
+            </li>
+            <li>
+              <v-form-input label="职业*" maxlength="20" placeholder="请选择您所从事的职业"></v-form-input>
+            </li>
+          </ul>
+          <div class="more" v-if="!loadmore" @click="loadmore = true">点击展开填写详细资料获取更多优惠（选填）</div>
+        </li>
+        <li class="section" v-if="loadmore">
+          <ul class="form">
+            <li>
+              <v-form-input label="中指指圈号" maxlength="20" placeholder=""></v-form-input>
+            </li>
+            <li>
+              <v-form-input label="无名指指圈号" maxlength="20" placeholder=""></v-form-input>
+            </li>
+            <li>
+              <v-form-input label="项链长度" maxlength="20" placeholder=""></v-form-input>
+            </li>
+            <li>
+              <v-form-input label="手镯尺寸" maxlength="20" placeholder=""></v-form-input>
+            </li>
+          </ul>
+        </li>
+        <li class="section" v-if="loadmore">
+          <ul class="form">
+            <li>
+              <v-form-input label="结婚纪念日" maxlength="20" placeholder=""></v-form-input>
+            </li>
+            <li>
+              <v-form-input label="配偶生日" maxlength="20" placeholder=""></v-form-input>
+            </li>
+            <li>
+              <v-form-input label="儿子生日" maxlength="20" placeholder=""></v-form-input>
+            </li>
+            <li>
+              <v-form-input label="女儿生日" maxlength="20" placeholder=""></v-form-input>
+            </li>
+            <li>
+              <v-form-input label="兴趣爱好" maxlength="20" placeholder=""></v-form-input>
             </li>
           </ul>
         </li>
         <li class="section">
+          <div class="more">以下内容由线下门店填写（选填）</div>
           <ul class="form">
             <li>
-              <v-input-text placeholder="请输入手机号码" v-model="account" clear maxlength="16" class="input"></v-input-text>
+              <v-form-input label="门店代码" maxlength="20" placeholder=""></v-form-input>
             </li>
             <li>
-              <v-input-code placeholder="请输入验证码" v-model="code" eye maxlength="16" class="input"></v-input-code>
+              <v-form-input label="珠宝顾问姓名" maxlength="20" placeholder=""></v-form-input>
             </li>
           </ul>
         </li>
@@ -37,16 +86,15 @@
   export default {
     data() {
       return {
-        account: '',
-        code: '',
-        password: '',
-        confirmPws: '',
-        checked: false
+        loadmore: false,
+        sex: '', //性别
+        birthday: '' //生日
       };
     },
     computed: {
       isActive() {
-        return this.account.length && this.code.length && this.password.length && this.confirmPws.length && this.checked;
+        // return this.account.length && this.code.length && this.password.length && this.confirmPws.length && this.checked;
+        return true;
       }
     },
     methods: {
@@ -74,37 +122,25 @@
       border-bottom: 1px solid #f0f0f0; /*no*/
       padding: 0 20px;
       height: 96px;
+      &:last-child {
+        border-bottom: 0;
+      }
       .input {
         height: 100%;
       }
     }
   }
 
-  .agreement {
+  .more {
+    height: 60px;
+    line-height: 60px;
     font-size: 24px;
-    padding: 36px 40px;
-    .checkbox {
-      width: 35px;
-      height: 35px;
-      background: url('~assets/home/button_a_g.png') no-repeat;
-      background-size: 100% 100%;
-      margin-right: 20px;
-      &.active {
-        background: url('~assets/home/button_a.png') no-repeat;
-        background-size: 100% 100%;
-      }
-    }
-    .label {
-      color: #666;
-    }
-    .protocol {
-      color: #faa0a0;
-      font-weight: bold;
-    }
+    color: #cdb498;
+    text-align: center;
   }
 
   .btns {
-    padding: 0 30px;
+    padding: 30px 40px;
     .btn {
       width: 100%;
       height: 90px;

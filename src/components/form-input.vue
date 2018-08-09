@@ -25,8 +25,11 @@
   .flex {
     width: 100%;
     height: 100%;
+    font-size: 30px;
     .label {
       flex-shrink: 0;
+      min-width: 30%;
+      color: #999;
     }
     input {
       text-align: right;
@@ -35,6 +38,7 @@
       font-size: 32px;
       color: #333;
       border: none;
+      color: #666;
     }
   }
 </style>

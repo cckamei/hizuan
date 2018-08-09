@@ -38,7 +38,7 @@
     line-height: 96px;
     top: 0;
     width: 100%;
-    box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.2);
+    box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.5);
     background-color: #fff;
     z-index: 1;
     .back {

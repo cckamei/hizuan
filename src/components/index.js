@@ -5,6 +5,8 @@ import inputPwd from './input-pwd';
 import inputCode from './input-code';
 import agreement from './agreement';
 import formInput from './form-input';
+import formSelect from './form-select';
+import formDatepicker from './form-datepicker';
 
 export default {
   header,
@@ -13,5 +15,7 @@ export default {
   inputPwd,
   inputCode,
   agreement,
-  formInput
+  formInput,
+  formSelect,
+  formDatepicker
 };
