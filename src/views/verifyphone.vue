@@ -12,7 +12,7 @@
       </ul>
       <v-agreement v-model="checked"></v-agreement>
       <div class="btns">
-        <button class="btn next" :class="{active: isActive}" @click="isActive && next()">下一步</button>
+        <button class="btn" :class="{active: isActive}" @click="isActive && next()">下一步</button>
       </div>
     </div>
   </div>
@@ -58,20 +58,6 @@
   }
 
   .btns {
-    padding: 0 40px;
-    .btn {
-      width: 100%;
-      height: 90px;
-      border: none;
-      font-size: 36px;
-      color: #fff;
-      &.next {
-        background-color: #ccc;
-        border-radius: 45px;
-        &.active {
-          background-color: #ffb494;
-        }
-      }
-    }
+    padding: 36px 40px;
   }
 </style>

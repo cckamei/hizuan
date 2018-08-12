@@ -76,20 +76,12 @@
   }
 
   .btns {
-    padding: 30px 40px 40px 40px;
+    padding: 30px 40px;
     .btn {
-      width: 100%;
-      height: 90px;
-      border: none;
       font-size: 36px;
-      color: #fff;
       margin-top: 30px;
-      &.login {
-        background-color: #ccc;
-        border-radius: 45px;
-        &.active {
-          background: ~"url('~assets/home/button_login.png') no-repeat center center/100%";
-        }
+      &.login.active {
+        background: ~"url('~assets/home/button_login.png') no-repeat center center/100%";
       }
       &.wechat {
         background: ~"url('~assets/home/button_login_w.png') no-repeat center center/100%";

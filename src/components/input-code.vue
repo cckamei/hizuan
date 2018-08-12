@@ -18,9 +18,6 @@
       };
     },
     watch: {
-      value() {
-        this.code = value;
-      },
       code(val) {
         this.$emit('input', val);
       }

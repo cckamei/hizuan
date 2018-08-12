@@ -10,13 +10,13 @@
       <ul>
         <li class="row1" v-for="(item, index) in imgList">
           <img @click="switchImg(item, index)" src="~assets/home/pic_cc1.png" alt="">
-          <v-popup-list v-model="item.display" :goods="item.goodsList" @close="item.display = false"></v-popup-list>
+          <v-popup-list v-model="item.display" :goods="item" @all="goGoodsList" @close="item.display = false"></v-popup-list>
         </li>
       </ul>
     </div>
     <div class="buttons flex">
       <div class="btn"><img src="~assets/home/button_home.png" alt=""></div>
-      <button class="btn-txt btn-txt1">全部作品</button>
+      <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
       <button class="btn-txt btn-txt2">无忧购</button>
       <div class="btn"><img src="~assets/home/button_my.png" alt=""></div>
     </div>
@@ -25,7 +25,7 @@
 
 <script>
   import $ from 'jquery';
-  import { mapActions } from 'vuex';
+  import { mapMutations, mapActions } from 'vuex';
 
   export default {
     data() {
@@ -35,6 +35,7 @@
         imgList: [{
           src: '',
           display: false,
+          type: 'XS1',
           goodsList: [{
             src: '',
             name: '醒狮MeiMei项链/坠',
@@ -54,6 +55,7 @@
         }, {
           src: '',
           display: false,
+          type: 'XS2',
           goodsList: [{
             src: '',
             name: '醒狮MeiMei项链/坠',
@@ -73,6 +75,7 @@
         }, {
           src: '',
           display: false,
+          type: 'XS3',
           goodsList: [{
             src: '',
             name: '醒狮MeiMei项链/坠',
@@ -87,6 +90,7 @@
         }, {
           src: '',
           display: false,
+          type: 'XS4',
           goodsList: [{
             src: '',
             name: '醒狮MeiMei项链/坠',
@@ -108,6 +112,7 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      ...mapMutations(['setCommon']),
       switchImg(item, index) {
         let temp = item.display;
         this.imgList.forEach(img => {
@@ -122,6 +127,10 @@
             scrollTop: resultTop + 'px'
           }, 200);
         }, 300);
+      },
+      goGoodsList(goodsType = '') {
+        this.setCommon({ goodsType });
+        this.$router.push({ name: 'goodslist' });
       }
     }
   };

@@ -16,9 +16,6 @@
       };
     },
     watch: {
-      value() {
-        this.password = value;
-      },
       password(val) {
         this.$emit('input', val);
       }
@@ -44,9 +41,9 @@
     .icon {
       width: 40px;
       height: 40px;
-      background: ~"url('~assets/home/button_invisible.png') no-repeat center center/100%";
+      background: ~"url('~assets/common/button_invisible.png') no-repeat center center/100%";
       &.active {
-        background: ~"url('~assets/home/button_visible.png') no-repeat center center/100%";
+        background: ~"url('~assets/common/button_visible.png') no-repeat center center/100%";
       }
     }
   }

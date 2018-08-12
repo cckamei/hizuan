@@ -7,7 +7,7 @@
           <v-input-text placeholder="请输入手机号码" v-model="account" clear maxlength="16" class="input"></v-input-text>
         </li>
         <li>
-          <v-input-code placeholder="请输入验证码" v-model="code" eye maxlength="16" class="input"></v-input-code>
+          <v-input-code placeholder="请输入验证码" v-model="code" maxlength="16" class="input"></v-input-code>
         </li>
         <li>
           <v-input-pwd placeholder="请输入账户密码" v-model="password" eye maxlength="16" class="input"></v-input-pwd>
@@ -18,7 +18,7 @@
       </ul>
       <v-agreement v-model="checked"></v-agreement>
       <div class="btns">
-        <button class="btn next" :class="{active: isActive}" @click="isActive && next()">下一步</button>
+        <button class="btn" :class="{active: isActive}" @click="isActive && next()">下一步</button>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
   export default {
     data() {
       return {
-        account: '',
+        account: '18702913241',
         code: '',
         password: '',
         confirmPws: '',
@@ -66,20 +66,6 @@
   }
 
   .btns {
-    padding: 0 40px;
-    .btn {
-      width: 100%;
-      height: 90px;
-      border: none;
-      font-size: 36px;
-      color: #fff;
-      &.next {
-        background-color: #ccc;
-        border-radius: 45px;
-        &.active {
-          background-color: #ffb494;
-        }
-      }
-    }
+    padding: 36px 40px;
   }
 </style>

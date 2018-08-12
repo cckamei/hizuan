@@ -9,20 +9,20 @@ export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
   state: {
     cacheData: getSen('cacheData') || {},
-    lang: getLoc('lang') || 'zh'
+    common: getSen('common') || {}
   },
   getters: {
     getCacheData: state => serialize(state.cacheData),
-    getLang: state => state.lang
+    getCommon: state => state.common
   },
   mutations: {
     setCacheData(state, data) {
       state.cacheData = { ...state.cacheData, ...data };
       setSen('cacheData', state.cacheData);
     },
-    setLang(state, data) {
-      state.lang = data;
-      setLoc('lang', data);
+    setCommon(state, data) {
+      state.common = { ...state.common, ...data };
+      setSen('common', state.common);
     }
   },
   actions: {

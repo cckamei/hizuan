@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    props: ['placeholder', 'maxlength', 'clear'],
+    props: ['value', 'placeholder', 'maxlength', 'clear'],
     data() {
       return {
         focus: false,
@@ -15,8 +15,11 @@
       };
     },
     watch: {
-      value() {
-        this.account = value;
+      value: {
+        handler(val) {
+          this.account = val;
+        },
+        immediate: true
       },
       account(val) {
         this.$emit('input', val);

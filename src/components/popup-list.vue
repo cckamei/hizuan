@@ -1,11 +1,11 @@
 <template>
   <div class="popup" :style="{height: display ? cententHeight + 'px' : 0}">
-    <div class="popup-header flex">
+    <div class="popup-header flex" @click="$emit('all', goods.type)">
       <img src="~assets/home/icon_all_arrow.png" alt=""><span>查看全部</span>
     </div>
     <div class="popup-content">
       <ul>
-        <li v-for="(item, index) in goods" :key="index" class="flex">
+        <li v-for="(item, index) in goods.goodsList" :key="index" class="flex">
           <div class="img"><img :src="item.src" alt=""></div>
           <div class="detail flex-auto flex">
             <span class="name">{{item.name}}</span>
@@ -31,7 +31,7 @@
     },
     computed: {
       cententHeight() {
-        return (70 + 20 * 2 + 200 * this.goods.length + 30 * (this.goods.length - 1)) / window.htp.designWidth * window.screen.width;
+        return (70 + 20 * 2 + 200 * this.goods.goodsList.length + 30 * (this.goods.goodsList.length - 1)) / window.htp.designWidth * window.screen.width;
       }
     },
     watch: {

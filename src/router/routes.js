@@ -5,6 +5,11 @@ const router = [
     component: () => import('@/views/home')
   },
   {
+    name: 'goodslist',
+    path: '/goodslist',
+    component: () => import('@/views/goodslist')
+  },
+  {
     name: 'login',
     path: '/login',
     component: () => import('@/views/login')
@@ -23,6 +28,11 @@ const router = [
     name: 'perfectinfo',
     path: '/login/verifyphone/perfectinfo',
     component: () => import('@/views/perfectinfo')
+  },
+  {
+    name: 'registersuccess',
+    path: '/login/verifyphone/perfectinfo/registersuccess',
+    component: () => import('@/views/registersuccess')
   },
   {
     path: '*',

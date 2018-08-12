@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div v-if="isDefined('back')" class="back" @click="backHandler"><img src="~assets/home/button_back.png" alt=""></div>
+    <div v-if="isDefined('back')" class="back" @click="backHandler"><img src="~assets/common/button_back.png" alt=""></div>
     <div class="title ellipsis">
       <slot></slot>
     </div>

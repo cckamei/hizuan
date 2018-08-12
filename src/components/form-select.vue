@@ -1,42 +1,29 @@
 <template>
   <div class="flex arrow">
     <div class="label">{{label}}</div>
-    <input type="text" :value="text" :placeholder="placeholder" @click="display = true" readonly />
-    <mt-actionsheet :actions="actions" v-model="display" cancelText=""></mt-actionsheet>
+    <input type="text" :value="result.label" :placeholder="placeholder" @click="open" readonly />
+    <v-slide-up ref="slide-up" :title="title" @confirm="confirm" :isConfirm="Object.keys(selected).length">
+      <v-input-radio v-model="selected" :list="list"></v-input-radio>
+    </v-slide-up>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['placeholder', 'label', 'list'],
+    props: ['placeholder', 'label', 'list', 'title'],
     data() {
       return {
-        display: false,
-        actions: [],
-        text: ''
+        selected: {},
+        result: {}
       };
     },
-    created() {
-      this.actions = this.list.map(item => {
-        let name = '';
-        let sheet = {};
-        if(typeof item === 'string') {
-          name = item;
-        } else {
-          sheet = item;
-          name = item.name;
-        }
-        return {
-          ...sheet,
-          name,
-          method: this.select
-        };
-      });
-    },
     methods: {
-      select(val) {
-        this.text = val.name;
-        this.$emit('input', val);
+      open() {
+        this.$refs['slide-up'].open();
+      },
+      confirm() {
+        this.result = this.selected;
+        this.$emit('input', this.result);
       }
     }
   };

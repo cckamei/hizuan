@@ -2,19 +2,26 @@
   <div class="flex">
     <div class="label">{{label}}</div>
     <input :maxlength="maxlength" type="text" v-model="text" :placeholder="placeholder" />
+    <span v-if="unit">{{unit}}</span>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['placeholder', 'maxlength', 'label'],
+    props: ['value', 'placeholder', 'maxlength', 'label', 'unit'],
     data() {
       return {
         text: ''
       };
     },
     watch: {
-      password(val) {
+      value: {
+        handler(val) {
+          this.text = val;
+        },
+        immediate: true
+      },
+      text(val) {
         this.$emit('input', val);
       }
     }
