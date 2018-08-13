@@ -8,7 +8,25 @@
 
 <script>
   export default {
-    props: ['value', 'placeholder', 'maxlength', 'label', 'unit'],
+    props: {
+      value: {
+        type: String,
+        required: true
+      },
+      placeholder: {
+        type: String
+      },
+      maxlength: {
+        type: [Number, String],
+        default: 100
+      },
+      label: {
+        type: String
+      },
+      unit: {
+        type: String
+      }
+    },
     data() {
       return {
         text: ''

@@ -8,7 +8,23 @@
 
 <script>
   export default {
-    props: ['placeholder', 'maxlength', 'eye'],
+    props: {
+      value: {
+        type: String,
+        required: true
+      },
+      placeholder: {
+        type: String
+      },
+      maxlength: {
+        type: [Number, String],
+        default: 100
+      },
+      eye: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
         password: '',

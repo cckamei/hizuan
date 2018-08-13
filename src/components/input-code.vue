@@ -9,7 +9,23 @@
   import { mapActions } from 'vuex';
 
   export default {
-    props: ['placeholder', 'maxlength', 'clear'],
+    props: {
+      value: {
+        type: String,
+        required: true
+      },
+      placeholder: {
+        type: String
+      },
+      maxlength: {
+        type: [Number, String],
+        default: 100
+      },
+      clear: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
         code: '',

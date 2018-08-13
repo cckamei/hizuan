@@ -1,7 +1,7 @@
 <template>
   <ul>
-    <li class="flex" v-for="(item, index) in radios" @click="selectIndex = index" :key="index">
-      <span>{{item.label}}</span>
+    <li class="flex" v-for="(item, index) in list" @click="selectIndex = index" :key="index">
+      <span>{{typeof item === 'string' ? item : item[keyName]}}</span>
       <img v-show="index === selectIndex" src="~assets/goods/icon_selected.png" alt="">
     </li>
   </ul>
@@ -11,12 +11,16 @@
   export default {
     props: {
       value: {
-        type: Object,
+        type: Number,
         required: true
       },
       list: {
         type: Array,
         required: true
+      },
+      keyName: {
+        type: String,
+        default: 'label'
       }
     },
     data() {
@@ -24,26 +28,9 @@
         selectIndex: -1
       };
     },
-    created() {
-      this.radios = this.list.map(item => {
-        let label = '';
-        let props = {};
-        if(typeof item === 'string') {
-          label = item;
-          props = { value: item };
-        } else {
-          props = item;
-          label = item.label;
-        }
-        return {
-          ...props,
-          label
-        };
-      });
-    },
     watch: {
       selectIndex(val) {
-        this.$emit('input', this.radios[val]);
+        this.$emit('input', this.selectIndex);
       }
     }
   };

@@ -13,11 +13,17 @@
 <script type="text/babel">
   export default {
     props: {
+      value: {
+        type: Boolean,
+        required: true
+      },
       isConfirm: {
+        type: Boolean,
         default: true
       },
       title: {
-        type: String
+        type: String,
+        required: true
       }
     },
     data() {
@@ -25,13 +31,15 @@
         visible: false
       };
     },
+    watch: {
+      value(val) {
+        this.visible = val;
+      },
+      visible(val) {
+        this.$emit('input', val);
+      }
+    },
     methods: {
-      open() {
-        this.visible = true;
-      },
-      close() {
-        this.visible = false;
-      },
       confirm() {
         this.visible = false;
         this.$emit('confirm');

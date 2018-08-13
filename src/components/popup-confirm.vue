@@ -14,12 +14,17 @@
 <script type="text/babel">
   export default {
     props: {
-      value: '',
+      value: {
+        type: Boolean,
+        required: true
+      },
       isConfirm: {
+        type: Boolean,
         default: true
       },
       title: {
-        type: String
+        type: String,
+        required: true
       }
     },
     data() {
@@ -73,10 +78,14 @@
       border: 0;
       &.cancel {
         color: #666;
+        border-right: 1px solid #fff; /*no*/
       }
       &.confirm {
-        background-color: #faa0a0;
-        color: #fff;
+        color: #666;
+        &.active {
+          background-color: #faa0a0;
+          color: #fff;
+        }
       }
     }
   }

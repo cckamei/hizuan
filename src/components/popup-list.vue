@@ -23,7 +23,16 @@
 
 <script>
   export default {
-    props: ['goods', 'value'],
+    props: {
+      value: {
+        type: Boolean,
+        required: true
+      },
+      goods: {
+        type: Object,
+        required: true
+      }
+    },
     data() {
       return {
         visible: false

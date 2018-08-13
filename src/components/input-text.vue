@@ -7,7 +7,23 @@
 
 <script>
   export default {
-    props: ['value', 'placeholder', 'maxlength', 'clear'],
+    props: {
+      value: {
+        type: String,
+        required: true
+      },
+      placeholder: {
+        type: String
+      },
+      maxlength: {
+        type: [Number, String],
+        default: 100
+      },
+      clear: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
         focus: false,

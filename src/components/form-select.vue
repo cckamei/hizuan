@@ -1,29 +1,48 @@
 <template>
   <div class="flex arrow">
     <div class="label">{{label}}</div>
-    <input type="text" :value="result.label" :placeholder="placeholder" @click="open" readonly />
-    <v-slide-up ref="slide-up" :title="title" @confirm="confirm" :isConfirm="Object.keys(selected).length">
-      <v-input-radio v-model="selected" :list="list"></v-input-radio>
+    <input type="text" :value="text" :placeholder="placeholder" @click="visible = true" readonly />
+    <v-slide-up v-model="visible" :title="title" @confirm="confirm" :isConfirm="selectedIndex !== -1">
+      <v-input-radio v-model="selectedIndex" :list="list"></v-input-radio>
     </v-slide-up>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['placeholder', 'label', 'list', 'title'],
+    props: {
+      value: {
+        type: Number,
+        required: true
+      },
+      placeholder: {
+        type: String
+      },
+      label: {
+        type: String
+      },
+      keyName: {
+        type: String,
+        default: 'label'
+      },
+      list: {
+        type: Array,
+        require: true
+      },
+      title: ''
+    },
     data() {
       return {
-        selected: {},
-        result: {}
+        visible: false,
+        selectedIndex: -1,
+        text: ''
       };
     },
     methods: {
-      open() {
-        this.$refs['slide-up'].open();
-      },
       confirm() {
-        this.result = this.selected;
-        this.$emit('input', this.result);
+        let selected = this.list[this.selectedIndex];
+        this.text = typeof selected === 'string' ? selected : selected[this.keyName];
+        this.$emit('input', this.selectedIndex);
       }
     }
   };

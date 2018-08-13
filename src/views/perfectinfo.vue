@@ -91,10 +91,10 @@
         reqData: {
           nickname: '', //昵称
           username: '', //姓名
-          sex: { label: '', value: '' }, //性别
+          sex: -1, //性别
           birthday: '', //生日
           IDCard: '', //身份证号
-          occupation: { label: '', value: '' }, //职业
+          occupation: -1, //职业
           middleFinger: '', //中指指圈号
           ringFingerSize: '', //无名指指圈号
           necklaceLength: '', //项链长度
@@ -111,7 +111,7 @@
     },
     computed: {
       isActive() {
-        return this.reqData.nickname.length && this.reqData.username.length && this.reqData.sex.value.length && this.reqData.birthday.length && this.reqData.IDCard.length && this.reqData.occupation.value.length;
+        return this.reqData.nickname.length && this.reqData.username.length && this.reqData.sex !== -1 && this.reqData.birthday.length && this.reqData.IDCard.length && this.reqData.occupation !== -1;
       }
     },
     methods: {

@@ -10,7 +10,11 @@
 
 <script>
   export default {
-    props: ['back'],
+    props: {
+      back: {
+        type: Boolean
+      }
+    },
     methods: {
       isDefined(val) {
         return this[val] !== undefined;

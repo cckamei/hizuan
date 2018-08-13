@@ -35,11 +35,11 @@
         <span>加载中...</span>
       </p>
     </div>
-    <v-popup-confirm title="筛选" v-model="filterVisible" @confirm="handleFilterConfirm">
-      <v-input-radio v-model="filterSelected" :list="filters"></v-input-radio>
+    <v-popup-confirm title="筛选" v-model="filterVisible" @confirm="handleFilterConfirm" :isConfirm="filterIndex !== -1">
+      <v-input-radio v-model="filterIndex" :list="filters"></v-input-radio>
     </v-popup-confirm>
-    <v-popup-confirm title="排序" v-model="sortVisible" @confirm="handleSortConfirm">
-      <v-input-radio v-model="sortSelected" :list="sorts"></v-input-radio>
+    <v-popup-confirm title="排序" v-model="sortVisible" @confirm="handleSortConfirm" :isConfirm="sortIndex !== -1">
+      <v-input-radio v-model="sortIndex" :list="sorts"></v-input-radio>
     </v-popup-confirm>
   </div>
 </template>
@@ -52,10 +52,10 @@
       return {
         filterVisible: false,
         sortVisible: false,
+        filterIndex: -1,
+        sortIndex: -1,
         filters: ['A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C'],
         sorts: ['价格从高到低', '价格从低到高'],
-        filterSelected: { label: '', value: '' },
-        sortSelected: { label: '', value: '' },
         goodsList: [{
           src: '',
           name: '醒狮MeiMei项链/坠',
@@ -109,10 +109,10 @@
     methods: {
       ...mapActions(['ajax']),
       handleFilterConfirm() {
-        console.log(this.filterSelected);
+        console.log(this.filterIndex);
       },
       handleSortConfirm() {
-        console.log(this.sortSelected);
+        console.log(this.sortIndex);
       },
       fetchGoods() {
         // this.ajax({
