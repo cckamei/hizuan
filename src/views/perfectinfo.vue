@@ -4,7 +4,6 @@
     <div class="content">
       <ul>
         <li class="section">
-          {{reqData}}
           <ul class="form">
             <li>
               <v-form-input label="昵称*" v-model="reqData.nickname" maxlength="6" placeholder="请填写您的账户昵称"></v-form-input>
@@ -39,7 +38,7 @@
               <v-form-input label="项链长度" v-model="reqData.necklaceLength" maxlength="20" placeholder="" unit="cm"></v-form-input>
             </li>
             <li>
-              <v-form-input label="手镯尺寸" v-model="reqData.braceletSize" maxlength="20" placeholder="" unit="cm"></v-form-input>
+              <v-form-input label="手镯尺寸" v-model="reqData.braceletSize" maxlength="20" placeholder="" unit="mm"></v-form-input>
             </li>
           </ul>
         </li>
@@ -95,7 +94,7 @@
           sex: { label: '', value: '' }, //性别
           birthday: '', //生日
           IDCard: '', //身份证号
-          occupation: '', //职业
+          occupation: { label: '', value: '' }, //职业
           middleFinger: '', //中指指圈号
           ringFingerSize: '', //无名指指圈号
           necklaceLength: '', //项链长度
@@ -112,7 +111,7 @@
     },
     computed: {
       isActive() {
-        return this.reqData.nickname.length && this.reqData.username.length && this.reqData.sex.value.length && this.reqData.birthday.length && this.reqData.IDCard.length && this.reqData.occupation.length;
+        return this.reqData.nickname.length && this.reqData.username.length && this.reqData.sex.value.length && this.reqData.birthday.length && this.reqData.IDCard.length && this.reqData.occupation.value.length;
       }
     },
     methods: {

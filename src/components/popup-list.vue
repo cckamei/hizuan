@@ -1,5 +1,5 @@
 <template>
-  <div class="popup" :style="{height: display ? cententHeight + 'px' : 0}">
+  <div class="popup" :style="{height: visible ? cententHeight + 'px' : 0}">
     <div class="popup-header flex" @click="$emit('all', goods.type)">
       <img src="~assets/home/icon_all_arrow.png" alt=""><span>查看全部</span>
     </div>
@@ -26,7 +26,7 @@
     props: ['goods', 'value'],
     data() {
       return {
-        display: false
+        visible: false
       };
     },
     computed: {
@@ -36,12 +36,12 @@
     },
     watch: {
       value(val) {
-        this.display = val;
+        this.visible = val;
       }
     },
     methods: {
       close() {
-        this.display = false;
+        this.visible = false;
         this.$emit('close');
       }
     }
@@ -112,6 +112,7 @@
         left: 0;
         width: 100%;
         img {
+          margin-top: 10px;
           width: 40px;
           height: 40px;
         }

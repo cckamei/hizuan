@@ -3,7 +3,7 @@
     <v-header>注册成功</v-header>
     <div class="content">
       <div class="info">
-        <img src="~assets/home/button_a.png" alt="">
+        <img src="~assets/home/icon_ok_b.png" alt="">
         <p>将在 {{time}} 秒后自动回到首页</p>
       </div>
       <div class="btns">
@@ -19,7 +19,7 @@
   export default {
     data() {
       return {
-        time: 3000
+        time: 3
       };
     },
     mounted() {
@@ -41,21 +41,29 @@
 </script>
 
 <style lang="less" scoped>
+  .content {
+    background-color: #fff;
+  }
+
   .info {
     text-align: center;
-    padding: 60px 0 40px 0;
+    padding: 100px 0 40px 0;
     img {
-      width: 100px;
-      height: 100px;
-      margin: 20px 0;
+      width: 180px;
+      height: 180px;
+      margin-bottom: 40px;
     }
   }
 
   .btns {
+    text-align: center;
     .btn {
-      border: 1px solid #ffb4b4; /*no*/
+      font-size: 24px;
+      height: 68px;
+      width: 540px;
+      border: 1px solid #faa0a0; /*no*/
       background-color: #fff;
-      color: #ffb4b4;
+      color: #faa0a0;
     }
   }
 </style>

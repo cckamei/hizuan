@@ -1,6 +1,7 @@
 import header from './header';
 import agreement from './agreement';
 import popupList from './popup-list';
+import popupConfirm from './popup-confirm';
 import inputText from './input-text';
 import inputPwd from './input-pwd';
 import inputCode from './input-code';
@@ -15,6 +16,7 @@ export default {
   header,
   agreement,
   popupList,
+  popupConfirm,
   inputText,
   inputPwd,
   inputCode,

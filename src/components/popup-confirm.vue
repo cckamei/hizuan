@@ -1,0 +1,84 @@
+<template>
+  <mt-popup v-model="visible" class="popup-confirm">
+    <div class="popup-confirm-title">{{title}}</div>
+    <div class="popup-confirm-content">
+      <slot></slot>
+    </div>
+    <div class="btn-group flex">
+      <button class="btn cancel" @click="visible = false">取消</button>
+      <button class="btn confirm" :class="{active: isConfirm}" @click="isConfirm && confirm()">确定</button>
+    </div>
+  </mt-popup>
+</template>
+
+<script type="text/babel">
+  export default {
+    props: {
+      value: '',
+      isConfirm: {
+        default: true
+      },
+      title: {
+        type: String
+      }
+    },
+    data() {
+      return {
+        visible: false
+      };
+    },
+    watch: {
+      value(val) {
+        this.visible = val;
+      },
+      visible(val) {
+        this.$emit('input', val);
+      }
+    },
+    methods: {
+      confirm() {
+        this.visible = false;
+        this.$emit('confirm');
+      }
+    }
+  };
+</script>
+
+<style lang="less" scoped>
+  .popup-confirm {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 600px;
+    &-title {
+      color: #999;
+      font-size: 30px;
+      padding: 40px 0 20px 0;
+      text-align: center;
+    }
+    &-content {
+      padding: 20px;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+  }
+
+  .btn-group {
+    font-size: 30px;
+    height: 80px;
+    border-top: 1px solid #f0f0f0; /*no*/
+    .btn {
+      width: 50%;
+      height: 100%;
+      font-size: 30px;
+      border: 0;
+      &.cancel {
+        color: #666;
+      }
+      &.confirm {
+        background-color: #faa0a0;
+        color: #fff;
+      }
+    }
+  }
+</style>
+

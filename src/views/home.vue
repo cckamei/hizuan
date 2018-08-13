@@ -10,7 +10,7 @@
       <ul>
         <li class="row1" v-for="(item, index) in imgList">
           <img @click="switchImg(item, index)" src="~assets/home/pic_cc1.png" alt="">
-          <v-popup-list v-model="item.display" :goods="item" @all="goGoodsList" @close="item.display = false"></v-popup-list>
+          <v-popup-list v-model="item.visible" :goods="item" @all="goGoodsList" @close="item.visible = false"></v-popup-list>
         </li>
       </ul>
     </div>
@@ -34,7 +34,7 @@
         bannerList: ['', ''],
         imgList: [{
           src: '',
-          display: false,
+          visible: false,
           type: 'XS1',
           goodsList: [{
             src: '',
@@ -54,7 +54,7 @@
           }]
         }, {
           src: '',
-          display: false,
+          visible: false,
           type: 'XS2',
           goodsList: [{
             src: '',
@@ -74,7 +74,7 @@
           }]
         }, {
           src: '',
-          display: false,
+          visible: false,
           type: 'XS3',
           goodsList: [{
             src: '',
@@ -89,7 +89,7 @@
           }]
         }, {
           src: '',
-          display: false,
+          visible: false,
           type: 'XS4',
           goodsList: [{
             src: '',
@@ -114,11 +114,11 @@
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon']),
       switchImg(item, index) {
-        let temp = item.display;
+        let temp = item.visible;
         this.imgList.forEach(img => {
-          img.display = false;
+          img.visible = false;
         });
-        item.display = !temp;
+        item.visible = !temp;
         setTimeout(() => {
           let top = $('.content').scrollTop();
           let rect = $('.popup').get(index).getBoundingClientRect();

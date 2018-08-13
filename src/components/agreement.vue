@@ -1,6 +1,6 @@
 <template>
-  <div class="agreement flex">
-    <div class="checkbox" :class="{active: checked}" @click="checked = !checked"></div>
+  <div class="agreement flex" @click="checked = !checked">
+    <div class="checkbox" :class="{active: checked}"></div>
     <span class="label">我已阅读并同意</span><span class="protocol">《注册协议》</span>
   </div>
 </template>

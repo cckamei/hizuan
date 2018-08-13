@@ -9,7 +9,16 @@
 
 <script>
   export default {
-    props: ['value', 'list'],
+    props: {
+      value: {
+        type: Object,
+        required: true
+      },
+      list: {
+        type: Array,
+        required: true
+      }
+    },
     data() {
       return {
         selectIndex: -1
@@ -43,6 +52,8 @@
 <style lang="less" scoped>
   ul {
     li {
+      font-size: 24px;
+      color: #666;
       height: 84px;
       padding: 0 16px;
       border-bottom: 1px solid #f0f0f0; /*no*/
