@@ -7,6 +7,7 @@ import inputPwd from './input-pwd';
 import inputCode from './input-code';
 import inputRadio from './input-radio';
 import slideUp from './slide-up';
+import slideDown from './slide-down';
 import formInput from './form-input';
 import formSelect from './form-select';
 import formDatepicker from './form-datepicker';
@@ -21,6 +22,7 @@ export default {
   inputCode,
   inputRadio,
   slideUp,
+  slideDown,
   formInput,
   formSelect,
   formDatepicker

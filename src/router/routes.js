@@ -10,6 +10,16 @@ const router = [
     component: () => import('@/views/goodslist')
   },
   {
+    name: 'goodssearch',
+    path: '/goodslist/goodssearch',
+    component: () => import('@/views/goodssearch')
+  },
+  {
+    name: 'gooddetail',
+    path: '/goodslist/goodssearch/gooddetail',
+    component: () => import('@/views/gooddetail')
+  },
+  {
     name: 'login',
     path: '/login',
     component: () => import('@/views/login')

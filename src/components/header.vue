@@ -4,7 +4,7 @@
     <div class="title ellipsis">
       <slot></slot>
     </div>
-    <div class="menus"></div>
+    <slot name="menus"></slot>
   </div>
 </template>
 

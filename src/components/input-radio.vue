@@ -29,6 +29,9 @@
       };
     },
     watch: {
+      value(val) {
+        this.selectIndex = val;
+      },
       selectIndex(val) {
         this.$emit('input', this.selectIndex);
       }

@@ -3,7 +3,7 @@
     <div class="header">
       <div class="home" @click="$router.go(-1)"><img src="~assets/goods/icon_home.png" alt=""></div>
       <div class="title ellipsis">
-        <input type="text" @click="$router.push({name: 'search'})" placeholder="请选择您要搜索的作品类型" readonly>
+        <input type="text" @click="$router.push({name: 'goodssearch'})" placeholder="请选择您要搜索的作品类型" readonly>
       </div>
     </div>
     <div class="condition">
@@ -20,7 +20,7 @@
     </div>
     <div class="content">
       <ul class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50" infinite-scroll-immediate-check="true">
-        <li v-for="(item, index) in goodsList" :key="index" class="flex">
+        <li v-for="(item, index) in goodsList" :key="index" class="flex" @click="goDetail(item)">
           <div class="img"><img :src="item.src" alt=""></div>
           <div class="detail flex-auto flex">
             <span class="name">{{item.name}}</span>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapMutations } from 'vuex';
 
   export default {
     data() {
@@ -107,6 +107,7 @@
       };
     },
     methods: {
+      ...mapMutations(['setCommon']),
       ...mapActions(['ajax']),
       handleFilterConfirm() {
         console.log(this.filterIndex);
@@ -162,6 +163,10 @@
         setTimeout(() => {
           this.fetchGoods();
         }, 500);
+      },
+      goDetail(val) {
+        this.setCommon({ goodType: val.type });
+        this.$router.push({ name: 'gooddetail' });
       }
     }
   };
