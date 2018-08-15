@@ -53,10 +53,10 @@
             </li>
             <li class="count flex">
               <span>数量</span>
-              <div>
-                <button class="add"><img src="~assets/goods/button_minus_d.png" alt=""></button>
+              <div class="flex">
+                <div class="btn minus"></div>
                 <input type="text">
-                <button class="minus"><img src="~assets/goods/button_plus_d.png" alt=""></button>
+                <div class="btn plus"></div>
               </div>
             </li>
           </ul>
@@ -173,9 +173,23 @@
         }
         &.count {
           .btn {
-            &.add {
+            width: 40px;
+            height: 40px;
+            &.plus {
+              background: url('~assets/goods/button_plus_l.png') no-repeat;
+              background-size: 100%;
+              &.active {
+                background: url('~assets/goods/button_plus_d.png') no-repeat;
+                background-size: 100%;
+              }
             }
             &.minus {
+              background: url('~assets/goods/button_minus_l.png') no-repeat;
+              background-size: 100%;
+              &.active {
+                background: url('~assets/goods/button_plus_d.png') no-repeat;
+                background-size: 100%;
+              }
             }
           }
         }
