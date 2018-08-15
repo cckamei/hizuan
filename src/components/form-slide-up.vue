@@ -2,7 +2,7 @@
   <div class="flex arrow">
     <div class="label">{{label}}</div>
     <input type="text" v-model="value" :placeholder="placeholder" @click="visible = true" readonly />
-    <v-slide-up v-model="visible">
+    <v-slide-up v-model="visible" :title="title" @confirm="$emit('confirm')">
       <slot></slot>
     </v-slide-up>
   </div>
@@ -19,7 +19,8 @@
       },
       label: {
         type: String
-      }
+      },
+      title: ''
     },
     data() {
       return {
@@ -49,10 +50,13 @@
       text-align: right;
       width: 100%;
       padding: 0 10px;
-      font-size: 32px;
+      font-size: 30px;
       color: #333;
       color: #666;
     }
+  }
+  ::-webkit-input-placeholder {
+    color: #666;
   }
 </style>
 
