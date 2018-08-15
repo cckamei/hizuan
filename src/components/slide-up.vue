@@ -1,6 +1,6 @@
 <template>
   <mt-popup v-model="visible" position="bottom" class="slide">
-    <div class="slide-title">{{title}}</div>
+    <div v-show="title" class="slide-title">{{title}}</div>
     <div class="slide-content">
       <slot></slot>
     </div>
@@ -22,8 +22,7 @@
         default: true
       },
       title: {
-        type: String,
-        required: true
+        type: String
       }
     },
     data() {
@@ -61,7 +60,7 @@
     }
     &-content {
       padding: 20px;
-      max-height: 600px;
+      max-height: 70%;
       overflow-y: auto;
     }
   }

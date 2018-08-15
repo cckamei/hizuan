@@ -1,9 +1,10 @@
 <template>
-  <div class="header">
-    <div v-if="isDefined('back')" class="back" @click="backHandler"><img src="~assets/common/button_back.png" alt=""></div>
+  <div class="header" :class="{shadow: isDefined('shadow')}">
+    <div v-if="isDefined('back')" class="menu-left" @click="backHandler"><img src="~assets/goods/button_back_r.png" alt=""></div>
     <div class="title ellipsis">
       <slot></slot>
     </div>
+    <slot name="menus"></slot>
   </div>
 </template>
 
@@ -11,7 +12,13 @@
   export default {
     props: {
       back: {
-        type: Boolean
+        type: String
+      },
+      home: {
+        type: String
+      },
+      shadow: {
+        type: String
       }
     },
     methods: {
@@ -29,6 +36,15 @@
             this.$router.go(-1);
           }
         }
+      },
+      homeHandler() {
+        if(this.isDefined('home')) {
+          if(this.isFunction('home')) {
+            this.back();
+          } else {
+            this.$router.go(-1);
+          }
+        }
       }
     }
   };
@@ -41,10 +57,12 @@
     line-height: 96px;
     top: 0;
     width: 100%;
-    box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.5);
     background-color: #fff;
-    z-index: 1;
-    .back {
+    z-index: 2;
+    &.shadow {
+      box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.5);
+    }
+    .menu-left {
       width: 96px;
       height: 96px;
       position: absolute;
@@ -63,5 +81,21 @@
       text-align: center;
       padding-right: 96px;
     }
+    .menus {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      .menu {
+        padding: 18px;
+        width: 96px;
+        height: 96px;
+        img {
+          height: 100%;
+          display: block;
+        }
+      }
+    }
   }
 </style>
+

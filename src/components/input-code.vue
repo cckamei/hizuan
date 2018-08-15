@@ -78,7 +78,6 @@
       padding: 0 10px;
       font-size: 32px;
       color: #333;
-      border: none;
     }
     .btn {
       flex-shrink: 0;

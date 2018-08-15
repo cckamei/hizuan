@@ -1,11 +1,11 @@
 <template>
   <div class="pt">
-    <div class="header">
-      <div class="home" @click="$router.go(-1)"><img src="~assets/goods/icon_home.png" alt=""></div>
-      <div class="title ellipsis">
-        <input type="text" @click="$router.push({name: 'goodssearch'})" placeholder="请选择您要搜索的作品类型" readonly>
+    <v-header-menus home>
+      <input type="text" @click="$router.push({name: 'goodssearch'})" placeholder="请选择您要搜索的作品类型" readonly>
+      <div slot="menus" class="menus">
+        <div class="menu" @click="$router.push({name: 'goodssearch'})"><img src="~assets/goods/icon_search.png" alt=""></div>
       </div>
-    </div>
+    </v-header-menus>
     <div class="condition">
       <ul class="flex">
         <li class="flex" @click="filterVisible = true">
@@ -102,7 +102,7 @@
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
         }],
-        pageInfo: {}, //分页
+        pageInfo: {},
         loading: false
       };
     },
@@ -118,7 +118,9 @@
       fetchGoods() {
         // this.ajax({
         //   name: 'goodsList',
-        //   data: {}
+        //   data: {
+        //   currentPage: (this.pageInfo.currentPage || 0) + 1,
+        // }
         // }).then(res => {
         setTimeout(() => {
           let res = {
@@ -177,40 +179,12 @@
     padding-top: 192px;
   }
 
-  .header {
-    position: absolute;
-    height: 96px;
-    line-height: 96px;
-    top: 0;
+  .title input {
+    border-left: 1px solid #f0f0f0; /*no*/
+    padding-left: 30px;
+    padding-right: 30px;
+    height: 60px;
     width: 100%;
-    background-color: #fff;
-    z-index: 2;
-    .home {
-      width: 96px;
-      height: 96px;
-      position: absolute;
-      left: 0;
-      top: 0;
-      padding: 18px;
-      img {
-        height: 100%;
-        display: block;
-      }
-    }
-    .title {
-      padding-left: 96px;
-      font-size: 30px;
-      color: #999;
-      input {
-        border: none;
-        border-left: 1px solid #f0f0f0; /*no*/
-        padding-left: 30px;
-        height: 60px;
-        width: 100%;
-        background: url('~assets/goods/icon_search.png') no-repeat right 18px center;
-        background-size: 60px 100%;
-      }
-    }
   }
 
   .condition {

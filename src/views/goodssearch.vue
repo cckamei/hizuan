@@ -1,14 +1,14 @@
 <template>
   <div class="goods-search pt">
-    <v-header back>
+    <v-header-menus back shadow>
       <input v-if="searchIndex === -1" type="text" placeholder="请选择您要搜索的作品类型" readonly>
       <div v-else class="search-type">
         <button class="btn" @click="searchIndex = -1">{{searches[searchIndex]}} X</button>
       </div>
-      <div class="menus" slot="menus" @click="search">
-        <img src="~assets/goods/icon_search.png" alt="">
+      <div slot="menus" class="menus">
+        <div class="menu" @click="search"><img src="~assets/goods/icon_search.png" alt=""></div>
       </div>
-    </v-header>
+    </v-header-menus>
     <div class="content">
       <v-input-radio v-model="searchIndex" :list="searches" class="list"></v-input-radio>
     </div>
@@ -40,7 +40,6 @@
 <style lang="less" scoped>
   @import '../style/tool.less';
   input {
-    border: none;
     border-left: 1px solid #f0f0f0; /*no*/
     padding-left: 30px;
     padding-right: 30px;
@@ -56,21 +55,8 @@
       height: 60px;
       padding: 0 24px;
       border-radius: 45px;
-      border: none;
       font-size: 30px;
       color: #fff;
-    }
-  }
-
-  .menus {
-    padding: 18px;
-    width: 96px;
-    height: 96px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    img {
-      display: block;
     }
   }
 </style>

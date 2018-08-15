@@ -62,7 +62,6 @@
       padding: 0 10px;
       font-size: 32px;
       color: #333;
-      border: none;
       color: #666;
     }
   }

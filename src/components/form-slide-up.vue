@@ -1,18 +1,17 @@
 <template>
   <div class="flex arrow">
     <div class="label">{{label}}</div>
-    <input type="text" :value="text" :placeholder="placeholder" @click="visible = true" readonly />
-    <v-slide-up v-model="visible" :title="title" @confirm="confirm" :isConfirm="selectedIndex !== -1">
-      <v-input-radio v-model="selectedIndex" :list="list"></v-input-radio>
+    <input type="text" v-model="value" :placeholder="placeholder" @click="visible = true" readonly />
+    <v-slide-up v-model="visible">
+      <slot></slot>
     </v-slide-up>
   </div>
 </template>
 
-<script>
+<script type="text/babel">
   export default {
     props: {
       value: {
-        type: Number,
         required: true
       },
       placeholder: {
@@ -20,29 +19,17 @@
       },
       label: {
         type: String
-      },
-      keyName: {
-        type: String,
-        default: 'label'
-      },
-      list: {
-        type: Array,
-        require: true
-      },
-      title: ''
+      }
     },
     data() {
       return {
-        visible: false,
-        selectedIndex: -1,
-        text: ''
+        visible: false
       };
     },
     methods: {
       confirm() {
-        let selected = this.list[this.selectedIndex];
-        this.text = typeof selected === 'string' ? selected : selected[this.keyName];
-        this.$emit('input', this.selectedIndex);
+        this.visible = false;
+        this.$emit('confirm');
       }
     }
   };
@@ -68,5 +55,4 @@
     }
   }
 </style>
-
 

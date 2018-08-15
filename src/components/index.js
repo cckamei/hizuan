@@ -1,4 +1,6 @@
 import header from './header';
+import headerGoods from './header-goods';
+import headerMenus from './header-menus';
 import agreement from './agreement';
 import popupList from './popup-list';
 import popupConfirm from './popup-confirm';
@@ -11,9 +13,13 @@ import slideDown from './slide-down';
 import formInput from './form-input';
 import formSelect from './form-select';
 import formDatepicker from './form-datepicker';
+import formSlideUp from './form-slide-up';
+import buttonRadio from './button-radio';
 
 export default {
   header,
+  headerGoods,
+  headerMenus,
   agreement,
   popupList,
   popupConfirm,
@@ -25,5 +31,7 @@ export default {
   slideDown,
   formInput,
   formSelect,
-  formDatepicker
+  formDatepicker,
+  formSlideUp,
+  buttonRadio
 };
