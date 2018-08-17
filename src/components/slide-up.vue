@@ -15,7 +15,7 @@
     props: {
       value: {
         type: Boolean,
-        required: true
+        default: false
       },
       isConfirm: {
         type: Boolean,

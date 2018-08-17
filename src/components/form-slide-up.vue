@@ -1,7 +1,11 @@
 <template>
   <div class="flex arrow">
     <div class="label">{{label}}</div>
-    <input type="text" v-model="value" :placeholder="placeholder" @click="visible = true" readonly />
+    <div class="input ellipsis flex" @click="visible = true">
+      <slot name="value">
+        <div class="input ellipsis">{{value || placeholder || '　'}}</div>
+      </slot>
+    </div>
     <v-slide-up v-model="visible" :title="title" @confirm="$emit('confirm')">
       <slot></slot>
     </v-slide-up>
@@ -12,7 +16,7 @@
   export default {
     props: {
       value: {
-        required: true
+        default: ''
       },
       placeholder: {
         type: String
@@ -46,17 +50,14 @@
       min-width: 30%;
       color: #999;
     }
-    input {
+    .input {
       text-align: right;
       width: 100%;
       padding: 0 10px;
       font-size: 30px;
-      color: #333;
       color: #666;
+      justify-content: flex-end;
     }
-  }
-  ::-webkit-input-placeholder {
-    color: #666;
   }
 </style>
 

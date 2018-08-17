@@ -30,7 +30,17 @@
       </div>
       <div class="gap"></div>
       <div class="row">
-        <v-form-slide-up label="商品规格" v-model="reqData.sku" placeholder="选择 主钻分数；钻石净度..." @confirm="handleSKU">
+        <v-form-slide-up label="领取优惠" v-model="reqData.benefit" placeholder="" @confirm="handleSKU">
+          <template slot="value">
+            <button class="benifit-btn">满20000减1500</button>
+            <button class="benifit-btn">满10000减600</button>
+          </template>
+          阿斯蒂芬
+        </v-form-slide-up>
+      </div>
+      <div class="gap"></div>
+      <div class="row">
+        <v-form-slide-up label="商品规格" v-model="reqData.sku" placeholder="选择 主钻分数；钻石净度；颜色；规格；数量" @confirm="handleSKU">
           <ul class="sku">
             <li class="sku-icon flex">
               <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
@@ -60,18 +70,22 @@
               <div class="flex">
                 <div @click="sku.count > 1 && sku.count--" class="btn minus" :class="{active: sku.count > 1}"></div>
                 <input v-model="sku.count" type="text" readonly>
-                <div @click="sku.count < sku.limit && sku.count++" class="btn plus" :class="{active: sku.count < sku.limit}"></div>
+                <div @click="sku.count < res.limit && sku.count++" class="btn plus" :class="{active: sku.count < res.limit}"></div>
               </div>
             </li>
           </ul>
         </v-form-slide-up>
       </div>
       <div class="row">
-        <v-form-slide-up label="商品参数" title="商品参数" placeholder="款式；钻石切工..." v-model="reqData.param">
+        <v-form-slide-up label="商品参数" title="商品参数" placeholder="套系；款式；钻石切工；主钻形状；副钻形状‘副钻分数；镶嵌材质；镶嵌方式">
           <ul class="goods-param">
             <li class="flex">
               <span class="label">商品编号</span>
               <span class="value">DRGC00208</span>
+            </li>
+            <li class="flex">
+              <span class="label">套系</span>
+              <span class="value">婚嫁系列</span>
             </li>
             <li class="flex">
               <span class="label">款式</span>
@@ -82,7 +96,7 @@
               <span class="value">完美</span>
             </li>
             <li class="flex">
-              <span class="label">主钻形妆</span>
+              <span class="label">主钻形状</span>
               <span class="value">圆形</span>
             </li>
             <li class="flex">
@@ -106,7 +120,7 @@
       </div>
       <div class="gap"></div>
       <div class="row">
-        <v-form-slide-up label="基础服务" title="基础服务" placeholder="店铺保修；专柜联保..." v-model="reqData.param">
+        <v-form-slide-up label="基础服务" title="基础服务" placeholder="店铺保修；专柜联保">
           <ul class="service">
             <li>
               <div class="flex"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>店铺保修</span></div>
@@ -120,9 +134,20 @@
         </v-form-slide-up>
       </div>
       <div class="row">
-        <v-form-slide-up label="刻字定制" title="刻字定制" placeholder="修改您的刻字信息" v-model="reqData.param">
-          <ul class="service">
-
+        <v-form-slide-up label="刻字定制" title="刻字定制" placeholder="修改您的刻字信息" v-model="reqData.lettering" @confirm="handleLettering">
+          <ul class="lettering">
+            <li class="lettering-enable">
+              <div class="title">是否刻字</div>
+              <v-button-radio v-model="lettering.disable" :list="['是', '否']"></v-button-radio>
+            </li>
+            <li>
+              <div class="title">刻字內容</div>
+              <input v-model="lettering.text" class="lettering-text" type="text" maxlength="2" placeholder="请填写您的刻字内容（不超过2个字）">
+            </li>
+            <li>
+              <div class="title">要求</div>
+              <input v-model="lettering.remarks" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的要求">
+            </li>
           </ul>
         </v-form-slide-up>
       </div>
@@ -142,19 +167,37 @@
           skuClarity: ['SI/小瑕', 'VS/微瑕', 'VVS/极微瑕'],
           skuColor: ['H/白', 'F-G/优白', 'I-J/淡白', 'D-E/极白'],
           skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号'],
-          goodsParam: ['']
+          limit: 10,
+          benifit: [{
+            id: 1,
+            price: 1500,
+            limit: 20000,
+            expiredStart: '2018.08.01',
+            expiredEnd: '2018.09.01'
+          }, {
+            id: 2,
+            price: 600,
+            limit: 1000,
+            expiredStart: '2018.08.01',
+            expiredEnd: '2018.09.01'
+          }]
         },
         sku: {
           scoreIndex: 0,
           clarityIndex: 0,
           colorIndex: 0,
           specIndex: 0,
-          count: 1,
-          limit: 10
+          count: 1
+        },
+        lettering: {
+          disable: 1,
+          text: '',
+          remarks: ''
         },
         reqData: {
           sku: '',
-          param: ''
+          lettering: '',
+          benefit: ''
         }
       };
     },
@@ -165,7 +208,12 @@
         let clarity = this.res.skuClarity[this.sku.clarityIndex];
         let color = this.res.skuColor[this.sku.colorIndex];
         let spec = this.res.skuSpec[this.sku.specIndex];
-        this.reqData.sku = `已选 ${score}；${clarity}...`;
+        this.reqData.sku = `已选 ${score}；${clarity}；${color}；${spec}`;
+      },
+      handleLettering() {
+        let disable = this.lettering.disable ? '否' : '是';
+        console.log(disable);
+        this.reqData.lettering = this.lettering.disable ? '' : `刻字 ${this.lettering.text}；要求 ${this.lettering.remarks}`;
       }
     }
   };
@@ -324,6 +372,40 @@
           margin-right: 12px;
         }
       }
+    }
+    .lettering {
+      li {
+        padding: 20px;
+        font-size: 24px;
+        color: #666;
+        .lettering-text {
+          height: 84px;
+          line-height: 84px;
+          font-size: 24px;
+          color: #999;
+          border-bottom: 1px solid #f0f0f0; /*no*/
+          width: 100%;
+          margin-top: 20px;
+        }
+      }
+    }
+    .benifit-btn {
+      border-radius: 18px;
+      background-color: #fff;
+      font-size: 24px;
+      padding: 0 14px;
+      height: 36px;
+      color: #faa0a0;
+      border: 1px solid #faa0a0; /*no*/
+      margin-left: 24px;
+    }
+  }
+</style>
+
+<style lang="less">
+  .lettering-enable {
+    button {
+      width: 272px;
     }
   }
 </style>

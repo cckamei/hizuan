@@ -15,6 +15,7 @@ import formSelect from './form-select';
 import formDatepicker from './form-datepicker';
 import formSlideUp from './form-slide-up';
 import buttonRadio from './button-radio';
+import card from './card';
 
 export default {
   header,
@@ -33,5 +34,6 @@ export default {
   formSelect,
   formDatepicker,
   formSlideUp,
-  buttonRadio
+  buttonRadio,
+  card
 };
