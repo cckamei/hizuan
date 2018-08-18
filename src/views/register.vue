@@ -30,7 +30,7 @@
   export default {
     data() {
       return {
-        account: '18702913241',
+        account: '',
         code: '',
         password: '',
         confirmPws: '',

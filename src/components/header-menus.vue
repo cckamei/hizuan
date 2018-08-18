@@ -1,7 +1,7 @@
 <template>
   <div class="header" :class="{shadow: isDefined('shadow')}">
     <div v-if="isDefined('back')" class="menu-left" @click="backHandler"><img src="~assets/common/button_back.png" alt=""></div>
-    <div v-if="isDefined('home')" class="menu-left" @click="backHandler"><img src="~assets/goods/icon_home.png" alt=""></div>
+    <div v-if="isDefined('home')" class="menu-left" @click="homeHandler"><img src="~assets/goods/icon_home.png" alt=""></div>
     <div class="title ellipsis">
       <slot></slot>
     </div>
@@ -41,9 +41,9 @@
       homeHandler() {
         if(this.isDefined('home')) {
           if(this.isFunction('home')) {
-            this.back();
+            this.home();
           } else {
-            this.$router.go(-1);
+            this.$router.push({ name: 'index' });
           }
         }
       }

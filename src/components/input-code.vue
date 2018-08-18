@@ -49,7 +49,7 @@
         //   method: 'get',
         //   data: {
         //     action: 'register',
-        //     phone: '18702913241'
+        //     phone: ''
         //   }
         // }).then(res => {
         this.sending = true;

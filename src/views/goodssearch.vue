@@ -28,10 +28,7 @@
     methods: {
       ...mapActions(['ajax']),
       search() {
-        if(this.searchIndex === -1) {
-          this.toast('请选择您要搜索的作品类型');
-          return false;
-        }
+        this.$router.push({ name: 'gooddetail' });
       }
     }
   };

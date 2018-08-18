@@ -1,12 +1,21 @@
 <template>
-  <div class="goods-detail">
-    <v-header-goods back>
+  <div class="goods-detail pb" @click.stop="menusVisible = false">
+    <v-header-goods back v-show="top <= 10">
       <div slot="menus" class="menus">
-        <div class="menu"><img src="~assets/goods/button_cart_r.png" alt=""></div>
-        <div class="menu"><img src="~assets/goods/button_option.png" alt=""></div>
+        <div @click="waiting" class="menu"><img src="~assets/goods/button_cart_r.png" alt=""></div>
+        <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option.png" alt=""></div>
       </div>
     </v-header-goods>
-    <div class="content">
+    <v-header-menus back shadow v-show="top > 10">
+      <span class="sub-title" :class="{active: top < offsetTops[1]}" @click="setTop(0)">商品</span>
+      <span class="sub-title" :class="{active: top >= offsetTops[1] && top < offsetTops[2]}" @click="setTop(1)">详情</span>
+      <span class="sub-title" :class="{active: top >= offsetTops[2]}" @click="setTop(2)">推荐</span>
+      <div slot="menus" class="menus">
+        <div @click="waiting" class="menu"><img src="~assets/goods/button_cart_g.png" alt=""></div>
+        <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option_g.png" alt=""></div>
+      </div>
+    </v-header-menus>
+    <div class="content" @scroll="scroll">
       <mt-swipe :auto="4000" class="banner">
         <mt-swipe-item v-for="(item, index) in res.bannerList" :key="index">
           <img :src="item" />
@@ -15,7 +24,7 @@
       <div class="info">
         <div class="price">
           <i>￥</i>{{8888.00 || currency}}
-          <img class="right" src="~assets/goods/button_share.png" alt="">
+          <img @click="waiting" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
         <div class="name">CC卡美婚嫁系列 - 戒指</div>
         <div class="desc">结而为约·有承诺的爱</div>
@@ -30,13 +39,33 @@
       </div>
       <div class="gap"></div>
       <div class="row">
-        <v-form-slide-up label="领取优惠" v-model="reqData.benefit" placeholder="" @confirm="handleSKU">
+        <v-form-slide-up label="领取优惠" placeholder="" @confirm="handleBenifit">
           <template slot="value">
-            <button class="benifit-btn">满20000减1500</button>
-            <button class="benifit-btn">满10000减600</button>
+            <button v-for="card in res.benifit" v-if="card.use" class="benifit-btn">满{{card.limit}}减{{card.price}}</button>
           </template>
-          阿斯蒂芬
+          <ul>
+            <li v-for="(card, index) in res.benifit">
+              <v-card :card="card"></v-card>
+            </li>
+          </ul>
         </v-form-slide-up>
+      </div>
+      <div class="row">
+        <v-form-slide-up label="促销活动" placeholder="" @confirm="handleSKU">
+          <template slot="value">
+            <button class="activity-btn">{{res.activity[0].title}}</button>{{res.activity[0].desc}}
+          </template>
+          <ul class="activity">
+            <li class="flex" v-for="(item, index) in res.activity">
+              <button class="activity-btn">{{item.title}}</button>{{item.desc}}
+            </li>
+          </ul>
+        </v-form-slide-up>
+      </div>
+      <div class="row activity" v-if="res.activity.length > 1">
+        <div class="flex" v-for="(item, index) in res.activity" v-if="index > 0">
+          <button class="activity-btn">{{item.title}}</button>{{item.desc}}
+        </div>
       </div>
       <div class="gap"></div>
       <div class="row">
@@ -151,18 +180,69 @@
           </ul>
         </v-form-slide-up>
       </div>
+      <div class="gap"></div>
+      <div ref="image-text" class="section image-text">
+        <div class="title flex"><span>图文详情</span></div>
+        <div class="image-text-content">
+          <img src="~assets/goods/pic_dring.png" alt="">
+          <p>CC卡美婚嫁钻饰系列经悉心设计，力求象征中国从未消失一直存在的隽永感情。</p>
+          <p>灵感取材于美对爱侣分享的幸福时刻。CC卡美创作的婚戒系列钻饰，每款设计都尽显美钻的锋芒火彩，将你的爱意表露无遗。
+          </p>
+        </div>
+      </div>
+      <div class="gap"></div>
+      <div ref="recommend" class="section recommend">
+        <div class="title flex"><span>为你推荐</span></div>
+        <div class="recommend-content">
+          <ul class="flex">
+            <li v-for="(item, index) in res.recommend">
+              <div class="recommend-item">
+                <img :src="item.url" alt="">
+                <div class="name">{{item.name}}</div>
+                <div class="flex">
+                  <div class="price"><span>￥</span>{{8888.00 || currency}}</div>
+                  <div class="like" :class="{active: item.like}" @click="item.like = !item.like"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+    <div class="footer flex">
+      <div class="fun-btns" @click="waiting">
+        <img src="~assets/goods/button_service.png" alt="">
+        <span>客服</span>
+      </div>
+      <div class="fun-btns" @click="waiting">
+        <img src="~assets/goods/button_like.png" alt="">
+        <span>收藏</span>
+      </div>
+      <div class="btn-group flex">
+        <button class="btn cart" @click="waiting">加入购物车</button>
+        <button class="btn purchase" @click="waiting">立即购买</button>
+      </div>
+    </div>
+    <v-menus v-model="menusVisible" :menus="['home', 'search', 'collect']"></v-menus>
+    <v-scroll-top ref="scroll-top" v-model="topVisible" @top="(t)=> top = t"></v-scroll-top>
   </div>
 </template>
 
 <script>
   import { mapActions } from 'vuex';
+  import $ from 'jquery';
+  import ss from '../assets/goods/pic_guguring.png';
+  import banner from '../assets/goods/pic_wring.png';
 
   export default {
     data() {
       return {
+        menusVisible: false,
+        topVisible: false,
+        top: 0,
+        offsetTops: [],
         res: {
-          bannerList: ['', '', ''],
+          bannerList: [banner, banner, banner],
           skuScore: ['18分', '25分', '30分', '40分'],
           skuClarity: ['SI/小瑕', 'VS/微瑕', 'VVS/极微瑕'],
           skuColor: ['H/白', 'F-G/优白', 'I-J/淡白', 'D-E/极白'],
@@ -172,14 +252,46 @@
             id: 1,
             price: 1500,
             limit: 20000,
+            use: false,
             expiredStart: '2018.08.01',
             expiredEnd: '2018.09.01'
           }, {
             id: 2,
             price: 600,
             limit: 1000,
+            use: false,
             expiredStart: '2018.08.01',
             expiredEnd: '2018.09.01'
+          }],
+          activity: [{
+            id: 1,
+            title: '七夕牵线',
+            desc: '满额免费购换小礼品'
+          }, {
+            id: 2,
+            title: '新用户',
+            desc: '新用户首单特惠'
+          }],
+          recommend: [{
+            url: ss,
+            name: '文承 戒指',
+            price: '6666',
+            like: false
+          }, {
+            url: ss,
+            name: '文承 戒指',
+            price: '6666',
+            like: false
+          }, {
+            url: ss,
+            name: '文承 戒指',
+            price: '6666',
+            like: false
+          }, {
+            url: ss,
+            name: '文承 戒指',
+            price: '6666',
+            like: false
           }]
         },
         sku: {
@@ -197,9 +309,14 @@
         reqData: {
           sku: '',
           lettering: '',
-          benefit: ''
+          benifit: ''
         }
       };
+    },
+    mounted() {
+      let headerHeight = 96 / window.htp.designWidth * window.screen.width;
+      this.offsetTops = [0, this.$refs['image-text'].offsetTop - headerHeight, this.$refs['recommend'].offsetTop - headerHeight];
+      console.log(this.offsetTops);
     },
     methods: {
       ...mapActions(['ajax']),
@@ -212,8 +329,21 @@
       },
       handleLettering() {
         let disable = this.lettering.disable ? '否' : '是';
-        console.log(disable);
         this.reqData.lettering = this.lettering.disable ? '' : `刻字 ${this.lettering.text}；要求 ${this.lettering.remarks}`;
+      },
+      handleBenifit() {
+        this.reqData.benifit = this.res.benifit.map(item => item.id);
+      },
+      waiting() {
+        this.toast('敬请期待');
+      },
+      scroll() {
+        this.$refs['scroll-top'].scroll();
+      },
+      setTop(index) {
+        $('.content').animate({
+          scrollTop: this.offsetTops[index]
+        }, 200);
       }
     }
   };
@@ -224,9 +354,22 @@
     background-color: #fff;
   }
 
+  .pb {
+    padding-bottom: 96px;
+  }
+
   .gap {
     height: 16px;
     background-color: #f3f3f3;
+  }
+
+  .sub-title {
+    font-size: 30px;
+    color: #999;
+    padding: 0 20px;
+    &.active {
+      color: #666;
+    }
   }
 
   .banner {
@@ -279,6 +422,46 @@
   .row {
     height: 84px;
     padding: 0 30px;
+    .benifit-btn {
+      border-radius: 18px;
+      background-color: #fff;
+      font-size: 24px;
+      padding: 0 14px;
+      height: 36px;
+      color: #faa0a0;
+      border: 1px solid #faa0a0; /*no*/
+      margin-left: 24px;
+    }
+    .activity-btn {
+      border-radius: 12px;
+      background-color: #fff;
+      font-size: 16px;
+      padding: 0 12px;
+      color: #cdb49b;
+      border: 1px solid #cdb49b; /*no*/
+      margin-right: 8px;
+    }
+    &.activity {
+      padding-top: 10px;
+      height: auto;
+      .flex {
+        justify-content: flex-end;
+        padding-right: 40px;
+        padding-bottom: 30px;
+      }
+    }
+    .activity {
+      li {
+        height: 84px;
+        font-size: 24px;
+        color: #666;
+        padding: 0 20px;
+        border-bottom: 1px solid #f0f0f0; /*no*/
+        &:last-child {
+          border: none;
+        }
+      }
+    }
     .sku {
       li {
         padding: 20px;
@@ -389,23 +572,132 @@
         }
       }
     }
-    .benifit-btn {
-      border-radius: 18px;
-      background-color: #fff;
+  }
+
+  .section {
+    &.image-text {
+      padding: 0 10px;
+      img {
+        padding-bottom: 10px;
+      }
+      p {
+        color: #666;
+        text-indent: 50px;
+        padding: 0 20px 30px 20px;
+      }
+    }
+    &.recommend {
+      .recommend-content {
+        padding: 8px 15px;
+        background-color: #f0f0f0;
+        .flex {
+          flex-wrap: wrap;
+          li {
+            width: 50%;
+            padding: 8px 5px;
+            .recommend-item {
+              background-color: #fff;
+              border-radius: 10px;
+              padding: 20px 24px 24px 24px;
+              .name {
+                font-size: 24px;
+                color: #666;
+                padding-top: 16px;
+              }
+              .flex {
+                justify-content: space-between;
+                padding-top: 16px;
+                .price {
+                  font-size: 30px;
+                  color: #cdb49b;
+                  span {
+                    font-size: 24px;
+                  }
+                }
+                .like {
+                  width: 40px;
+                  height: 40px;
+                  background: url('~assets/goods/button_like.png') no-repeat;
+                  background-size: 100%;
+                  &.active {
+                    background: url('~assets/goods/button_like_l.png') no-repeat;
+                    background-size: 100%;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .title {
+      position: relative;
+      height: 84px;
       font-size: 24px;
-      padding: 0 14px;
-      height: 36px;
-      color: #faa0a0;
-      border: 1px solid #faa0a0; /*no*/
-      margin-left: 24px;
+      color: #ccc;
+      width: 100%;
+      justify-content: center;
+      &:after {
+        content: '';
+        left: 30px;
+        right: 30px;
+        height: 1px; /*no*/
+        background-color: #f0f0f0;
+        display: block;
+        top: 50%;
+        position: absolute;
+      }
+      span {
+        padding: 0 30px;
+        background-color: #fff;
+        z-index: 1;
+      }
+    }
+  }
+
+  .footer {
+    padding: 0 20px 0 15px;
+    height: 96px;
+    box-shadow: 0 -10px 50px 10px rgba(170, 170, 170, 0.5);
+    .fun-btns {
+      padding: 0 43px;
+      font-size: 20px;
+      color: #999;
+      img {
+        width: 40px;
+        height: 40px;
+        display: block;
+      }
+    }
+    .btn-group {
+      font-size: 30px;
+      height: 68px;
+      width: 440px;
+      margin-left: auto;
+      .btn {
+        color: #fff;
+        width: 50%;
+        height: 100%;
+        font-size: 30px;
+        &.cart {
+          background: url('~assets/goods/button_cart.png') no-repeat;
+          background-size: 100% 100%;
+        }
+        &.purchase {
+          background: url('~assets/goods/button_pink_l.png') no-repeat;
+          background-size: 100% 100%;
+        }
+      }
     }
   }
 </style>
 
 <style lang="less">
-  .lettering-enable {
-    button {
-      width: 272px;
+  .goods-detail {
+    .lettering-enable {
+      button {
+        width: 272px;
+      }
     }
   }
 </style>

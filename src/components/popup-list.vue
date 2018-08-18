@@ -8,7 +8,7 @@
         <li v-for="(item, index) in goods.goodsList" :key="index" class="flex">
           <div class="img"><img :src="item.src" alt=""></div>
           <div class="detail flex-auto flex">
-            <span class="name">{{item.name}}</span>
+            <span @click="$router.push({name: 'gooddetail'})" class="name">{{item.name}}</span>
             <span class="desc">{{item.desc}}</span>
             <span class="price">{{item.price}}</span>
           </div>
