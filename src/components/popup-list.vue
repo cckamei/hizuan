@@ -1,6 +1,7 @@
 <template>
   <div class="popup" :style="{height: visible ? cententHeight + 'px' : 0}">
     <div class="popup-header flex" @click="$emit('all', goods.type)">
+      <div class="shadow"></div>
       <img src="~assets/home/icon_all_arrow.png" alt=""><span>查看全部</span>
     </div>
     <div class="popup-content">
@@ -66,8 +67,15 @@
       justify-content: center;
       text-align: center;
       color: #cdb49b;
-      background: linear-gradient(rgba(0, 0, 0, 0.1) 10%, #fff 40%);
       border-bottom: 1px solid #f0f0f0; /*no*/
+      position: relative;
+      .shadow {
+        box-shadow: 0 10px 20px 10px rgba(100, 100, 100, 1);
+        position: absolute;
+        width: 100%;
+        height: 10px;
+        top: -10px;
+      }
       img {
         width: 18px;
         height: 18px;

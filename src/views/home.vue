@@ -120,7 +120,7 @@
         setTimeout(() => {
           let top = $('.content').scrollTop();
           let rect = $('.popup').get(index).getBoundingClientRect();
-          let resultTop = top + rect.top - window.screen.height / 2 + rect.height / 2;
+          let resultTop = top + rect.top - $(window).height() / 2 + rect.height / 2;
           $('.content').stop(true, true).animate({
             scrollTop: resultTop + 'px'
           }, 200);

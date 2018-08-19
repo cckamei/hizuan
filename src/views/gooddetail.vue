@@ -314,9 +314,10 @@
       };
     },
     mounted() {
-      let headerHeight = 96 / window.htp.designWidth * window.screen.width;
-      this.offsetTops = [0, this.$refs['image-text'].offsetTop - headerHeight, this.$refs['recommend'].offsetTop - headerHeight];
-      console.log(this.offsetTops);
+      setTimeout(() => {
+        let headerHeight = 96 / window.htp.designWidth * window.screen.width;
+        this.offsetTops = [0, Math.trunc(this.$refs['image-text'].offsetTop - headerHeight), Math.trunc(this.$refs['recommend'].offsetTop - headerHeight)];
+      }, 1000);
     },
     methods: {
       ...mapActions(['ajax']),
@@ -356,6 +357,10 @@
 
   .pb {
     padding-bottom: 96px;
+  }
+
+  .content {
+    padding-bottom: 120px;
   }
 
   .gap {
@@ -432,15 +437,7 @@
       border: 1px solid #faa0a0; /*no*/
       margin-left: 24px;
     }
-    .activity-btn {
-      border-radius: 12px;
-      background-color: #fff;
-      font-size: 16px;
-      padding: 0 12px;
-      color: #cdb49b;
-      border: 1px solid #cdb49b; /*no*/
-      margin-right: 8px;
-    }
+
     &.activity {
       padding-top: 10px;
       height: auto;
@@ -450,126 +447,64 @@
         padding-bottom: 30px;
       }
     }
-    .activity {
-      li {
-        height: 84px;
-        font-size: 24px;
-        color: #666;
-        padding: 0 20px;
-        border-bottom: 1px solid #f0f0f0; /*no*/
-        &:last-child {
-          border: none;
+  }
+
+  .sku {
+    li {
+      padding: 20px;
+      border-bottom: 1px solid #f0f0f0; /*no*/
+      &.sku-icon {
+        align-items: flex-end;
+        border: none;
+        .icon {
+          width: 200px;
+          height: 200px;
+          margin-right: 30px;
         }
-      }
-    }
-    .sku {
-      li {
-        padding: 20px;
-        border-bottom: 1px solid #f0f0f0; /*no*/
-        &.sku-icon {
-          align-items: flex-end;
-          border: none;
-          .icon {
-            width: 200px;
-            height: 200px;
-            margin-right: 30px;
-          }
-          .price {
-            color: #cdb49b;
-            font-size: 42px;
-          }
-          .code {
-            color: #999;
-            font-size: 20px;
-          }
+        .price {
+          color: #cdb49b;
+          font-size: 42px;
         }
-        &.count {
-          color: #666;
-          font-size: 24px;
-          justify-content: space-between;
-          .btn {
-            width: 40px;
-            height: 40px;
-            &.plus {
-              background: url('~assets/goods/button_plus_l.png') no-repeat;
-              background-size: 100%;
-              &.active {
-                background: url('~assets/goods/button_plus_d.png') no-repeat;
-                background-size: 100%;
-              }
-            }
-            &.minus {
-              background: url('~assets/goods/button_minus_l.png') no-repeat;
-              background-size: 100%;
-              &.active {
-                background: url('~assets/goods/button_minus_d.png') no-repeat;
-                background-size: 100%;
-              }
-            }
-          }
-          input {
-            width: 0;
-            min-width: 120px;
-            color: #666;
-            text-align: center;
-            padding: 0 10px;
-          }
-        }
-        .title {
-          color: #666;
-          font-size: 24px;
-        }
-      }
-    }
-    .goods-param {
-      font-size: 24px;
-      li {
-        height: 84px;
-        border-bottom: 1px solid #f0f0f0; /*no*/
-        justify-content: space-between;
-        padding: 0 20px;
-        &:last-child {
-          border-bottom: 0;
-        }
-        .label {
+        .code {
           color: #999;
-        }
-        .value {
-          color: #666;
-        }
-      }
-    }
-    .service {
-      li {
-        padding: 20px;
-        font-size: 24px;
-        color: #666;
-        .note {
-          padding-left: 36px;
           font-size: 20px;
-          color: #999;
-        }
-        img {
-          width: 24px;
-          height: 24px;
-          margin-right: 12px;
         }
       }
-    }
-    .lettering {
-      li {
-        padding: 20px;
-        font-size: 24px;
+      &.count {
         color: #666;
-        .lettering-text {
-          height: 84px;
-          line-height: 84px;
-          font-size: 24px;
-          color: #999;
-          border-bottom: 1px solid #f0f0f0; /*no*/
-          width: 100%;
-          margin-top: 20px;
+        font-size: 24px;
+        justify-content: space-between;
+        .btn {
+          width: 40px;
+          height: 40px;
+          &.plus {
+            background: url('~assets/goods/button_plus_l.png') no-repeat;
+            background-size: 100%;
+            &.active {
+              background: url('~assets/goods/button_plus_d.png') no-repeat;
+              background-size: 100%;
+            }
+          }
+          &.minus {
+            background: url('~assets/goods/button_minus_l.png') no-repeat;
+            background-size: 100%;
+            &.active {
+              background: url('~assets/goods/button_minus_d.png') no-repeat;
+              background-size: 100%;
+            }
+          }
         }
+        input {
+          width: 0;
+          min-width: 120px;
+          color: #666;
+          text-align: center;
+          padding: 0 10px;
+        }
+      }
+      .title {
+        color: #666;
+        font-size: 24px;
       }
     }
   }
@@ -691,6 +626,87 @@
     }
   }
 </style>
+
+<style lang="less" scoped>
+  /*popup内部的里面元素的样式直接放到该页面的根部 否则样式在手机上无效*/
+  .activity-btn {
+    border-radius: 12px;
+    background-color: #fff;
+    font-size: 16px;
+    padding: 0 12px;
+    color: #cdb49b;
+    border: 1px solid #cdb49b; /*no*/
+    margin-right: 8px;
+  }
+
+  .goods-param {
+    font-size: 24px;
+    li {
+      height: 84px;
+      border-bottom: 1px solid #f0f0f0; /*no*/
+      justify-content: space-between;
+      padding: 0 20px;
+      &:last-child {
+        border-bottom: 0;
+      }
+      .label {
+        color: #999;
+      }
+      .value {
+        color: #666;
+      }
+    }
+  }
+
+  .activity {
+    li {
+      height: 84px;
+      font-size: 24px;
+      color: #666;
+      padding: 0 20px;
+      border-bottom: 1px solid #f0f0f0; /*no*/
+      &:last-child {
+        border: none;
+      }
+    }
+  }
+
+  .service {
+    li {
+      padding: 20px;
+      font-size: 24px;
+      color: #666;
+      .note {
+        padding-left: 36px;
+        font-size: 20px;
+        color: #999;
+      }
+      img {
+        width: 24px;
+        height: 24px;
+        margin-right: 12px;
+      }
+    }
+  }
+
+  .lettering {
+    li {
+      padding: 20px;
+      font-size: 24px;
+      color: #666;
+      .lettering-text {
+        height: 84px;
+        line-height: 84px;
+        font-size: 24px;
+        color: #999;
+        border-bottom: 1px solid #f0f0f0; /*no*/
+        width: 100%;
+        margin-top: 20px;
+      }
+    }
+  }
+</style>
+
 
 <style lang="less">
   .goods-detail {

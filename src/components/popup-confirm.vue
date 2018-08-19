@@ -35,6 +35,11 @@
     watch: {
       value(val) {
         this.visible = val;
+        if(this.visible) {
+          this.closeTouch();
+        } else {
+          this.openTouch();
+        }
       },
       visible(val) {
         this.$emit('input', val);
@@ -44,6 +49,15 @@
       confirm() {
         this.visible = false;
         this.$emit('confirm');
+      },
+      handler(e) {
+        e.preventDefault();
+      },
+      closeTouch: function() {
+        document.getElementsByTagName('content')[0].addEventListener('touchmove', this.handler, { passive: false });//阻止默认事件
+      },
+      openTouch: function() {
+        document.getElementsByTagName('content')[0].removeEventListener('touchmove', this.handler, { passive: false });//打开默认事件
       }
     }
   };
@@ -64,6 +78,7 @@
       padding: 20px;
       max-height: 600px;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
   }
 
