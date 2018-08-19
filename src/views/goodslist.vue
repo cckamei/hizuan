@@ -46,6 +46,7 @@
 
 <script>
   import { mapActions, mapMutations } from 'vuex';
+  import icon from '../assets/home/pic_lion.png';
 
   export default {
     data() {
@@ -57,47 +58,47 @@
         filters: ['A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C'],
         sorts: ['价格从高到低', '价格从低到高'],
         goodsList: [{
-          src: '',
+          src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
         }, {
-          src: '',
+          src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
         }, {
-          src: '',
+          src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
         }, {
-          src: '',
+          src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
         }, {
-          src: '',
+          src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
         }, {
-          src: '',
+          src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
         }, {
-          src: '',
+          src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
         }, {
-          src: '',
+          src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
         }, {
-          src: '',
+          src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
           price: '￥6,666'
