@@ -55,7 +55,7 @@
         sortVisible: false,
         filterIndex: -1,
         sortIndex: -1,
-        filters: ['A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C'],
+        filters: ['结', '醒狮MeiMei', '婚嫁', '情侣', 'CHIC潮', '文承', 'TANG玲珑', '点亮'],
         sorts: ['价格从高到低', '价格从低到高'],
         goodsList: [{
           src: icon,
