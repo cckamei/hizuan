@@ -57,10 +57,14 @@
         e.preventDefault();
       },
       closeTouch: function() {
-        document.getElementsByTagName('content')[0].addEventListener('touchmove', this.handler, { passive: false });//阻止默认事件
+        if(document.getElementsByTagName('content')[0]) {
+          document.getElementsByTagName('content')[0].addEventListener('touchmove', this.handler, { passive: false });//阻止默认事件
+        }
       },
       openTouch: function() {
-        document.getElementsByTagName('content')[0].removeEventListener('touchmove', this.handler, { passive: false });//打开默认事件
+        if(document.getElementsByTagName('content')[0]) {
+          document.getElementsByTagName('content')[0].removeEventListener('touchmove', this.handler, { passive: false });//打开默认事件
+        }
       }
     }
   };
