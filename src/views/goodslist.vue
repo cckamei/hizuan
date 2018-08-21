@@ -25,8 +25,10 @@
           <div class="detail flex-auto flex">
             <span class="name">{{item.name}}</span>
             <span class="desc">{{item.desc}}</span>
-            <span class="price">{{item.price}}</span>
-            <div class="cart"></div>
+            <div class="line3 flex">
+              <div class="price"><span>￥</span>{{item.price | currency}}</div>
+              <div class="cart"></div>
+            </div>
           </div>
         </li>
       </ul>
@@ -61,47 +63,47 @@
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '￥6,666'
+          price: '6666'
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '￥6,666'
+          price: '6666'
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '￥6,666'
+          price: '6666'
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '￥6,666'
+          price: '6666'
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '￥6,666'
+          price: '6666'
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '￥6,666'
+          price: '6666'
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '￥6,666'
+          price: '6666'
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '￥6,666'
+          price: '6666'
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '￥6,666'
+          price: '6666'
         }],
         pageInfo: {},
         loading: false
@@ -133,17 +135,17 @@
               src: '',
               name: '醒狮MeiMei项链/坠',
               desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '￥6,666'
+              price: '6666'
             }, {
               src: '',
               name: '醒狮MeiMei项链/坠',
               desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '￥6,666'
+              price: '6666'
             }, {
               src: '',
               name: '醒狮MeiMei项链/坠',
               desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '￥6,666'
+              price: '6666'
             }]
           };
           this.pageInfo = res.pageInfo;
@@ -169,7 +171,7 @@
       },
       goDetail(val) {
         this.setCommon({ goodType: val.type });
-        this.$router.push({ name: 'gooddetail' });
+        this.$router.push({ name: 'goodsdetail' });
       }
     }
   };
@@ -225,6 +227,7 @@
     position: relative;
     li {
       padding: 30px 40px 30px 30px;
+      align-items: stretch;
       .img {
         width: 200px;
         height: 200px;
@@ -242,25 +245,33 @@
         .name {
           font-size: 30px;
           color: #666;
+          padding-top: 10px;
         }
         .desc {
           font-size: 20px;
           color: #999;
           padding-top: 24px;
         }
-        .price {
-          font-size: 30px;
-          color: #cdb49b;
-          padding-top: 24px;
-        }
-        .cart {
-          width: 40px;
-          height: 40px;
-          background: url('~assets/goods/icon_cart.png') no-repeat;
-          background-size: 100%;
+        .line3 {
           position: absolute;
-          right: 0;
-          bottom: 0;
+          width: 100%;
+          bottom: 10px;
+          left: 0;
+          align-items: center;
+          justify-content: space-between;
+          .price {
+            font-size: 30px;
+            color: #cdb49b;
+            span {
+              font-size: 20px;
+            }
+          }
+          .cart {
+            width: 40px;
+            height: 40px;
+            background: url('~assets/goods/icon_cart.png') no-repeat;
+            background-size: 100%;
+          }
         }
       }
       &:last-child {

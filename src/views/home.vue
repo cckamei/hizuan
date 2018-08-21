@@ -41,17 +41,17 @@
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }, {
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }, {
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }]
         }, {
           visible: false,
@@ -60,17 +60,17 @@
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }, {
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }, {
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }]
         }, {
           visible: false,
@@ -79,12 +79,12 @@
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }, {
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }]
         }, {
           visible: false,
@@ -93,17 +93,17 @@
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }, {
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }, {
             src: icon,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '￥6,666'
+            price: '6666'
           }]
         }]
       };

@@ -9,9 +9,9 @@
         <li v-for="(item, index) in goods.goodsList" :key="index" class="flex">
           <div class="img"><img :src="item.src" alt=""></div>
           <div class="detail flex-auto flex">
-            <span @click="$router.push({name: 'gooddetail'})" class="name">{{item.name}}</span>
+            <span @click="$router.push({name: 'goodsdetail'})" class="name">{{item.name}}</span>
             <span class="desc">{{item.desc}}</span>
-            <span class="price">{{item.price}}</span>
+            <span class="price"><span>￥</span>{{item.price | currency}}</span>
           </div>
         </li>
       </ul>
@@ -88,6 +88,7 @@
       position: relative;
       li {
         padding-bottom: 30px;
+        align-items: stretch;
         .img {
           width: 240px;
           height: 200px;
@@ -101,9 +102,11 @@
         .detail {
           flex-direction: column;
           align-items: flex-start;
+          position: relative;
           .name {
             font-size: 30px;
             color: #666;
+            padding-top: 10px;
           }
           .desc {
             font-size: 20px;
@@ -111,9 +114,12 @@
             padding-top: 24px;
           }
           .price {
+            position: absolute;
+            width: 100%;
+            bottom: 10px;
+            left: 0;
             font-size: 30px;
             color: #333;
-            padding-top: 24px;
           }
         }
         &:last-child {

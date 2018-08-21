@@ -1,7 +1,7 @@
 <template>
   <div class="card flex">
     <div class="col1 flex-auto">
-      <div class="price"><span>￥</span>{{card.price || currency}}</div>
+      <div class="price"><span>￥</span>{{card.price | currency}}</div>
       <div class="limit">购物满{{card.limit}}元使用</div>
       <div class="expired">有效期至 {{card.expiredStart}} 至 {{card.expiredStart}}</div>
     </div>

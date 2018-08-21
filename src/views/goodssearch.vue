@@ -28,7 +28,7 @@
     methods: {
       ...mapActions(['ajax']),
       search() {
-        this.$router.push({ name: 'gooddetail' });
+        this.$router.push({ name: 'goodsdetail' });
       }
     }
   };

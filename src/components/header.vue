@@ -43,7 +43,7 @@
     width: 100%;
     box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.5);
     background-color: #fff;
-    z-index: 1;
+    z-index: 2;
     .back {
       width: 96px;
       height: 96px;

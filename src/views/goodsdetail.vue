@@ -2,7 +2,7 @@
   <div class="goods-detail pb" @click.stop="menusVisible = false">
     <v-header-goods back v-show="top <= 10">
       <div slot="menus" class="menus">
-        <div @click="waiting" class="menu"><img src="~assets/goods/button_cart_r.png" alt=""></div>
+        <div @click="$router.push({name: 'cart'})" class="menu"><img src="~assets/goods/button_cart_r.png" alt=""></div>
         <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option.png" alt=""></div>
       </div>
     </v-header-goods>
@@ -11,7 +11,7 @@
       <span class="sub-title" :class="{active: top >= offsetTops[1] && top < offsetTops[2]}" @click="setTop(1)">详情</span>
       <span class="sub-title" :class="{active: top >= offsetTops[2]}" @click="setTop(2)">推荐</span>
       <div slot="menus" class="menus">
-        <div @click="waiting" class="menu"><img src="~assets/goods/button_cart_g.png" alt=""></div>
+        <div @click="$router.push({name: 'cart'})" class="menu"><img src="~assets/goods/button_cart_g.png" alt=""></div>
         <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option_g.png" alt=""></div>
       </div>
     </v-header-menus>
@@ -23,7 +23,7 @@
       </mt-swipe>
       <div class="info">
         <div class="price">
-          <i>￥</i>{{8888.00 || currency}}
+          <i>￥</i>{{8888.00 | currency}}
           <img @click="waiting" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
         <div class="name">CC卡美婚嫁系列 - 戒指</div>
@@ -74,7 +74,7 @@
             <li class="sku-icon flex">
               <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
               <div>
-                <div class="price"><span>￥</span>{{8888.00 || currency}}</div>
+                <div class="price"><span>￥</span>{{8888.00 | currency}}</div>
                 <span class="code">商品编号：DRGC00208</span>
               </div>
             </li>
@@ -200,7 +200,7 @@
                 <img :src="item.url" alt="">
                 <div class="name">{{item.name}}</div>
                 <div class="flex">
-                  <div class="price"><span>￥</span>{{8888.00 || currency}}</div>
+                  <div class="price"><span>￥</span>{{item.price | currency}}</div>
                   <div class="like" :class="{active: item.like}" @click="item.like = !item.like"></div>
                 </div>
               </div>
@@ -386,7 +386,7 @@
     .price {
       color: #cdb49b;
       font-size: 42px;
-      i {
+      span {
         font-size: 30px;
       }
       img {

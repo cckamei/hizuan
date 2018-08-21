@@ -15,9 +15,14 @@ const router = [
     component: () => import('@/views/goodssearch')
   },
   {
-    name: 'gooddetail',
-    path: '/goodslist/goodssearch/gooddetail',
-    component: () => import('@/views/gooddetail')
+    name: 'goodsdetail',
+    path: '/goodslist/goodssearch/goodsdetail',
+    component: () => import('@/views/goodsdetail')
+  },
+  {
+    name: 'cart',
+    path: '/goodslist/goodssearch/goodsdetail/cart',
+    component: () => import('@/views/cart')
   },
   {
     name: 'login',
