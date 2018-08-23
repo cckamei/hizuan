@@ -3,7 +3,7 @@
     <v-header>购物车</v-header>
     <div class="content">
       <ul class="cart-list">
-        <li class="flex" v-for="(item, index) in res.cart">
+        <li class="flex" v-for="(item, index) in res.cart" v-touch.press="handlePress" :data-index="index">
           <div class="checkbox" :class="{active: item.checked, disabled: !item.limit}" @click="item.limit && (item.checked = !item.checked)"></div>
           <div class="img">
             <img :src="item.src" alt="">
@@ -27,6 +27,9 @@
                 <button class="rechoose btn" @click="skuVisible = true,skuIndex = index">重选</button>
               </div>
             </template>
+          </div>
+          <div class="mask-delete flex" v-if="item.deleteVisible" @click="item.deleteVisible = false">
+            <div class="delete" @click="remove">删除</div>
           </div>
         </li>
       </ul>
@@ -53,7 +56,7 @@
       <span class="checkbox-label">全选</span>
       <span class="total-label">合计：</span>
       <div class="price">￥{{totalMoney | currency}}</div>
-      <button class="btn settlement">结算{{totalCount}}</button>
+      <button class="btn settlement" @click="settlement">结算{{totalCount}}</button>
     </div>
     <v-slide-up v-model="skuVisible" @confirm="handleSKU">
       <template v-for="(item, index) in res.cart" v-if="skuIndex === index">
@@ -111,6 +114,7 @@
         res: {
           cart: [{
             checked: false,
+            deleteVisible: false,
             src: ss,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
@@ -129,6 +133,7 @@
             skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号']
           }, {
             checked: false,
+            deleteVisible: false,
             src: ss,
             name: '醒狮MeiMei项链/坠',
             desc: '玫瑰金，红玉髓',
@@ -147,6 +152,7 @@
             skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号']
           }, {
             checked: false,
+            deleteVisible: false,
             src: ss,
             name: '醒狮MeiMei项链/坠',
             desc: '',
@@ -206,12 +212,24 @@
           item.checked = !isCheckedAll;
         });
       },
+      handlePress(eventName, e, hammer) {
+        if(eventName === 'press') {
+          console.log(hammer.index);
+          this.res.cart[hammer.index].deleteVisible = true;
+        }
+      },
+      remove(index) {
+        this.res.cart.splice(index, 1);
+      },
       handleSKU() {
         // let score = this.res.skuScore[this.sku.scoreIndex];
         // let clarity = this.res.skuClarity[this.sku.clarityIndex];
         // let color = this.res.skuColor[this.sku.colorIndex];
         // let spec = this.res.skuSpec[this.sku.specIndex];
         // this.reqData.sku = `已选 ${score}；${clarity}；${color}；${spec}`;
+      },
+      settlement() {
+        this.$router.push({ name: 'confirmorder' });
       }
     }
   };
@@ -231,6 +249,7 @@
       border-radius: 10px;
       padding: 30px 40px 30px 20px;
       align-items: stretch;
+      position: relative;
       .checkbox {
         width: 36px;
         height: 36px;
@@ -337,6 +356,26 @@
               margin: 0 8px;
             }
           }
+        }
+      }
+      .mask-delete {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.5);
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 100%;
+        justify-content: center;
+        margin: 0 -20px;
+        .delete {
+          width: 120px;
+          height: 120px;
+          color: #fff;
+          background-color: #faa0a0;
+          text-align: center;
+          line-height: 120px;
+          font-size: 24px;
+          border-radius: 50%;
         }
       }
     }

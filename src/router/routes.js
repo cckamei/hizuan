@@ -25,6 +25,16 @@ const router = [
     component: () => import('@/views/cart')
   },
   {
+    name: 'confirmorder',
+    path: '/goodslist/goodssearch/goodsdetail/cart/confirmorder',
+    component: () => import('@/views/confirmorder')
+  },
+  {
+    name: 'address',
+    path: '/goodslist/goodssearch/goodsdetail/cart/confirmorder/address',
+    component: () => import('@/views/address')
+  },
+  {
     name: 'login',
     path: '/',
     component: () => import('@/views/login')
