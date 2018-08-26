@@ -39,7 +39,7 @@
       </div>
       <div class="gap"></div>
       <div class="row">
-        <v-form-slide-up label="领取优惠" placeholder="" @confirm="handleBenifit">
+        <v-form-slide-up label="领取优惠" title="领取优惠" @confirm="handleBenifit">
           <template slot="value">
             <button v-for="card in res.benifit" v-if="card.use" class="benifit-btn">满{{card.limit}}减{{card.price}}</button>
           </template>
@@ -51,7 +51,7 @@
         </v-form-slide-up>
       </div>
       <div class="row">
-        <v-form-slide-up label="促销活动" placeholder="" @confirm="handleSKU">
+        <v-form-slide-up label="促销活动" title="促销活动">
           <template slot="value">
             <button class="activity-btn">{{res.activity[0].title}}</button>{{res.activity[0].desc}}
           </template>
@@ -191,23 +191,7 @@
         </div>
       </div>
       <div class="gap"></div>
-      <div ref="recommend" class="section recommend">
-        <div class="title flex"><span>为你推荐</span></div>
-        <div class="recommend-content">
-          <ul class="flex">
-            <li v-for="(item, index) in res.recommend">
-              <div class="recommend-item">
-                <img :src="item.url" alt="">
-                <div class="name">{{item.name}}</div>
-                <div class="flex">
-                  <div class="price"><span>￥</span>{{item.price | currency}}</div>
-                  <div class="like" :class="{active: item.like}" @click="item.like = !item.like"></div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <v-recommend class="section" ref="recommend" title="为你推荐" :list="res.recommend"></v-recommend>
     </div>
     <div class="footer flex">
       <div class="fun-btns" @click="waiting">
@@ -220,7 +204,7 @@
       </div>
       <div class="btn-group flex">
         <button class="btn cart" @click="waiting">加入购物车</button>
-        <button class="btn purchase" @click="waiting">立即购买</button>
+        <button class="btn purchase" @click="buyNow">立即购买</button>
       </div>
     </div>
     <v-menus v-model="menusVisible" :menus="['home', 'search', 'collect']"></v-menus>
@@ -316,7 +300,7 @@
     mounted() {
       setTimeout(() => {
         let headerHeight = 96 / window.htp.designWidth * window.screen.width;
-        this.offsetTops = [0, Math.trunc(this.$refs['image-text'].offsetTop - headerHeight), Math.trunc(this.$refs['recommend'].offsetTop - headerHeight)];
+        this.offsetTops = [0, Math.trunc(this.$refs['image-text'].offsetTop - headerHeight), Math.trunc(this.$refs['recommend'].$el.offsetTop - headerHeight)];
       }, 1000);
     },
     methods: {
@@ -345,6 +329,9 @@
         $('.content').animate({
           scrollTop: this.offsetTops[index]
         }, 200);
+      },
+      buyNow() {
+        this.$router.push({ name: 'confirmorder' });
       }
     }
   };
@@ -353,10 +340,6 @@
 <style lang="less" scoped>
   .goods-detail {
     background-color: #fff;
-  }
-
-  .pb {
-    padding-bottom: 96px;
   }
 
   .content {
@@ -441,6 +424,7 @@
     &.activity {
       padding-top: 10px;
       height: auto;
+      font-size: 24px;
       .flex {
         justify-content: flex-end;
         padding-right: 40px;
@@ -519,50 +503,6 @@
         color: #666;
         text-indent: 50px;
         padding: 0 20px 30px 20px;
-      }
-    }
-    &.recommend {
-      .recommend-content {
-        padding: 8px 15px;
-        background-color: #f0f0f0;
-        .flex {
-          flex-wrap: wrap;
-          li {
-            width: 50%;
-            padding: 8px 5px;
-            .recommend-item {
-              background-color: #fff;
-              border-radius: 10px;
-              padding: 20px 24px 24px 24px;
-              .name {
-                font-size: 24px;
-                color: #666;
-                padding-top: 16px;
-              }
-              .flex {
-                justify-content: space-between;
-                padding-top: 16px;
-                .price {
-                  font-size: 30px;
-                  color: #cdb49b;
-                  span {
-                    font-size: 24px;
-                  }
-                }
-                .like {
-                  width: 40px;
-                  height: 40px;
-                  background: url('~assets/goods/button_like.png') no-repeat;
-                  background-size: 100%;
-                  &.active {
-                    background: url('~assets/goods/button_like_l.png') no-repeat;
-                    background-size: 100%;
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     }
     .title {

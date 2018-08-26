@@ -5,8 +5,8 @@
       <div class="limit">购物满{{card.limit}}元使用</div>
       <div class="expired">有效期至 {{card.expiredStart}} 至 {{card.expiredStart}}</div>
     </div>
-    <div v-if="card.use" class="col2">已领取</div>
-    <div v-else class="col2" @click="card.use = true">立即领取</div>
+    <div v-if="card.use" class="col2">{{useText}}</div>
+    <div v-else class="col2" @click="card.use = true">{{unuseText}}</div>
   </div>
 </template>
 
@@ -16,6 +16,14 @@
       card: {
         required: true,
         type: Object
+      },
+      useText: {
+        default: '已领取',
+        type: String
+      },
+      unuseText: {
+        default: '立即领取',
+        type: String
       }
     }
   };
@@ -28,7 +36,7 @@
     background: url('~assets/goods/coupon.png') no-repeat;
     background-size: 100% 100%;
     color: #cdb49b;
-    margin-top: 30px;
+    margin-bottom: 30px;
     .col1 {
       .price {
         font-size: 60px;

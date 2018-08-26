@@ -35,6 +35,16 @@ const router = [
     component: () => import('@/views/address')
   },
   {
+    name: 'pay',
+    path: '/goodslist/goodssearch/goodsdetail/cart/confirmorder/pay',
+    component: () => import('@/views/pay')
+  },
+  {
+    name: 'paysuccess',
+    path: '/goodslist/goodssearch/goodsdetail/cart/confirmorder/pay/paysuccess',
+    component: () => import('@/views/paysuccess')
+  },
+  {
     name: 'login',
     path: '/',
     component: () => import('@/views/login')

@@ -78,11 +78,13 @@
       color: #666;
       font-size: 30px;
       height: 120px;
-      line-height: 120px;
+      line-height: 140px;
       text-align: center;
     }
     &-content {
-      padding: 20px;
+      margin: 20px;
+      margin-bottom: 0;
+      padding-bottom: 20px;
       max-height: 700px;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;

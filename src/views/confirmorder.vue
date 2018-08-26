@@ -1,5 +1,5 @@
 <template>
-  <div class="pt">
+  <div class="pt pb">
     <v-header>确认订单</v-header>
     <div class="content">
       <ul class="sections">
@@ -17,7 +17,7 @@
         </li>
         <li class="section cart-list">
           <ul>
-            <li class="flex" v-for="(item, index) in cart">
+            <li class="flex" v-for="(item, index) in res.cart">
               <div class="img">
                 <img :src="item.src" alt="">
               </div>
@@ -32,7 +32,39 @@
             </li>
           </ul>
         </li>
-        <li class="section">3</li>
+        <li class="option section">
+          <div class="row">
+            <v-form-slide-up label="优惠券" title="选择优惠券" placeholder="无可用" @confirm="handleBenifit">
+              <template slot="value">
+                <div v-for="card in res.benifit" v-if="card.use" class="benifit-btn">已选 优惠{{card.price}}元&nbsp;</div>
+              </template>
+              <ul>
+                <li v-for="(card, index) in res.benifit">
+                  <v-card :card="card" useText="已使用" unuseText="立即使用"></v-card>
+                </li>
+              </ul>
+            </v-form-slide-up>
+          </div>
+          <div class="row">
+            <v-form-slide-up label="配送方式" title="配送方式" @confirm="handleDeliver">
+              <template slot="value">
+                <div v-for="(item, index) in res.delivery" v-if="index === deliveryIndex" class="">{{item.name}} 10元</div>
+              </template>
+              <ul class="delivery">
+                <li class="flex" v-for="(item, index) in res.delivery" @click="deliveryIndex = index" :key="index">
+                  <div class="flex-auto">
+                    <p class="name">{{item.name}}</p>
+                    <span class="desc">{{item.desc}}</span>
+                  </div>
+                  <img v-show="index === deliveryIndex" src="~assets/goods/icon_selected.png" alt="">
+                </li>
+              </ul>
+            </v-form-slide-up>
+          </div>
+          <div class="insurance">
+
+          </div>
+        </li>
         <li class="section">4</li>
       </ul>
     </div>
@@ -53,31 +85,69 @@
       return {
         totalMoney: 0,
         address: '',
-        cart: [{
-          src: ss,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          count: 1
-        }, {
-          src: ss,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓',
-          price: '6666',
-          count: 1
-        }, {
-          src: ss,
-          name: '醒狮MeiMei项链/坠',
-          desc: '',
-          price: '6666',
-          count: 1
-        }]
+        deliveryIndex: 0,
+        res: {
+          cart: [{
+            src: ss,
+            name: '醒狮MeiMei项链/坠',
+            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
+            price: '6666',
+            count: 1
+          }, {
+            src: ss,
+            name: '醒狮MeiMei项链/坠',
+            desc: '玫瑰金，红玉髓',
+            price: '6666',
+            count: 1
+          }, {
+            src: ss,
+            name: '醒狮MeiMei项链/坠',
+            desc: '',
+            price: '6666',
+            count: 1
+          }],
+          benifit: [{
+            id: 1,
+            price: 1500,
+            limit: 20000,
+            use: true,
+            expiredStart: '2018.08.01',
+            expiredEnd: '2018.09.01'
+          }, {
+            id: 2,
+            price: 600,
+            limit: 1000,
+            use: false,
+            expiredStart: '2018.08.01',
+            expiredEnd: '2018.09.01'
+          }],
+          delivery: [{
+            name: '快递运输',
+            desc: '标准收费：首重0.5kg内10元，续重每0.5kg加收5元'
+          }, {
+            name: 'EMS',
+            desc: '标准收费：首重0.5kg内10元，续重每0.5kg加收5元'
+          }, {
+            name: '顺丰速运',
+            desc: '标准收费：首重0.5kg内22元，续重每0.5kg加收10元'
+          }]
+        },
+        reqData: {
+          benifit: [],
+          delivery: ''
+        }
       };
     },
     methods: {
       ...mapActions(['ajax']),
       addOrder() {
-        this.$router.push({ name: 'payment' });
+        this.$router.push({ name: 'pay' });
+      },
+      handleBenifit() {
+        this.reqData.benifit = this.res.benifit.map(item => item.id);
+      },
+      handleDeliver() {
+        console.log(this.res.delivery[this.deliveryIndex]);
       }
     }
   };
@@ -171,6 +241,12 @@
           }
         }
       }
+      &.option {
+        .row {
+          height: 84px;
+          padding: 0 30px;
+        }
+      }
     }
   }
 
@@ -198,3 +274,31 @@
     }
   }
 </style>
+
+<style lang="less">
+  .delivery {
+    li {
+      font-size: 24px;
+      color: #666;
+      padding: 30px 16px;
+      border-bottom: 1px solid #f0f0f0; /*no*/
+      justify-content: space-between;
+      &:last-child {
+        border-bottom: 0;
+      }
+      img {
+        width: 36px;
+        height: 36px;
+      }
+      .name {
+        color: #666;
+        padding-bottom: 10px;
+      }
+      .desc {
+        color: #999;
+        font-size: 20px;
+      }
+    }
+  }
+</style>
+
