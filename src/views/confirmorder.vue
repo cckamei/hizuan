@@ -1,11 +1,11 @@
 <template>
-  <div class="pt pb">
+  <div class="pt pb confirm-order">
     <v-header>确认订单</v-header>
     <div class="content">
       <ul class="sections">
         <li class="section address" @click="$router.push({name: 'address'})">
-          <div class="arrow" :class="{empty: !address}">
-            <template v-if="address">
+          <div class="arrow" :class="{empty: !reqData.address}">
+            <template v-if="reqData.address">
               <div class="line1">收货人：A先生 <span class="tel">188****8888</span></div>
               <div class="line2">收货地址：陕西省西安市碑林区长安北路261号</div>
             </template>
@@ -46,7 +46,7 @@
             </v-form-slide-up>
           </div>
           <div class="row">
-            <v-form-slide-up label="配送方式" title="配送方式" @confirm="handleDeliver">
+            <v-form-slide-up label="配送方式" title="配送方式" @confirm="handleDeliver" confirmText="完成">
               <template slot="value">
                 <div v-for="(item, index) in res.delivery" v-if="index === deliveryIndex" class="">{{item.name}} 10元</div>
               </template>
@@ -61,11 +61,20 @@
               </ul>
             </v-form-slide-up>
           </div>
-          <div class="insurance">
-
+          <div class="row">
+            <div class="insurance flex">
+              <div class="label flex-auto">运险费</div>
+              <span @click="reqData.insurance = !reqData.insurance">确认收货前退货可赔付11元 ¥1.80</span>
+              <div class="select" :class="{active: reqData.insurance}" @click="reqData.insurance = !reqData.insurance"></div>
+            </div>
+          </div>
+          <div class="row">
+            <v-form-input class="remark" label="留言" v-model="reqData.remark" placeholder="（选填）建议留言前先与卖家沟通确认"></v-form-input>
           </div>
         </li>
-        <li class="section">4</li>
+        <li class="section">
+          <div class="row"></div>
+        </li>
       </ul>
     </div>
     <div class="footer flex">
@@ -84,7 +93,6 @@
     data() {
       return {
         totalMoney: 0,
-        address: '',
         deliveryIndex: 0,
         res: {
           cart: [{
@@ -133,8 +141,11 @@
           }]
         },
         reqData: {
+          address: '',
           benifit: [],
-          delivery: ''
+          delivery: '',
+          insurance: false,
+          remark: ''
         }
       };
     },
@@ -242,9 +253,31 @@
         }
       }
       &.option {
+        padding: 0 20px;
         .row {
           height: 84px;
-          padding: 0 30px;
+        }
+        .insurance {
+          height: 84px;
+          justify-content: space-between;
+          color: #666;
+          .label {
+            color: #999;
+          }
+          .select {
+            margin-left: 6px;
+            background: url('~assets/payment/button_select_off.png') no-repeat;
+            background-size: 100% 100%;
+            width: 24px;
+            height: 24px;
+            &.active {
+              background: url('~assets/payment/button_select_on.png') no-repeat;
+              background-size: 100% 100%;
+            }
+          }
+        }
+        .remark {
+          font-size: 24px;
         }
       }
     }
@@ -276,27 +309,34 @@
 </style>
 
 <style lang="less">
-  .delivery {
-    li {
-      font-size: 24px;
-      color: #666;
-      padding: 30px 16px;
-      border-bottom: 1px solid #f0f0f0; /*no*/
-      justify-content: space-between;
-      &:last-child {
-        border-bottom: 0;
-      }
-      img {
-        width: 36px;
-        height: 36px;
-      }
-      .name {
+  .confirm-order {
+    .delivery {
+      li {
+        font-size: 24px;
         color: #666;
-        padding-bottom: 10px;
+        padding: 30px 16px;
+        border-bottom: 1px solid #f0f0f0; /*no*/
+        justify-content: space-between;
+        &:last-child {
+          border-bottom: 0;
+        }
+        img {
+          width: 36px;
+          height: 36px;
+        }
+        .name {
+          color: #666;
+          padding-bottom: 10px;
+        }
+        .desc {
+          color: #999;
+          font-size: 20px;
+        }
       }
-      .desc {
-        color: #999;
-        font-size: 20px;
+    }
+    .remark.flex {
+      input {
+        font-size: 24px;
       }
     }
   }
