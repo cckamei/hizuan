@@ -3,6 +3,7 @@ import headerGoods from './header-goods';
 import headerMenus from './header-menus';
 import agreement from './agreement';
 import popupList from './popup-list';
+import recommend from './recommend';
 import popupConfirm from './popup-confirm';
 import inputText from './input-text';
 import inputPwd from './input-pwd';
@@ -25,6 +26,7 @@ export default {
   headerMenus,
   agreement,
   popupList,
+  recommend,
   popupConfirm,
   inputText,
   inputPwd,

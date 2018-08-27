@@ -1,11 +1,11 @@
 <template>
-  <div class="pt">
+  <div class="pt pb confirm-order">
     <v-header>确认订单</v-header>
     <div class="content">
       <ul class="sections">
         <li class="section address" @click="$router.push({name: 'address'})">
-          <div class="arrow" :class="{empty: !address}">
-            <template v-if="address">
+          <div class="arrow" :class="{empty: !reqData.address}">
+            <template v-if="reqData.address">
               <div class="line1">收货人：A先生 <span class="tel">188****8888</span></div>
               <div class="line2">收货地址：陕西省西安市碑林区长安北路261号</div>
             </template>
@@ -17,7 +17,7 @@
         </li>
         <li class="section cart-list">
           <ul>
-            <li class="flex" v-for="(item, index) in cart">
+            <li class="flex" v-for="(item, index) in res.cart">
               <div class="img">
                 <img :src="item.src" alt="">
               </div>
@@ -32,8 +32,49 @@
             </li>
           </ul>
         </li>
-        <li class="section">3</li>
-        <li class="section">4</li>
+        <li class="option section">
+          <div class="row">
+            <v-form-slide-up label="优惠券" title="选择优惠券" placeholder="无可用" @confirm="handleBenifit">
+              <template slot="value">
+                <div v-for="card in res.benifit" v-if="card.use" class="benifit-btn">已选 优惠{{card.price}}元&nbsp;</div>
+              </template>
+              <ul>
+                <li v-for="(card, index) in res.benifit">
+                  <v-card :card="card" useText="已使用" unuseText="立即使用"></v-card>
+                </li>
+              </ul>
+            </v-form-slide-up>
+          </div>
+          <div class="row">
+            <v-form-slide-up label="配送方式" title="配送方式" @confirm="handleDeliver" confirmText="完成">
+              <template slot="value">
+                <div v-for="(item, index) in res.delivery" v-if="index === deliveryIndex" class="">{{item.name}} 10元</div>
+              </template>
+              <ul class="delivery">
+                <li class="flex" v-for="(item, index) in res.delivery" @click="deliveryIndex = index" :key="index">
+                  <div class="flex-auto">
+                    <p class="name">{{item.name}}</p>
+                    <span class="desc">{{item.desc}}</span>
+                  </div>
+                  <img v-show="index === deliveryIndex" src="~assets/goods/icon_selected.png" alt="">
+                </li>
+              </ul>
+            </v-form-slide-up>
+          </div>
+          <div class="row">
+            <div class="insurance flex">
+              <div class="label flex-auto">运险费</div>
+              <span @click="reqData.insurance = !reqData.insurance">确认收货前退货可赔付11元 ¥1.80</span>
+              <div class="select" :class="{active: reqData.insurance}" @click="reqData.insurance = !reqData.insurance"></div>
+            </div>
+          </div>
+          <div class="row">
+            <v-form-input class="remark" label="留言" v-model="reqData.remark" placeholder="（选填）建议留言前先与卖家沟通确认"></v-form-input>
+          </div>
+        </li>
+        <li class="section">
+          <div class="row"></div>
+        </li>
       </ul>
     </div>
     <div class="footer flex">
@@ -52,32 +93,72 @@
     data() {
       return {
         totalMoney: 0,
-        address: '',
-        cart: [{
-          src: ss,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          count: 1
-        }, {
-          src: ss,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓',
-          price: '6666',
-          count: 1
-        }, {
-          src: ss,
-          name: '醒狮MeiMei项链/坠',
-          desc: '',
-          price: '6666',
-          count: 1
-        }]
+        deliveryIndex: 0,
+        res: {
+          cart: [{
+            src: ss,
+            name: '醒狮MeiMei项链/坠',
+            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
+            price: '6666',
+            count: 1
+          }, {
+            src: ss,
+            name: '醒狮MeiMei项链/坠',
+            desc: '玫瑰金，红玉髓',
+            price: '6666',
+            count: 1
+          }, {
+            src: ss,
+            name: '醒狮MeiMei项链/坠',
+            desc: '',
+            price: '6666',
+            count: 1
+          }],
+          benifit: [{
+            id: 1,
+            price: 1500,
+            limit: 20000,
+            use: true,
+            expiredStart: '2018.08.01',
+            expiredEnd: '2018.09.01'
+          }, {
+            id: 2,
+            price: 600,
+            limit: 1000,
+            use: false,
+            expiredStart: '2018.08.01',
+            expiredEnd: '2018.09.01'
+          }],
+          delivery: [{
+            name: '快递运输',
+            desc: '标准收费：首重0.5kg内10元，续重每0.5kg加收5元'
+          }, {
+            name: 'EMS',
+            desc: '标准收费：首重0.5kg内10元，续重每0.5kg加收5元'
+          }, {
+            name: '顺丰速运',
+            desc: '标准收费：首重0.5kg内22元，续重每0.5kg加收10元'
+          }]
+        },
+        reqData: {
+          address: '',
+          benifit: [],
+          delivery: '',
+          insurance: false,
+          remark: ''
+        }
       };
     },
     methods: {
       ...mapActions(['ajax']),
       addOrder() {
-        this.$router.push({ name: 'payment' });
+        this.$router.push({ name: 'pay' });
+      },
+      handleBenifit() {
+        this.reqData.benifit = this.res.benifit.map(item => item.id);
+      },
+      handleDeliver() {
+        console.log(this.res.delivery[this.deliveryIndex]);
       }
     }
   };
@@ -171,6 +252,34 @@
           }
         }
       }
+      &.option {
+        padding: 0 20px;
+        .row {
+          height: 84px;
+        }
+        .insurance {
+          height: 84px;
+          justify-content: space-between;
+          color: #666;
+          .label {
+            color: #999;
+          }
+          .select {
+            margin-left: 6px;
+            background: url('~assets/payment/button_select_off.png') no-repeat;
+            background-size: 100% 100%;
+            width: 24px;
+            height: 24px;
+            &.active {
+              background: url('~assets/payment/button_select_on.png') no-repeat;
+              background-size: 100% 100%;
+            }
+          }
+        }
+        .remark {
+          font-size: 24px;
+        }
+      }
     }
   }
 
@@ -198,3 +307,38 @@
     }
   }
 </style>
+
+<style lang="less">
+  .confirm-order {
+    .delivery {
+      li {
+        font-size: 24px;
+        color: #666;
+        padding: 30px 16px;
+        border-bottom: 1px solid #f0f0f0; /*no*/
+        justify-content: space-between;
+        &:last-child {
+          border-bottom: 0;
+        }
+        img {
+          width: 36px;
+          height: 36px;
+        }
+        .name {
+          color: #666;
+          padding-bottom: 10px;
+        }
+        .desc {
+          color: #999;
+          font-size: 20px;
+        }
+      }
+    }
+    .remark.flex {
+      input {
+        font-size: 24px;
+      }
+    }
+  }
+</style>
+

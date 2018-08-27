@@ -29,16 +29,16 @@
         <li class="section" v-if="loadmore">
           <ul class="form">
             <li>
-              <v-form-input label="中指指圈号" v-model="reqData.middleFinger" maxlength="20" placeholder=""></v-form-input>
+              <v-form-input label="中指指圈号" v-model="reqData.middleFinger" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input label="无名指指圈号" v-model="reqData.ringFingerSize" maxlength="20" placeholder=""></v-form-input>
+              <v-form-input label="无名指指圈号" v-model="reqData.ringFingerSize" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input label="项链长度" v-model="reqData.necklaceLength" maxlength="20" placeholder="" unit="cm"></v-form-input>
+              <v-form-input label="项链长度" v-model="reqData.necklaceLength" maxlength="20" unit="cm"></v-form-input>
             </li>
             <li>
-              <v-form-input label="手镯尺寸" v-model="reqData.braceletSize" maxlength="20" placeholder="" unit="mm"></v-form-input>
+              <v-form-input label="手镯尺寸" v-model="reqData.braceletSize" maxlength="20" unit="mm"></v-form-input>
             </li>
           </ul>
         </li>
@@ -57,7 +57,7 @@
               <v-form-datepicker label="女儿生日" title="女儿生日" v-model="reqData.daughterBirthday" format="yyyy 年 MM 月 dd 日" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-input label="兴趣爱好" v-model="reqData.hobby" maxlength="20" placeholder=""></v-form-input>
+              <v-form-input label="兴趣爱好" v-model="reqData.hobby" maxlength="20"></v-form-input>
             </li>
           </ul>
         </li>
@@ -65,10 +65,10 @@
           <div class="more">以下内容由线下门店填写（选填）</div>
           <ul class="form">
             <li>
-              <v-form-input label="门店代码" v-model="reqData.shopCode" maxlength="20" placeholder=""></v-form-input>
+              <v-form-input label="门店代码" v-model="reqData.shopCode" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input label="珠宝顾问姓名" v-model="reqData.consultantName" maxlength="20" placeholder=""></v-form-input>
+              <v-form-input label="珠宝顾问姓名" v-model="reqData.consultantName" maxlength="20"></v-form-input>
             </li>
           </ul>
         </li>

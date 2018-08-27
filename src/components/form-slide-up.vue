@@ -6,7 +6,7 @@
         <div class="input ellipsis">{{value || placeholder || '　'}}</div>
       </slot>
     </div>
-    <v-slide-up v-model="visible" :title="title" @confirm="$emit('confirm')">
+    <v-slide-up v-model="visible" :title="title" @confirm="$emit('confirm')" :confirmText="confirmText">
       <slot></slot>
     </v-slide-up>
   </div>
@@ -24,6 +24,7 @@
       label: {
         type: String
       },
+      confirmText: '',
       title: ''
     },
     data() {

@@ -5,7 +5,7 @@
       <slot></slot>
     </div>
     <div class="btns">
-      <button class="btn" :class="{active: isConfirm}" @click="isConfirm && confirm()">确定</button>
+      <button class="btn" :class="{active: isConfirm}" @click="isConfirm && confirm()">{{confirmText}}</button>
     </div>
   </mt-popup>
 </template>
@@ -25,6 +25,10 @@
       },
       title: {
         type: String
+      },
+      confirmText: {
+        type: String,
+        default: '确定'
       }
     },
     data() {
@@ -78,11 +82,13 @@
       color: #666;
       font-size: 30px;
       height: 120px;
-      line-height: 120px;
+      line-height: 140px;
       text-align: center;
     }
     &-content {
-      padding: 20px;
+      margin: 20px;
+      margin-bottom: 0;
+      padding-bottom: 20px;
       max-height: 700px;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
