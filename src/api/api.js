@@ -1,5 +1,9 @@
 let api = {
-  authCode: { url: 'api/v1/vcode', cache: false } //获取短信验证码
+  authCode: { url: 'api/v1/vcode', method: 'get', cache: false }, //获取短信验证码
+  register: { url: 'api/v1/register', cache: false }, //手机号注册
+  login: { url: 'api/v1/login', cache: false }, //手机号登陆
+  forget: { url: 'api/v1/forget_password', cache: false }, //修改密码
+  index: { url: 'api/v1/preset', cache: false } //首页接口
 };
 
 for (var k in api) {

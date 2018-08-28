@@ -6,7 +6,7 @@
       </div>
       <ul class="form">
         <li>
-          <v-input-text placeholder="请输入手机号码" v-model="account" clear maxlength="16" class="input"></v-input-text>
+          <v-input-text placeholder="请输入手机号码" v-model="phone" clear maxlength="16" class="input"></v-input-text>
         </li>
         <li>
           <v-input-pwd placeholder="请输入账户密码" v-model="password" eye maxlength="16" class="input"></v-input-pwd>
@@ -30,19 +30,27 @@
   export default {
     data() {
       return {
-        account: '',
+        phone: '',
         password: ''
       };
     },
     computed: {
       isActive() {
-        return this.account.length && this.password.length;
+        return this.phone.length && this.password.length;
       }
     },
     methods: {
       ...mapActions(['ajax']),
       login() {
-        this.$router.push('home');
+        this.ajax({
+          name: 'login',
+          data: {
+            phone: this.phone,
+            password: this.password
+          }
+        }).then(res => {
+          this.$router.push('home');
+        });
       }
     }
   };

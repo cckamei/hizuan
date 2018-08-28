@@ -2,6 +2,7 @@ import axios from 'axios';
 import api from './api';
 import MintUI from 'mint-ui';
 import store from '../store';
+import qs from 'qs';
 
 let loading = false;
 let timer = null;
@@ -11,10 +12,12 @@ axios.defaults.timeout = 5000;
 //添加请求拦截器
 axios.interceptors.request.use(
   config => {
+    console.log(1);
     loading = true;
     return config;
   },
   error => {
+    console.log(2);
     loading = false;
     MintUI.Indicator.close();
     return Promise.reject(error);
@@ -24,11 +27,13 @@ axios.interceptors.request.use(
 //添加响应拦截器
 axios.interceptors.response.use(
   response => {
+    console.log(3);
     loading = false;
     MintUI.Indicator.close();
     return response;
   },
   error => {
+    console.log(4, error);
     loading = false;
     MintUI.Indicator.close();
 
@@ -82,6 +87,7 @@ axios.interceptors.response.use(
 
 //检查接口请求状态
 function checkStatus(resolve, reject, response) {
+  console.log(5, response);
   if (response && response.status === 200) {
     if (response.data.status === 0) {
       resolve(response.data.data);
@@ -90,7 +96,7 @@ function checkStatus(resolve, reject, response) {
       reject(response.msg);
     }
   } else {
-    MintUI.Toast(response.msg);
+    MintUI.Toast(response.msg || '请求失败');
     reject(response.msg);
   }
 }
@@ -110,38 +116,53 @@ let xhr = config => {
   if (config instanceof Array) {
     return axios.all(config);
   } else {
-    let method = config.method || 'post';
     let name = config.name;
     let data = config.data || {};
+    let { url, method = 'post', isJson } = api[name];
+
+    if (method === 'post') {
+      if (isJson) {
+        data = JSON.stringify(data);
+      } else {
+        data = qs.stringify(data);
+      }
+    }
+
+    let headers = {
+      'X-AUTH-TOKEN': '',
+      'X-AUTH-USER': '',
+      'Content-Type': isJson ? 'application/json; charset=UTF-8' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    };
 
     switch (method) {
       case 'get':
         return new Promise((resolve, reject) => {
           axios
-            .get(api[name].url, {
+            .get(url, {
               params: data,
-              headers: {}
+              headers
             })
             .then(res => {
+              console.log(6, res);
               checkStatus(resolve, reject, res);
             })
             .catch(res => {
+              console.log(7, res);
               reject(res);
             });
         });
       case 'post':
         return new Promise((resolve, reject) => {
           axios
-            .post(api[name].url, JSON.stringify(data), {
-              headers: {
-                // 'Content-Type': 'application/json; charset=UTF-8'
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-              }
+            .post(url, data, {
+              headers
             })
             .then(res => {
+              console.log(8, res);
               checkStatus(resolve, reject, res);
             })
             .catch(res => {
+              console.log(9, res);
               reject(res);
             });
         });

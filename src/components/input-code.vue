@@ -24,6 +24,10 @@
       clear: {
         type: Boolean,
         default: false
+      },
+      phone: {
+        type: String,
+        required: true
       }
     },
     data() {
@@ -40,31 +44,37 @@
     },
     methods: {
       ...mapActions(['ajax']),
-      isDefined(val) {
-        return this[val] !== undefined;
-      },
       sendAuthCode() {
-        // this.ajax({
-        //   name: 'authCode',
-        //   method: 'get',
-        //   data: {
-        //     action: 'register',
-        //     phone: ''
-        //   }
-        // }).then(res => {
-        this.sending = true;
-        this.text = 59;
-        let i = 0;
-        let t = setInterval(() => {
-          i++;
-          this.text = 59 - i;
-          if(i == 59) {
-            this.text = '重新获取';
-            this.sending = false;
-            clearInterval(t);
+        if(!this.phone.length) {
+          this.toast('手机号码不能为空');
+          return false;
+        }
+
+        if(this.phone.length !== 11) {
+          this.toast('手机号格式不正确');
+          return false;
+        }
+
+        this.ajax({
+          name: 'authCode',
+          data: {
+            action: 'register',
+            phone: this.phone
           }
-        }, 1000);
-        // });
+        }).then(res => {
+          this.sending = true;
+          this.text = 59;
+          let i = 0;
+          let t = setInterval(() => {
+            i++;
+            this.text = 59 - i;
+            if(i == 59) {
+              this.text = '重新获取';
+              this.sending = false;
+              clearInterval(t);
+            }
+          }, 1000);
+        });
       }
     }
   };
