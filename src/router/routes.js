@@ -70,6 +70,21 @@ const router = [
     component: () => import('@/views/registersuccess')
   },
   {
+    name: 'mypage',
+    path: '/mypage',
+    component: () => import('@/views/mypage')
+  },
+  {
+    name: 'orderlist',
+    path: '/my/orderlist',
+    component: () => import('@/views/orderlist')
+  },
+  {
+    name: 'orderdetail',
+    path: '/my/orderdetail',
+    component: () => import('@/views/orderdetail')
+  },
+  {
     path: '*',
     redirect: '/'
   }
