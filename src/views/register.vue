@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapMutations } from 'vuex';
 
   export default {
     data() {
@@ -44,6 +44,7 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      ...mapMutations(['setCommon']),
       next() {
         if(!this.phone.length) {
           this.toast('手机号码不能为空');
@@ -52,21 +53,6 @@
 
         if(this.phone.length !== 11) {
           this.toast('手机号格式不正确');
-          return false;
-        }
-
-        if(!this.phone.length) {
-          this.toast('验证码不能为空');
-          return false;
-        }
-
-        if(!this.password.length) {
-          this.toast('密码不能为空');
-          return false;
-        }
-
-        if(!this.confirmPws.length) {
-          this.toast('确认密码不能为空');
           return false;
         }
 
@@ -81,9 +67,13 @@
             phone: this.phone,
             vcode: this.code,
             password: this.password
-          }
+          },
+          error: true
         }).then(res => {
+          this.setCommon({ token: res.token, userId: res.user_id });
           this.$router.push({ name: 'perfectinfo' });
+        }).catch(() => {
+          this.toast('手机号或验证码不正确');
         });
       }
     }

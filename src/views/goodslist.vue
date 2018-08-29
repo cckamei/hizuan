@@ -113,10 +113,8 @@
       ...mapMutations(['setCommon']),
       ...mapActions(['ajax']),
       handleFilterConfirm() {
-        console.log(this.filterIndex);
       },
       handleSortConfirm() {
-        console.log(this.sortIndex);
       },
       fetchGoods() {
         // this.ajax({

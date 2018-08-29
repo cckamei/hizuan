@@ -12,12 +12,10 @@ axios.defaults.timeout = 5000;
 //添加请求拦截器
 axios.interceptors.request.use(
   config => {
-    console.log(1);
     loading = true;
     return config;
   },
   error => {
-    console.log(2);
     loading = false;
     MintUI.Indicator.close();
     return Promise.reject(error);
@@ -27,13 +25,11 @@ axios.interceptors.request.use(
 //添加响应拦截器
 axios.interceptors.response.use(
   response => {
-    console.log(3);
     loading = false;
     MintUI.Indicator.close();
     return response;
   },
   error => {
-    console.log(4, error);
     loading = false;
     MintUI.Indicator.close();
 
@@ -86,14 +82,15 @@ axios.interceptors.response.use(
 );
 
 //检查接口请求状态
-function checkStatus(resolve, reject, response) {
-  console.log(5, response);
+function checkStatus(resolve, reject, response, config) {
   if (response && response.status === 200) {
     if (response.data.status === 0) {
       resolve(response.data.data);
     } else {
-      MintUI.Toast(response.msg);
-      reject(response.msg);
+      if (!config.error) {
+        MintUI.Toast(response.data.msg);
+      }
+      reject(response.data);
     }
   } else {
     MintUI.Toast(response.msg || '请求失败');
@@ -129,8 +126,8 @@ let xhr = config => {
     }
 
     let headers = {
-      'X-AUTH-TOKEN': '',
-      'X-AUTH-USER': '',
+      'X-AUTH-TOKEN': store.getters.getCommon.token,
+      'X-AUTH-USER': store.getters.getCommon.userId,
       'Content-Type': isJson ? 'application/json; charset=UTF-8' : 'application/x-www-form-urlencoded; charset=UTF-8'
     };
 
@@ -143,11 +140,9 @@ let xhr = config => {
               headers
             })
             .then(res => {
-              console.log(6, res);
-              checkStatus(resolve, reject, res);
+              checkStatus(resolve, reject, res, config);
             })
             .catch(res => {
-              console.log(7, res);
               reject(res);
             });
         });
@@ -158,11 +153,9 @@ let xhr = config => {
               headers
             })
             .then(res => {
-              console.log(8, res);
-              checkStatus(resolve, reject, res);
+              checkStatus(resolve, reject, res, config);
             })
             .catch(res => {
-              console.log(9, res);
               reject(res);
             });
         });

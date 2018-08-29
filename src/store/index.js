@@ -9,7 +9,11 @@ export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
   state: {
     cacheData: getSen('cacheData') || {},
-    common: getSen('common') || {}
+    common: getSen('common') || {
+      token: '',
+      userId: '',
+      goodsId: ''
+    }
   },
   getters: {
     getCacheData: state => serialize(state.cacheData),

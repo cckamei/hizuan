@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapMutations } from 'vuex';
 
   export default {
     data() {
@@ -41,15 +41,20 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      ...mapMutations(['setCommon']),
       login() {
         this.ajax({
           name: 'login',
           data: {
             phone: this.phone,
             password: this.password
-          }
+          },
+          error: true
         }).then(res => {
+          this.setCommon({ token: res.token, userId: res.user_id });
           this.$router.push('home');
+        }).catch(res => {
+          this.toast('用户名或密码错误');
         });
       }
     }

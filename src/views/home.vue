@@ -3,13 +3,19 @@
     <div class="content">
       <mt-swipe :auto="4000" class="banner">
         <mt-swipe-item v-for="(item, index) in bannerList" :key="index">
-          <img :src="item" />
+          <a :href="item.url">
+            <img :src="item.img" />
+          </a>
         </mt-swipe-item>
       </mt-swipe>
-      <div class="activity"><img src="~assets/home/pic_ccx.png" alt=""></div>
+      <div class="activity" v-for="item in activity">
+        <a :href="item.url">
+          <img :src="item.img" alt="">
+        </a>
+      </div>
       <ul>
         <li class="row1" v-for="(item, index) in imgList">
-          <img @click="switchImg(item, index)" src="~assets/home/pic_cc1.png" alt="">
+          <img @click="switchImg(item, index)" :src="item.img" alt="">
           <v-popup-list v-model="item.visible" :goods="item" @all="goGoodsList" @close="item.visible = false"></v-popup-list>
         </li>
       </ul>
@@ -26,91 +32,34 @@
 <script>
   import $ from 'jquery';
   import { mapMutations, mapActions } from 'vuex';
-  import banner from '../assets/home/pic_cc0.png';
-  import icon from '../assets/home/pic_lion.png';
 
   export default {
     data() {
       return {
         activeIndex: -1,
-        bannerList: [banner, banner, banner],
-        imgList: [{
-          visible: false,
-          type: 'XS1',
-          goodsList: [{
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }, {
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }, {
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }]
-        }, {
-          visible: false,
-          type: 'XS2',
-          goodsList: [{
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }, {
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }, {
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }]
-        }, {
-          visible: false,
-          type: 'XS3',
-          goodsList: [{
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }, {
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }]
-        }, {
-          visible: false,
-          type: 'XS4',
-          goodsList: [{
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }, {
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }, {
-            src: icon,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666'
-          }]
-        }]
+        bannerList: [],
+        activity: [],
+        imgList: []
       };
+    },
+    created() {
+      this.fetchData();
     },
     methods: {
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon']),
+      fetchData() {
+        this.ajax({
+          name: 'index'
+        }).then(res => {
+          this.bannerList = res.banners.list;
+          this.imgList = res.series;
+          this.activity = res.banners.single;
+          this.imgList.forEach(item => {
+            this.$set(item, 'visible', false);
+          });
+        });
+      },
       switchImg(item, index) {
         let temp = item.visible;
         this.imgList.forEach(img => {

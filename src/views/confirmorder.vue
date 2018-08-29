@@ -158,7 +158,6 @@
         this.reqData.benifit = this.res.benifit.map(item => item.id);
       },
       handleDeliver() {
-        console.log(this.res.delivery[this.deliveryIndex]);
       }
     }
   };

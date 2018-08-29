@@ -198,7 +198,6 @@
       },
       handlePress(eventName, e, hammer) {
         if(eventName === 'press') {
-          console.log(hammer.index);
           this.res.cart[hammer.index].deleteVisible = true;
         }
       },

@@ -6,11 +6,11 @@
     </div>
     <div class="popup-content">
       <ul>
-        <li v-for="(item, index) in goods.goodsList" :key="index" class="flex">
-          <div class="img"><img :src="item.src" alt=""></div>
+        <li v-for="(item, index) in goods.goods" :key="index" class="flex">
+          <div class="img"><img :src="item.img" alt=""></div>
           <div class="detail flex-auto flex">
-            <span @click="$router.push({name: 'goodsdetail'})" class="name">{{item.name}}</span>
-            <span class="desc">{{item.desc}}</span>
+            <span @click="goGoodsDetail(item.goods_id)" class="name">{{item.goods_title}}</span>
+            <span class="desc">{{item.sub_title}}</span>
             <span class="price"><span>￥</span>{{item.price | currency}}</span>
           </div>
         </li>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
+
   export default {
     props: {
       value: {
@@ -41,7 +43,7 @@
     },
     computed: {
       cententHeight() {
-        return (70 + 20 * 2 + 200 * this.goods.goodsList.length + 30 * (this.goods.goodsList.length - 1)) / window.htp.designWidth * window.screen.width;
+        return (70 + 20 * 2 + 200 * this.goods.goods.length + 30 * (this.goods.goods.length - 1)) / window.htp.designWidth * window.screen.width;
       }
     },
     watch: {
@@ -50,9 +52,14 @@
       }
     },
     methods: {
+      ...mapMutations(['setCommon']),
       close() {
         this.visible = false;
         this.$emit('close');
+      },
+      goGoodsDetail(id) {
+        this.setCommon({ goodsId: id });
+        this.$router.push({ name: 'goodsdetail' });
       }
     }
   };
