@@ -186,8 +186,6 @@ export default {
     .listitem {
       background: #ffffff;
       margin-bottom: 16px;
-      position: relative;
-      z-index: 2;
       .itemtitle {
         padding: 0 30px;
         height: 64px;

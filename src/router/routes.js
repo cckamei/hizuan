@@ -85,6 +85,16 @@ const router = [
     component: () => import('@/views/orderdetail')
   },
   {
+    name: 'logistics',
+    path: '/my/logistics',
+    component: () => import('@/views/logisticsTrack')
+  },
+  {
+    name: 'mystore',
+    path: '/my/mystore',
+    component: () => import('@/views/mystore')
+  },
+  {
     path: '*',
     redirect: '/'
   }

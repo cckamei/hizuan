@@ -18,7 +18,7 @@
                                     <img src="~assets/mypage/icon_exp.png" alt=""> 
                                     <span class="logInfo">[西安市]陕西省西安市碑林区长安北路261陕西省西安市碑林区长安北路261</span>
                               </div>
-                              <img class="rightarrow" src="~assets/common/icon_right_arrow.png" alt="">
+                              <img @click="gotLogistics()" class="rightarrow" src="~assets/common/icon_right_arrow.png" alt="">
                         </div>
                         <p>2018-08-08 18:06:06</p>
                   </div>
@@ -160,7 +160,13 @@
       </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    gotLogistics() {
+      this.$router.push({ name: 'logistics' });
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .orderdetailpage {
@@ -173,25 +179,23 @@ export default {};
     border-radius: 10px;
     background: #ffffff;
     font-size: 24px;
-    position: relative;
-    z-index: 2;
     .logitem {
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: space-between;
-          >div {
-               display: flex;
-            flex-flow: row nowrap;
-            justify-content: flex-start; 
-          }
-          .rightarrow {
-                width: 18px;
-                height: 18px;
-                margin-top: 30px;
-          }
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      > div {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+      }
+      .rightarrow {
+        width: 18px;
+        height: 18px;
+        margin-top: 30px;
+      }
     }
     .logInfo {
-          max-width: 500px;
+      max-width: 500px;
     }
     img {
       display: inline;

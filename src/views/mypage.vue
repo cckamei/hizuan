@@ -9,7 +9,7 @@
                   <img class="userset" src="~assets/mypage/set-icon.png" alt="">
             </div>
             <div class="myitem">
-                  <div class="item">
+                  <div class="item" @click="goMystore()">
                         <img src="~assets/mypage/mylike_icon.png" alt="">
                         <span>我的收藏</span>
                   </div>
@@ -76,6 +76,9 @@ export default {
     },
     goOrderList() {
           this.$router.push({ name: 'orderlist'});
+    },
+    goMystore() {
+      this.$router.push({ name: 'mystore' });
     }
   }
 };

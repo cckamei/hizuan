@@ -8,13 +8,13 @@
           </a>
         </mt-swipe-item>
       </mt-swipe>
-      <div class="activity" v-for="item in activity">
+      <div class="activity" v-for="(item,index) in activity" :key="index">
         <a :href="item.url">
           <img :src="item.img" alt="">
         </a>
       </div>
       <ul>
-        <li class="row1" v-for="(item, index) in imgList">
+        <li class="row1" v-for="(item, index) in imgList" :key="index">
           <img @click="switchImg(item, index)" :src="item.img" alt="">
           <v-popup-list v-model="item.visible" :goods="item" @all="goGoodsList" @close="item.visible = false"></v-popup-list>
         </li>
