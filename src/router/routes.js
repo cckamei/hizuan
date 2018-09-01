@@ -95,6 +95,26 @@ const router = [
     component: () => import('@/views/mystore')
   },
   {
+    name: 'myset',
+    path: '/my/myset',
+    component: () => import('@/views/myset')
+  },
+  {
+    name: 'myaddress',
+    path: '/my/myaddress',
+    component: () => import('@/views/myaddress')
+  },
+  {
+    name: 'revisepwd',
+    path: '/my/revisepwd',
+    component: () => import('@/views/revisepwd')
+  },
+  {
+    name: 'editaddress',
+    path: '/my/editaddress',
+    component: () => import('@/views/editaddress')
+  },
+  {
     path: '*',
     redirect: '/'
   }

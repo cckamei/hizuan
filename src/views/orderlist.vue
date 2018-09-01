@@ -103,17 +103,17 @@ export default {
           type: 2
         },
         {
-          title: "待收货",
+          title: "待发货",
           isChoiced: false,
           type: 3
         },
         {
-          title: "已完成",
+          title: "待收货",
           isChoiced: false,
           type: 4
         },
         {
-          title: "退款/取消",
+          title: "已完成",
           isChoiced: false,
           type: 5
         }

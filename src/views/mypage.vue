@@ -6,7 +6,7 @@
                         <h2>用户名</h2>
                         <span>积分：1200</span>
                   </div>
-                  <img class="userset" src="~assets/mypage/set-icon.png" alt="">
+                  <img class="userset" src="~assets/mypage/set-icon.png" alt="" @click="goMySet()">
             </div>
             <div class="myitem">
                   <div class="item" @click="goMystore()">
@@ -17,7 +17,7 @@
                         <img src="~assets/mypage/reserve_icon.png" alt="">
                         <span>我的预约</span>
                   </div>
-                  <div class="item">
+                  <div class="item" @click="setMyAddress()">
                         <img src="~assets/mypage/address_icon.png" alt="">
                         <span>地址管理</span>
                   </div>
@@ -27,7 +27,7 @@
                         <span>我的订单</span>
                         <div class="titleright" @click="goOrderList()">
                               <span>查看全部订单</span>
-                              <img src="~assets/common/icon_right_arrow.png" alt="">
+                              <img src="~assets/mypage/icon_arrow_r_s.png" alt="">
                         </div>
                   </div>
                   <div class="ordertype">
@@ -37,19 +37,19 @@
                         </div>
                         <div class="orderitem">
                               <img src="~assets/mypage/icon_order_2.png" alt="">
-                              <span>待付款</span>
+                              <span>待发货</span>
                         </div>
                         <div class="orderitem">
                               <img src="~assets/mypage/icon_order_3.png" alt="">
-                              <span>待付款</span>
+                              <span>待收货</span>
                         </div>
                         <div class="orderitem">
                               <img src="~assets/mypage/icon_order_4.png" alt="">
-                              <span>待付款</span>
+                              <span>已完成</span>
                         </div>
                         <div class="orderitem">
                               <img src="~assets/mypage/icon_order_5.png" alt="">
-                              <span>待付款</span>
+                              <span>退款/取消</span>
                         </div>
                         
                   </div>
@@ -79,6 +79,12 @@ export default {
     },
     goMystore() {
       this.$router.push({ name: 'mystore' });
+    },
+    setMyAddress() {
+      this.$router.push({ name: 'myaddress' });
+    },
+    goMySet() {
+      this.$router.push({ name: 'myset' });
     }
   }
 };
@@ -165,7 +171,7 @@ export default {
         img {
           display: inline;
           width: 18px;
-          height: 26px;
+          height: 18px;
           margin-left: 16px;
         }
         span {

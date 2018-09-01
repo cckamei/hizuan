@@ -1,6 +1,6 @@
 <template>
   <div class="pt">
-    <v-header back>填写资料</v-header>
+    <v-header back>个人资料</v-header>
     <div class="content">
       <ul>
         <li class="section">
