@@ -12,3 +12,38 @@
     height: 80px;
   }
 }
+
+.mint-switch-input:checked + .mint-switch-core {
+  border-color: #acd598;
+  background-color: #acd598;
+}
+.mint-switch-core {
+  display: inline-block;
+  position: relative;
+  width: 84px;
+  height: 40px;
+  border: 2px solid #dcdcdc;
+  border-radius: 20px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #dcdcdc;
+}
+
+.mint-switch-core::before {
+  width: 32px;
+  height: 32px;
+  background-color: #ffffff;
+}
+.mint-switch-core::after {
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  background-color: #dcdcdc;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+  background-color: #ffffff;
+}
+.mint-switch-input:checked + .mint-switch-core::after {
+  -webkit-transform: translateX(45px);
+    transform: translateX(45px);
+}

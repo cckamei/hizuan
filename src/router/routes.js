@@ -115,6 +115,16 @@ const router = [
     component: () => import('@/views/editaddress')
   },
   {
+    name: 'applyrefund',
+    path: '/my/applyrefund',
+    component: () => import('@/views/applyrefund')
+  },
+  {
+    name: 'refunddetail',
+    path: '/my/refunddetail',
+    component: () => import('@/views/refunddetail')
+  },
+  {
     path: '*',
     redirect: '/'
   }

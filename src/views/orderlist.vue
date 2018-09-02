@@ -57,10 +57,10 @@
                         </div>
                         <div class="itemfoot">
                               <!-- 待收货 -->
-                              <div class="ordertypeDS">
+                              <!-- <div class="ordertypeDS">
                                     <button class="btngrey btnleft">查看物流</button>
                                     <button class="btnpink">确认收货</button>
-                              </div>
+                              </div> -->
                               <!-- 已完成 -->
                               <!-- <div class="ordertypeWC">
                                     <button class="btngrey btnleft">联系客服</button>
@@ -77,10 +77,10 @@
                                     <button class="btngrey">再次购买</button>
                               </div> -->
                               <!-- 退款中 -->
-                              <!-- <div class="ordertypeTK">
+                              <div class="ordertypeTK">
                                     <button class="btngrey btnleft">联系客服</button>
-                                    <button class="btngrey">查看详情</button>
-                              </div> -->
+                                    <button class="btngrey" @click="goRefunddetail()">查看详情</button>
+                              </div>
                               
                         </div>
                   </div>
@@ -132,6 +132,9 @@ export default {
     //跳转订单详情
     goDetail() {
           this.$router.push({ name: 'orderdetail' });
+    },
+    goRefunddetail() {
+       this.$router.push({ name: 'refunddetail' });
     }
   }
 };

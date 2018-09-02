@@ -102,22 +102,22 @@
                   </div>
                   <div class="itemfoot">
                         <!-- 待收货 -->
-                        <!-- <div class="ordertypeDS">
-                              <button class="btngrey btnleft flexleft">申请退款</button>
+                        <div class="ordertypeDS">
+                              <button class="btngrey btnleft flexleft" @click="goApplyRefund()">申请退款</button>
                               <button class="btngrey btnleft">联系客服</button>
                               <button class="btnpink">确认收货</button>
-                        </div> -->
+                        </div>
                         <!-- 已完成 -->
                         <!-- <div class="ordertypeWC">
                               <button class="btngrey btnleft">联系客服</button>
                               <button class="btngrey">以旧换新</button>
                         </div> -->
                         <!-- 待付款 -->
-                        <div class="ordertypeDF">
+                        <!-- <div class="ordertypeDF">
                               <button class="btngrey btnleft flexleft">取消订单</button>
                               <button class="btngrey btnleft">查看物流</button>
                               <button class="btnpink">立即付款</button>
-                        </div>
+                        </div> -->
                         <!-- 已取消 -->
                         <!-- <div class="ordertypeQX">
                               <button class="btngrey btnleft">联系客服</button>
@@ -164,6 +164,9 @@ export default {
   methods: {
     gotLogistics() {
       this.$router.push({ name: 'logistics' });
+    },
+    goApplyRefund() {
+      this.$router.push({ name: 'applyrefund' });
     }
   }
 };

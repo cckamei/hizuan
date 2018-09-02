@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div class="label">{{label}}</div>
-    <input :maxlength="maxlength" type="text" v-model="text" :placeholder="placeholder" />
+    <input :maxlength="maxlength" type="text" v-model="text" :placeholder="placeholder"/>
     <span v-if="unit">{{unit}}</span>
   </div>
 </template>

@@ -3,13 +3,13 @@
             <v-header>修改密码</v-header>
             <ul>
                   <li>
-                        <input type="password" :value="reqData.oldPwd" placeholder="请输入当前密码" @input="writeValue()">
+                        <input type="password" v-model="reqData.oldPwd" placeholder="请输入当前密码" />
                   </li>
                   <li>
-                        <input type="password" :value="reqData.newPwd" placeholder="请输入新密码"  @input="writeValue()">
+                        <input type="password" v-model="reqData.newPwd" placeholder="请输入新密码" />
                   </li>
                   <li>
-                        <input type="password" :value="reqData.repeatPwd" placeholder="请再次输入新密码"  @input="writeValue()">
+                        <input type="password" v-model="reqData.repeatPwd" placeholder="请再次输入新密码" />
                   </li>
             </ul>
             <div class="btns">
@@ -31,9 +31,6 @@
             methods: {
                   confirm() {
                         console.log(99999);
-                  },
-                  writeValue() {
-
                   }
             },
             computed: {
