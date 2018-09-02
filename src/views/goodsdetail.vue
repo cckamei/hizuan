@@ -320,7 +320,24 @@
         }).then(res => {
           Object.assign(this.res, res);
           this.res.bannerList = [res.img];
-          this.res.goodsParams = res.skus[0];
+          let skus = [{
+            "merchant_code": "None",   //商品编码
+            "weight_value": null,
+            "xiangqiancaizhi": null,    //镶嵌材质
+            "zhushipingji": null,            //主石评级
+            "count": null,               //数量
+            "bar_code": "None",     //条形码
+            "zhuzuanxingzhuang": null,     //主钻形状
+            "default": true,           //是否为该商品默认sku
+            "xiangqianfangshi": null,     //镶嵌方式
+            "sku_id": "5b851b561f30bfc39cddfc40",   //该sku的id 购物车和收藏都需要这个字段
+            "price": 6666,
+            "fuzuanxingzhuang": null,         //付钻形状
+            "fuzuanfenshu": null,             //附钻分数
+            "zhushimingcheng": null,
+            "weight_unit": null,
+            "kuanshi": null
+          }];
         });
       },
       handleSKU() {
