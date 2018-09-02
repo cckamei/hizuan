@@ -29,8 +29,11 @@
       };
     },
     watch: {
-      value(val) {
-        this.selectIndex = val;
+      value: {
+        handler(val) {
+          this.selectIndex = val;
+        },
+        immediate: true
       },
       selectIndex(val) {
         this.$emit('input', this.selectIndex);

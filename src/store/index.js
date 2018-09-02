@@ -12,7 +12,8 @@ export default new Vuex.Store({
     common: getSen('common') || {
       token: '',
       userId: '',
-      goodsId: ''
+      goodsId: '',
+      goodsType: ''
     }
   },
   getters: {

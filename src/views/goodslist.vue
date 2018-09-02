@@ -8,11 +8,11 @@
     </v-header-menus>
     <div class="condition">
       <ul class="flex">
-        <li class="flex" @click="filterVisible = true">
+        <li class="flex" @click="openFilter">
           <span>筛选</span>
           <div class="arrow-down" :class="{active: filterVisible}"></div>
         </li>
-        <li class="flex" @click="sortVisible = true">
+        <li class="flex" @click="openSort">
           <span>排序</span>
           <div class="arrow-down" :class="{active: sortVisible}"></div>
         </li>
@@ -21,10 +21,10 @@
     <div class="content">
       <ul class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50" infinite-scroll-immediate-check="true">
         <li v-for="(item, index) in goodsList" :key="index" class="flex" @click="goDetail(item)">
-          <div class="img"><img :src="item.src" alt=""></div>
+          <div class="img"><img :src="item.img" alt=""></div>
           <div class="detail flex-auto flex">
-            <span class="name">{{item.name}}</span>
-            <span class="desc">{{item.desc}}</span>
+            <span class="name">{{item.goods_title}}</span>
+            <span class="desc">{{item.sub_title}}</span>
             <div class="line3 flex">
               <div class="price"><span>￥</span>{{item.price | currency}}</div>
               <div class="cart"></div>
@@ -38,7 +38,7 @@
       </p>
     </div>
     <v-popup-confirm title="筛选" v-model="filterVisible" @confirm="handleFilterConfirm" :isConfirm="filterIndex !== -1">
-      <v-input-radio v-model="filterIndex" :list="filters"></v-input-radio>
+      <v-input-radio v-model="filterIndex" :list="filters.map(res => res.name)"></v-input-radio>
     </v-popup-confirm>
     <v-popup-confirm title="排序" v-model="sortVisible" @confirm="handleSortConfirm" :isConfirm="sortIndex !== -1">
       <v-input-radio v-model="sortIndex" :list="sorts"></v-input-radio>
@@ -47,8 +47,7 @@
 </template>
 
 <script>
-  import { mapActions, mapMutations } from 'vuex';
-  import icon from '../assets/home/pic_lion.png';
+  import { mapActions, mapMutations, mapGetters } from 'vuex';
 
   export default {
     data() {
@@ -57,118 +56,90 @@
         sortVisible: false,
         filterIndex: -1,
         sortIndex: -1,
-        filters: ['结', '醒狮MeiMei', '婚嫁', '情侣', 'CHIC潮', '文承', 'TANG玲珑', '点亮'],
+        filterSelectedIndex: -1,
+        sortSelectedIndex: -1,
+        filters: [],
         sorts: ['价格从高到低', '价格从低到高'],
-        goodsList: [{
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
-        }],
+        goodsList: [],
         pageInfo: {},
         loading: false
       };
     },
+    created() {
+      this.fetchSeries();
+    },
+    computed: {
+      ...mapGetters(['getCommon'])
+    },
     methods: {
       ...mapMutations(['setCommon']),
       ...mapActions(['ajax']),
+      openFilter() {
+        this.filterVisible = true;
+        this.filterIndex = this.filterSelectedIndex;
+      },
+      openSort() {
+        this.sortVisible = true;
+        this.sortIndex = this.sortSelectedIndex;
+      },
       handleFilterConfirm() {
+        this.pageInfo.currentPage = 0;
+        this.filterSelectedIndex = this.filterIndex;
+        this.setCommon({ goodsType: this.filters[this.filterIndex].series_id });
+        this.fetchGoods();
       },
       handleSortConfirm() {
+        this.pageInfo.currentPage = 0;
+        this.sortSelectedIndex = this.sortIndex;
+        this.fetchGoods();
       },
       fetchGoods() {
-        // this.ajax({
-        //   name: 'goodsList',
-        //   data: {
-        //   currentPage: (this.pageInfo.currentPage || 0) + 1,
-        // }
-        // }).then(res => {
-        setTimeout(() => {
-          let res = {
-            pageInfo: {
-              totalPage: 10,
-              currentPage: 2
-            },
-            goodsList: [{
-              src: '',
-              name: '醒狮MeiMei项链/坠',
-              desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '6666'
-            }, {
-              src: '',
-              name: '醒狮MeiMei项链/坠',
-              desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '6666'
-            }, {
-              src: '',
-              name: '醒狮MeiMei项链/坠',
-              desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '6666'
-            }]
+        let reqData = {
+          series: this.getCommon.goodsType,
+          page: (this.pageInfo.currentPage || 0) + 1
+        };
+
+        if(this.sortSelectedIndex !== -1) {
+          Object.assign(reqData, { orderby: Math.abs(this.sortSelectedIndex - 1) });
+        }
+
+        this.ajax({
+          name: 'goods',
+          data: reqData
+        }).then(res => {
+          this.pageInfo = {
+            currentPage: res.page,
+            totalPage: res.pages
           };
-          this.pageInfo = res.pageInfo;
           if(this.pageInfo.currentPage == 1) {
             this.goodsList = [];
           }
-          this.goodsList = this.goodsList.concat(res.goodsList);
+          this.goodsList = this.goodsList.concat(res.list);
 
           if(this.pageInfo.currentPage < this.pageInfo.totalPage) {
             this.loading = false;
           } else if(this.pageInfo.currentPage != 1) {
             this.toast('没有更多数据了');
           }
-        }, 1000);
-        // });
+        });
+      },
+      fetchSeries() {
+        this.ajax({
+          name: 'series'
+        }).then(res => {
+          this.filters = res;
+          this.filterIndex = res.findIndex(item => item.series_id === this.getCommon.goodsType);
+          this.filterSelectedIndex = this.filterIndex;
+          this.fetchGoods();
+        });
       },
       //分页
       loadMore() {
         this.loading = true;
-        setTimeout(() => {
-          this.fetchGoods();
-        }, 500);
+        this.fetchGoods();
       },
       goDetail(val) {
-        this.setCommon({ goodType: val.type });
+        this.setCommon({ goodsId: val.goods_id });
         this.$router.push({ name: 'goodsdetail' });
       }
     }
@@ -271,9 +242,6 @@
             background-size: 100%;
           }
         }
-      }
-      &:last-child {
-        padding-bottom: 0;
       }
     }
   }

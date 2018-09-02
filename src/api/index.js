@@ -116,6 +116,9 @@ let xhr = config => {
     let name = config.name;
     let data = config.data || {};
     let { url, method = 'post', isJson } = api[name];
+    if (/:id/.test(url)) {
+      url = url.replace(':id', config.id);
+    }
 
     if (method === 'post') {
       if (isJson) {

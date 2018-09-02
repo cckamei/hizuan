@@ -23,11 +23,11 @@
       </mt-swipe>
       <div class="info">
         <div class="price">
-          <i>￥</i>{{8888.00 | currency}}
+          <i>￥</i>{{res.price | currency}}
           <img @click="waiting" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
-        <div class="name">CC卡美婚嫁系列 - 戒指</div>
-        <div class="desc">结而为约·有承诺的爱</div>
+        <div class="name">{{res.goods_title}}</div>
+        <div class="desc">{{res.sub_title}}</div>
         <ul class="mark flex">
           <li class="flex"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>新款上架</span></li>
           <li class="flex"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>专柜同款</span></li>
@@ -75,7 +75,7 @@
               <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
               <div>
                 <div class="price"><span>￥</span>{{8888.00 | currency}}</div>
-                <span class="code">商品编号：DRGC00208</span>
+                <span class="code">商品编号：{{res.goodsParams.merchant_code}}</span>
               </div>
             </li>
             <li>
@@ -110,7 +110,7 @@
           <ul class="goods-param">
             <li class="flex">
               <span class="label">商品编号</span>
-              <span class="value">DRGC00208</span>
+              <span class="value">{{res.goodsParams.merchant_code}}</span>
             </li>
             <li class="flex">
               <span class="label">套系</span>
@@ -126,23 +126,23 @@
             </li>
             <li class="flex">
               <span class="label">主钻形状</span>
-              <span class="value">圆形</span>
+              <span class="value">{{res.goodsParams.zhuzuanxingzhuang}}</span>
             </li>
             <li class="flex">
               <span class="label">副钻形状</span>
-              <span class="value">无副钻</span>
+              <span class="value">{{res.goodsParams.fuzuanxingzhuang || '无副钻'}}</span>
             </li>
             <li class="flex">
               <span class="label">副钻分数</span>
-              <span class="value">无副钻</span>
+              <span class="value">{{res.goodsParams.fuzuanfenshu || '无副钻'}}</span>
             </li>
             <li class="flex">
               <span class="label">镶嵌材质</span>
-              <span class="value">Pt950铂金</span>
+              <span class="value">{{res.goodsParams.xiangqiancaizhi}}</span>
             </li>
             <li class="flex">
               <span class="label">镶嵌方式</span>
-              <span class="value">单钻</span>
+              <span class="value">{{res.goodsParams.xiangqianfangshi}}</span>
             </li>
           </ul>
         </v-form-slide-up>
@@ -213,7 +213,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import $ from 'jquery';
   import ss from '../assets/goods/pic_guguring.png';
   import banner from '../assets/goods/pic_wring.png';
@@ -226,12 +226,13 @@
         top: 0,
         offsetTops: [],
         res: {
-          bannerList: [banner, banner, banner],
+          bannerList: [],
           skuScore: ['18分', '25分', '30分', '40分'],
           skuClarity: ['SI/小瑕', 'VS/微瑕', 'VVS/极微瑕'],
           skuColor: ['H/白', 'F-G/优白', 'I-J/淡白', 'D-E/极白'],
           skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号'],
           limit: 10,
+          goodsParams: {},
           benifit: [{
             id: 1,
             price: 1500,
@@ -256,6 +257,7 @@
             title: '新用户',
             desc: '新用户首单特惠'
           }],
+
           recommend: [{
             url: ss,
             name: '文承 戒指',
@@ -297,14 +299,30 @@
         }
       };
     },
+    created() {
+      this.fetchGoodsDetail();
+    },
     mounted() {
       setTimeout(() => {
         let headerHeight = 96 / window.htp.designWidth * window.screen.width;
         this.offsetTops = [0, Math.trunc(this.$refs['image-text'].offsetTop - headerHeight), Math.trunc(this.$refs['recommend'].$el.offsetTop - headerHeight)];
       }, 1000);
     },
+    computed: {
+      ...mapGetters(['getCommon'])
+    },
     methods: {
       ...mapActions(['ajax']),
+      fetchGoodsDetail() {
+        this.ajax({
+          name: 'goodsDetail',
+          id: this.getCommon.goodsId
+        }).then(res => {
+          Object.assign(this.res, res);
+          this.res.bannerList = [res.img];
+          this.res.goodsParams = res.skus[0];
+        });
+      },
       handleSKU() {
         let score = this.res.skuScore[this.sku.scoreIndex];
         let clarity = this.res.skuClarity[this.sku.clarityIndex];

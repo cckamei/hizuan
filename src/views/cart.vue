@@ -94,7 +94,6 @@
         totalMoney: 0,
         skuVisible: false,
         skuIndex: 0,
-
         res: {
           cart: [{
             checked: false,
@@ -178,6 +177,9 @@
         }
       };
     },
+    created() {
+      this.fetchCart();
+    },
     watch: {
       'res.cart': {
         handler(val) {
@@ -190,6 +192,17 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      fetchCart() {
+        this.ajax({
+          name: 'cart'
+        }).then(res => {
+          this.res.cart = res.cart;
+          this.res.cart.forEach(item => {
+            item.checked = false;
+            item.deleteVisible = false;
+          });
+        });
+      },
       checkAll() {
         let isCheckedAll = this.checkedAll;
         this.res.cart.filter(item => item.limit).forEach(item => {

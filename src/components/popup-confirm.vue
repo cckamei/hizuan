@@ -1,5 +1,5 @@
 <template>
-  <mt-popup v-model="visible" class="popup-confirm">
+  <mt-popup v-if="visible" v-model="visible" class="popup-confirm">
     <div class="popup-confirm-title">{{title}}</div>
     <div class="popup-confirm-content">
       <slot></slot>

@@ -1,6 +1,6 @@
 <template>
   <div class="popup" :style="{height: visible ? cententHeight + 'px' : 0}">
-    <div class="popup-header flex" @click="$emit('all', goods.type)">
+    <div class="popup-header flex" @click="$emit('all', goods.id)">
       <div class="shadow"></div>
       <img src="~assets/home/icon_all_arrow.png" alt=""><span>查看全部</span>
     </div>
