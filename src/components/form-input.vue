@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div class="label">{{label}}</div>
-    <input :maxlength="maxlength" type="text" v-model="text" :placeholder="placeholder"/>
+    <input :maxlength="maxlength" type="text" v-model="text" :readonly="readonly" :placeholder="placeholder" />
     <span v-if="unit">{{unit}}</span>
   </div>
 </template>
@@ -10,7 +10,7 @@
   export default {
     props: {
       value: {
-        type: String,
+        type: [String, Number],
         required: true
       },
       placeholder: {
@@ -25,6 +25,10 @@
       },
       unit: {
         type: String
+      },
+      readonly: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -61,7 +65,6 @@
       width: 100%;
       padding: 0 10px;
       font-size: 32px;
-      color: #333;
       color: #666;
     }
   }

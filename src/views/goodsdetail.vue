@@ -29,8 +29,8 @@
         <div class="name">{{res.goods_title}}</div>
         <div class="desc">{{res.sub_title}}</div>
         <ul class="mark flex">
-          <li class="flex"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>新款上架</span></li>
-          <li class="flex"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>专柜同款</span></li>
+          <li class="flex" v-if="res.is_new"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>新款上架</span></li>
+          <li class="flex" v-if="res.is_shop_same"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>专柜同款</span></li>
         </ul>
         <div class="courier">
           <span>快递:{{22 | currency}}元</span>
@@ -50,7 +50,7 @@
           </ul>
         </v-form-slide-up>
       </div>
-      <div class="row">
+      <div class="row" v-if="0">
         <v-form-slide-up label="促销活动" title="促销活动">
           <template slot="value">
             <button class="activity-btn">{{res.activity[0].title}}</button>{{res.activity[0].desc}}
@@ -183,11 +183,11 @@
       <div class="gap"></div>
       <div ref="image-text" class="section image-text">
         <div class="title flex"><span>图文详情</span></div>
-        <div class="image-text-content">
-          <img src="~assets/goods/pic_dring.png" alt="">
+        <div class="image-text-content" v-html="res.detail">
+          <!-- <img src="~assets/goods/pic_dring.png" alt="">
           <p>CC卡美婚嫁钻饰系列经悉心设计，力求象征中国从未消失一直存在的隽永感情。</p>
           <p>灵感取材于美对爱侣分享的幸福时刻。CC卡美创作的婚戒系列钻饰，每款设计都尽显美钻的锋芒火彩，将你的爱意表露无遗。
-          </p>
+          </p> -->
         </div>
       </div>
       <div class="gap"></div>
@@ -319,7 +319,7 @@
           id: this.getCommon.goodsId
         }).then(res => {
           Object.assign(this.res, res);
-          this.res.bannerList = [res.img];
+          this.res.bannerList = res.slide_img;
           let skus = [{
             "merchant_code": "None",   //商品编码
             "weight_value": null,
@@ -338,6 +338,9 @@
             "weight_unit": null,
             "kuanshi": null
           }];
+          // skus.forEach(item => {
+          //   item.skuLabels = `${item}`;
+          // });
         });
       },
       handleSKU() {
@@ -688,6 +691,14 @@
     .lettering-enable {
       button {
         width: 272px;
+      }
+    }
+
+    .image-text {
+      p {
+        color: #666;
+        text-indent: 50px;
+        padding: 0 20px 30px 20px;
       }
     }
   }
