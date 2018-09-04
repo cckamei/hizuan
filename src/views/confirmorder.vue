@@ -72,8 +72,19 @@
             <v-form-input class="remark" label="留言" v-model="reqData.remark" placeholder="（选填）建议留言前先与卖家沟通确认"></v-form-input>
           </div>
         </li>
-        <li class="section">
-          <div class="row"></div>
+        <li class="summary section">
+          <div class="row">
+            <v-form-input label="商品总额" v-model="res.shopMoney" :readonly="true"></v-form-input>
+          </div>
+          <div class="row">
+            <v-form-input label="运费" v-model="res.shopMoney" :readonly="true"></v-form-input>
+          </div>
+          <div class="row">
+            <v-form-input label="运费险" v-model="res.shopMoney" :readonly="true"></v-form-input>
+          </div>
+          <div class="row">
+            <v-form-input label="优惠券" v-model="res.shopMoney" :readonly="true"></v-form-input>
+          </div>
         </li>
       </ul>
     </div>
@@ -138,7 +149,8 @@
           }, {
             name: '顺丰速运',
             desc: '标准收费：首重0.5kg内22元，续重每0.5kg加收10元'
-          }]
+          }],
+          shopMoney: 0
         },
         reqData: {
           address: '',
@@ -279,6 +291,12 @@
           font-size: 24px;
         }
       }
+      &.summary {
+        padding: 0 20px;
+        .row {
+          height: 84px;
+        }
+      }
     }
   }
 
@@ -335,6 +353,12 @@
     }
     .remark.flex {
       input {
+        font-size: 24px;
+      }
+    }
+    .summary {
+      .label,
+      .flex input {
         font-size: 24px;
       }
     }

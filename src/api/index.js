@@ -93,8 +93,8 @@ function checkStatus(resolve, reject, response, config) {
       reject(response.data);
     }
   } else {
-    MintUI.Toast(response.msg || '请求失败');
-    reject(response.msg);
+    MintUI.Toast(response.message || '请求失败');
+    reject(response.message);
   }
 }
 
