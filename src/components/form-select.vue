@@ -38,6 +38,14 @@
         text: ''
       };
     },
+    watch: {
+      value() {
+        if(this.value !== -1) {
+          let selected = this.list[this.value];
+          this.text = typeof selected === 'string' ? selected : selected[this.keyName];
+        }
+      }
+    },
     methods: {
       confirm() {
         let selected = this.list[this.selectedIndex];

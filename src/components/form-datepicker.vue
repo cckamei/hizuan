@@ -14,6 +14,9 @@
 
   export default {
     props: {
+      value: {
+        type: String
+      },
       placeholder: {
         type: String
       },
@@ -36,6 +39,14 @@
     },
     components: {
       datetimePicker
+    },
+    watch: {
+      value() {
+        if(this.value) {
+          this.date = new Date(this.value.replace(/-/g, '/'));
+          this.text = this.value;
+        }
+      }
     },
     methods: {
       confirm() {
