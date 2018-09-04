@@ -198,7 +198,7 @@
         <img src="~assets/goods/button_service.png" alt="">
         <span>客服</span>
       </div>
-      <div class="fun-btns" @click="waiting">
+      <div class="fun-btns" @click="collect">
         <img src="~assets/goods/button_like.png" alt="">
         <span>收藏</span>
       </div>
@@ -229,7 +229,7 @@
           bannerList: [],
           skuScore: ['18分', '25分', '30分', '40分'],
           skuClarity: ['SI/小瑕', 'VS/微瑕', 'VVS/极微瑕'],
-          skuColor: ['H/白', 'F-G/优白', 'I-J/淡白', 'D-E/极白'],
+          skuColor: [],
           skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号'],
           limit: 10,
           goodsParams: {},
@@ -320,27 +320,16 @@
         }).then(res => {
           Object.assign(this.res, res);
           this.res.bannerList = res.slide_img;
-          let skus = [{
-            "merchant_code": "None",   //商品编码
-            "weight_value": null,
-            "xiangqiancaizhi": null,    //镶嵌材质
-            "zhushipingji": null,            //主石评级
-            "count": null,               //数量
-            "bar_code": "None",     //条形码
-            "zhuzuanxingzhuang": null,     //主钻形状
-            "default": true,           //是否为该商品默认sku
-            "xiangqianfangshi": null,     //镶嵌方式
-            "sku_id": "5b851b561f30bfc39cddfc40",   //该sku的id 购物车和收藏都需要这个字段
-            "price": 6666,
-            "fuzuanxingzhuang": null,         //付钻形状
-            "fuzuanfenshu": null,             //附钻分数
-            "zhushimingcheng": null,
-            "weight_unit": null,
-            "kuanshi": null
-          }];
-          // skus.forEach(item => {
-          //   item.skuLabels = `${item}`;
-          // });
+          let skuColor = [];
+
+          res.skus.forEach(item => {
+            // item.skuLabels = `${item}`;
+            if(item.color) {
+              skuColor.push(item.color);
+            }
+          });
+          this.res.skuColor = [...new Set(skuColor)];
+          console.log(this.res);
         });
       },
       handleSKU() {
@@ -370,6 +359,16 @@
       },
       buyNow() {
         this.$router.push({ name: 'confirmorder' });
+      },
+      collect() {
+        this.ajax({
+          name: 'collect',
+          data: {
+            'collect_id': ''
+          }
+        }).then(res => {
+          console.log(res);
+        });
       }
     }
   };

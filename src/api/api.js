@@ -8,6 +8,7 @@ let api = {
   series: { url: 'api/v1/series', method: 'get' }, //获取所有套系信息
   goodsDetail: { url: 'api/v1/goods/detail/:id', method: 'get' }, //获取商品详情
   cart: { url: 'api/v1/cart', method: 'get' }, //获取购物车的商品列表
+  collect: { url: 'api/v1/collects' }, //收藏商品
 
   getAddress: { url: 'api/v1/address', method: 'get' } //获取个人地址
 };
