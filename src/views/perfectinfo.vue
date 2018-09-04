@@ -15,7 +15,7 @@
               <v-form-select label="性别*" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别"></v-form-select>
             </li>
             <li>
-              <v-form-datepicker label="生日*" title="生日日期" v-model="reqData.birthday" format="yyyy 年 MM 月 dd 日" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日"></v-form-datepicker>
+              <v-form-datepicker label="生日*" title="生日日期" v-model="reqData.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日"></v-form-datepicker>
             </li>
             <li>
               <v-form-input label="身份证号*" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
@@ -45,16 +45,16 @@
         <li class="section" v-if="loadmore">
           <ul class="form">
             <li>
-              <v-form-datepicker label="结婚纪念日" title="结婚纪念日" v-model="reqData.wedding_day" format="yyyy 年 MM 月 dd 日" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker label="结婚纪念日" title="结婚纪念日" v-model="reqData.wedding_day" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker label="配偶生日" title="配偶生日" v-model="reqData.lover_birth" format="yyyy 年 MM 月 dd 日" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker label="配偶生日" title="配偶生日" v-model="reqData.lover_birth" format="yyyy - MM - dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker label="儿子生日" title="儿子生日" v-model="reqData.son_birth" format="yyyy 年 MM 月 dd 日" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker label="儿子生日" title="儿子生日" v-model="reqData.son_birth" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker label="女儿生日" title="女儿生日" v-model="reqData.daughter_birth" format="yyyy 年 MM 月 dd 日" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker label="女儿生日" title="女儿生日" v-model="reqData.daughter_birth" format="yyyy-MM-dd 日" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
               <v-form-input label="兴趣爱好" v-model="reqData.hobbit" maxlength="20"></v-form-input>
