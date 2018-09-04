@@ -12,7 +12,8 @@ let api = {
 
   getAddress: { url: 'api/v1/address', method: 'get' }, //获取个人地址
   getUserInfo: { url: 'api/v1/user_info', method: 'get' },  //获取个人信息
-  editUserInfo: { url: 'api/v1/user_info', method: 'post' }  //个人资料完善
+  editUserInfo: { url: 'api/v1/user_info', method: 'post' },  //个人资料完善
+  getUserAddress: { url: 'api/v1/address', method: 'get'} //获取收货地址
 };
 
 for (var k in api) {

@@ -8,16 +8,16 @@
             </v-header>
             <ul class="form">
                   <li>
-                        <v-form-input label="姓名" v-model="reqData.username" maxlength="4" placeholder="请填写收货人姓名"></v-form-input>
+                        <v-form-input label="姓名" v-model="reqData.name" maxlength="4" placeholder="请填写收货人姓名"></v-form-input>
                   </li>
                   <li>
-                        <v-form-input label="手机号" v-model="reqData.phoneNumber" maxlength="20" placeholder="请填写收货人手机号"></v-form-input>
+                        <v-form-input label="手机号" v-model="reqData.phone" maxlength="20" placeholder="请填写收货人手机号"></v-form-input>
                   </li>
                   <li>
-                        <v-form-datepicker label="所在地区" title="选择地区" v-model="reqData.section" format="yyyy 年 MM 月 dd 日" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择收货人所在地区"></v-form-datepicker>
+                        <v-form-select label="所在地区" title="选择地区" v-model="address" :list="addressList" placeholder="请选择收货人所在地区"></v-form-select>
                   </li>
                   <li>
-                        <v-form-input label="详细地址" v-model="reqData.address" maxlength="6" placeholder="请填写街道、楼牌号等信息"></v-form-input>
+                        <v-form-input label="详细地址" v-model="reqData.street" maxlength="6" placeholder="请填写街道、楼牌号等信息"></v-form-input>
                   </li>
                   <li>
                         <label>设为默认</label>
@@ -35,14 +35,17 @@
 export default {
       data() {
             return {
-                  popupVisible: true,
                   reqData: {
-                        address: '', //详细地址
-                        username: '', //姓名
-                        section: '', //所在地区
-                        phoneNumber: '', //手机号
-                        lock: false //职业
-                  }
+                        address: '',
+                        phone: '',//手机号
+                        province:'',//省
+                        name: '',//姓名
+                        city: '',//市
+                        street: '',//街道
+                        code: '',
+                        district: ''//区
+                  },
+                  addressList: []
             };
       },
       computed: {
