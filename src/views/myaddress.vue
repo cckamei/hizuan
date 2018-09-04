@@ -30,15 +30,40 @@
                         <div class="listright">
                               <img src="~assets/mypage/button_edit_a.png" alt="">
                         </div>
-                        
                   </li>
             </ul>
+
+            <div class="btns fix">
+                  <button class="btn" :class="{active: isActive}" @click="isActive && confirm()">添加收货地址</button>
+            </div>
       </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
+
+      created() {
+            this.pageInit();
+      },
+      computed: {
+            isActive() {
+                  return true;
+            }
+      },
       methods: {
+            ...mapActions(['ajax']),
+            pageInit() {
+                  this.ajax({
+                        name: 'getUserAddress'
+                  }).then(res => {
+                        let data = res;
+                        console.log(data,9990);
+                  });
+            },
             editAddress() {
+                  this.$router.push({ name: 'editaddress' });
+            },
+            confirm() {
                   this.$router.push({ name: 'editaddress' });
             }
       }
