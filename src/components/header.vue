@@ -4,6 +4,9 @@
     <div class="title ellipsis">
       <slot></slot>
     </div>
+    <div class="handler">
+      <slot name="headright"></slot>
+    </div>
   </div>
 </template>
 
@@ -62,6 +65,16 @@
       color: #999;
       text-align: center;
       padding-right: 96px;
+    }
+    .handler {
+      width: 96px;
+      height: 96px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      line-height: 96px;
+      text-align: center;
+      padding-right: 40px;
     }
   }
 </style>

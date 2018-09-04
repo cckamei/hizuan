@@ -2,9 +2,9 @@
       <div class="editaddress">
             <v-header>
                   编辑地址
-                  <slot>
+                  <div slot="headright">
                         <span class="deleteAddresss" @click="delteAddress()">删除</span>
-                  </slot>
+                  </div>
             </v-header>
             <ul class="form">
                   <li>
@@ -51,7 +51,9 @@ export default {
             }
       },
       methods: {
-            delteAddress() {}
+            delteAddress() {
+                  console.log(99999);
+            }
       }
 };
 </script>

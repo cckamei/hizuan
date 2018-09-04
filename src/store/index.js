@@ -14,7 +14,8 @@ export default new Vuex.Store({
       userId: '',
       goodsId: '',
       goodsType: ''
-    }
+    },
+    userInfo: {}
   },
   getters: {
     getCacheData: state => serialize(state.cacheData),
@@ -28,6 +29,10 @@ export default new Vuex.Store({
     setCommon(state, data) {
       state.common = { ...state.common, ...data };
       setSen('common', state.common);
+    },
+    setUserInfo(state, data) {
+      state.userInfo = { ...state.userInfo, ...data };
+      setSen('userInfo', state.userInfo);
     }
   },
   actions: {

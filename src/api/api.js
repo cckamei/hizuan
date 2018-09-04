@@ -9,7 +9,9 @@ let api = {
   goodsDetail: { url: 'api/v1/goods/detail/:id', method: 'get' }, //获取商品详情
   cart: { url: 'api/v1/cart', method: 'get' }, //获取购物车的商品列表
 
-  getAddress: { url: 'api/v1/address', method: 'get' } //获取个人地址
+  getAddress: { url: 'api/v1/address', method: 'get' }, //获取个人地址
+  getUserInfo: { url: 'api/v1/user_info', method: 'get' },  //获取个人信息
+  editUserInfo: { url: 'api/v1/user_info', method: 'post' }  //个人资料完善
 };
 
 for (var k in api) {

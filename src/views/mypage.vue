@@ -3,7 +3,7 @@
             <div class="mymessage">
                   <img src="~assets/home/button_my.png" alt="">
                   <div class="usermessage">
-                        <h2>用户名</h2>
+                        <h2>{{userInfo.nick_name}}</h2>
                         <span>积分：1200</span>
                   </div>
                   <img class="userset" src="~assets/mypage/set-icon.png" alt="" @click="goMySet()">
@@ -63,10 +63,28 @@
       </div>
 </template>
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapActions } from 'vuex';
 export default {
+  data() {
+    return{
+      userInfo: {}
+    };
+  },
+  created() {
+    this.pageInit();
+  },
   methods: {
-    ...mapMutations(["setCommon"]),
+    ...mapActions(['ajax']),
+    ...mapMutations(["setUserInfo"]),
+    pageInit() {
+      this.ajax({
+          name: 'getUserInfo'
+      }).then(res => {
+          let userInfo = res;
+          this.userInfo = res;
+          this.setUserInfo(userInfo);
+      });
+    },
     goGoodsList(goodsType = "") {
       this.setCommon({ goodsType });
       this.$router.push({ name: "goodslist" });
