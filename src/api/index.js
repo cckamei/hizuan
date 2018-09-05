@@ -115,12 +115,16 @@ let xhr = config => {
   } else {
     let name = config.name;
     let data = config.data || {};
-    let { url, method = 'post', isJson } = api[name];
+    let {
+      url,
+      method = 'post',
+      isJson
+    } = api[name];
     if (/:id/.test(url)) {
       url = url.replace(':id', config.id);
     }
 
-    if (method === 'post'|| 'delete' || 'put') {
+    if (method === 'post' || 'delete' || 'put') {
       if (isJson) {
         data = JSON.stringify(data);
       } else {
@@ -136,9 +140,9 @@ let xhr = config => {
 
     switch (method) {
       case 'get':
+      case 'delete':
         return new Promise((resolve, reject) => {
-          axios
-            .get(url, {
+          axios[method](url, {
               params: data,
               headers
             })
@@ -150,36 +154,9 @@ let xhr = config => {
             });
         });
       case 'post':
+      case 'put':
         return new Promise((resolve, reject) => {
-          axios
-            .post(url, data, {
-              headers
-            })
-            .then(res => {
-              checkStatus(resolve, reject, res, config);
-            })
-            .catch(res => {
-              reject(res);
-            });
-        });
-        case 'delete':
-        return new Promise((resolve, reject) => {
-          console.log(headers,11111)
-          axios
-            .delete(url, data, {
-              headers
-            })
-            .then(res => {
-              checkStatus(resolve, reject, res, config);
-            })
-            .catch(res => {
-              reject(res);
-            });
-        });
-        case 'put':
-        return new Promise((resolve, reject) => {
-          axios
-            .put(url, data, {
+          axios[method](url, data, {
               headers
             })
             .then(res => {
@@ -194,4 +171,7 @@ let xhr = config => {
   }
 };
 
-export { xhr, api };
+export {
+  xhr,
+  api
+};
