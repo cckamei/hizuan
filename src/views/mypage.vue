@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     ...mapActions(['ajax']),
-    ...mapMutations(["setUserInfo"]),
+    ...mapMutations(["setUserInfo", "setCommon"]),
     pageInit() {
       this.ajax({
           name: 'getUserInfo'

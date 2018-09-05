@@ -2,37 +2,21 @@
       <div class="myaddress">
             <v-header>地址管理</v-header>
             <ul class="addresslist">
-                  <li>
+                  <li v-for="(item, index) in addressList" :key="index">
                         <div class="listleft">
                               <div class="receiver">
-                                    收货人：A先生<span>1231456987</span> <i>默认</i>
+                                    收货人：{{item.name}}<span>{{item.phone}}</span> <i v-if="item.code==1">默认</i>
                               </div>
                               <div class="address">
                                     <span>收货地址：</span>
-                                    <p>西安市西安市西安市西安市西安市西安市西安市西安市西安市</p>
+                                    <p>{{item.province}}{{item.city}}{{item.district}}{{item.street}}</p>
                               </div>
                         </div>
                         <div class="listright">
-                              <img src="~assets/mypage/button_edit_a.png" alt="" @click="editAddress()">
-                        </div>
-                        
-                  </li>
-                   <li>
-                        <div class="listleft">
-                              <div class="receiver">
-                                    收货人：A先生<span>1231456987</span> <i>默认</i>
-                              </div>
-                              <div class="address">
-                                    <span>收货地址：</span>
-                                    <p>西安市西安市西安市西安市西安市西安市西安市西安市西安市</p>
-                              </div>
-                        </div>
-                        <div class="listright">
-                              <img src="~assets/mypage/button_edit_a.png" alt="">
+                              <img src="~assets/mypage/button_edit_a.png" alt="" @click="editAddress(item)">
                         </div>
                   </li>
             </ul>
-
             <div class="btns fix">
                   <button class="btn" :class="{active: isActive}" @click="isActive && confirm()">添加收货地址</button>
             </div>
@@ -41,7 +25,11 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 export default {
-
+      data() {
+            return{
+                  addressList: []
+            }
+      },
       created() {
             this.pageInit();
       },
@@ -54,14 +42,16 @@ export default {
             ...mapActions(['ajax']),
             pageInit() {
                   this.ajax({
-                        name: 'getUserAddress'
+                        name: 'getAddress'
                   }).then(res => {
                         let data = res;
                         console.log(data,9990);
+                        this.addressList = data;
                   });
             },
-            editAddress() {
-                  this.$router.push({ name: 'editaddress' });
+            editAddress(item) {
+                  console.log(item,456);
+                  this.$router.push({ name: 'editaddress', params: {item} });
             },
             confirm() {
                   this.$router.push({ name: 'editaddress' });

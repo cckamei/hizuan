@@ -120,7 +120,7 @@ let xhr = config => {
       url = url.replace(':id', config.id);
     }
 
-    if (method === 'post') {
+    if (method === 'post'|| 'delete' || 'put') {
       if (isJson) {
         data = JSON.stringify(data);
       } else {
@@ -153,6 +153,33 @@ let xhr = config => {
         return new Promise((resolve, reject) => {
           axios
             .post(url, data, {
+              headers
+            })
+            .then(res => {
+              checkStatus(resolve, reject, res, config);
+            })
+            .catch(res => {
+              reject(res);
+            });
+        });
+        case 'delete':
+        return new Promise((resolve, reject) => {
+          console.log(headers,11111)
+          axios
+            .delete(url, data, {
+              headers
+            })
+            .then(res => {
+              checkStatus(resolve, reject, res, config);
+            })
+            .catch(res => {
+              reject(res);
+            });
+        });
+        case 'put':
+        return new Promise((resolve, reject) => {
+          axios
+            .put(url, data, {
               headers
             })
             .then(res => {

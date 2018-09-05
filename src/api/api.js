@@ -10,10 +10,12 @@ let api = {
   cart: { url: 'api/v1/cart', method: 'get' }, //获取购物车的商品列表
   collect: { url: 'api/v1/collects' }, //收藏商品
 
-  getAddress: { url: 'api/v1/address', method: 'get' }, //获取个人地址
   getUserInfo: { url: 'api/v1/user_info', method: 'get' },  //获取个人信息
   editUserInfo: { url: 'api/v1/user_info', method: 'post' },  //个人资料完善
-  getUserAddress: { url: 'api/v1/address', method: 'get'} //获取收货地址
+  getAddress: { url: 'api/v1/address', method: 'get'}, //获取收货地址
+  addAdress: { url: 'api/v1/address', method: 'post'}, //添加收货地址
+  setAdress: { url: 'api/v1/address', method: 'put'}, //编辑收货地址
+  delAdress: { url: 'api/v1/address', method: 'delete'} //删除收货地址
 };
 
 for (var k in api) {

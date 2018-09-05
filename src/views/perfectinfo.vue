@@ -6,10 +6,10 @@
         <li class="section">
           <ul class="form">
             <li>
-              <v-form-input label="昵称*" v-model="reqData.nick_name" maxlength="6" placeholder="请填写您的账户昵称"></v-form-input>
+              <v-form-input :readonly="!isEdit" label="昵称*" v-model="reqData.nick_name" maxlength="6" placeholder="请填写您的账户昵称"></v-form-input>
             </li>
             <li>
-              <v-form-input label="姓名*" v-model="reqData.name" maxlength="4" placeholder="请填写您的真实姓名"></v-form-input>
+              <v-form-input :readonly="!isEdit" label="姓名*" v-model="reqData.name" maxlength="4" placeholder="请填写您的真实姓名"></v-form-input>
             </li>
             <li>
               <v-form-select label="性别*" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别"></v-form-select>
@@ -18,7 +18,7 @@
               <v-form-datepicker label="生日*" title="生日日期" v-model="reqData.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日"></v-form-datepicker>
             </li>
             <li>
-              <v-form-input label="身份证号*" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
+              <v-form-input :readonly="!isEdit" label="身份证号*" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
             </li>
             <li>
               <v-form-select label="职业*" title="职业选择" v-model="reqData.occupation" :list="occupation" placeholder="请选择您所从事的职业"></v-form-select>
@@ -29,16 +29,16 @@
         <li class="section" v-if="loadmore">
           <ul class="form">
             <li>
-              <v-form-input label="中指指圈号" v-model="reqData.zzqh" maxlength="20"></v-form-input>
+              <v-form-input :readonly="!isEdit" label="中指指圈号" v-model="reqData.zzqh" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input label="无名指指圈号" v-model="reqData.wmzqh" maxlength="20"></v-form-input>
+              <v-form-input :readonly="!isEdit" label="无名指指圈号" v-model="reqData.wmzqh" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input label="项链长度" v-model="reqData.xlcd" maxlength="20" unit="cm"></v-form-input>
+              <v-form-input :readonly="!isEdit" label="项链长度" v-model="reqData.xlcd" maxlength="20" unit="cm"></v-form-input>
             </li>
             <li>
-              <v-form-input label="手镯尺寸" v-model="reqData.szsc" maxlength="20" unit="mm"></v-form-input>
+              <v-form-input label="手镯尺寸" :readonly="!isEdit" v-model="reqData.szsc" maxlength="20" unit="mm"></v-form-input>
             </li>
           </ul>
         </li>
@@ -57,7 +57,7 @@
               <v-form-datepicker label="女儿生日" title="女儿生日" v-model="reqData.daughter_birth" format="yyyy-MM-dd 日" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-input label="兴趣爱好" v-model="reqData.hobbit" maxlength="20"></v-form-input>
+              <v-form-input :readonly="!isEdit" label="兴趣爱好" v-model="reqData.hobbit" maxlength="20"></v-form-input>
             </li>
           </ul>
         </li>
@@ -73,10 +73,12 @@
           </ul>
         </li>
       </ul>
-      <div class="btns">
-        <button class="btn" :class="{active: isActive}" @click="isActive && confirm()">确认提交</button>
-      </div>
+      <!-- <div class="btns">
+        
+      </div> -->
     </div>
+    <div class="rightTopBtn" v-if="!isEdit" @click="edit()">编辑</div>
+    <div v-if="isEdit" class="rightTopBtn submitBtn"><button class="btn" :class="{active: isActive}" @click="isActive && confirm()">提交</button></div>
   </div>
 </template>
 
@@ -86,6 +88,7 @@
   export default {
     data() {
       return {
+        isEdit: false,
         loadmore: false,
         occupation: ['教育工作', '医务工作', '财务工作', '媒体市场', '服务行业', '零售行业', '艺术工作', '技术工作', '公务员'],
         reqData: {
@@ -130,8 +133,11 @@
             }
           });
           this.reqData = data;
-          console.log(this.reqData,999);
         });
+      },
+      edit() {
+        console.log(46)
+        this.isEdit = !this.isEdit;
       },
       confirm() {
         let data = this.reqData;
@@ -172,7 +178,23 @@
       }
     }
   }
-
+  .rightTopBtn {
+    position: fixed;
+    top: 0px;
+    right: 40px;
+    width: 60px;
+    line-height: 96px;
+    z-index: 3;
+    color: #333333;
+    font-size: 26px;
+  }
+  .submitBtn {
+    .btn {
+      background: #ffffff;
+      color: #ffb4b4;
+    }
+    
+  }
   .more {
     height: 60px;
     line-height: 60px;
