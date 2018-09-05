@@ -15,7 +15,10 @@ let api = {
   getAddress: { url: 'api/v1/address', method: 'get'}, //获取收货地址
   addAdress: { url: 'api/v1/address', method: 'post'}, //添加收货地址
   setAdress: { url: 'api/v1/address', method: 'put'}, //编辑收货地址
-  delAdress: { url: 'api/v1/address', method: 'delete'} //删除收货地址
+  delAdress: { url: 'api/v1/address', method: 'delete'}, //删除收货地址
+  getProvince: { url: '/api/v1/province', method: 'get'}, //获取省
+  getCity: { url: '/api/v1/city', method: 'get'}, //获取市
+  getDistrict: { url: '/api/v1/district', method: 'get'} //获取区
 };
 
 for (var k in api) {

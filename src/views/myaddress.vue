@@ -61,6 +61,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .myaddress {
+      overflow-y: auto;
   .addresslist {
     margin-top: 96px;
     background: #ffffff;

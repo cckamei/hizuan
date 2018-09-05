@@ -164,7 +164,7 @@ let xhr = config => {
         });
         case 'delete':
         return new Promise((resolve, reject) => {
-          console.log(headers,11111)
+          console.log(headers,11111);
           axios
             .delete(url, data, {
               headers
