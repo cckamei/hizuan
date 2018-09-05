@@ -28,9 +28,9 @@
             </ul>
              <v-slide-up v-model="visible" title="选择区域" @confirm="confirm">
                    <ul class="addChoice">
-                         <li>{{reqData.province}}</li>
-                         <li>{{reqData.city}}</li>
-                         <li>{{reqData.district}}</li>
+                         <li @click="addRessClick(1)">{{reqData.province}}<i v-if="chIndex==1"></i></li>
+                         <li @click="addRessClick(2)">{{reqData.city}}<i v-if="chIndex==2"></i></li>
+                         <li @click="addRessClick(3)">{{reqData.district}}<i v-if="chIndex==3"></i></li>
                    </ul>
                    <ul class="addList">
                          <li v-for="(item,index) in adList" :key="index" :class="{actived: selectedIndex==index}" @click="choice(item,index)">{{item.name}}</li>
@@ -49,8 +49,9 @@ import { mapActions } from 'vuex';
 export default {
       data() {
             return {
+                  chIndex: 1,
                   addressId: '', //省市区id
-                  addId: 0, //0:省份选择; 1:市区； 2：地区
+                  addId: 1, //1:省份选择; 2:市区； 3：地区
                   isEdit: false,
                   selectedIndex: -1,
                   visible: false,
@@ -98,7 +99,7 @@ export default {
             getCity() {
                   this.ajax({
                         name: 'getCity',
-                        pre: this.addressId
+                        data: { pre: this.addressId}
                   }).then(res => {
                         this.adList = res;
                   })
@@ -106,7 +107,7 @@ export default {
             getDistrict() {
                   this.ajax({
                         name: 'getDistrict',
-                        pre: this.addressId
+                        data: { pre: this.addressId}
                   }).then(res => {
                         this.adList = res;
                   })
@@ -114,18 +115,28 @@ export default {
             choice(item,index) {
                   this.selectedIndex = index;
                   this.addressId = item.id;
-                  if(this.addId ==0) {
-                        console.log(this.pre)
+                  if(this.addId == 1) {
                         this.reqData.province = item.name;
-                        this.addId =1;
+                        this.addId = 2;
+                        this.chIndex = 2;
                         this.getCity();
-                  }else if(this.addId ==1) {
+                  }else if(this.addId == 2) {
                         this.reqData.city = item.name
-                        this.addId =2;
+                        this.addId = 3;
+                        this.chIndex = 3;
                         this.getDistrict();
                   }else {
-                        this.reqData.district = item.name
-                        this.addId =0;
+                  }
+            },
+            addRessClick(index) {
+                   this.chIndex = index;
+                  if(index == 1) {
+                        this.getProvince();
+                        this.addId = 1;
+                  }else if(index == 2 && this.addId == 2) {
+                         this.getCity();
+                  }else if(index == 3 && this.addId == 3){
+                        this.getDistrict();
                   }
             },
             confirm() {
@@ -182,6 +193,28 @@ export default {
                         color: #666;
                         font-size: 32px;
                   }
+            }
+      }
+}
+.addChoice {
+      display: flex;
+      flex-flow:row nowrap;
+      justify-content: flex-start;
+      border-bottom: 2px solid #f0f0f0;
+      li {
+            min-width: 92px;
+            height: 84px;
+            padding: 0 20px;
+            color: #666;
+            font-size: 24px;
+            position: relative;
+            i{
+                  position: absolute;
+                  left: 0;
+                  bottom: 0;
+                  height: 4px;
+                  background: #faa0a0;
+                  min-width: 92px;
             }
       }
 }
