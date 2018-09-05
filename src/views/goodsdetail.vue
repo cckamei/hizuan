@@ -69,7 +69,7 @@
       </div>
       <div class="gap"></div>
       <div class="row">
-        <v-form-slide-up label="商品规格" v-model="reqData.sku" placeholder="选择 主钻分数；钻石净度；颜色；规格；数量" @confirm="handleSKU">
+        <v-form-slide-up label="商品规格" v-model="reqData.sku" :placeholder="`选择 ${isZuan ? '主钻分数；钻石净度；' : '主石名称；主石评级；'}颜色；规格；数量`" @confirm="handleSKU">
           <ul class="sku">
             <li class="sku-icon flex">
               <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
@@ -79,11 +79,11 @@
               </div>
             </li>
             <li>
-              <div class="title">主钻分数</div>
+              <div class="title">{{isZuan ? '主钻分数' : '主石名称'}}</div>
               <v-button-radio v-model="sku.scoreIndex" :list="res.skuScore"></v-button-radio>
             </li>
             <li>
-              <div class="title">钻石净度</div>
+              <div class="title">{{isZuan ? '钻石净度' : '主石评级'}}</div>
               <v-button-radio v-model="sku.clarityIndex" :list="res.skuClarity"></v-button-radio>
             </li>
             <li>
@@ -225,10 +225,11 @@
         topVisible: false,
         top: 0,
         offsetTops: [],
+        isZuan: true,
         res: {
           bannerList: [],
-          skuScore: ['18分', '25分', '30分', '40分'],
-          skuClarity: ['SI/小瑕', 'VS/微瑕', 'VVS/极微瑕'],
+          skuScore: [],
+          skuClarity: [],
           skuColor: [],
           skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号'],
           limit: 10,
@@ -321,14 +322,38 @@
           Object.assign(this.res, res);
           this.res.bannerList = res.slide_img;
           let skuColor = [];
+          let skuScore = [];
+          let skuClarity = [];
+          let skuSpec = [];
 
           res.skus.forEach(item => {
-            // item.skuLabels = `${item}`;
+            this.isZuan = !!item.zuanshijingdu;
+            if(this.isZuan) {
+              if(item.zhuzuanfenshu) {
+                skuScore.push(item.zhuzuanfenshu);
+              }
+              if(item.zuanshijingdu) {
+                skuClarity.push(item.zuanshijingdu);
+              }
+            } else {
+              if(item.zhushimingcheng) {
+                skuScore.push(item.zhushimingcheng);
+              }
+              if(item.zhushipingji) {
+                skuClarity.push(item.zhushipingji);
+              }
+            }
             if(item.color) {
               skuColor.push(item.color);
             }
+            if(item.guige) {
+              skuSpec.push(item.guige);
+            }
           });
           this.res.skuColor = [...new Set(skuColor)];
+          this.res.skuScore = [...new Set(skuScore)];
+          this.res.skuClarity = [...new Set(skuClarity)];
+          this.res.skuSpec = [...new Set(skuSpec)];
           console.log(this.res);
         });
       },
@@ -364,10 +389,10 @@
         this.ajax({
           name: 'collect',
           data: {
-            'collect_id': ''
+            'collect_id': '5b8d40aa8263913b53665a16'
           }
         }).then(res => {
-          console.log(res);
+          this.toast('收藏成功！');
         });
       }
     }

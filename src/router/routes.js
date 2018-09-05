@@ -1,7 +1,7 @@
 const router = [
   {
     name: 'index',
-    path: '/home',
+    path: '/',
     component: () => import('@/views/home')
   },
   {
@@ -46,7 +46,7 @@ const router = [
   },
   {
     name: 'login',
-    path: '/',
+    path: '/login',
     component: () => import('@/views/login')
   },
   {
