@@ -15,7 +15,7 @@
                   </li>
                   <li>
                         <label>所在地区</label>
-                        <input type="text" v-model="reqData.address"  placeholder="请选择收货人所在地区" readonly @click="visible = true">
+                        <input type="text" v-model="address"  placeholder="请选择收货人所在地区" readonly @click="visible = true">
                   </li>
                   <li>
                         <v-form-input label="详细地址" v-model="reqData.street" maxlength="6" placeholder="请填写街道、楼牌号等信息"></v-form-input>
@@ -26,7 +26,7 @@
                         
                   </li>
             </ul>
-             <v-slide-up v-model="visible" title="选择区域" @confirm="confirm">
+             <v-slide-up v-model="visible" title="选择区域" @confirm="confirm()">
                    <ul class="addChoice">
                          <li @click="addRessClick(1)">{{reqData.province}}<i v-if="chIndex==1"></i></li>
                          <li @click="addRessClick(2)">{{reqData.city}}<i v-if="chIndex==2"></i></li>
@@ -37,9 +37,9 @@
                    </ul>
 
             </v-slide-up>
-             <!-- <div class="btns">
-                  <button class="btn" :class="{active: isActive}" @click="isActive && confirm()">确认提交</button>
-            </div> -->
+             <div class="btns">
+                  <button class="btn" :class="{active: isActive}" @click="isActive && confirmSubmit()">确认提交</button>
+            </div>
             <!-- <button @click="add()">添加地址</button> -->
       </div>
       
@@ -49,20 +49,21 @@ import { mapActions } from 'vuex';
 export default {
       data() {
             return {
-                  chIndex: 1,
-                  addressId: '', //省市区id
+                  chIndex: 1, //省市区选择下划线
                   addId: 1, //1:省份选择; 2:市区； 3：地区
+                  provinceId: '', //选择的省份id
+                  cityId: '', //选择的市id
                   isEdit: false,
-                  selectedIndex: -1,
+                  selectedIndex: -1, //选中的省市区在列表中的index
                   visible: false,
                   adList: [],
+                  address: '', //展示给用户的地址
                   reqData: {
-                        address: '',
-                        phone: '15829296362',//手机号
-                        province:'山西省',//省
-                        name: 'A先生',//姓名
-                        city: '太原市',//市
-                        street: '子午大道',//街道
+                        phone: '',//手机号
+                        province:'北京市',//省
+                        name: '',//姓名
+                        city: '北京市',//市
+                        street: '',//街道
                         code: '0',
                         district: '朝阳区'//区
                   },
@@ -74,8 +75,14 @@ export default {
             if(item) {
                   this.reqData = item;
                   this.isEdit = true;
+                  this.address = item.province + '-' + item.city + '-' +item.district;
             }
             this.getProvince();
+      },
+      computed: {
+            isActive() {
+                  return this.reqData.phone && this.reqData.name && this.reqData.street;
+            }
       },
       methods: {
             ...mapActions(["ajax"]),
@@ -99,7 +106,7 @@ export default {
             getCity() {
                   this.ajax({
                         name: 'getCity',
-                        data: { pre: this.addressId}
+                        data: { pre: this.provinceId}
                   }).then(res => {
                         this.adList = res;
                   })
@@ -107,7 +114,7 @@ export default {
             getDistrict() {
                   this.ajax({
                         name: 'getDistrict',
-                        data: { pre: this.addressId}
+                        data: { pre: this.cityId}
                   }).then(res => {
                         this.adList = res;
                   })
@@ -119,17 +126,24 @@ export default {
                         this.reqData.province = item.name;
                         this.addId = 2;
                         this.chIndex = 2;
+                        this.provinceId = item.id;
                         this.getCity();
+                        this.selectedIndex = -1;
                   }else if(this.addId == 2) {
                         this.reqData.city = item.name
                         this.addId = 3;
                         this.chIndex = 3;
+                        this.cityId = item.id;
                         this.getDistrict();
+                        this.selectedIndex = -1;
                   }else {
+                        this.reqData.district = item.name
                   }
+
             },
             addRessClick(index) {
                    this.chIndex = index;
+                   this.selectedIndex = -1;
                   if(index == 1) {
                         this.getProvince();
                         this.addId = 1;
@@ -140,16 +154,14 @@ export default {
                   }
             },
             confirm() {
-                  let selected = this.list[this.selectedIndex];
-                  this.reqData.address = typeof selected === 'string' ? selected : selected[this.keyName];
-                  this.$emit('input', this.selectedIndex);
+                  this.address = this.reqData.province + '-' + this.reqData.city + '-' +this.reqData.district;
             },
-            add() {
+            confirmSubmit() {
                   this.ajax({
                         name: 'addAdress',
                         data: this.reqData
                   }).then(res => {
-                        console.log(res,789);
+                        this.$router.back(-1);
                   })
             }
       }
@@ -215,12 +227,15 @@ export default {
                   height: 4px;
                   background: #faa0a0;
                   min-width: 92px;
+                  width: 100%;
             }
       }
 }
 .addList {
       margin-top: 10px;
       font-size: 24px;
+      overflow-y: auto;
+      height: 588px;
       li {
             height: 64px;
             line-height: 64px;

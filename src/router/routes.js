@@ -125,6 +125,11 @@ const router = [
     component: () => import('@/views/refunddetail')
   },
   {
+    name: 'cancelList',
+    path: '/my/cancelList',
+    component: () => import('@/views/cancelList')
+  },
+  {
     path: '*',
     redirect: '/'
   }

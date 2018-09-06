@@ -1,7 +1,8 @@
 <template>
       <div class="mypage">
             <div class="mymessage">
-                  <img src="~assets/home/button_my.png" alt="">
+                  <!-- <img src="~assets/home/button_my.png" alt="" v-if="userInfo.avatar"> -->
+                  <img :src="userInfo.avatar" alt="">
                   <div class="usermessage">
                         <h2>{{userInfo.nick_name}}</h2>
                         <span>积分：1200</span>
@@ -25,29 +26,29 @@
             <div class="myorder">
                   <div class="ordertitle">
                         <span>我的订单</span>
-                        <div class="titleright" @click="goOrderList()">
+                        <div class="titleright" @click="goOrderList(1)">
                               <span>查看全部订单</span>
                               <img src="~assets/mypage/icon_arrow_r_s.png" alt="">
                         </div>
                   </div>
                   <div class="ordertype">
-                        <div class="orderitem">
+                        <div class="orderitem" @click="goOrderList(2)">
                               <img src="~assets/mypage/icon_order_1.png" alt="">
                               <span>待付款</span>
                         </div>
-                        <div class="orderitem">
+                        <div class="orderitem" @click="goOrderList(3)">
                               <img src="~assets/mypage/icon_order_2.png" alt="">
                               <span>待发货</span>
                         </div>
-                        <div class="orderitem">
+                        <div class="orderitem" @click="goOrderList(4)">
                               <img src="~assets/mypage/icon_order_3.png" alt="">
                               <span>待收货</span>
                         </div>
-                        <div class="orderitem">
+                        <div class="orderitem" @click="goOrderList(5)">
                               <img src="~assets/mypage/icon_order_4.png" alt="">
                               <span>已完成</span>
                         </div>
-                        <div class="orderitem">
+                        <div class="orderitem" @click="goCancelist()">
                               <img src="~assets/mypage/icon_order_5.png" alt="">
                               <span>退款/取消</span>
                         </div>
@@ -92,8 +93,8 @@ export default {
     goMypage() {
       this.$router.push({ name: "mypage" });
     },
-    goOrderList() {
-          this.$router.push({ name: 'orderlist'});
+    goOrderList(type) {
+          this.$router.push({ name: 'orderlist', params: {type}});
     },
     goMystore() {
       this.$router.push({ name: 'mystore' });
@@ -103,6 +104,9 @@ export default {
     },
     goMySet() {
       this.$router.push({ name: 'myset' });
+    },
+    goCancelist() {
+      this.$router.push({ name: 'cancelList' });
     }
   }
 };

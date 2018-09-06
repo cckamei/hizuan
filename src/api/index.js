@@ -124,7 +124,7 @@ let xhr = config => {
       url = url.replace(':id', config.id);
     }
 
-    if (method === 'post' || 'delete' || 'put') {
+    if (method !== 'get') {
       if (isJson) {
         data = JSON.stringify(data);
       } else {

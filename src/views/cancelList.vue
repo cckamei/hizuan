@@ -1,12 +1,6 @@
 <template>
       <div class="orderlistpage">
             <v-header>订单列表</v-header>
-            <div class="tab">
-                  <span :class="{active: item.type == reqData.type}" v-for="(item, index) in orderTab" :key="index" @click="changeTab(index)" :disabled="item.type == reqData.type">
-                        <i>{{item.title}}</i>
-                        <i v-if="item.isChoiced"></i>
-                  </span>
-            </div>
             <div class="orderlist">
                   <div class="listitem">
                         <div class="itemtitle" @click="goDetail()">
@@ -14,7 +8,7 @@
                                     <img src="~assets/mypage/icon_shop.png" alt="">
                                     <span>CC卡美珠宝</span>
                               </div>
-                              <div class="listright">待收货</div>
+                              <div class="listright">已取消</div>
                         </div>
                         <div class="itemcontent">
                               <div class="contentleft">
@@ -56,21 +50,6 @@
                               共1件商品  实付款： <span>￥18888.00</span> （含运费￥10.00）
                         </div>
                         <div class="itemfoot">
-                              <!-- 待收货 -->
-                              <!-- <div class="ordertypeDS">
-                                    <button class="btngrey btnleft">查看物流</button>
-                                    <button class="btnpink">确认收货</button>
-                              </div> -->
-                              <!-- 已完成 -->
-                              <!-- <div class="ordertypeWC">
-                                    <button class="btngrey btnleft">联系客服</button>
-                                    <button class="btngrey">以旧换新</button>
-                              </div> -->
-                              <!-- 待付款 -->
-                              <!-- <div class="ordertypeDF">
-                                    <button class="btngrey btnleft">联系客服</button>
-                                    <button class="btnpink">立即付款</button>
-                              </div> -->
                               <!-- 已取消 -->
                               <!-- <div class="ordertypeQX">
                                     <button class="btngrey btnleft">联系客服</button>
@@ -91,59 +70,16 @@
 export default {
   data() {
     return {
-      orderTab: [
-        {
-          title: "全部",
-          isChoiced: false,
-          type: 1
-        },
-        {
-          title: "待付款",
-          isChoiced: false,
-          type: 2
-        },
-        {
-          title: "待发货",
-          isChoiced: false,
-          type: 3
-        },
-        {
-          title: "待收货",
-          isChoiced: false,
-          type: 4
-        },
-        {
-          title: "已完成",
-          isChoiced: false,
-          type: 5
-        }
-      ],
-      reqData: {
-        type: 1
-      }
+      
     };
   },
   created(){
-    let type = this.$route.params.type || 1;
-    console.log(type);
-    this.reqData.type = type;
+    
   },
   methods: {
-    //切换tab
-    changeTab(index) {
-      if (this.reqData.type != index + 1) {
-        this.reqData.type = index + 1;
-        //先置空列表数组和分页信息；然后请求数据
-      }
-    },
     //跳转订单详情
     goDetail() {
-          this.$router.push({ name: 'orderdetail' });
-          // 全部订单----取消/退款 订单跳转
-          // this.$router.push({ name: 'refunddetail' });
-    },
-    goRefunddetail() {
-       this.$router.push({ name: 'refunddetail' });
+          this.$router.push({ name: 'refunddetail' });
     }
   }
 };
@@ -151,49 +87,6 @@ export default {
 <style lang="less" scoped>
 .orderlistpage {
   background: #f0f0f0;
-  .header {
-    box-shadow: 0 0 0 0 rgba(170, 170, 170, 0.5);
-    border-bottom: 2px solid #cccccc;
-  }
-  .tab {
-    position: fixed;
-    height: 96px;
-    line-height: 96px;
-    top: 96px;
-    width: 100%;
-    box-shadow: 0 5px 10px 5px rgba(170, 170, 170, 0.5);
-    background-color: #fff;
-    z-index: 2;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
-    padding: 0 45px;
-    span {
-      color: #666666;
-      text-align: center;
-      line-height: 96px;
-      flex: 1;
-      position: relative;
-      font-size: 20px;
-    }
-
-    .active {
-      color: #333333;
-      font-weight: bold;
-      font-size: 24px;
-      &:after {
-        content: "";
-        position: absolute;
-        width: 108px;
-        height: 2px;
-        bottom: -1px;
-        background: #faa0a0;
-        left: 0;
-        right: 0;
-        margin: auto;
-      }
-    }
-  }
   .orderlist {
     .listitem {
       background: #ffffff;
@@ -202,7 +95,7 @@ export default {
         padding: 0 30px;
         height: 64px;
         line-height: 64px;
-        margin-top: 209px;
+        margin-top: 96px;
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
