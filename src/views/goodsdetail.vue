@@ -75,7 +75,7 @@
               <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
               <div>
                 <div class="price"><span>￥</span>{{8888.00 | currency}}</div>
-                <span class="code">商品编号：{{res.goodsParams.merchant_code}}</span>
+                <span class="code">商品编号：{{res.merchant_code}}</span>
               </div>
             </li>
             <li>
@@ -110,39 +110,41 @@
           <ul class="goods-param">
             <li class="flex">
               <span class="label">商品编号</span>
-              <span class="value">{{res.goodsParams.merchant_code}}</span>
+              <span class="value">{{res.merchant_code}}</span>
             </li>
             <li class="flex">
               <span class="label">套系</span>
-              <span class="value">婚嫁系列</span>
+              <span class="value">{{null}}</span>
             </li>
             <li class="flex">
               <span class="label">款式</span>
-              <span class="value">婚戒</span>
+              <span class="value">{{res.kuanshi}}</span>
             </li>
-            <li class="flex">
-              <span class="label">钻石切工</span>
-              <span class="value">完美</span>
-            </li>
-            <li class="flex">
-              <span class="label">主钻形状</span>
-              <span class="value">{{res.goodsParams.zhuzuanxingzhuang}}</span>
-            </li>
-            <li class="flex">
-              <span class="label">副钻形状</span>
-              <span class="value">{{res.goodsParams.fuzuanxingzhuang || '无副钻'}}</span>
-            </li>
-            <li class="flex">
-              <span class="label">副钻分数</span>
-              <span class="value">{{res.goodsParams.fuzuanfenshu || '无副钻'}}</span>
-            </li>
+            <template v-if="isZuan">
+              <li class="flex">
+                <span class="label">钻石切工</span>
+                <span class="value">{{res.zuanshiqiegong}}</span>
+              </li>
+              <li class="flex">
+                <span class="label">主钻形状</span>
+                <span class="value">{{res.zhuzuanxingzhuang}}</span>
+              </li>
+              <li class="flex">
+                <span class="label">副钻形状</span>
+                <span class="value">{{res.fuzuanxingzhuang || '无副钻'}}</span>
+              </li>
+              <li class="flex">
+                <span class="label">副钻分数</span>
+                <span class="value">{{res.fuzuanfenshu || '无副钻'}}</span>
+              </li>
+            </template>
             <li class="flex">
               <span class="label">镶嵌材质</span>
-              <span class="value">{{res.goodsParams.xiangqiancaizhi}}</span>
+              <span class="value">{{res.xiangqiancaizhi}}</span>
             </li>
             <li class="flex">
               <span class="label">镶嵌方式</span>
-              <span class="value">{{res.goodsParams.xiangqianfangshi}}</span>
+              <span class="value">{{res.xiangqianfangshi}}</span>
             </li>
           </ul>
         </v-form-slide-up>
@@ -231,9 +233,8 @@
           skuScore: [],
           skuClarity: [],
           skuColor: [],
-          skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号'],
+          skuSpec: [],
           limit: 10,
-          goodsParams: {},
           benifit: [{
             id: 1,
             price: 1500,
@@ -258,7 +259,6 @@
             title: '新用户',
             desc: '新用户首单特惠'
           }],
-
           recommend: [{
             url: ss,
             name: '文承 戒指',
@@ -285,8 +285,8 @@
           scoreIndex: 0,
           clarityIndex: 0,
           colorIndex: 0,
-          specIndex: 0,
-          count: 1
+          specIndex: 0
+
         },
         lettering: {
           disable: 1,
@@ -296,7 +296,8 @@
         reqData: {
           sku: '',
           lettering: '',
-          benifit: ''
+          benifit: '',
+          count: 1
         }
       };
     },
@@ -312,13 +313,83 @@
     computed: {
       ...mapGetters(['getCommon'])
     },
+    watch: {
+      sku(val) {
+        console.log(val);
+      }
+    },
     methods: {
       ...mapActions(['ajax']),
       fetchGoodsDetail() {
         this.ajax({
           name: 'goodsDetail',
           id: this.getCommon.goodsId
-        }).then(res => {
+        }).then(() => {
+          let res = {
+            "zhuzuanxingzhuang": "主钻形状",
+            "price": 2998,
+            "fuzuanxingzhuang": "副钻形状",
+            "is_shop_same": true,
+            "xiangqiancaizhi": "镶嵌方式",
+            "slide_img": [],
+            "fuzuanfenshu": "副钻分数",
+            "goods_id": "5b851a4d1f30bfc39cddfc37",
+            "category": "项链/坠",
+            "is_new": true,
+            "sub_title": "传承中国传统文化，以纯天然色贝母拼成，打造印象派艺术画风的时尚单品",
+            "is_active": true,
+            "kuanshi": "款式",
+            "img": "http://pd1957kyq.bkt.clouddn.com/pic_mei.png",
+            "skus": [
+              {
+                "zuanshijingdu": "钻石净度1",
+                "price": 2998,
+                "color": "颜色1",
+                "sku_id": "5b851b341f30bfc39cddfc3d",
+                "zhushipingji": "主石评级1",
+                "count": 3,
+                "weight_unit": "克拉",
+                "guige": "规格1",
+                "zhushimingcheng": "主石名称1",
+                "zhuzuanfenshu": "主钻分数1",
+                "weight_value": 0.2,
+                "default": true
+              },
+              {
+                "zuanshijingdu": "钻石净度2",
+                "price": 2998,
+                "color": "颜色2",
+                "sku_id": "5b851b341f30bfc39cddfc3d",
+                "zhushipingji": "主石评级2",
+                "count": 4,
+                "weight_unit": "克拉",
+                "guige": "规格1",
+                "zhushimingcheng": "主石名称2",
+                "zhuzuanfenshu": "主钻分数2",
+                "weight_value": 0.3,
+                "default": true
+              },
+              {
+                "zuanshijingdu": "钻石净度3",
+                "price": 2998,
+                "color": "颜色3",
+                "sku_id": "5b851b341f30bfc39cddfc3d",
+                "zhushipingji": "主石评级3",
+                "count": 5,
+                "weight_unit": "克拉",
+                "guige": "规格3",
+                "zhushimingcheng": "主石名称3",
+                "zhuzuanfenshu": "主钻分数3",
+                "weight_value": 0.4,
+                "default": true
+              }
+            ],
+            "zuanshiqiegong": "钻石切工",
+            "goods_title": "醒狮MeiMei经典款项链/坠 ",
+            "detail": "<p>醒狮MeiMei经典款项链/坠</p>\n\n<p>&nbsp;</p>\n\n<p>传承中国传统文化，以纯天然色贝母拼成，打造印象派艺术画风的时尚单品</p>\n",
+            "xiangqianfangshi": "镶嵌方式"
+          };
+
           Object.assign(this.res, res);
           this.res.bannerList = res.slide_img;
           let skuColor = [];
