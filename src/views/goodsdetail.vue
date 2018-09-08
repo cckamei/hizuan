@@ -74,32 +74,32 @@
             <li class="sku-icon flex">
               <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
               <div>
-                <div class="price"><span>￥</span>{{8888.00 | currency}}</div>
+                <div class="price"><span>￥</span>{{res.price | currency}}</div>
                 <span class="code">商品编号：{{res.merchant_code}}</span>
               </div>
             </li>
             <li>
               <div class="title">{{isZuan ? '主钻分数' : '主石名称'}}</div>
-              <v-button-radio v-model="sku.scoreIndex" :list="res.skuScore"></v-button-radio>
+              <v-button-radio v-model="sku.scoreIndex" :list="res.skuScore" :cancel="true"></v-button-radio>
             </li>
             <li>
               <div class="title">{{isZuan ? '钻石净度' : '主石评级'}}</div>
-              <v-button-radio v-model="sku.clarityIndex" :list="res.skuClarity"></v-button-radio>
+              <v-button-radio v-model="sku.clarityIndex" :list="res.skuClarity" :cancel="true"></v-button-radio>
             </li>
             <li>
               <div class="title">颜色</div>
-              <v-button-radio v-model="sku.colorIndex" :list="res.skuColor"></v-button-radio>
+              <v-button-radio v-model="sku.colorIndex" :list="res.skuColor" :cancel="true"></v-button-radio>
             </li>
             <li>
               <div class="title">规格</div>
-              <v-button-radio v-model="sku.specIndex" :list="res.skuSpec"></v-button-radio>
+              <v-button-radio v-model="sku.specIndex" :list="res.skuSpec" :cancel="true"></v-button-radio>
             </li>
             <li class="count flex">
               <span>数量</span>
               <div class="flex">
-                <div @click="sku.count > 1 && sku.count--" class="btn minus" :class="{active: sku.count > 1}"></div>
-                <input v-model="sku.count" type="text" readonly>
-                <div @click="sku.count < res.limit && sku.count++" class="btn plus" :class="{active: sku.count < res.limit}"></div>
+                <div @click="reqData.count > 1 && reqData.count--" class="btn minus" :class="{active: reqData.count > 1}"></div>
+                <input v-model="reqData.count" type="text" readonly>
+                <div @click="reqData.count < limit && reqData.count++" class="btn plus" :class="{active: reqData.count < limit}"></div>
               </div>
             </li>
           </ul>
@@ -228,13 +228,13 @@
         top: 0,
         offsetTops: [],
         isZuan: true,
+        limit: 1,
         res: {
           bannerList: [],
           skuScore: [],
           skuClarity: [],
           skuColor: [],
           skuSpec: [],
-          limit: 10,
           benifit: [{
             id: 1,
             price: 1500,
@@ -282,11 +282,10 @@
           }]
         },
         sku: {
-          scoreIndex: 0,
-          clarityIndex: 0,
-          colorIndex: 0,
-          specIndex: 0
-
+          scoreIndex: -1,
+          clarityIndex: -1,
+          colorIndex: -1,
+          specIndex: -1
         },
         lettering: {
           disable: 1,
@@ -294,7 +293,7 @@
           remarks: ''
         },
         reqData: {
-          sku: '',
+          card_id: '',
           lettering: '',
           benifit: '',
           count: 1
@@ -314,8 +313,32 @@
       ...mapGetters(['getCommon'])
     },
     watch: {
-      sku(val) {
-        console.log(val);
+      sku: {
+        handler({ scoreIndex, clarityIndex, colorIndex, specIndex }) {
+          let selectIndexes = [scoreIndex, clarityIndex, colorIndex, specIndex];
+          [this.res.skuScore, this.res.skuClarity, this.res.skuColor, this.res.skuSpec].forEach((type, typeIndex) => {
+            type.forEach((item, index) => {
+              let arr = Object.assign([], selectIndexes);
+              arr[typeIndex] = index;
+              let reg = new RegExp(arr.join('_').replace(/-1/g, '[\\d]'), 'g');
+              let result = this.res.skus.filter(sku => {
+                console.log(reg, sku.skuIds);
+                return reg.test(sku.skuIds);
+              });
+              item.disabled = !result.length;
+            });
+          });
+          selectIndexes.includes(-1);
+          if(!selectIndexes.includes(-1)) {
+            let { count, price } = this.res.skus.filter(sku => selectIndexes.join('_') === sku.skuIds)[0];
+            this.limit = count;
+            this.reqData.count = Math.min(this.reqData.count, count);
+            this.res.price = price;
+          } else {
+            this.limit = 1;
+          }
+        },
+        deep: true
       }
     },
     methods: {
@@ -342,44 +365,58 @@
             "img": "http://pd1957kyq.bkt.clouddn.com/pic_mei.png",
             "skus": [
               {
-                "zuanshijingdu": "钻石净度1",
-                "price": 2998,
-                "color": "颜色1",
+                "zuanshijingdu": "钻石净度22",
+                "price": 1,
+                "color": "颜色8",
                 "sku_id": "5b851b341f30bfc39cddfc3d",
                 "zhushipingji": "主石评级1",
                 "count": 3,
                 "weight_unit": "克拉",
-                "guige": "规格1",
-                "zhushimingcheng": "主石名称1",
-                "zhuzuanfenshu": "主钻分数1",
+                "guige": "规格3",
+                "zhushimingcheng": "主石名称11",
+                "zhuzuanfenshu": "主钻分数3",
                 "weight_value": 0.2,
                 "default": true
               },
               {
                 "zuanshijingdu": "钻石净度2",
-                "price": 2998,
+                "price": 2,
                 "color": "颜色2",
                 "sku_id": "5b851b341f30bfc39cddfc3d",
-                "zhushipingji": "主石评级2",
+                "zhushipingji": "主石评级32",
                 "count": 4,
                 "weight_unit": "克拉",
                 "guige": "规格1",
-                "zhushimingcheng": "主石名称2",
+                "zhushimingcheng": "主石名称21",
                 "zhuzuanfenshu": "主钻分数2",
                 "weight_value": 0.3,
                 "default": true
               },
               {
                 "zuanshijingdu": "钻石净度3",
-                "price": 2998,
+                "price": 3,
                 "color": "颜色3",
                 "sku_id": "5b851b341f30bfc39cddfc3d",
-                "zhushipingji": "主石评级3",
+                "zhushipingji": "主石评级13",
                 "count": 5,
                 "weight_unit": "克拉",
-                "guige": "规格3",
+                "guige": "规格1",
                 "zhushimingcheng": "主石名称3",
                 "zhuzuanfenshu": "主钻分数3",
+                "weight_value": 0.4,
+                "default": true
+              },
+              {
+                "zuanshijingdu": "钻石净度1",
+                "price": 4,
+                "color": "颜色2",
+                "sku_id": "5b851b341f30bfc39cddfc3d",
+                "zhushipingji": "主石评级4",
+                "count": 8,
+                "weight_unit": "克拉",
+                "guige": "规格3",
+                "zhushimingcheng": "主石名称2",
+                "zhuzuanfenshu": "主钻分数6",
                 "weight_value": 0.4,
                 "default": true
               }
@@ -392,12 +429,12 @@
 
           Object.assign(this.res, res);
           this.res.bannerList = res.slide_img;
-          let skuColor = [];
           let skuScore = [];
           let skuClarity = [];
+          let skuColor = [];
           let skuSpec = [];
 
-          res.skus.forEach(item => {
+          res.skus.forEach((item, index) => {
             this.isZuan = !!item.zuanshijingdu;
             if(this.isZuan) {
               if(item.zhuzuanfenshu) {
@@ -421,11 +458,35 @@
               skuSpec.push(item.guige);
             }
           });
-          this.res.skuColor = [...new Set(skuColor)];
-          this.res.skuScore = [...new Set(skuScore)];
-          this.res.skuClarity = [...new Set(skuClarity)];
-          this.res.skuSpec = [...new Set(skuSpec)];
-          console.log(this.res);
+
+          skuScore = [...new Set(skuScore)];
+          skuClarity = [...new Set(skuClarity)];
+          skuColor = [...new Set(skuColor)];
+          skuSpec = [...new Set(skuSpec)];
+
+          res.skus.forEach(item => {
+            if(this.isZuan) {
+              item.skuIds = [
+                skuScore.indexOf(item.zhuzuanfenshu),
+                skuClarity.indexOf(item.zuanshijingdu),
+                skuColor.indexOf(item.color),
+                skuSpec.indexOf(item.guige)
+              ].join('_');
+            } else {
+              item.skuIds = [
+                skuScore.indexOf(item.zhushimingcheng),
+                skuClarity.indexOf(item.zhushipingji),
+                skuColor.indexOf(item.color),
+                skuSpec.indexOf(item.guige)
+              ].join('_');
+            }
+          });
+
+          this.res.skuScore = skuScore.map(item => ({ label: item, disabled: false }));
+          this.res.skuClarity = skuClarity.map(item => ({ label: item, disabled: false }));
+          this.res.skuColor = skuColor.map(item => ({ label: item, disabled: false }));
+          this.res.skuSpec = skuSpec.map(item => ({ label: item, disabled: false }));
+          console.log(this.res.skus);
         });
       },
       handleSKU() {
@@ -433,7 +494,7 @@
         let clarity = this.res.skuClarity[this.sku.clarityIndex];
         let color = this.res.skuColor[this.sku.colorIndex];
         let spec = this.res.skuSpec[this.sku.specIndex];
-        this.reqData.sku = `已选 ${score}；${clarity}；${color}；${spec}`;
+        this.reqData.card_id = `已选 ${score}；${clarity}；${color}；${spec}`;
       },
       handleLettering() {
         let disable = this.lettering.disable ? '否' : '是';

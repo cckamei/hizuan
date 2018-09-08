@@ -1,7 +1,7 @@
 <template>
   <ul class="flex">
-    <li v-for="(item, index) in list" @click="selectIndex = index" :key="index">
-      <button @click="selectIndex = index" :class="{active: selectIndex === index}">{{typeof item === 'string' ? item : item[keyName]}}</button>
+    <li v-for="(item, index) in list" @click="switchBtn(item, index)" :key="index">
+      <button :class="{active: selectIndex === index, disabled: item.disabled}">{{typeof item === 'string' ? item : item[keyName]}}</button>
     </li>
   </ul>
 </template>
@@ -20,6 +20,10 @@
       keyName: {
         type: String,
         default: 'label'
+      },
+      cancel: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -36,6 +40,17 @@
       },
       selectIndex(val) {
         this.$emit('input', this.selectIndex);
+      }
+    },
+    methods: {
+      switchBtn(item, index) {
+        if(!item.disabled) {
+          if(this.cancel && this.selectIndex === index) {
+            this.selectIndex = -1;
+          } else {
+            this.selectIndex = index;
+          }
+        }
       }
     }
   };
@@ -60,6 +75,11 @@
           background-color: #fff0f0;
           color: #faa0a0;
           border: 1px solid #faa0a0; /*no*/
+        }
+        &.disabled {
+          color: #999 !important;
+          border: 1px dashed #999; /*no*/
+          background-color: #fff !important;
         }
       }
     }
