@@ -6,7 +6,7 @@
         <li class="section">
           <ul class="form">
             <li>
-              <v-form-input :readonly="!isEdit" label="昵称*" v-model="reqData.nick_name" maxlength="6" placeholder="请填写您的账户昵称"></v-form-input>
+              <v-form-input :readonly="!isEdit" label="昵称*" v-model="reqData['nick_name']" maxlength="6" placeholder="请填写您的账户昵称"></v-form-input>
             </li>
             <li>
               <v-form-input :readonly="!isEdit" label="姓名*" v-model="reqData.name" maxlength="4" placeholder="请填写您的真实姓名"></v-form-input>
@@ -21,7 +21,7 @@
               <v-form-input :readonly="!isEdit" label="身份证号*" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
             </li>
             <li>
-              <v-form-select label="职业*" title="职业选择" v-model="reqData.occupation" :list="occupation" placeholder="请选择您所从事的职业"></v-form-select>
+              <v-form-select label="职业*" title="职业选择" v-model="reqData.occupation" :list="occupations" placeholder="请选择您所从事的职业"></v-form-select>
             </li>
           </ul>
           <div class="more" v-if="!loadmore" @click="loadmore = true">点击展开填写详细资料获取更多优惠（选填）</div>
@@ -45,30 +45,30 @@
         <li class="section" v-if="loadmore">
           <ul class="form">
             <li>
-              <v-form-datepicker label="结婚纪念日" title="结婚纪念日" v-model="reqData.wedding_day" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker label="结婚纪念日" title="结婚纪念日" v-model="reqData['wedding_day']" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker label="配偶生日" title="配偶生日" v-model="reqData.lover_birth" format="yyyy - MM - dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker label="配偶生日" title="配偶生日" v-model="reqData['lover_birth']" format="yyyy - MM - dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker label="儿子生日" title="儿子生日" v-model="reqData.son_birth" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker label="儿子生日" title="儿子生日" v-model="reqData['son_birth']" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker label="女儿生日" title="女儿生日" v-model="reqData.daughter_birth" format="yyyy-MM-dd 日" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker label="女儿生日" title="女儿生日" v-model="reqData['daughter_birth']" format="yyyy-MM-dd 日" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
               <v-form-input :readonly="!isEdit" label="兴趣爱好" v-model="reqData.hobbit" maxlength="20"></v-form-input>
             </li>
           </ul>
         </li>
-        <li class="section" v-if="reqData.store_code">
+        <li class="section" v-if="reqData['store_code']">
           <div class="more">以下内容由线下门店填写（选填）</div>
           <ul class="form">
             <li>
-              <v-form-input label="门店代码" v-model="reqData.store_code" disabled="disabled" maxlength="20"></v-form-input>
+              <v-form-input label="门店代码" v-model="reqData['store_code']" disabled="disabled" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input label="珠宝顾问姓名" disabled="disabled" v-model="reqData.advisor_name" maxlength="20"></v-form-input>
+              <v-form-input label="珠宝顾问姓名" disabled="disabled" v-model="reqData['advisor_name']" maxlength="20"></v-form-input>
             </li>
           </ul>
         </li>
@@ -92,9 +92,9 @@
       return {
         isEdit: false,
         loadmore: false,
-        occupation: ['教育工作', '医务工作', '财务工作', '媒体市场', '服务行业', '零售行业', '艺术工作', '技术工作', '公务员'],
+        occupations: ['教育工作', '医务工作', '财务工作', '媒体市场', '服务行业', '零售行业', '艺术工作', '技术工作', '公务员'],
         reqData: {
-          nick_name: '', //昵称
+          'nick_name': '', //昵称
           name: '',//姓名
           gender: -1, //性别
           birthday: '', //生日
@@ -104,19 +104,20 @@
           szsc: '',  //手镯尺寸
           zzqh: '', //中指指圈号
           xlcd: '', //项链长度
-          wedding_day: '', //结婚纪念日
-          lover_birth: '', //配偶生日
-          son_birth: '', //儿子生日
-          daughter_birth: '', //女儿生日
+          'wedding_day': '', //结婚纪念日
+          'lover_birth': '', //配偶生日
+          'son_birth': '', //儿子生日
+          'daughter_birth': '', //女儿生日
           hobbit: '', //兴趣爱好
-          advisor_name: '', //珠宝顾问姓名
-          store_code: ''//门店代码
+          'advisor_name': '', //珠宝顾问姓名
+          'store_code': ''//门店代码
         }
       };
     },
     computed: {
       isActive() {
-        return this.reqData.nick_name.length && this.reqData.name.length && this.reqData.gender !== -1 && this.reqData.birthday.length && this.reqData.idcard.length && this.reqData.career !== -1;
+
+        return this.reqData['nick_name'].length && this.reqData.name.length && this.reqData.gender !== -1 && this.reqData.birthday.length && this.reqData.idcard.length && this.reqData.career !== -1;
       }
     },
     created() {
@@ -128,13 +129,33 @@
         this.ajax({
           name: 'getUserInfo'
         }).then(res => {
-          let data = res;
-          this.occupation.forEach((item, index) => {
-            if(item == data.career) {
-              data.occupation = index;
-            }
-          });
-          this.reqData = data;
+          let user = res;
+          if(user.career) {
+            this.occupations.forEach((occupation, index) => {
+              if(occupation == user.career) {
+                user.occupation = index;
+              }
+            });
+          }
+          this.reqData = {
+            'nick_name': user['nick_name'] == null ? '' : user['nick_name'],
+            name: user['name'] == null ? '' : user['name'],
+            gender: user['gender'] == null ? -1 : user['gender'],
+            birthday: user['birthday'] == null ? '' : user['birthday'],
+            idcard: user['idcard'] == null ? '' : user['idcard'],
+            occupation: user['occupation'] == null ? -1 : user['occupation'],
+            wmzqh: user['wmzqh'] == null ? '' : user['wmzqh'],
+            szsc: user['szsc'] == null ? '' : user['szsc'],
+            zzqh: user['zzqh'] == null ? '' : user['zzqh'],
+            xlcd: user['xlcd'] == null ? '' : user['xlcd'],
+            'wedding_day': user['wedding_day'] == null ? '' : user['wedding_day'],
+            'lover_birth': user['lover_birth'] == null ? '' : user['lover_birth'],
+            'son_birth': user['son_birth'] == null ? '' : user['son_birth'],
+            'daughter_birth': user['daughter_birth'] == null ? '' : user['daughter_birth'],
+            hobbit: user['hobbit'] == null ? '' : user['hobbit'],
+            'advisor_name': user['advisor_name'] == null ? '' : user['advisor_name'],
+            'store_code': user['store_code'] == null ? '' : user['store_code']
+          };
         });
       },
       edit() {
@@ -144,7 +165,7 @@
       confirm() {
         let data = this.reqData;
         let index = data.occupation;
-        data.career = this.occupation[index];
+        data.career = this.occupations[index];
         this.ajax({
           name: 'editUserInfo',
           data: data

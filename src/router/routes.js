@@ -60,9 +60,9 @@ const router = [
     component: () => import('@/views/verifyphone')
   },
   {
-    name: 'perfectinfo',
-    path: '/login/verifyphone/perfectinfo',
-    component: () => import('@/views/perfectinfo')
+    name: 'personal-data',
+    path: '/login/verifyphone/personal-data',
+    component: () => import('@/views/user/personal-data')
   },
   {
     name: 'registersuccess',
@@ -72,12 +72,17 @@ const router = [
   {
     name: 'mypage',
     path: '/mypage',
-    component: () => import('@/views/mypage')
+    component: () => import('@/views/user/index')
+  },
+  {
+    name: 'commissions',
+    path: '/commissions',
+    component: () => import('@/views/commissions')
   },
   {
     name: 'orderlist',
     path: '/my/orderlist',
-    component: () => import('@/views/orderlist')
+    component: () => import('@/views/order/index')
   },
   {
     name: 'orderdetail',
@@ -128,6 +133,16 @@ const router = [
     name: 'cancelList',
     path: '/my/cancelList',
     component: () => import('@/views/cancelList')
+  },
+  {
+    name: 'bespeak',
+    path: '/mypage/bespeak',
+    component: () => import('@/views/bespeak/index')
+  },
+  {
+    name: 'addappointment',
+    path: '/mypage/bespeak/addappointment',
+    component: () => import('@/views/bespeak/add')
   },
   {
     path: '*',
