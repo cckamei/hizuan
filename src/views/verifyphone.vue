@@ -7,7 +7,7 @@
           <v-input-text placeholder="请输入手机号码" v-model="account" clear maxlength="16" class="input"></v-input-text>
         </li>
         <li>
-          <v-input-code placeholder="请输入验证码" v-model="code" eye maxlength="16" class="input"></v-input-code>
+          <v-input-code :phone="account" placeholder="请输入验证码" v-model="code" maxlength="16" class="input"></v-input-code>
         </li>
       </ul>
       <v-agreement v-model="checked"></v-agreement>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapMutations } from 'vuex';
 
   export default {
     data() {
@@ -36,8 +36,21 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      ...mapMutations(['setCommon']),
       next() {
+        // this.ajax({
+        //   name: 'register',
+        //   data: {
+        //     phone: this.account,
+        //     vcode: this.code
+        //   },
+        //   error: true
+        // }).then(res => {
+        //   this.setCommon({ token: res.token, userId: res.user_id });
         this.$router.push({ name: 'perfectinfo' });
+        // }).catch(() => {
+        //   this.toast('手机号或验证码不正确');
+        // });
       }
     }
   };

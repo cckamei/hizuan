@@ -52,7 +52,7 @@
           error: true
         }).then(res => {
           this.setCommon({ token: res.token, userId: res.user_id });
-          this.$router.push('home');
+          this.$router.go(-1);
         }).catch(res => {
           this.toast('用户名或密码错误');
         });

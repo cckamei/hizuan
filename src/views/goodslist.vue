@@ -62,10 +62,12 @@
         sorts: ['价格从高到低', '价格从低到高'],
         goodsList: [],
         pageInfo: {},
-        loading: false
+        loading: false,
+        category: ''
       };
     },
     created() {
+      this.category = this.$route.params;
       this.fetchSeries();
     },
     computed: {
@@ -101,6 +103,10 @@
 
         if(this.sortSelectedIndex !== -1) {
           Object.assign(reqData, { orderby: Math.abs(this.sortSelectedIndex - 1) });
+        }
+
+        if(this.category) {
+          Object.assign(reqData, this.category);
         }
 
         this.ajax({

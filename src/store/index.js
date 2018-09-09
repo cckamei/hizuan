@@ -15,11 +15,15 @@ export default new Vuex.Store({
       goodsId: '',
       goodsType: ''
     },
-    userInfo: {}
+    userInfo: getSen('userInfo') || {},
+    address: getSen('address') || {}
   },
   getters: {
     getCacheData: state => serialize(state.cacheData),
-    getCommon: state => state.common
+    getCommon: state => state.common,
+    token: state => state.common.token,
+    userId: state => state.common.userId,
+    getAddress: state => state.address
   },
   mutations: {
     setCacheData(state, data) {
@@ -33,6 +37,10 @@ export default new Vuex.Store({
     setUserInfo(state, data) {
       state.userInfo = { ...state.userInfo, ...data };
       setSen('userInfo', state.userInfo);
+    },
+    setAddress(state, data) {
+      state.address = data;
+      setSen('address', data);
     }
   },
   actions: {

@@ -23,7 +23,7 @@
     <div class="buttons flex">
       <div class="btn"><img src="~assets/home/button_home.png" alt=""></div>
       <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
-      <button class="btn-txt btn-txt2">无忧购</button>
+      <button class="btn-txt btn-txt2" @click="goWuyougou">无忧购</button>
       <div class="btn" @click="goMypage()"><img src="~assets/home/button_my.png" alt=""></div>
     </div>
   </div>
@@ -80,7 +80,10 @@
         this.$router.push({ name: 'goodslist' });
       },
       goMypage() {
-         this.$router.push({ name: 'mypage' });
+        this.$router.push({ name: 'mypage' });
+      },
+      goWuyougou() {
+        this.toast('进入无忧购TODO');
       }
     }
   };

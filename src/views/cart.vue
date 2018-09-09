@@ -6,18 +6,18 @@
         <li class="flex" v-for="(item, index) in res.cart" v-touch.press="handlePress" :data-index="index">
           <div class="checkbox" :class="{active: item.checked, disabled: !item.limit}" @click="item.limit && (item.checked = !item.checked)"></div>
           <div class="img">
-            <img :src="item.src" alt="">
+            <img :src="item.img" alt="">
           </div>
           <div class="detail flex-auto flex">
-            <span class="name">{{item.name}}</span>
-            <span class="desc">{{item.desc}}</span>
+            <span class="name">{{item.goods_title}}</span>
+            <span class="desc">{{item.sub_title}}</span>
             <template v-if="item.limit">
               <div class="line3">
                 <span class="price"><span>￥</span>{{item.price | currency}}</span>
                 <div class="add-minus flex">
-                  <div @click="item.count > 1 && item.count--" class="btn minus" :class="{active: item.count > 1}"></div>
+                  <div @click="item.count > 1 && minusCart(item)" class="btn minus" :class="{active: item.count > 1}"></div>
                   <input v-model="item.count" type="text" readonly>
-                  <div @click="item.count < item.limit && item.count++" class="btn plus" :class="{active: item.count < item.limit}"></div>
+                  <div @click="item.count < item.limit && addCart(item)" class="btn plus" :class="{active: item.count < item.limit}"></div>
                 </div>
               </div>
             </template>
@@ -29,7 +29,7 @@
             </template>
           </div>
           <div class="mask-delete flex" v-if="item.deleteVisible" @click="item.deleteVisible = false">
-            <div class="delete" @click="remove">删除</div>
+            <div class="delete" @click="removeCart(item, index)">删除</div>
           </div>
         </li>
       </ul>
@@ -42,7 +42,7 @@
       <div class="price">￥{{totalMoney | currency}}</div>
       <button class="btn settlement" @click="settlement">结算{{totalCount}}</button>
     </div>
-    <v-slide-up v-model="skuVisible" @confirm="handleSKU">
+    <!-- <v-slide-up v-model="skuVisible" @confirm="handleSKU">
       <template v-for="(item, index) in res.cart" v-if="skuIndex === index">
         <ul class="sku">
           <li class="sku-icon flex">
@@ -78,7 +78,7 @@
           </li>
         </ul>
       </template>
-    </v-slide-up>
+    </v-slide-up> -->
   </div>
 </template>
 
@@ -95,64 +95,7 @@
         skuVisible: false,
         skuIndex: 0,
         res: {
-          cart: [{
-            checked: false,
-            deleteVisible: false,
-            src: ss,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: '6666',
-            count: 1,
-            limit: 10,
-            sku: {
-              scoreIndex: 0,
-              clarityIndex: 0,
-              colorIndex: 0,
-              specIndex: 0
-            },
-            skuScore: ['18分', '25分', '30分', '40分'],
-            skuClarity: ['SI/小瑕', 'VS/微瑕', 'VVS/极微瑕'],
-            skuColor: ['H/白', 'F-G/优白', 'I-J/淡白', 'D-E/极白'],
-            skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号']
-          }, {
-            checked: false,
-            deleteVisible: false,
-            src: ss,
-            name: '醒狮MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓',
-            price: '6666',
-            count: 1,
-            limit: 10,
-            sku: {
-              scoreIndex: 0,
-              clarityIndex: 0,
-              colorIndex: 0,
-              specIndex: 0
-            },
-            skuScore: ['18分', '25分', '30分', '40分'],
-            skuClarity: ['SI/小瑕', 'VS/微瑕', 'VVS/极微瑕'],
-            skuColor: ['H/白', 'F-G/优白', 'I-J/淡白', 'D-E/极白'],
-            skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号']
-          }, {
-            checked: false,
-            deleteVisible: false,
-            src: ss,
-            name: '醒狮MeiMei项链/坠',
-            desc: '',
-            price: '6666',
-            count: 1,
-            limit: 0,
-            sku: {
-              scoreIndex: 0,
-              clarityIndex: 0,
-              colorIndex: 0,
-              specIndex: 0
-            },
-            skuScore: ['18分', '25分', '30分', '40分'],
-            skuClarity: ['SI/小瑕', 'VS/微瑕', 'VVS/极微瑕'],
-            skuColor: ['H/白', 'F-G/优白', 'I-J/淡白', 'D-E/极白'],
-            skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号']
-          }],
+          cart: [],
           recommend: [{
             url: ss,
             name: '文承 戒指',
@@ -196,11 +139,12 @@
         this.ajax({
           name: 'cart'
         }).then(res => {
-          this.res.cart = res.cart;
-          this.res.cart.forEach(item => {
+          res.forEach(item => {
             item.checked = false;
             item.deleteVisible = false;
+            item.limit = 999;
           });
+          this.res.cart = res;
         });
       },
       checkAll() {
@@ -214,8 +158,31 @@
           this.res.cart[hammer.index].deleteVisible = true;
         }
       },
-      remove(index) {
-        this.res.cart.splice(index, 1);
+      addCart(item) {
+        this.cardHandle(item.cart_id, 1, () => {
+          item.count++;
+        });
+      },
+      minusCart(item) {
+        this.cardHandle(item.cart_id, -1, () => {
+          item.count--;
+        });
+      },
+      removeCart(item, index) {
+        this.cardHandle(item.cart_id, -item.count, () => {
+          this.res.cart.splice(index, 1);
+        });
+      },
+      cardHandle(skuId, count, cb) {
+        this.ajax({
+          name: 'addCart',
+          data: {
+            'cart_id': skuId,
+            num: count
+          }
+        }).then(res => {
+          cb();
+        });
       },
       handleSKU() {
         // let score = this.res.skuScore[this.sku.scoreIndex];

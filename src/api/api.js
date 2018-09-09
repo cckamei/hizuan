@@ -24,6 +24,10 @@ let api = {
     url: 'api/v1/series',
     method: 'get'
   }, //获取所有套系信息
+  getCategory: {
+    url: 'api/v1/category',
+    method: 'get'
+  },
   goodsDetail: {
     url: 'api/v1/goods/detail/:id',
     method: 'get'
@@ -32,6 +36,9 @@ let api = {
     url: 'api/v1/cart',
     method: 'get'
   }, //获取购物车的商品列表
+  addCart: {
+    url: 'api/v1/cart'
+  }, //添加删除购物车
   collect: {
     url: 'api/v1/collects'
   }, //收藏商品

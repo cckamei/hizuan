@@ -11,7 +11,7 @@
       <span class="sub-title" :class="{active: top >= offsetTops[1] && top < offsetTops[2]}" @click="setTop(1)">详情</span>
       <span class="sub-title" :class="{active: top >= offsetTops[2]}" @click="setTop(2)">推荐</span>
       <div slot="menus" class="menus">
-        <div @click="$router.push({name: 'cart'})" class="menu"><img src="~assets/goods/button_cart_g.png" alt=""></div>
+        <div @click="goCart" class="menu"><img src="~assets/goods/button_cart_g.png" alt=""></div>
         <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option_g.png" alt=""></div>
       </div>
     </v-header-menus>
@@ -24,7 +24,7 @@
       <div class="info">
         <div class="price">
           <i>￥</i>{{res.price | currency}}
-          <img @click="waiting" class="right" src="~assets/goods/button_share.png" alt="">
+          <img @click="wxShare" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
         <div class="name">{{res.goods_title}}</div>
         <div class="desc">{{res.sub_title}}</div>
@@ -75,7 +75,7 @@
               <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
               <div>
                 <div class="price"><span>￥</span>{{res.price | currency}}</div>
-                <span class="code">商品编号：{{res.merchant_code}}</span>
+                <span class="code">商品编号：{{sku.merchant_code}}</span>
               </div>
             </li>
             <li>
@@ -109,7 +109,7 @@
         <v-form-slide-up label="商品参数" title="商品参数" placeholder="套系；款式；钻石切工；主钻形状；副钻形状‘副钻分数；镶嵌材质；镶嵌方式">
           <ul class="goods-param">
             <li class="flex">
-              <span class="label">商品编号</span>
+              <span class="label">商品货号</span>
               <span class="value">{{res.merchant_code}}</span>
             </li>
             <li class="flex">
@@ -196,7 +196,7 @@
       <v-recommend class="section" ref="recommend" title="为你推荐" :list="res.recommend"></v-recommend>
     </div>
     <div class="footer flex">
-      <div class="fun-btns" @click="waiting">
+      <div class="fun-btns" @click="goCustomService">
         <img src="~assets/goods/button_service.png" alt="">
         <span>客服</span>
       </div>
@@ -205,7 +205,7 @@
         <span>收藏</span>
       </div>
       <div class="btn-group flex">
-        <button class="btn cart" @click="waiting">加入购物车</button>
+        <button class="btn cart" @click="addCart">加入购物车</button>
         <button class="btn purchase" @click="buyNow">立即购买</button>
       </div>
     </div>
@@ -215,7 +215,7 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
   import $ from 'jquery';
   import ss from '../assets/goods/pic_guguring.png';
   import banner from '../assets/goods/pic_wring.png';
@@ -293,10 +293,10 @@
           remarks: ''
         },
         reqData: {
-          card_id: '',
           lettering: '',
           benifit: '',
-          count: 1
+          count: 1,
+          skuId: ''
         }
       };
     },
@@ -310,7 +310,7 @@
       }, 1000);
     },
     computed: {
-      ...mapGetters(['getCommon'])
+      ...mapGetters(['getCommon', 'token'])
     },
     watch: {
       sku: {
@@ -322,7 +322,6 @@
               arr[typeIndex] = index;
               let reg = new RegExp(arr.join('_').replace(/-1/g, '[\\d]'), 'g');
               let result = this.res.skus.filter(sku => {
-                console.log(reg, sku.skuIds);
                 return reg.test(sku.skuIds);
               });
               item.disabled = !result.length;
@@ -330,12 +329,14 @@
           });
           selectIndexes.includes(-1);
           if(!selectIndexes.includes(-1)) {
-            let { count, price } = this.res.skus.filter(sku => selectIndexes.join('_') === sku.skuIds)[0];
+            let { count, price, sku_id } = this.res.skus.filter(sku => selectIndexes.join('_') === sku.skuIds)[0];
             this.limit = count;
             this.reqData.count = Math.min(this.reqData.count, count);
             this.res.price = price;
+            this.reqData.skuId = sku_id;
           } else {
             this.limit = 1;
+            this.reqData.skuId = '';
           }
         },
         deep: true
@@ -382,7 +383,7 @@
                 "zuanshijingdu": "钻石净度2",
                 "price": 2,
                 "color": "颜色2",
-                "sku_id": "5b851b341f30bfc39cddfc3d",
+                "sku_id": "5b8d40aa8263913b53665a16",
                 "zhushipingji": "主石评级32",
                 "count": 4,
                 "weight_unit": "克拉",
@@ -396,7 +397,7 @@
                 "zuanshijingdu": "钻石净度3",
                 "price": 3,
                 "color": "颜色3",
-                "sku_id": "5b851b341f30bfc39cddfc3d",
+                "sku_id": "5b8d40dd8263913b518463f4",
                 "zhushipingji": "主石评级13",
                 "count": 5,
                 "weight_unit": "克拉",
@@ -410,7 +411,7 @@
                 "zuanshijingdu": "钻石净度1",
                 "price": 4,
                 "color": "颜色2",
-                "sku_id": "5b851b341f30bfc39cddfc3d",
+                "sku_id": "5b8d40f78263913b565434ec",
                 "zhushipingji": "主石评级4",
                 "count": 8,
                 "weight_unit": "克拉",
@@ -486,25 +487,16 @@
           this.res.skuClarity = skuClarity.map(item => ({ label: item, disabled: false }));
           this.res.skuColor = skuColor.map(item => ({ label: item, disabled: false }));
           this.res.skuSpec = skuSpec.map(item => ({ label: item, disabled: false }));
-          console.log(this.res.skus);
+          // this.reqData.skuId = this.res.goods_id;
         });
       },
-      handleSKU() {
-        let score = this.res.skuScore[this.sku.scoreIndex];
-        let clarity = this.res.skuClarity[this.sku.clarityIndex];
-        let color = this.res.skuColor[this.sku.colorIndex];
-        let spec = this.res.skuSpec[this.sku.specIndex];
-        this.reqData.card_id = `已选 ${score}；${clarity}；${color}；${spec}`;
-      },
+      handleSKU() { },
       handleLettering() {
         let disable = this.lettering.disable ? '否' : '是';
         this.reqData.lettering = this.lettering.disable ? '' : `刻字 ${this.lettering.text}；要求 ${this.lettering.remarks}`;
       },
       handleBenifit() {
         this.reqData.benifit = this.res.benifit.map(item => item.id);
-      },
-      waiting() {
-        this.toast('敬请期待');
       },
       scroll() {
         this.$refs['scroll-top'].scroll();
@@ -515,17 +507,72 @@
         }, 200);
       },
       buyNow() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+
+        if(!this.reqData.skuId) {
+          this.toast('请选择商品规格');
+          return false;
+        }
+
         this.$router.push({ name: 'confirmorder' });
       },
       collect() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+
+        if(!this.reqData.skuId) {
+          this.toast('请选择商品规格');
+          return false;
+        }
+
         this.ajax({
           name: 'collect',
           data: {
-            'collect_id': '5b8d40aa8263913b53665a16'
+            'collect_id': this.reqData.skuId
           }
         }).then(res => {
           this.toast('收藏成功！');
         });
+      },
+      goCart() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+
+        this.$router.push({ name: 'cart' });
+      },
+      addCart() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+
+        if(!this.reqData.skuId) {
+          this.toast('请选择商品规格');
+          return false;
+        }
+
+        this.ajax({
+          name: 'addCart',
+          data: {
+            'cart_id': this.reqData.skuId,
+            num: this.reqData.count
+          }
+        }).then(res => {
+          this.toast('已加入购物车');
+        });
+      },
+      wxShare() {
+        this.toast('暂未开放');
+      },
+      goCustomService() {
+        this.toast('暂未开放');
       }
     }
   };
