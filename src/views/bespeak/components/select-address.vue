@@ -1,5 +1,5 @@
 <template>
-  <v-slide-up v-model="visible" title="选择区域" @confirm="confirm()">
+  <v-slide-up v-model="show" title="选择区域" @confirm="confirm()">
     <ul class="addChoice">
       <li @click="addRessClick(1)">{{province}}
         <i v-if="chIndex==1"></i>

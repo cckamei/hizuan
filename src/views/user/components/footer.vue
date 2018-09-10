@@ -2,7 +2,7 @@
   <div class="buttons flex">
     <div class="btn"><img src="~assets/home/button_home.png" alt=""></div>
     <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
-    <button class="btn-txt btn-txt2">无忧购</button>
+    <button class="btn-txt btn-txt2" @click="$router.push({name:'freebuy'})">无忧购</button>
     <div class="btn" @click="$router.push({name:'mypage'})">
       <img src="~assets/mypage/button_my_b.png" alt="">
     </div>

@@ -145,6 +145,11 @@ const router = [
     component: () => import('@/views/bespeak/add')
   },
   {
+    name: 'freebuy',
+    path: '/home/freebuy',
+    component: () => import('@/views/freebuy')
+  },
+  {
     path: '*',
     redirect: '/'
   }

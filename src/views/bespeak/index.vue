@@ -2,7 +2,7 @@
   <div class="bespeak">
     <v-header>我的预约
       <div slot="headright">
-        <span class="add-btn" @click="$router.push({name:'addappointment'})">新增</span>
+        <span class="add-btn" @click="add">新增</span>
       </div>
     </v-header>
     <div class="bespeak-warp">
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
   import tabs from './components/tabs';
   import list from './components/list';
   export default {
@@ -33,13 +34,19 @@
       });
     },
     methods: {
+      ...mapMutations(['setAppointment']),
       fetchData() {
         for(let index = 0; index < 10; index++) {
           let _appointment = {
             shopName: index % 2 ? '世纪金花钟楼店' : '开元商城钟楼店',
-            shopAddress: '陕西省西安市',
-            createTime: '2018年 9月 30日',
+            shopAddress: '陕西省-西安市-雁塔区',
+            createTime: new Date(),
             linkUser: 'A女士（132****9811）',
+            userName: 'A女士',
+            tel: '13609247777',
+            sex: 1,
+            occupation: 1,
+            birthday: new Date(),
             detail: '购买一套彩宝，需要珠宝顾问协助挑选，还有其他的购买需求',
             id: index,
             status: index % 2
@@ -54,6 +61,13 @@
         this.appointments = this.appointments.filter(ele => {
           return ele.status == type;
         });
+      },
+      add() {
+        this.setAppointment({
+          appointments: {},
+          edit: 1
+        });
+        this.$router.push({ name: 'addappointment' });
       }
     }
   };
@@ -76,7 +90,6 @@
       right: 0;
       top: 96px;
       bottom: 0;
-      overflow: auto;
       background: #fff;
   }
 </style>

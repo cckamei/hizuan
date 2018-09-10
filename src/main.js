@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import MintUI from 'mint-ui';
+import Vant from 'vant';
 import FastClick from 'fastclick';
 import VueI18n from 'vue-i18n';
 import router from './router';
@@ -15,6 +16,7 @@ if (window.htp.mock) {
 }
 
 Vue.use(MintUI);
+Vue.use(Vant);
 Vue.use(VueI18n);
 
 Vue.prototype.toast = MintUI.Toast;

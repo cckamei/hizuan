@@ -19,8 +19,11 @@
 
 <style lang="less" scoped>
   .tabs {
+      position: absolute;
       height: 100px;
-      margin: 0 30px;
+      top: 0;
+      left: 30px;
+      right: 30px;
       background: #fff;
       border-top: 1px solid #f0f0f0; /*no*/
       display: flex;
