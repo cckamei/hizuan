@@ -31,7 +31,7 @@
 
 <script>
   import $ from 'jquery';
-  import { mapMutations, mapActions } from 'vuex';
+  import { mapMutations, mapActions, mapGetters } from 'vuex';
 
   export default {
     data() {
@@ -44,6 +44,9 @@
     },
     created() {
       this.fetchData();
+    },
+    computed: {
+      ...mapGetters(['token'])
     },
     methods: {
       ...mapActions(['ajax']),
@@ -80,6 +83,10 @@
         this.$router.push({ name: 'goodslist' });
       },
       goMypage() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
         this.$router.push({ name: 'mypage' });
       }
     }
@@ -88,48 +95,48 @@
 
 <style lang="less" scoped>
   .banner {
-      height: 450px;
+    height: 450px;
   }
 
   .activity {
-      height: 120px;
-      border-bottom: 4px;
-      margin-top: 4px;
-      img {
-          height: 100%;
-      }
+    height: 120px;
+    border-bottom: 4px;
+    margin-top: 4px;
+    img {
+      height: 100%;
+    }
   }
 
   li {
-      margin-top: 4px;
-      img {
-          height: 220px;
-      }
+    margin-top: 4px;
+    img {
+      height: 220px;
+    }
   }
 
   .buttons {
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-      justify-content: center;
-      padding: 24px 0;
-      .btn {
-          width: 60px;
-          border-radius: 50%;
-          background-color: #000;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    justify-content: center;
+    padding: 24px 0;
+    .btn {
+      width: 60px;
+      border-radius: 50%;
+      background-color: #000;
+    }
+    .btn-txt {
+      width: 160px;
+      height: 60px;
+      border-radius: 30px;
+      background-color: rgba(255, 255, 255, 0.6);
+      border: 0;
+      &1 {
+        margin: 0 24px 0 91px;
       }
-      .btn-txt {
-          width: 160px;
-          height: 60px;
-          border-radius: 30px;
-          background-color: rgba(255, 255, 255, 0.6);
-          border: 0;
-          &1 {
-              margin: 0 24px 0 91px;
-          }
-          &2 {
-              margin: 0 91px 0 24px;
-          }
+      &2 {
+        margin: 0 91px 0 24px;
       }
+    }
   }
 </style>
