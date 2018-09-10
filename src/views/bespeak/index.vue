@@ -64,7 +64,8 @@
       },
       add() {
         this.setAppointment({
-          appointments: {},
+          appointment: {
+          },
           edit: 1
         });
         this.$router.push({ name: 'addappointment' });

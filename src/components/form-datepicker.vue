@@ -1,8 +1,8 @@
 <template>
   <div class="flex arrow">
     <div class="label">{{label}}</div>
-    <input type="text" :value="text" :placeholder="placeholder" @click="visible = true" readonly />
-    <v-slide-up v-if="readonly" v-model="visible" :title="title" @confirm="confirm">
+    <input type="text" :value="text" :placeholder="placeholder" @click="!readonly&&(visible = true)" readonly />
+    <v-slide-up v-model="visible" :title="title" @confirm="confirm">
       <datetime-picker v-model="date" :yearFormat="yearFormat" :monthFormat="monthFormat" :dateFormat="dateFormat" type="date" :startDate="new Date('1900/01/01')" :endDate="new Date()"></datetime-picker>
     </v-slide-up>
   </div>

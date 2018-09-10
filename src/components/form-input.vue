@@ -2,8 +2,7 @@
   <div class="flex " :class="{arrow:arrow}">
     <div class="label">{{label}}</div>
     <input v-if="arrow" :maxlength="maxlength" type="text" v-model="text" readonly :placeholder="placeholder" @click="onClickHandler" />
-    <input v-else :maxlength="maxlength" type="text" v-model="text" :readonly="!readonly" :placeholder="placeholder" />
-
+    <input v-else :maxlength="maxlength" type="text" v-model="text" :readonly="readonly" :placeholder="placeholder" />
     <span v-if="unit">{{unit}}</span>
   </div>
 </template>
@@ -55,7 +54,8 @@
     },
     methods: {
       onClickHandler() {
-        if(this.readonly) {
+        console.log(this.readonly);
+        if(!this.readonly) {
           this.$emit('input-click');
         }
       }
