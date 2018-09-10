@@ -23,8 +23,8 @@
         default: true
       },
       title: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       }
     },
     data() {
@@ -69,44 +69,44 @@
 
 <style lang="less" scoped>
   .popup-confirm {
-    border-radius: 20px;
-    overflow: hidden;
-    width: 600px;
-    &-title {
-      color: #999;
-      font-size: 30px;
-      padding: 40px 0 20px 0;
-      text-align: center;
-    }
-    &-content {
-      padding: 20px;
-      max-height: 600px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
+      border-radius: 20px;
+      overflow: hidden;
+      width: 600px;
+      &-title {
+          color: #999;
+          font-size: 30px;
+          padding: 40px 0 20px 0;
+          text-align: center;
+      }
+      &-content {
+          padding: 20px;
+          max-height: 600px;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+      }
   }
 
   .btn-group {
-    font-size: 30px;
-    height: 80px;
-    border-top: 1px solid #f0f0f0; /*no*/
-    .btn {
-      width: 50%;
-      height: 100%;
       font-size: 30px;
-      border: 0;
-      &.cancel {
-        color: #666;
-        border-right: 1px solid #fff; /*no*/
+      height: 80px;
+      border-top: 1px solid #f0f0f0; /*no*/
+      .btn {
+          width: 50%;
+          height: 100%;
+          font-size: 30px;
+          border: 0;
+          &.cancel {
+              color: #666;
+              border-right: 1px solid #fff; /*no*/
+          }
+          &.confirm {
+              color: #666;
+              &.active {
+                  background-color: #faa0a0;
+                  color: #fff;
+              }
+          }
       }
-      &.confirm {
-        color: #666;
-        &.active {
-          background-color: #faa0a0;
-          color: #fff;
-        }
-      }
-    }
   }
 </style>
 

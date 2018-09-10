@@ -30,7 +30,7 @@
     data() {
       return {
         commission: {
-          money: 0,
+          money: 1000,
           user: 'VIP高级用户',
           time: '2018-09-30 16：30'
         }
