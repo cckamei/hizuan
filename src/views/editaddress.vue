@@ -1,30 +1,35 @@
 <template>
-  <div class="editaddress">
+  <div class="editaddress pt">
     <v-header>
       {{ isEdit ? "编辑地址" : "添加地址" }}
       <div slot="headright" v-if="isEdit">
         <span class="deleteAddresss" @click="delteAddress()">删除</span>
       </div>
     </v-header>
-    <ul class="form">
-      <li>
-        <v-form-input label="姓名" v-model="reqData.name" maxlength="20" placeholder="请填写收货人姓名"></v-form-input>
-      </li>
-      <li>
-        <v-form-input label="手机号" v-model="reqData.phone" maxlength="11" placeholder="请填写收货人手机号"></v-form-input>
-      </li>
-      <li>
-        <label>所在地区</label>
-        <input type="text" v-model="address" placeholder="请选择收货人所在地区" readonly @click="visible = true">
-      </li>
-      <li>
-        <v-form-input label="详细地址" v-model="reqData.street" maxlength="6" placeholder="请填写街道、楼牌号等信息"></v-form-input>
-      </li>
-      <li>
-        <label>设为默认</label>
-        <span><mt-switch v-model="reqData.lock"></mt-switch></span>
-      </li>
-    </ul>
+    <div class="content">
+      <ul class="form">
+        <li>
+          <v-form-input label="姓名" v-model="reqData.name" maxlength="20" placeholder="请填写收货人姓名"></v-form-input>
+        </li>
+        <li>
+          <v-form-input label="手机号" v-model="reqData.phone" maxlength="11" placeholder="请填写收货人手机号"></v-form-input>
+        </li>
+        <li class="address">
+          <label>所在地区</label>
+          <input type="text" v-model="address" placeholder="请选择收货人所在地区" readonly @click="visible = true">
+        </li>
+        <li>
+          <v-form-input label="详细地址" v-model="reqData.street" maxlength="6" placeholder="请填写街道、楼牌号等信息"></v-form-input>
+        </li>
+        <li class="address">
+          <label>设为默认</label>
+          <span><mt-switch v-model="reqData.lock"></mt-switch></span>
+        </li>
+      </ul>
+      <div class="btns fix">
+        <button class="btn" :class="{active: isActive}" @click="isActive && confirmSubmit()">确认提交</button>
+      </div>
+    </div>
     <v-slide-up v-model="visible" title="选择区域" @confirm="confirm()">
       <ul class="addChoice">
         <li @click="addRessClick(1)">{{reqData.province}}
@@ -42,9 +47,7 @@
       </ul>
 
     </v-slide-up>
-    <div class="btns">
-      <button class="btn" :class="{active: isActive}" @click="isActive && confirmSubmit()">确认提交</button>
-    </div>
+
     <!-- <button @click="add()">添加地址</button> -->
   </div>
 
@@ -181,14 +184,16 @@
   .editaddress {
       .form {
           background-color: #fff;
-          margin-top: 96px;
           li {
               border-bottom: 1px solid #f0f0f0; /*no*/
-              padding: 0 20px;
+              margin: 0 24px;
               height: 96px;
-              line-height: 96px;
+              line-height: 94px;
               font-size: 30px;
               color: #999999;
+              &.address {
+                  padding: 0 16px;
+              }
               &:last-child {
                   border-bottom: 0;
               }
@@ -250,5 +255,18 @@
           color: #faa0a0;
       }
   }
+  .fix {
+      position: fixed;
+      bottom: 20px;
+      width: 710px;
+      margin: 0 auto;
+  }
 </style>
 
+<style lang="less">
+  .editaddress {
+      .mint-switch-core {
+          width: 84px !important;
+      }
+  }
+</style>

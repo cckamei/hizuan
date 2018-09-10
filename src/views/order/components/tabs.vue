@@ -56,7 +56,7 @@
       line-height: 96px;
       top: 96px;
       width: 100%;
-      box-shadow: 0 5px 10px 5px rgba(170, 170, 170, 0.5);
+      box-shadow: 0 20px 50px 10px rgba(170, 170, 170, 0.5);
       background-color: #fff;
       z-index: 2;
       display: flex;
@@ -80,7 +80,7 @@
               content: '';
               position: absolute;
               width: 108px;
-              height: 2px;
+              height: 6px;
               bottom: -1px;
               background: #faa0a0;
               left: 0;
