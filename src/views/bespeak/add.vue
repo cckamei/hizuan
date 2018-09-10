@@ -24,6 +24,9 @@
               <li>
                 <v-form-datepicker label="预约时间" title="预约时间" v-model="appointment.time" format="yyyy-MM-dd 日" placeholder="请选择" :readonly="!getAppointment.edit"></v-form-datepicker>
               </li>
+              <li>
+                <v-form-select label="预约类型" title="预约类型" v-model="appointment.type" :list="['线下体验', '以旧换新']" placeholder="请选择预约类型" :readonly="!getAppointment.edit"></v-form-select>
+              </li>
               <li class="middle">
                 <div class="instructions">补充说明</div>
                 <textarea class="textarea" v-model="appointment.detail" name="" :readonly="!getAppointment.edit"></textarea>
@@ -84,6 +87,7 @@
           gender: 1,
           tel: '',
           birthday: '',
+          type: 0,
           detail: '',
           occupation: -1,
           time: '',
@@ -119,6 +123,7 @@
             occupation: this.getAppointment.appointment.occupation,
             time: formatDate(this.getAppointment.appointment.createTime, 'yyyy-MM-dd'),
             shop: 0,
+            type: 1,
             addId: 1, //1:省份选择; 2:市区； 3：地区
             provinceId: '', //选择的省份id
             cityId: '' //选择的市id
@@ -180,7 +185,6 @@
           background-color: #fff;
           li {
               border-bottom: 1px solid #f0f0f0; /*no*/
-              padding: 0 20px;
               height: 96px;
               &:last-child {
                   border-bottom: 0;
@@ -190,6 +194,7 @@
               }
               &.middle {
                   height: auto;
+                  padding: 0 20px;
                   .instructions {
                       color: #999;
                       font-size: 28px;

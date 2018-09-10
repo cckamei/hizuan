@@ -139,10 +139,7 @@ const router = [
   {
     name: 'myaddress',
     path: '/my/myaddress',
-    component: () => import('@/views/myaddress'),
-    meta: {
-      params: ['token']
-    }
+    component: () => import('@/views/myaddress')
   },
   {
     name: 'revisepwd',
