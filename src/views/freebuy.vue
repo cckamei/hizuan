@@ -7,11 +7,11 @@
       <img src="~assets/payment/card2.png" alt="" srcset="">
     </div>
     <div class="buttons flex">
-      <div class="btn" @click="$router.push({name:'index'})"><img src="~assets/home/button_home.png" alt=""></div>
+      <div class="btn" @click="$router.push({name:'index'})"><img src="~assets/home/button_home_b.png" alt=""></div>
       <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
       <button class="btn-txt btn-txt2">无忧购</button>
       <div class="btn" @click="gomypage">
-        <img src="~assets/payment/head.png" alt="">
+        <img src="~assets/home/button_my.png" alt="">
       </div>
     </div>
   </div>

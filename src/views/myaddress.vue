@@ -3,20 +3,20 @@
     <v-header>地址管理</v-header>
     <div class="content">
       <ul class="addresslist">
-        <li v-for="(item, index) in addressList" :key="index" @click="selectAddress(item)">
-          <img v-if="item.default" class="default-address" src="~assets/goods/icon_selected.png" alt="">
+        <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)">
+          <!-- <img v-if="item.default" class="default-address" src="~assets/goods/icon_selected.png" alt=""> -->
           <div class="listleft">
             <div class="receiver">
               收货人：{{item.name}}<span>{{item.phone}}</span>
-              <i v-if="item.code==1">默认</i>
+              <i v-if="item.default==1">默认</i>
             </div>
             <div class="address">
               <span>收货地址：</span>
               <p>{{item.province}}{{item.city}}{{item.district}}{{item.street}}</p>
             </div>
           </div>
-          <div class="listright">
-            <img src="~assets/mypage/button_edit_a.png" alt="" @click="editAddress(item)">
+          <div class="listright" @click.stop="editAddress(item)">
+            <img src="~assets/mypage/button_edit_a.png" alt="">
           </div>
         </li>
       </ul>
@@ -56,6 +56,7 @@
         });
       },
       editAddress(item) {
+        console.log(item);
         this.$router.push({ name: 'editaddress', params: { item } });
       },
       confirm() {

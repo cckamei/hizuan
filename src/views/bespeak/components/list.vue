@@ -10,6 +10,7 @@
       </div>
       <div class="appointment-conetnt">
         <div class="time">预约时间：{{formatDate(appointment.createTime,'yyyy-MM-dd hh:mm:ss')}}</div>
+        <div class="user">预约类型：{{appointment.type?'线下体验':'以旧换新'}}</div>
         <div class="user">联系人：{{appointment.linkUser}}</div>
         <div class="detail">补充说明：{{appointment.detail}}</div>
       </div>
@@ -50,16 +51,16 @@
 
 <style lang="less" scoped>
   .appointment-list {
-      box-shadow: 0px -10px 16px rgba(170, 170, 170, 0.5);
       position: absolute;
       left: 0px;
-      top: 110px;
+      top: 112px;
       bottom: 0;
       right: 0px;
       background-color: #f0f0f0;
       overflow: auto;
+      box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.5);
       .appointment {
-          margin: 15px 20px;
+          margin: 20px 20px 16px;
           border-radius: 5px;
           background-color: #fff;
           &-header {
@@ -67,13 +68,17 @@
               justify-content: space-around;
               align-items: center;
               vertical-align: middle;
-              height: 60px;
+              height: 64px;
               border-bottom: 1px solid #f0f0f0; /*no*/
               padding: 0 20px;
 
               .name {
                   width: 60%;
+                  font-size: 24px;
                   img {
+                      margin-right: 12px;
+                      margin-top: -2px;
+                      vertical-align: middle;
                       width: 24px;
                       height: 24px;
                   }
@@ -84,19 +89,24 @@
               }
           }
           &-conetnt {
-              padding: 25px 20px;
+              padding: 0px 20px;
               border-bottom: 1px solid #f0f0f0; /*no*/
+              .time {
+                  margin-top: 30px;
+              }
+              .user {
+                  margin-top: 18px;
+              }
               .time,
               .user,
               .detail {
-                  height: 40px;
-                  line-height: 40px;
                   font-size: 24px;
                   color: #666666;
               }
               .detail {
                   color: #999999;
-                  margin-top: 10px;
+                  width: 660px;
+                  margin: 30px 0;
                   overflow: hidden;
                   text-overflow: ellipsis;
                   white-space: nowrap;
@@ -104,14 +114,17 @@
           }
           &-footer {
               height: 80px;
+              padding: 0 20px;
               .btn {
                   float: right;
-                  padding: 0px 25px;
-                  line-height: 48px;
-                  border-radius: 20px;
-                  border: 1px solid #cccccc; /*no*/
+                  width: 140px;
+                  text-align: center;
+                  line-height: 52px;
+                  line-height: 52px;
+                  border-radius: 26px;
+                  border: 1px solid #dcdcdc; /*no*/
                   margin-top: 15px;
-                  margin-right: 20px;
+                  margin-left: 30px;
               }
           }
       }

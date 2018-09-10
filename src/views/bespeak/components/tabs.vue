@@ -1,7 +1,9 @@
 <template>
-  <div class="tabs">
-    <div class="tab"><span :class="{active:active==1}" @click="searchAppointment(1)">进行中</span></div>
-    <div class="tab"><span :class="{active:active==2}" @click="searchAppointment(2)">已完成</span></div>
+  <div class="tabs-warp">
+    <div class="tabs">
+      <div class="tab"><span :class="{active:active==1}" @click="searchAppointment(1)">进行中</span></div>
+      <div class="tab"><span :class="{active:active==2}" @click="searchAppointment(2)">已完成</span></div>
+    </div>
   </div>
 </template>
 
@@ -18,12 +20,18 @@
 
 
 <style lang="less" scoped>
+  .tabs-warp {
+      position: absolute;
+      height: 96px;
+      top: 0;
+      left: 0;
+      right: 0;
+  }
   .tabs {
       position: absolute;
-      height: 100px;
-      top: 0;
       left: 30px;
       right: 30px;
+      height: 100%;
       background: #fff;
       border-top: 1px solid #f0f0f0; /*no*/
       display: flex;
@@ -31,14 +39,18 @@
       text-align: center;
       .tab {
           flex: 1;
-          font-size: 32px;
+          font-size: 30px;
+          font-weight: bold;
+          color: #666;
+          height: 100%;
           span {
               display: inline-block;
-              height: 100px;
-              line-height: 100px;
-              padding: 0 30px;
+              height: 96px;
+              line-height: 96px;
+              width: 150px;
+              text-align: center;
               &.active {
-                  border-bottom: 2px solid #faa0a0; /*no*/
+                  border-bottom: 3px solid #faa0a0; /*no*/
               }
           }
       }

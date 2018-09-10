@@ -43,6 +43,7 @@
             createTime: new Date(),
             linkUser: 'A女士（132****9811）',
             userName: 'A女士',
+            type: 0,
             tel: '13609247777',
             sex: 1,
             occupation: 1,

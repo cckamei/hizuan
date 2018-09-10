@@ -59,71 +59,51 @@
         sortIndex: -1,
         filters: ['结', '醒狮MeiMei', '婚嫁', '情侣', 'CHIC潮', '文承', 'TANG玲珑', '点亮'],
         sorts: ['价格从高到低', '价格从低到高'],
-        goodsList: [{
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          deleteVisible: false
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          deleteVisible: false
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          deleteVisible: false
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          deleteVisible: false
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          deleteVisible: false
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          deleteVisible: false
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          deleteVisible: false
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          deleteVisible: false
-        }, {
-          src: icon,
-          name: '醒狮MeiMei项链/坠',
-          desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666',
-          deleteVisible: false
-        }],
+        goodsList: [],
         pageInfo: {},
         loading: false
       };
     },
+    created() {
+      this.getGoods();
+    },
     methods: {
       ...mapMutations(['setCommon']),
       ...mapActions(['ajax']),
-      handleFilterConfirm() {
+      getGoods() {
+        for(let i = 0; i < 16; i++) {
+          let good = {
+            src: icon,
+            type: i % 9,
+            name: this.filters[i % 9] + 'MeiMei项链/坠',
+            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
+            price: 6666 + i,
+            deleteVisible: false
+          };
+          this.goodsList.push(good);
+        }
       },
-      handleSortConfirm() {
+      handleFilterConfirm() {
+        this.getGoods();
+        this.goodsList = this.goodsList.filter(good => {
+          return good.type == this.filterIndex;
+        });
+      },
+      handleSortConfirm(val) {
+        this.goodsList = this.goodsList.sort(this.compare('price'));
+      },
+      compare(property) {
+        let vm = this;
+        return function(obj1, obj2) {
+          var value1 = obj1[property];
+          var value2 = obj2[property];
+          if(vm.sortIndex) {
+            return value1 - value2;     // 升序
+          } else {
+            return value2 - value1;     // 升序
+          }
+
+        };
       },
       fetchGoods() {
         // this.ajax({
@@ -142,17 +122,20 @@
               src: '',
               name: '醒狮MeiMei项链/坠',
               desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '6666'
+              price: '6666',
+              type: 1
             }, {
               src: '',
               name: '醒狮MeiMei项链/坠',
               desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '6666'
+              price: '6666',
+              type: 2
             }, {
               src: '',
               name: '醒狮MeiMei项链/坠',
               desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '6666'
+              price: '6666',
+              type: 3
             }]
           };
           this.pageInfo = res.pageInfo;
@@ -173,7 +156,6 @@
         this.goodsList.splice(index, 1);
       },
       handlePress(eventName, e, hammer) {
-        console.log(1);
         if(eventName === 'press') {
           this.goodsList[hammer.index].deleteVisible = true;
         }

@@ -4,13 +4,13 @@
       <div class="item-title" @click="goDetail()">
         <div class="titleleft">
           <img src="~assets/mypage/icon_shop.png" alt="">
-          <span>{{order.shopName}}</span>
+          <span>{{order.shopName}}{{order.type}}</span>
         </div>
         <div class="listright">{{typename(order.type)}}</div>
       </div>
-      <div class="item-content" v-for="(good,j) in order.goods">
+      <div class="item-content" v-for="(good,j) in order.goods" @click="goDetail()">
         <div class="contentleft">
-          <img src="~assets/mypage/icon_order_5.png" alt="">
+          <img src="~/assets/goods/pic_wring1.png" alt="">
         </div>
         <div class="contentright">
           <div class="contenttitle">
@@ -31,9 +31,14 @@
       </div>
       <div class="item-footer">
         <!-- 默认 -->
+        <div class="ordertypeDF" v-if="order.type==0">
+          <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey" @click="goRefunddetail()">查看退款</button>
+        </div>
+        <!-- 默认 -->
         <div class="ordertypeDF" v-if="order.type==1">
           <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="goRefunddetail()">查看详情</button>
+          <button class="btngrey" @click="goRefunddetail()">查看退款</button>
         </div>
         <!-- 待付款 -->
         <div class="ordertypeDF" v-if="order.type==2">
@@ -42,8 +47,7 @@
         </div>
         <!-- 待收货 -->
         <div class="ordertypeDF" v-if="order.type==3">
-          <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="goRefunddetail()">查看详情</button>
+          <button class="btngrey">联系客服</button>
         </div>
         <!-- 待收货 -->
         <div class="ordertypeDS" v-if="order.type==4">
@@ -63,7 +67,7 @@
         <!-- 退款中 -->
         <div class="ordertypeTK" v-if="order.type==7">
           <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="goRefunddetail()">查看详情</button>
+          <button class="btngrey" @click="goRefunddetail()">查看退款</button>
         </div>
       </div>
     </div>
@@ -84,7 +88,7 @@
         this.$router.push({ name: 'refunddetail' });
       },
       typename(type) {
-        let _typenames = ['', '', '待付款', '待发货', '待收货', '已完成'];
+        let _typenames = ['已退款', '退款中', '待付款', '待发货', '待收货', '已完成', '已取消'];
         return _typenames[type];
       }
     }
@@ -93,7 +97,7 @@
 
 <style lang="less" scoped>
   .order-list {
-      margin-top: 110px;
+      margin-top: 112px;
       .item {
           background: #ffffff;
           margin-bottom: 16px;
@@ -141,7 +145,7 @@
                       display: flex;
                       flex-flow: row nowrap;
                       justify-content: space-between;
-                      margin: 30px 0 10px;
+                      margin: 30px 0 20px;
                       color: #666666;
                       font-size: 24px;
                       span:nth-child-of(2) {
@@ -188,7 +192,7 @@
               button {
                   width: 140px;
                   height: 52px;
-                  border-radius: 25px;
+                  border-radius: 26px;
                   font-size: 20px;
                   margin-top: 14px;
               }
