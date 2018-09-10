@@ -16,12 +16,16 @@ export default new Vuex.Store({
       goodsType: ''
     },
     appointment: getSen('appointment') || {},
-    userInfo: {}
+    userInfo: getSen('userInfo') || {},
+    address: getSen('address') || {}
   },
   getters: {
     getCacheData: state => serialize(state.cacheData),
     getCommon: state => state.common,
-    getAppointment: state => state.appointment
+    getAppointment: state => state.appointment,
+    token: state => state.common.token,
+    userId: state => state.common.userId,
+    getAddress: state => state.address
   },
   mutations: {
     setCacheData(state, data) {
@@ -39,6 +43,10 @@ export default new Vuex.Store({
     setAppointment(state, data) {
       state.appointment = { ...state.appointment, ...data };
       setSen('appointment', state.appointment);
+    },
+    setAddress(state, data) {
+      state.address = data;
+      setSen('address', data);
     }
   },
   actions: {

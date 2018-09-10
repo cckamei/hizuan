@@ -8,7 +8,7 @@
     </v-header>
     <ul class="form">
       <li>
-        <v-form-input label="姓名" v-model="reqData.name" maxlength="4" placeholder="请填写收货人姓名"></v-form-input>
+        <v-form-input label="姓名" v-model="reqData.name" maxlength="20" placeholder="请填写收货人姓名"></v-form-input>
       </li>
       <li>
         <v-form-input label="手机号" v-model="reqData.phone" maxlength="11" placeholder="请填写收货人手机号"></v-form-input>
@@ -23,7 +23,6 @@
       <li>
         <label>设为默认</label>
         <span><mt-switch v-model="reqData.lock"></mt-switch></span>
-
       </li>
     </ul>
     <v-slide-up v-model="visible" title="选择区域" @confirm="confirm()">
@@ -96,7 +95,7 @@
         this.ajax({
           name: 'delAdress',
           data: {
-            'address_id': this.reqData.id
+            address_id: this.reqData.id
           }
         }).then(res => {
           console.log(res, 789);

@@ -3,11 +3,11 @@
     <v-header>确认订单</v-header>
     <div class="content">
       <ul class="sections">
-        <li class="section address" @click="$router.push({name: 'address'})">
+        <li class="section address" @click="$router.push({name: 'myaddress'})">
           <div class="arrow" :class="{empty: !reqData.address}">
             <template v-if="reqData.address">
-              <div class="line1">收货人：A先生 <span class="tel">188****8888</span></div>
-              <div class="line2">收货地址：陕西省西安市碑林区长安北路261号</div>
+              <div class="line1">收货人：{{getAddress.name}} <span class="tel">{{getAddress.phone}}</span></div>
+              <div class="line2">收货地址：{{getAddress.address}}</div>
             </template>
             <template v-else>
               <div class="line1">添加收货地址</div>
@@ -97,7 +97,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import ss from '../assets/goods/pic_guguring.png';
 
   export default {
@@ -160,6 +160,13 @@
           remark: ''
         }
       };
+    },
+    created() {
+      console.log(this.getAddress);
+      this.reqData.address = this.getAddress.address;
+    },
+    computed: {
+      ...mapGetters(['getAddress'])
     },
     methods: {
       ...mapActions(['ajax']),

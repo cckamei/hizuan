@@ -15,6 +15,8 @@
 </template>
 
 <script>
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
+
   export default {
     props: {
       value: {
@@ -36,6 +38,9 @@
         this.visible = val;
       }
     },
+    computed: {
+      ...mapGetters(['token'])
+    },
     methods: {
       go(item) {
         if(item === 'home') {
@@ -43,8 +48,11 @@
         } else if(item === 'search') {
           this.$router.push({ name: 'goodssearch' });
         } else if(item === 'collect') {
-          this.toast('敬请期待');
-          // this.$router.push({ name: 'collect' });
+          if(!this.token) {
+            this.$router.push({ name: 'login' });
+            return false;
+          }
+          this.$router.push({ name: 'mystore' });
         }
       }
     }

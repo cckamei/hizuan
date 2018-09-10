@@ -22,13 +22,23 @@
     data() {
       return {
         searchIndex: -1,
-        searches: ['戒指', '婚戒', '情侣戒', '项链/坠', '耳饰', '手链/镯', '配链', '脚链']
+        searches: []
       };
+    },
+    created() {
+      this.fetchCategory();
     },
     methods: {
       ...mapActions(['ajax']),
+      fetchCategory() {
+        this.ajax({
+          name: 'getCategory'
+        }).then(res => {
+          this.searches = res;
+        });
+      },
       search() {
-        this.$router.push({ name: 'goodsdetail' });
+        this.$router.push({ name: 'goodslist', params: { category: this.searches[this.searchIndex] } });
       }
     }
   };

@@ -11,7 +11,7 @@
       <span class="sub-title" :class="{active: top >= offsetTops[1] && top < offsetTops[2]}" @click="setTop(1)">详情</span>
       <span class="sub-title" :class="{active: top >= offsetTops[2]}" @click="setTop(2)">推荐</span>
       <div slot="menus" class="menus">
-        <div @click="$router.push({name: 'cart'})" class="menu"><img src="~assets/goods/button_cart_g.png" alt=""></div>
+        <div @click="goCart" class="menu"><img src="~assets/goods/button_cart_g.png" alt=""></div>
         <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option_g.png" alt=""></div>
       </div>
     </v-header-menus>
@@ -24,7 +24,7 @@
       <div class="info">
         <div class="price">
           <i>￥</i>{{res.price | currency}}
-          <img @click="waiting" class="right" src="~assets/goods/button_share.png" alt="">
+          <img @click="wxShare" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
         <div class="name">{{res.goods_title}}</div>
         <div class="desc">{{res.sub_title}}</div>
@@ -74,32 +74,32 @@
             <li class="sku-icon flex">
               <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
               <div>
-                <div class="price"><span>￥</span>{{8888.00 | currency}}</div>
-                <span class="code">商品编号：{{res.goodsParams.merchant_code}}</span>
+                <div class="price"><span>￥</span>{{res.price | currency}}</div>
+                <span class="code">商品编号：{{sku.merchant_code}}</span>
               </div>
             </li>
             <li>
               <div class="title">{{isZuan ? '主钻分数' : '主石名称'}}</div>
-              <v-button-radio v-model="sku.scoreIndex" :list="res.skuScore"></v-button-radio>
+              <v-button-radio v-model="sku.scoreIndex" :list="res.skuScore" :cancel="true"></v-button-radio>
             </li>
             <li>
               <div class="title">{{isZuan ? '钻石净度' : '主石评级'}}</div>
-              <v-button-radio v-model="sku.clarityIndex" :list="res.skuClarity"></v-button-radio>
+              <v-button-radio v-model="sku.clarityIndex" :list="res.skuClarity" :cancel="true"></v-button-radio>
             </li>
             <li>
               <div class="title">颜色</div>
-              <v-button-radio v-model="sku.colorIndex" :list="res.skuColor"></v-button-radio>
+              <v-button-radio v-model="sku.colorIndex" :list="res.skuColor" :cancel="true"></v-button-radio>
             </li>
             <li>
               <div class="title">规格</div>
-              <v-button-radio v-model="sku.specIndex" :list="res.skuSpec"></v-button-radio>
+              <v-button-radio v-model="sku.specIndex" :list="res.skuSpec" :cancel="true"></v-button-radio>
             </li>
             <li class="count flex">
               <span>数量</span>
               <div class="flex">
-                <div @click="sku.count > 1 && sku.count--" class="btn minus" :class="{active: sku.count > 1}"></div>
-                <input v-model="sku.count" type="text" readonly>
-                <div @click="sku.count < res.limit && sku.count++" class="btn plus" :class="{active: sku.count < res.limit}"></div>
+                <div @click="reqData.count > 1 && reqData.count--" class="btn minus" :class="{active: reqData.count > 1}"></div>
+                <input v-model="reqData.count" type="text" readonly>
+                <div @click="reqData.count < limit && reqData.count++" class="btn plus" :class="{active: reqData.count < limit}"></div>
               </div>
             </li>
           </ul>
@@ -109,40 +109,42 @@
         <v-form-slide-up label="商品参数" title="商品参数" placeholder="套系；款式；钻石切工；主钻形状；副钻形状‘副钻分数；镶嵌材质；镶嵌方式">
           <ul class="goods-param">
             <li class="flex">
-              <span class="label">商品编号</span>
-              <span class="value">{{res.goodsParams.merchant_code}}</span>
+              <span class="label">商品货号</span>
+              <span class="value">{{res.merchant_code}}</span>
             </li>
             <li class="flex">
               <span class="label">套系</span>
-              <span class="value">婚嫁系列</span>
+              <span class="value">{{null}}</span>
             </li>
             <li class="flex">
               <span class="label">款式</span>
-              <span class="value">婚戒</span>
+              <span class="value">{{res.kuanshi}}</span>
             </li>
-            <li class="flex">
-              <span class="label">钻石切工</span>
-              <span class="value">完美</span>
-            </li>
-            <li class="flex">
-              <span class="label">主钻形状</span>
-              <span class="value">{{res.goodsParams.zhuzuanxingzhuang}}</span>
-            </li>
-            <li class="flex">
-              <span class="label">副钻形状</span>
-              <span class="value">{{res.goodsParams.fuzuanxingzhuang || '无副钻'}}</span>
-            </li>
-            <li class="flex">
-              <span class="label">副钻分数</span>
-              <span class="value">{{res.goodsParams.fuzuanfenshu || '无副钻'}}</span>
-            </li>
+            <template v-if="isZuan">
+              <li class="flex">
+                <span class="label">钻石切工</span>
+                <span class="value">{{res.zuanshiqiegong}}</span>
+              </li>
+              <li class="flex">
+                <span class="label">主钻形状</span>
+                <span class="value">{{res.zhuzuanxingzhuang}}</span>
+              </li>
+              <li class="flex">
+                <span class="label">副钻形状</span>
+                <span class="value">{{res.fuzuanxingzhuang || '无副钻'}}</span>
+              </li>
+              <li class="flex">
+                <span class="label">副钻分数</span>
+                <span class="value">{{res.fuzuanfenshu || '无副钻'}}</span>
+              </li>
+            </template>
             <li class="flex">
               <span class="label">镶嵌材质</span>
-              <span class="value">{{res.goodsParams.xiangqiancaizhi}}</span>
+              <span class="value">{{res.xiangqiancaizhi}}</span>
             </li>
             <li class="flex">
               <span class="label">镶嵌方式</span>
-              <span class="value">{{res.goodsParams.xiangqianfangshi}}</span>
+              <span class="value">{{res.xiangqianfangshi}}</span>
             </li>
           </ul>
         </v-form-slide-up>
@@ -194,7 +196,7 @@
       <v-recommend class="section" ref="recommend" title="为你推荐" :list="res.recommend"></v-recommend>
     </div>
     <div class="footer flex">
-      <div class="fun-btns" @click="waiting">
+      <div class="fun-btns" @click="goCustomService">
         <img src="~assets/goods/button_service.png" alt="">
         <span>客服</span>
       </div>
@@ -203,7 +205,7 @@
         <span>收藏</span>
       </div>
       <div class="btn-group flex">
-        <button class="btn cart" @click="waiting">加入购物车</button>
+        <button class="btn cart" @click="addCart">加入购物车</button>
         <button class="btn purchase" @click="buyNow">立即购买</button>
       </div>
     </div>
@@ -213,7 +215,7 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
   import $ from 'jquery';
   import ss from '../assets/goods/pic_guguring.png';
   import banner from '../assets/goods/pic_wring.png';
@@ -226,14 +228,13 @@
         top: 0,
         offsetTops: [],
         isZuan: true,
+        limit: 1,
         res: {
           bannerList: [],
           skuScore: [],
           skuClarity: [],
           skuColor: [],
-          skuSpec: ['女戒-11号', '女戒-12号', '女戒-13号', '女戒-14号', '女戒-15号'],
-          limit: 10,
-          goodsParams: {},
+          skuSpec: [],
           benifit: [{
             id: 1,
             price: 1500,
@@ -258,7 +259,6 @@
             title: '新用户',
             desc: '新用户首单特惠'
           }],
-
           recommend: [{
             url: ss,
             name: '文承 戒指',
@@ -282,11 +282,10 @@
           }]
         },
         sku: {
-          scoreIndex: 0,
-          clarityIndex: 0,
-          colorIndex: 0,
-          specIndex: 0,
-          count: 1
+          scoreIndex: -1,
+          clarityIndex: -1,
+          colorIndex: -1,
+          specIndex: -1
         },
         lettering: {
           disable: 1,
@@ -294,9 +293,10 @@
           remarks: ''
         },
         reqData: {
-          sku: '',
           lettering: '',
-          benifit: ''
+          benifit: '',
+          count: 1,
+          skuId: ''
         }
       };
     },
@@ -310,7 +310,37 @@
       }, 1000);
     },
     computed: {
-      ...mapGetters(['getCommon'])
+      ...mapGetters(['getCommon', 'token'])
+    },
+    watch: {
+      sku: {
+        handler({ scoreIndex, clarityIndex, colorIndex, specIndex }) {
+          let selectIndexes = [scoreIndex, clarityIndex, colorIndex, specIndex];
+          [this.res.skuScore, this.res.skuClarity, this.res.skuColor, this.res.skuSpec].forEach((type, typeIndex) => {
+            type.forEach((item, index) => {
+              let arr = Object.assign([], selectIndexes);
+              arr[typeIndex] = index;
+              let reg = new RegExp(arr.join('_').replace(/-1/g, '[\\d]'), 'g');
+              let result = this.res.skus.filter(sku => {
+                return reg.test(sku.skuIds);
+              });
+              item.disabled = !result.length;
+            });
+          });
+          selectIndexes.includes(-1);
+          if(!selectIndexes.includes(-1)) {
+            let { count, price, sku_id } = this.res.skus.filter(sku => selectIndexes.join('_') === sku.skuIds)[0];
+            this.limit = count;
+            this.reqData.count = Math.min(this.reqData.count, count);
+            this.res.price = price;
+            this.reqData.skuId = sku_id;
+          } else {
+            this.limit = 1;
+            this.reqData.skuId = '';
+          }
+        },
+        deep: true
+      }
     },
     methods: {
       ...mapActions(['ajax']),
@@ -318,15 +348,94 @@
         this.ajax({
           name: 'goodsDetail',
           id: this.getCommon.goodsId
-        }).then(res => {
+        }).then(() => {
+          let res = {
+            "zhuzuanxingzhuang": "主钻形状",
+            "price": 2998,
+            "fuzuanxingzhuang": "副钻形状",
+            "is_shop_same": true,
+            "xiangqiancaizhi": "镶嵌方式",
+            "slide_img": [],
+            "fuzuanfenshu": "副钻分数",
+            "goods_id": "5b851a4d1f30bfc39cddfc37",
+            "category": "项链/坠",
+            "is_new": true,
+            "sub_title": "传承中国传统文化，以纯天然色贝母拼成，打造印象派艺术画风的时尚单品",
+            "is_active": true,
+            "kuanshi": "款式",
+            "img": "http://pd1957kyq.bkt.clouddn.com/pic_mei.png",
+            "skus": [
+              {
+                "zuanshijingdu": "钻石净度22",
+                "price": 1,
+                "color": "颜色8",
+                "sku_id": "5b851b341f30bfc39cddfc3d",
+                "zhushipingji": "主石评级1",
+                "count": 3,
+                "weight_unit": "克拉",
+                "guige": "规格3",
+                "zhushimingcheng": "主石名称11",
+                "zhuzuanfenshu": "主钻分数3",
+                "weight_value": 0.2,
+                "default": true
+              },
+              {
+                "zuanshijingdu": "钻石净度2",
+                "price": 2,
+                "color": "颜色2",
+                "sku_id": "5b8d40aa8263913b53665a16",
+                "zhushipingji": "主石评级32",
+                "count": 4,
+                "weight_unit": "克拉",
+                "guige": "规格1",
+                "zhushimingcheng": "主石名称21",
+                "zhuzuanfenshu": "主钻分数2",
+                "weight_value": 0.3,
+                "default": true
+              },
+              {
+                "zuanshijingdu": "钻石净度3",
+                "price": 3,
+                "color": "颜色3",
+                "sku_id": "5b8d40dd8263913b518463f4",
+                "zhushipingji": "主石评级13",
+                "count": 5,
+                "weight_unit": "克拉",
+                "guige": "规格1",
+                "zhushimingcheng": "主石名称3",
+                "zhuzuanfenshu": "主钻分数3",
+                "weight_value": 0.4,
+                "default": true
+              },
+              {
+                "zuanshijingdu": "钻石净度1",
+                "price": 4,
+                "color": "颜色2",
+                "sku_id": "5b8d40f78263913b565434ec",
+                "zhushipingji": "主石评级4",
+                "count": 8,
+                "weight_unit": "克拉",
+                "guige": "规格3",
+                "zhushimingcheng": "主石名称2",
+                "zhuzuanfenshu": "主钻分数6",
+                "weight_value": 0.4,
+                "default": true
+              }
+            ],
+            "zuanshiqiegong": "钻石切工",
+            "goods_title": "醒狮MeiMei经典款项链/坠 ",
+            "detail": "<p>醒狮MeiMei经典款项链/坠</p>\n\n<p>&nbsp;</p>\n\n<p>传承中国传统文化，以纯天然色贝母拼成，打造印象派艺术画风的时尚单品</p>\n",
+            "xiangqianfangshi": "镶嵌方式"
+          };
+
           Object.assign(this.res, res);
           this.res.bannerList = res.slide_img;
-          let skuColor = [];
           let skuScore = [];
           let skuClarity = [];
+          let skuColor = [];
           let skuSpec = [];
 
-          res.skus.forEach(item => {
+          res.skus.forEach((item, index) => {
             this.isZuan = !!item.zuanshijingdu;
             if(this.isZuan) {
               if(item.zhuzuanfenshu) {
@@ -350,29 +459,44 @@
               skuSpec.push(item.guige);
             }
           });
-          this.res.skuColor = [...new Set(skuColor)];
-          this.res.skuScore = [...new Set(skuScore)];
-          this.res.skuClarity = [...new Set(skuClarity)];
-          this.res.skuSpec = [...new Set(skuSpec)];
-          console.log(this.res);
+
+          skuScore = [...new Set(skuScore)];
+          skuClarity = [...new Set(skuClarity)];
+          skuColor = [...new Set(skuColor)];
+          skuSpec = [...new Set(skuSpec)];
+
+          res.skus.forEach(item => {
+            if(this.isZuan) {
+              item.skuIds = [
+                skuScore.indexOf(item.zhuzuanfenshu),
+                skuClarity.indexOf(item.zuanshijingdu),
+                skuColor.indexOf(item.color),
+                skuSpec.indexOf(item.guige)
+              ].join('_');
+            } else {
+              item.skuIds = [
+                skuScore.indexOf(item.zhushimingcheng),
+                skuClarity.indexOf(item.zhushipingji),
+                skuColor.indexOf(item.color),
+                skuSpec.indexOf(item.guige)
+              ].join('_');
+            }
+          });
+
+          this.res.skuScore = skuScore.map(item => ({ label: item, disabled: false }));
+          this.res.skuClarity = skuClarity.map(item => ({ label: item, disabled: false }));
+          this.res.skuColor = skuColor.map(item => ({ label: item, disabled: false }));
+          this.res.skuSpec = skuSpec.map(item => ({ label: item, disabled: false }));
+          // this.reqData.skuId = this.res.goods_id;
         });
       },
-      handleSKU() {
-        let score = this.res.skuScore[this.sku.scoreIndex];
-        let clarity = this.res.skuClarity[this.sku.clarityIndex];
-        let color = this.res.skuColor[this.sku.colorIndex];
-        let spec = this.res.skuSpec[this.sku.specIndex];
-        this.reqData.sku = `已选 ${score}；${clarity}；${color}；${spec}`;
-      },
+      handleSKU() { },
       handleLettering() {
         let disable = this.lettering.disable ? '否' : '是';
         this.reqData.lettering = this.lettering.disable ? '' : `刻字 ${this.lettering.text}；要求 ${this.lettering.remarks}`;
       },
       handleBenifit() {
         this.reqData.benifit = this.res.benifit.map(item => item.id);
-      },
-      waiting() {
-        this.toast('敬请期待');
       },
       scroll() {
         this.$refs['scroll-top'].scroll();
@@ -383,17 +507,72 @@
         }, 200);
       },
       buyNow() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+
+        if(!this.reqData.skuId) {
+          this.toast('请选择商品规格');
+          return false;
+        }
+
         this.$router.push({ name: 'confirmorder' });
       },
       collect() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+
+        if(!this.reqData.skuId) {
+          this.toast('请选择商品规格');
+          return false;
+        }
+
         this.ajax({
           name: 'collect',
           data: {
-            'collect_id': '5b8d40aa8263913b53665a16'
+            'collect_id': this.reqData.skuId
           }
         }).then(res => {
           this.toast('收藏成功！');
         });
+      },
+      goCart() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+
+        this.$router.push({ name: 'cart' });
+      },
+      addCart() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+
+        if(!this.reqData.skuId) {
+          this.toast('请选择商品规格');
+          return false;
+        }
+
+        this.ajax({
+          name: 'addCart',
+          data: {
+            'cart_id': this.reqData.skuId,
+            num: this.reqData.count
+          }
+        }).then(res => {
+          this.toast('已加入购物车');
+        });
+      },
+      wxShare() {
+        this.toast('暂未开放');
+      },
+      goCustomService() {
+        this.toast('暂未开放');
       }
     }
   };

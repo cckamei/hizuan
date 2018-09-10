@@ -17,12 +17,18 @@ const router = [
   {
     name: 'goodsdetail',
     path: '/goodslist/goodssearch/goodsdetail',
-    component: () => import('@/views/goodsdetail')
+    component: () => import('@/views/goodsdetail'),
+    meta: {
+      params: ['goodsId']
+    }
   },
   {
     name: 'cart',
     path: '/goodslist/goodssearch/goodsdetail/cart',
-    component: () => import('@/views/cart')
+    component: () => import('@/views/cart'),
+    meta: {
+      params: ['token']
+    }
   },
   {
     name: 'confirmorder',
@@ -103,6 +109,11 @@ const router = [
     name: 'myset',
     path: '/my/myset',
     component: () => import('@/views/myset')
+  },
+  {
+    name: 'editinfo',
+    path: '/my/myset/editinfo',
+    component: () => import('@/views/editinfo')
   },
   {
     name: 'myaddress',

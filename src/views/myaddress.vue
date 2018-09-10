@@ -1,30 +1,35 @@
 <template>
-  <div class="myaddress">
+  <div class="myaddress pt">
     <v-header>地址管理</v-header>
-    <ul class="addresslist">
-      <li v-for="(item, index) in addressList" :key="index">
-        <div class="listleft">
-          <div class="receiver">
-            收货人：{{item.name}}<span>{{item.phone}}</span>
-            <i v-if="item.code==1">默认</i>
+    <div class="content">
+      <ul class="addresslist">
+        <li v-for="(item, index) in addressList" :key="index" @click="selectAddress(item)">
+          <img v-if="item.default" class="default-address" src="~assets/goods/icon_selected.png" alt="">
+          <div class="listleft">
+            <div class="receiver">
+              收货人：{{item.name}}<span>{{item.phone}}</span>
+              <i v-if="item.code==1">默认</i>
+            </div>
+            <div class="address">
+              <span>收货地址：</span>
+              <p>{{item.province}}{{item.city}}{{item.district}}{{item.street}}</p>
+            </div>
           </div>
-          <div class="address">
-            <span>收货地址：</span>
-            <p>{{item.province}}{{item.city}}{{item.district}}{{item.street}}</p>
+          <div class="listright">
+            <img src="~assets/mypage/button_edit_a.png" alt="" @click="editAddress(item)">
           </div>
-        </div>
-        <div class="listright">
-          <img src="~assets/mypage/button_edit_a.png" alt="" @click="editAddress(item)">
-        </div>
-      </li>
-    </ul>
-    <div class="btns fix">
-      <button class="btn" :class="{active: isActive}" @click="isActive && confirm()">添加收货地址</button>
+        </li>
+      </ul>
+      <div class="btns fix">
+        <button class="btn" :class="{active: isActive}" @click="isActive && confirm()">添加收货地址</button>
+      </div>
     </div>
   </div>
 </template>
+
 <script>
-  import { mapActions, mapState } from 'vuex';
+  import { mapActions, mapState, mapMutations } from 'vuex';
+
   export default {
     data() {
       return {
@@ -41,30 +46,37 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      ...mapMutations(['setAddress']),
       pageInit() {
         this.ajax({
           name: 'getAddress'
         }).then(res => {
           let data = res;
-          console.log(data, 9990);
           this.addressList = data;
         });
       },
       editAddress(item) {
-        console.log(item, 456);
         this.$router.push({ name: 'editaddress', params: { item } });
       },
       confirm() {
         this.$router.push({ name: 'editaddress' });
+      },
+      selectAddress(item) {
+        this.setAddress({
+          name: item.name,
+          phone: item.phone,
+          address: `${item.province}${item.city}${item.district}${item.street}`
+        });
+        this.$router.go(-1);
       }
     }
   };
 </script>
+
 <style lang="less" scoped>
   .myaddress {
       overflow-y: auto;
       .addresslist {
-          margin-top: 96px;
           background: #ffffff;
           li {
               display: flex;
@@ -79,6 +91,7 @@
       }
       .listleft {
           width: 600px;
+          padding-left: 20px;
           .receiver {
               color: #666666;
               font-size: 30px;
@@ -118,6 +131,7 @@
       }
       .listright {
           width: 40px;
+
           padding-top: 40px;
           img {
               display: block;
@@ -125,6 +139,13 @@
               height: 40px;
           }
       }
+  }
+
+  .default-address {
+      margin-top: 30px;
+      margin-right: 2px;
+      width: 36px;
+      height: 36px;
   }
 </style>
 
