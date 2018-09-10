@@ -10,7 +10,7 @@
       </div>
       <div class="item-content" v-for="(good,j) in order.goods" @click="goDetail()">
         <div class="contentleft">
-          <img src="~assets/goods/pic_guguring.png" alt="">
+          <img src="~/assets/goods/pic_wring1.png" alt="">
         </div>
         <div class="contentright">
           <div class="contenttitle">
