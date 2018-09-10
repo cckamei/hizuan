@@ -1,5 +1,5 @@
 <template>
-  <v-slide-up v-model="show" title="选择区域" @confirm="confirm()">
+  <v-slide-up v-model="ivisible" title="选择区域" @confirm="confirm()">
     <ul class="addChoice">
       <li @click="addRessClick(1)">{{province}}
         <i v-if="chIndex==1"></i>
@@ -20,10 +20,15 @@
 <script>
   import { mapActions } from 'vuex';
   export default {
-    props: ['visible'],
+    props: {
+      value: {
+        type: Boolean,
+        required: true
+      }
+    },
     data() {
       return {
-        show: false,
+        ivisible: false,
         selectedIndex: -1, //选中的省市区在列表中的index
         adList: [],
         chIndex: 1, //省市区选择下划线
@@ -36,12 +41,16 @@
       };
     },
     watch: {
-      visible(val) {
-        this.show = val;
+      value(val) {
+        this.ivisible = val;
+      },
+      ivisible(val) {
+        // console.log('close slide-up', val);
+        // this.ivisible = val;
+        this.$emit('input', val);
       }
     },
     created() {
-      this.show = this.visible;
       this.getProvince();
     },
     methods: {

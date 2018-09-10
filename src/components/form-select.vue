@@ -1,8 +1,8 @@
 <template>
-  <div class="flex arrow">
+  <div class="flex" :class="{arrow:!readonly}">
     <div class="label">{{label}}</div>
-    <input type="text" :value="text" :placeholder="placeholder" @click="visible = true" readonly />
-    <v-slide-up v-if="readonly" v-model="visible" :title="title" @confirm="confirm" :isConfirm="selectedIndex !== -1">
+    <input type="text" :value="text" :placeholder="placeholder" @click="!readonly&&(visible = true)" readonly />
+    <v-slide-up v-model="visible" :title="title" @confirm="confirm" :isConfirm="selectedIndex !== -1">
       <v-input-radio v-model="selectedIndex" :list="list"></v-input-radio>
     </v-slide-up>
   </div>

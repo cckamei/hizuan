@@ -67,7 +67,7 @@
           padding-right: 96px;
       }
       .handler {
-          width: 96px;
+          min-width: 96px;
           height: 96px;
           position: absolute;
           right: 0;

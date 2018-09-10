@@ -14,15 +14,20 @@
       </ul>
     </div>
     <div class="content">
-      <ul class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50" infinite-scroll-immediate-check="true">
-        <li v-for="(item, index) in goodsList" :key="index" class="flex" @click="goDetail(item)">
-          <div class="img"><img :src="item.src" alt=""></div>
-          <div class="detail flex-auto flex">
-            <span class="name">{{item.name}}</span>
-            <span class="desc">{{item.desc}}</span>
-            <div class="line3 flex">
-              <div class="price"><span>￥</span>{{item.price | currency}}</div>
-              <div class="cart"></div>
+      <ul class="list">
+        <li v-for="(item, index) in goodsList" :key="index" class="flex" v-touch.press="handlePress">
+          <div class="libox" @click="goDetail(item)">
+            <div class="img"><img :src="item.src" alt=""></div>
+            <div class="detail flex-auto flex">
+              <span class="name">{{item.name}}</span>
+              <span class="desc">{{item.desc}}</span>
+              <div class="line3 flex">
+                <div class="price"><span>￥</span>{{item.price | currency}}</div>
+                <div class="cart"></div>
+              </div>
+            </div>
+            <div class="mask-delete flex" v-if="item.deleteVisible" @click="item.deleteVisible = false">
+              <div class="delete" @click="removeCart(item, index)">删除</div>
             </div>
           </div>
         </li>
@@ -58,47 +63,56 @@
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
+          price: '6666',
+          deleteVisible: false
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
+          price: '6666',
+          deleteVisible: false
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
+          price: '6666',
+          deleteVisible: false
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
+          price: '6666',
+          deleteVisible: false
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
+          price: '6666',
+          deleteVisible: false
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
+          price: '6666',
+          deleteVisible: false
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
+          price: '6666',
+          deleteVisible: false
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
+          price: '6666',
+          deleteVisible: false
         }, {
           src: icon,
           name: '醒狮MeiMei项链/坠',
           desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-          price: '6666'
+          price: '6666',
+          deleteVisible: false
         }],
         pageInfo: {},
         loading: false
@@ -155,6 +169,15 @@
         }, 1000);
         // });
       },
+      removeCart(item, index) {
+        this.goodsList.splice(index, 1);
+      },
+      handlePress(eventName, e, hammer) {
+        console.log(1);
+        if(eventName === 'press') {
+          this.goodsList[hammer.index].deleteVisible = true;
+        }
+      },
       //分页
       loadMore() {
         this.loading = true;
@@ -172,108 +195,135 @@
 
 <style lang="less" scoped>
   .pt {
-        .header {
-              box-shadow: none;
-              border: none;
-        }
-    padding-top: 192px;
+      .header {
+          box-shadow: none;
+          border: none;
+      }
+      padding-top: 192px;
   }
 
   .title input {
-    border-left: 1px solid #f0f0f0; /*no*/
-    padding-left: 30px;
-    padding-right: 30px;
-    height: 60px;
-    width: 100%;
+      border-left: 1px solid #f0f0f0; /*no*/
+      padding-left: 30px;
+      padding-right: 30px;
+      height: 60px;
+      width: 100%;
   }
 
   .condition {
-    height: 96px;
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-    top: 96px;
-    background-color: #fff;
-    font-size: 30px;
-    color: #999;
-    padding: 0 24px;
-    border-top: 2px solid #f0f0f0;
-    box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.5);
-    ul {
-      height: 100%;
-      li {
-        width: 50%;
-        justify-content: center;
-        .arrow-down {
-          width: 24px;
-          height: 24px;
-          background: url('~assets/goods/icon_arrow_d.png') no-repeat;
-          background-size: 100%;
-          transition: all 0.2s;
-          margin-left: 16px;
-          &.active {
-            transform: rotate(180deg);
+      height: 96px;
+      width: 100%;
+      position: absolute;
+      z-index: 1;
+      top: 96px;
+      background-color: #fff;
+      font-size: 30px;
+      color: #999;
+      padding: 0 24px;
+      border-top: 2px solid #f0f0f0;
+      box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.5);
+      ul {
+          height: 100%;
+          li {
+              width: 50%;
+              justify-content: center;
+              position: relative;
+              .arrow-down {
+                  width: 24px;
+                  height: 24px;
+                  background: url('~assets/goods/icon_arrow_d.png') no-repeat;
+                  background-size: 100%;
+                  transition: all 0.2s;
+                  margin-left: 16px;
+                  &.active {
+                      transform: rotate(180deg);
+                  }
+              }
           }
-        }
       }
-    }
   }
 
   .list {
-    background-color: #fff;
-    position: relative;
-    li {
-      padding: 30px 40px 30px 30px;
-      align-items: stretch;
-      .img {
-        width: 200px;
-        height: 200px;
-        margin-right: 30px;
-        flex-shrink: 0;
-        background-color: #f5f5f5;
-        img {
-          height: 100%;
-        }
-      }
-      .detail {
-        flex-direction: column;
-        align-items: flex-start;
-        position: relative;
-        .name {
-          font-size: 30px;
-          color: #666;
-          padding-top: 10px;
-        }
-        .desc {
-          font-size: 20px;
-          color: #999;
-          padding-top: 24px;
-        }
-        .line3 {
-          position: absolute;
-          width: 100%;
-          bottom: 10px;
-          left: 0;
-          align-items: center;
-          justify-content: space-between;
-          .price {
-            font-size: 30px;
-            color: #cdb49b;
-            span {
-              font-size: 20px;
-            }
+      background-color: #fff;
+      position: relative;
+      li {
+          .libox {
+              width: 100%;
+              height: 100%;
+              padding: 30px 40px 30px 30px;
+              align-items: stretch;
+              display: flex;
+              position: relative;
+              .img {
+                  width: 200px;
+                  height: 200px;
+                  margin-right: 30px;
+                  flex-shrink: 0;
+                  background-color: #f5f5f5;
+                  img {
+                      height: 100%;
+                  }
+              }
+              .detail {
+                  flex-direction: column;
+                  align-items: flex-start;
+                  position: relative;
+                  .name {
+                      font-size: 30px;
+                      color: #666;
+                      padding-top: 10px;
+                  }
+                  .desc {
+                      font-size: 20px;
+                      color: #999;
+                      padding-top: 24px;
+                  }
+                  .line3 {
+                      position: absolute;
+                      width: 100%;
+                      bottom: 10px;
+                      left: 0;
+                      align-items: center;
+                      justify-content: space-between;
+                      .price {
+                          font-size: 30px;
+                          color: #cdb49b;
+                          span {
+                              font-size: 20px;
+                          }
+                      }
+                      .cart {
+                          width: 40px;
+                          height: 40px;
+                          background: url('~assets/goods/icon_cart.png') no-repeat;
+                          background-size: 100%;
+                      }
+                  }
+              }
           }
-          .cart {
-            width: 40px;
-            height: 40px;
-            background: url('~assets/goods/icon_cart.png') no-repeat;
-            background-size: 100%;
+          &:last-child {
+              padding-bottom: 0;
           }
-        }
       }
-      &:last-child {
-        padding-bottom: 0;
+  }
+  .mask-delete {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.5);
+      left: 0;
+      top: 0;
+      right: 0;
+      height: 100%;
+      justify-content: center;
+      margin: 0 -20px;
+      .delete {
+          width: 120px;
+          height: 120px;
+          color: #fff;
+          background-color: #faa0a0;
+          text-align: center;
+          line-height: 120px;
+          font-size: 24px;
+          border-radius: 50%;
       }
-    }
   }
 </style>
