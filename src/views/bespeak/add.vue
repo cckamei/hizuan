@@ -59,6 +59,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import { formatDate } from '@/utils';
   import selectAddress from './components/select-address';
   export default {
     components: {
@@ -102,15 +103,16 @@
           name: this.getAppointment.appointment.userName,
           address: this.getAppointment.appointment.shopAddress,
           gender: this.getAppointment.appointment.sex,
-          birthday: this.getAppointment.appointment.birthday,
+          birthday: formatDate(this.getAppointment.appointment.birthday),
           occupation: this.getAppointment.appointment.occupation,
-          time: this.getAppointment.appointment.createTime,
+          time: formatDate(this.getAppointment.appointment.createTime),
           shop: 0,
           addId: 1, //1:省份选择; 2:市区； 3：地区
           provinceId: '', //选择的省份id
           cityId: '' //选择的市id
         };
       }
+      console.log(this.appointment);
     },
     methods: {
       selectAddress() {
