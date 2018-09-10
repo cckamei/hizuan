@@ -3,7 +3,7 @@
     <v-header-menus back shadow>
       <input v-if="searchIndex === -1" type="text" placeholder="请选择您要搜索的作品类型" readonly>
       <div v-else class="search-type">
-        <button class="btn" @click="searchIndex = -1">{{searches[searchIndex]}} X</button>
+        <button class="btn flex" @click="searchIndex = -1">{{searches[searchIndex]}} <img src="~assets/goods/icon_x.png" /></button>
       </div>
       <div slot="menus" class="menus">
         <div class="menu" @click="search"><img src="~assets/goods/icon_search.png" alt=""></div>
@@ -60,10 +60,17 @@
     button {
       background-color: @btn-color;
       height: 60px;
+      margin-top: 18px;
       padding: 0 24px;
       border-radius: 45px;
       font-size: 30px;
       color: #fff;
+      line-height: 60px;
+    }
+    img {
+      width: 24px;
+      height: 24px;
+      margin-left: 10px;
     }
   }
 </style>

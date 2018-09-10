@@ -26,6 +26,7 @@
           <i>￥</i>{{res.price | currency}}
           <img @click="wxShare" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
+        <button class="tag">七夕蜜语 浪漫大促</button>
         <div class="name">{{res.goods_title}}</div>
         <div class="desc">{{res.sub_title}}</div>
         <ul class="mark flex">
@@ -72,7 +73,7 @@
         <v-form-slide-up label="商品规格" v-model="reqData.sku" :placeholder="`选择 ${isZuan ? '主钻分数；钻石净度；' : '主石名称；主石评级；'}颜色；规格；数量`" @confirm="handleSKU">
           <ul class="sku">
             <li class="sku-icon flex">
-              <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
+              <img class="icon" src="~assets/goods/orderlistonly.png" alt="">
               <div>
                 <div class="price"><span>￥</span>{{res.price | currency}}</div>
                 <span class="code">商品编号：{{sku.merchant_code}}</span>
@@ -114,7 +115,7 @@
             </li>
             <li class="flex">
               <span class="label">套系</span>
-              <span class="value">{{null}}</span>
+              <span class="value">{{res.taoxi}}</span>
             </li>
             <li class="flex">
               <span class="label">款式</span>
@@ -185,11 +186,13 @@
       <div class="gap"></div>
       <div ref="image-text" class="section image-text">
         <div class="title flex"><span>图文详情</span></div>
-        <div class="image-text-content" v-html="res.detail">
+        <!-- <div class="image-text-content" v-html="res.detail"> -->
+        <div class="image-text-content">
           <!-- <img src="~assets/goods/pic_dring.png" alt="">
           <p>CC卡美婚嫁钻饰系列经悉心设计，力求象征中国从未消失一直存在的隽永感情。</p>
           <p>灵感取材于美对爱侣分享的幸福时刻。CC卡美创作的婚戒系列钻饰，每款设计都尽显美钻的锋芒火彩，将你的爱意表露无遗。
           </p> -->
+          <img src="~assets/goods/goods_detail.jpg" alt="">
         </div>
       </div>
       <div class="gap"></div>
@@ -230,7 +233,7 @@
         isZuan: true,
         limit: 1,
         res: {
-          bannerList: [],
+          bannerList: [banner, banner, banner],
           skuScore: [],
           skuClarity: [],
           skuColor: [],
@@ -239,14 +242,14 @@
             id: 1,
             price: 1500,
             limit: 20000,
-            use: false,
+            use: true,
             expiredStart: '2018.08.01',
             expiredEnd: '2018.09.01'
           }, {
             id: 2,
             price: 600,
             limit: 1000,
-            use: false,
+            use: true,
             expiredStart: '2018.08.01',
             expiredEnd: '2018.09.01'
           }],
@@ -254,10 +257,6 @@
             id: 1,
             title: '七夕牵线',
             desc: '满额免费购换小礼品'
-          }, {
-            id: 2,
-            title: '新用户',
-            desc: '新用户首单特惠'
           }],
           recommend: [{
             url: ss,
@@ -350,86 +349,106 @@
           id: this.getCommon.goodsId
         }).then(() => {
           let res = {
-            "zhuzuanxingzhuang": "主钻形状",
+            merchant_code: 'DRGC00208',
+            taoxi: '婚嫁系列',
+            "zhuzuanxingzhuang": "圆形",
             "price": 2998,
-            "fuzuanxingzhuang": "副钻形状",
+            "fuzuanxingzhuang": "无副钻",
             "is_shop_same": true,
-            "xiangqiancaizhi": "镶嵌方式",
+            "xiangqiancaizhi": "Pt950铂金",
             "slide_img": [],
-            "fuzuanfenshu": "副钻分数",
+            "fuzuanfenshu": "无副钻",
             "goods_id": "5b851a4d1f30bfc39cddfc37",
             "category": "项链/坠",
             "is_new": true,
-            "sub_title": "传承中国传统文化，以纯天然色贝母拼成，打造印象派艺术画风的时尚单品",
+            "sub_title": "结而为约 · 有承诺的爱",
             "is_active": true,
-            "kuanshi": "款式",
-            "img": "http://pd1957kyq.bkt.clouddn.com/pic_mei.png",
+            "kuanshi": "戒指",
+            "img": banner,
             "skus": [
               {
-                "zuanshijingdu": "钻石净度22",
-                "price": 1,
-                "color": "颜色8",
+                merchant_code: 'DRGC00208',
+                "zuanshijingdu": "SI/小瑕",
+                "price": 9000,
+                "color": "H/白",
                 "sku_id": "5b851b341f30bfc39cddfc3d",
                 "zhushipingji": "主石评级1",
                 "count": 3,
                 "weight_unit": "克拉",
-                "guige": "规格3",
+                "guige": "女戒-11号",
                 "zhushimingcheng": "主石名称11",
-                "zhuzuanfenshu": "主钻分数3",
+                "zhuzuanfenshu": "18分",
                 "weight_value": 0.2,
                 "default": true
               },
               {
-                "zuanshijingdu": "钻石净度2",
-                "price": 2,
-                "color": "颜色2",
+                merchant_code: 'DRGC00208',
+                "zuanshijingdu": "SI/小瑕",
+                "price": 6666,
+                "color": "F-G/优白",
                 "sku_id": "5b8d40aa8263913b53665a16",
                 "zhushipingji": "主石评级32",
                 "count": 4,
                 "weight_unit": "克拉",
-                "guige": "规格1",
+                "guige": "女戒-12号",
                 "zhushimingcheng": "主石名称21",
-                "zhuzuanfenshu": "主钻分数2",
+                "zhuzuanfenshu": "25分",
                 "weight_value": 0.3,
                 "default": true
               },
               {
-                "zuanshijingdu": "钻石净度3",
-                "price": 3,
-                "color": "颜色3",
+                merchant_code: 'DRGC00208',
+                "zuanshijingdu": "VS/微瑕",
+                "price": 9999,
+                "color": "I-J/淡白",
                 "sku_id": "5b8d40dd8263913b518463f4",
                 "zhushipingji": "主石评级13",
                 "count": 5,
                 "weight_unit": "克拉",
-                "guige": "规格1",
+                "guige": "女戒-13号",
                 "zhushimingcheng": "主石名称3",
-                "zhuzuanfenshu": "主钻分数3",
+                "zhuzuanfenshu": "30分",
                 "weight_value": 0.4,
                 "default": true
               },
               {
-                "zuanshijingdu": "钻石净度1",
-                "price": 4,
-                "color": "颜色2",
+                merchant_code: 'DRGC00208',
+                "zuanshijingdu": "VVS/极微瑕",
+                "price": 8888,
+                "color": "D-E/极白",
                 "sku_id": "5b8d40f78263913b565434ec",
                 "zhushipingji": "主石评级4",
                 "count": 8,
                 "weight_unit": "克拉",
-                "guige": "规格3",
+                "guige": "女戒-14号",
                 "zhushimingcheng": "主石名称2",
-                "zhuzuanfenshu": "主钻分数6",
+                "zhuzuanfenshu": "40分",
+                "weight_value": 0.4,
+                "default": true
+              },
+              {
+                "zuanshijingdu": "VVS/极微瑕",
+                "price": 4,
+                "color": "D-E/极白",
+                "sku_id": "5b8d40f78263913b565434ec",
+                "zhushipingji": "主石评级4",
+                "count": 8,
+                "weight_unit": "克拉",
+                "guige": "女戒-15号",
+                "zhushimingcheng": "主石名称2",
+                "zhuzuanfenshu": "40分",
                 "weight_value": 0.4,
                 "default": true
               }
             ],
-            "zuanshiqiegong": "钻石切工",
-            "goods_title": "醒狮MeiMei经典款项链/坠 ",
+            "zuanshiqiegong": "完美",
+            "goods_title": "CC卡美婚嫁精品钻戒",
             "detail": "<p>醒狮MeiMei经典款项链/坠</p>\n\n<p>&nbsp;</p>\n\n<p>传承中国传统文化，以纯天然色贝母拼成，打造印象派艺术画风的时尚单品</p>\n",
-            "xiangqianfangshi": "镶嵌方式"
+            "xiangqianfangshi": "单钻"
           };
 
           Object.assign(this.res, res);
-          this.res.bannerList = res.slide_img;
+          // this.res.bannerList = res.slide_img;
           let skuScore = [];
           let skuClarity = [];
           let skuColor = [];
@@ -488,6 +507,8 @@
           this.res.skuColor = skuColor.map(item => ({ label: item, disabled: false }));
           this.res.skuSpec = skuSpec.map(item => ({ label: item, disabled: false }));
           // this.reqData.skuId = this.res.goods_id;
+
+          this.reqData.benifit = this.res.benifit.map(item => item.id);
         });
       },
       handleSKU() { },
@@ -585,6 +606,7 @@
 
   .content {
     padding-bottom: 120px;
+    background-color: #f3f3f3;
   }
 
   .gap {
@@ -607,6 +629,7 @@
 
   .info {
     padding: 30px;
+    background-color: #fff;
     .price {
       color: #cdb49b;
       font-size: 42px;
@@ -617,7 +640,17 @@
         width: 40px;
         height: 40px;
         padding: 20px;
+        margin-top: -10px;
       }
+    }
+    .tag {
+      color: #fff;
+      background-color: #faa0a0;
+      border-radius: 20px;
+      font-size: 16px;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 12px;
     }
     .name {
       padding-top: 30px;
@@ -651,6 +684,7 @@
   .row {
     height: 84px;
     padding: 0 30px;
+    background-color: #fff;
     .benifit-btn {
       border-radius: 18px;
       background-color: #fff;
@@ -736,6 +770,7 @@
 
   .section {
     &.image-text {
+      background-color: #fff;
       padding: 0 10px;
       img {
         padding-bottom: 10px;
@@ -800,7 +835,7 @@
           background-size: 100% 100%;
         }
         &.purchase {
-          background: url('~assets/goods/button_pink_l.png') no-repeat;
+          background: url('~assets/goods/button_buynow.png') no-repeat;
           background-size: 100% 100%;
         }
       }

@@ -40,7 +40,7 @@
       <span class="checkbox-label">全选</span>
       <span class="total-label">合计：</span>
       <div class="price">￥{{totalMoney | currency}}</div>
-      <button class="btn settlement" @click="settlement">结算{{totalCount}}</button>
+      <button class="btn settlement" @click="settlement">结算（ {{totalCount}} ）</button>
     </div>
     <!-- <v-slide-up v-model="skuVisible" @confirm="handleSKU">
       <template v-for="(item, index) in res.cart" v-if="skuIndex === index">
@@ -84,7 +84,7 @@
 
 <script>
   import { mapActions } from 'vuex';
-  import ss from '../assets/goods/pic_guguring.png';
+  import ss from '../assets/goods/orderlistonly.png';
 
   export default {
     data() {
@@ -127,7 +127,7 @@
       'res.cart': {
         handler(val) {
           this.checkedAll = !this.res.cart.filter(item => item.limit && !item.checked).length;
-          this.totalCount = this.res.cart.filter(item => item.limit && item.checked).reduce((total, { count }) => total + count, 0);
+          this.totalCount = this.res.cart.filter(item => item.limit && item.checked).reduce((total, { count }) => total + +count, 0);
           this.totalMoney = this.res.cart.filter(item => item.limit && item.checked).reduce((total, { price, count }) => total + price * count, 0);
         },
         deep: true
@@ -139,11 +139,50 @@
         this.ajax({
           name: 'cart'
         }).then(res => {
-          res.forEach(item => {
-            item.checked = false;
-            item.deleteVisible = false;
-            item.limit = 999;
-          });
+          res = [
+            {
+              "cart_id": "5b8d40dd8263913b518463f4",
+              "goods_title": "文乘系列呦呦鹿鸣-项链/坠",
+              "goods_id": "5b851a4d1f30bfc39cddfc37",
+              "count": "2",
+              "sub_title": "25分；VS/微瑕；H/白；女戒-11号；基础保障服务",
+              "price": 6666.0,
+              "img": ss,
+              checked: false,
+              deleteVisible: false,
+              limit: 999
+            },
+            {
+              "cart_id": "5b8d40dd8263913b518463f4",
+              "goods_title": "文乘系列呦呦鹿鸣-项链/坠",
+              "goods_id": "5b851a4d1f30bfc39cddfc37",
+              "count": "2",
+              "sub_title": "25分；VS/微瑕；H/白；女戒-11号；基础保障服务",
+              "price": 8880.0,
+              "img": ss,
+              checked: false,
+              deleteVisible: false,
+              limit: 999
+            }
+            // {
+            //   "cart_id": "5b8d40dd8263913b518463f4",
+            //   "goods_title": "醒狮MeiMei经典款项链吊坠",
+            //   "goods_id": "5b851a4d1f30bfc39cddfc37",
+            //   "count": "2",
+            //   "sub_title": "传承中国传统文化，以纯天然色贝母拼成，打造印象派艺术画风的时尚单品",
+            //   "price": 8880.0,
+            //   "img": "http://pd1957kyq.bkt.clouddn.com/1f00d57a-b505-11e8-9852-00163e0561b9",
+            //   checked: false,
+            //   deleteVisible: false,
+            //   limit: 0
+            // }
+          ];
+
+          // res.forEach(item => {
+          //   item.checked = false;
+          //   item.deleteVisible = false;
+          //   item.limit = 999;
+          // });
           this.res.cart = res;
         });
       },

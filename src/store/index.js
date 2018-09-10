@@ -25,7 +25,8 @@ export default new Vuex.Store({
     getAppointment: state => state.appointment,
     token: state => state.common.token,
     userId: state => state.common.userId,
-    getAddress: state => state.address
+    getAddress: state => state.address,
+    getUserInfo: state => state.userInfo
   },
   mutations: {
     setCacheData(state, data) {
