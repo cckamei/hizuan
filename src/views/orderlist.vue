@@ -150,166 +150,127 @@
 </script>
 <style lang="less" scoped>
   .orderlistpage {
-    background: #f0f0f0;
-    .header {
-      box-shadow: 0 0 0 0 rgba(170, 170, 170, 0.5);
-      border-bottom: 2px solid #cccccc;
-    }
-    .tab {
-      position: fixed;
-      height: 96px;
-      line-height: 96px;
-      top: 96px;
-      width: 100%;
-      box-shadow: 0 5px 10px 5px rgba(170, 170, 170, 0.5);
-      background-color: #fff;
-      z-index: 2;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-around;
-      padding: 0 45px;
-      span {
-        color: #666666;
-        text-align: center;
-        line-height: 96px;
-        flex: 1;
-        position: relative;
-        font-size: 20px;
-      }
-
-      .active {
-        color: #333333;
-        font-weight: bold;
-        font-size: 24px;
-        &:after {
-          content: '';
-          position: absolute;
-          width: 108px;
-          height: 2px;
-          bottom: -1px;
-          background: #faa0a0;
-          left: 0;
-          right: 0;
-          margin: auto;
-        }
-      }
-    }
-    .orderlist {
-      .listitem {
-        background: #ffffff;
-        margin-bottom: 16px;
-        .itemtitle {
-          padding: 0 30px;
-          height: 64px;
-          line-height: 64px;
-          margin-top: 209px;
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: space-between;
-          .titleleft {
-            img {
-              display: inline;
-              width: 24px;
-              height: 24px;
-              margin-right: 12px;
-            }
-          }
-          .listright {
-            font-size: 24px;
-            color: #cdb498;
-          }
-        }
-        .itemcontent {
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: space-between;
-          padding: 0 30px;
-          background: #f5f5f5;
-          margin-bottom: 8px;
-          .contentleft {
-            width: 120px;
-            height: 120px;
-            margin: 20px 20px 20px 0;
-            background: #ffffff;
-            img {
-              display: block;
-              width: 100%;
-              height: auto;
-            }
-          }
-          .contentright {
-            flex: 1;
-            .contenttitle {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              margin: 30px 0 10px;
-              color: #666666;
-              font-size: 24px;
-              span:nth-child-of(2) {
-                text-align: right;
-              }
-            }
-            .contentmessage {
-              flex: 1;
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              font-size: 24px;
-              margin-bottom: 30px;
-              color: #999999;
-              p {
-                width: 360px;
-              }
-              .messageright {
-                text-align: right;
-              }
-              s {
-                color: #cccccc;
-                display: block;
-              }
-            }
-          }
-        }
-        .itemprice {
-          height: 64px;
-          line-height: 64px;
-          text-align: right;
-          padding: 0 30px;
-          font-size: 20px;
-          color: #666666;
+      background: #f0f0f0;
+      .header {
+          box-shadow: 0 0 0 0 rgba(170, 170, 170, 0.5);
           border-bottom: 2px solid #cccccc;
-          span {
-            font-size: 24px;
-          }
-        }
-        .itemfoot {
-          height: 80px;
-          text-align: right;
-          padding: 0 30px;
-          button {
-            width: 140px;
-            height: 52px;
-            border-radius: 25px;
-            font-size: 20px;
-            margin-top: 14px;
-          }
-          .btnleft {
-            margin-right: 30px;
-          }
-          .btngrey {
-            background: #ffffff;
-            border: 2px solid #cccccc;
-            color: #666666;
-          }
-          .btnpink {
-            background: #ffb4b4;
-            border: 2px solid #ffb4b4;
-            color: #ffffff;
-          }
-        }
       }
-    }
+      .orderlist {
+          .listitem {
+              background: #ffffff;
+              margin-bottom: 16px;
+              .itemtitle {
+                  padding: 0 30px;
+                  height: 64px;
+                  line-height: 64px;
+                  margin-top: 209px;
+                  display: flex;
+                  flex-flow: row nowrap;
+                  justify-content: space-between;
+                  .titleleft {
+                      img {
+                          display: inline;
+                          width: 24px;
+                          height: 24px;
+                          margin-right: 12px;
+                      }
+                  }
+                  .listright {
+                      font-size: 24px;
+                      color: #cdb498;
+                  }
+              }
+              .itemcontent {
+                  display: flex;
+                  flex-flow: row nowrap;
+                  justify-content: space-between;
+                  padding: 0 30px;
+                  background: #f5f5f5;
+                  margin-bottom: 8px;
+                  .contentleft {
+                      width: 120px;
+                      height: 120px;
+                      margin: 20px 20px 20px 0;
+                      background: #ffffff;
+                      img {
+                          display: block;
+                          width: 100%;
+                          height: auto;
+                      }
+                  }
+                  .contentright {
+                      flex: 1;
+                      .contenttitle {
+                          display: flex;
+                          flex-flow: row nowrap;
+                          justify-content: space-between;
+                          margin: 30px 0 10px;
+                          color: #666666;
+                          font-size: 24px;
+                          span:nth-child-of(2) {
+                              text-align: right;
+                          }
+                      }
+                      .contentmessage {
+                          flex: 1;
+                          display: flex;
+                          flex-flow: row nowrap;
+                          justify-content: space-between;
+                          font-size: 24px;
+                          margin-bottom: 30px;
+                          color: #999999;
+                          p {
+                              width: 360px;
+                          }
+                          .messageright {
+                              text-align: right;
+                          }
+                          s {
+                              color: #cccccc;
+                              display: block;
+                          }
+                      }
+                  }
+              }
+              .itemprice {
+                  height: 64px;
+                  line-height: 64px;
+                  text-align: right;
+                  padding: 0 30px;
+                  font-size: 20px;
+                  color: #666666;
+                  border-bottom: 2px solid #cccccc;
+                  span {
+                      font-size: 24px;
+                  }
+              }
+              .itemfoot {
+                  height: 80px;
+                  text-align: right;
+                  padding: 0 30px;
+                  button {
+                      width: 140px;
+                      height: 52px;
+                      border-radius: 25px;
+                      font-size: 20px;
+                      margin-top: 14px;
+                  }
+                  .btnleft {
+                      margin-right: 30px;
+                  }
+                  .btngrey {
+                      background: #ffffff;
+                      border: 2px solid #cccccc;
+                      color: #666666;
+                  }
+                  .btnpink {
+                      background: #ffb4b4;
+                      border: 2px solid #ffb4b4;
+                      color: #ffffff;
+                  }
+              }
+          }
+      }
   }
 </style>
 

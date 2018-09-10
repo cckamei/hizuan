@@ -77,10 +77,10 @@
         <button class="btn" :class="{active: isActive}" @click="isActive && confirm()">提交</button>
       </div>
     </div>
-    <!-- <div class="rightTopBtn" v-if="!isEdit" @click="edit()">编辑</div>
+    <div class="rightTopBtn" v-if="!isEdit" @click="edit()">编辑</div>
     <div v-if="isEdit" class="rightTopBtn submitBtn">
       <button class="btn" :class="{active: isActive}" @click="isActive && confirm()">提交</button>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -124,6 +124,23 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      pageInit() {
+        this.ajax({
+          name: 'getUserInfo'
+        }).then(res => {
+          let data = res;
+          this.occupation.forEach((item, index) => {
+            if(item == data.career) {
+              data.occupation = index;
+            }
+          });
+          this.reqData = data;
+        });
+      },
+      edit() {
+        console.log(46);
+        this.isEdit = !this.isEdit;
+      },
       confirm() {
         let data = this.reqData;
         let index = data.occupation;
@@ -141,49 +158,49 @@
 
 <style lang="less" scoped>
   .section {
-    margin-top: 16px;
-    padding: 0 20px;
-    background-color: #fff;
-    &:first-child {
-      margin-top: 0;
-    }
+      margin-top: 16px;
+      padding: 0 20px;
+      background-color: #fff;
+      &:first-child {
+          margin-top: 0;
+      }
   }
 
   .form {
-    background-color: #fff;
-    li {
-      border-bottom: 1px solid #f0f0f0; /*no*/
-      padding: 0 20px;
-      height: 96px;
-      &:last-child {
-        border-bottom: 0;
+      background-color: #fff;
+      li {
+          border-bottom: 1px solid #f0f0f0; /*no*/
+          padding: 0 20px;
+          height: 96px;
+          &:last-child {
+              border-bottom: 0;
+          }
+          .input {
+              height: 100%;
+          }
       }
-      .input {
-        height: 100%;
-      }
-    }
   }
   .rightTopBtn {
-    position: fixed;
-    top: 0px;
-    right: 40px;
-    width: 60px;
-    line-height: 96px;
-    z-index: 3;
-    color: #333333;
-    font-size: 26px;
+      position: fixed;
+      top: 0px;
+      right: 40px;
+      width: 60px;
+      line-height: 96px;
+      z-index: 3;
+      color: #333333;
+      font-size: 26px;
   }
   .submitBtn {
-    .btn {
-      background: #ffffff;
-      color: #ffb4b4;
-    }
+      .btn {
+          background: #ffffff;
+          color: #ffb4b4;
+      }
   }
   .more {
-    height: 60px;
-    line-height: 60px;
-    font-size: 24px;
-    color: #cdb498;
-    text-align: center;
+      height: 60px;
+      line-height: 60px;
+      font-size: 24px;
+      color: #cdb498;
+      text-align: center;
   }
 </style>

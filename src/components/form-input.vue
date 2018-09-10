@@ -1,7 +1,9 @@
 <template>
-  <div class="flex">
+  <div class="flex " :class="{arrow:arrow}">
     <div class="label">{{label}}</div>
-    <input :maxlength="maxlength" type="text" v-model="text" :readonly="readonly" :placeholder="placeholder" />
+    <input v-if="arrow" :maxlength="maxlength" type="text" v-model="text" readonly :placeholder="placeholder" @click="onClickHandler" />
+    <input v-else :maxlength="maxlength" type="text" v-model="text" :readonly="!readonly" :placeholder="placeholder" />
+
     <span v-if="unit">{{unit}}</span>
   </div>
 </template>
@@ -9,6 +11,10 @@
 <script>
   export default {
     props: {
+      arrow: {
+        type: Boolean,
+        default: false
+      },
       value: {
         type: [String, Number],
         required: true
@@ -27,7 +33,7 @@
         type: String
       },
       readonly: {
-        type: Boolean,
+        type: [Boolean, Number],
         default: false
       }
     },
@@ -46,27 +52,34 @@
       text(val) {
         this.$emit('input', val);
       }
+    },
+    methods: {
+      onClickHandler() {
+        if(this.readonly) {
+          this.$emit('input-click');
+        }
+      }
     }
   };
 </script>
 
 <style lang="less" scoped>
   .flex {
-    width: 100%;
-    height: 100%;
-    font-size: 30px;
-    .label {
-      flex-shrink: 0;
-      min-width: 30%;
-      color: #999;
-    }
-    input {
-      text-align: right;
       width: 100%;
-      padding: 0 10px;
-      font-size: 32px;
-      color: #666;
-    }
+      height: 100%;
+      font-size: 30px;
+      .label {
+          flex-shrink: 0;
+          min-width: 30%;
+          color: #999;
+      }
+      input {
+          text-align: right;
+          width: 100%;
+          padding: 0 10px;
+          font-size: 32px;
+          color: #666;
+      }
   }
 </style>
 

@@ -174,81 +174,81 @@
 </script>
 <style lang="less" scoped>
   .deleteAddresss {
-    float: right;
-    font-size: 28px;
-    color: #999999;
+      float: right;
+      font-size: 28px;
+      color: #999999;
   }
   .editaddress {
-    .form {
-      background-color: #fff;
-      margin-top: 96px;
-      li {
-        border-bottom: 1px solid #f0f0f0; /*no*/
-        padding: 0 20px;
-        height: 96px;
-        line-height: 96px;
-        font-size: 30px;
-        color: #999999;
-        &:last-child {
-          border-bottom: 0;
-        }
-        .input {
-          height: 100%;
-        }
+      .form {
+          background-color: #fff;
+          margin-top: 96px;
+          li {
+              border-bottom: 1px solid #f0f0f0; /*no*/
+              padding: 0 20px;
+              height: 96px;
+              line-height: 96px;
+              font-size: 30px;
+              color: #999999;
+              &:last-child {
+                  border-bottom: 0;
+              }
+              .input {
+                  height: 100%;
+              }
 
-        span {
-          float: right;
-          margin-top: 28px;
-        }
-        label {
-          float: left;
-        }
-        input {
-          float: right;
-          height: 100%;
-          text-align: right;
-          color: #666;
-          font-size: 32px;
-        }
+              span {
+                  float: right;
+                  margin-top: 28px;
+              }
+              label {
+                  float: left;
+              }
+              input {
+                  float: right;
+                  height: 100%;
+                  text-align: right;
+                  color: #666;
+                  font-size: 32px;
+              }
+          }
       }
-    }
   }
   .addChoice {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    border-bottom: 2px solid #f0f0f0;
-    li {
-      min-width: 92px;
-      height: 84px;
-      padding: 0 20px;
-      color: #666;
-      font-size: 24px;
-      position: relative;
-      i {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 4px;
-        background: #faa0a0;
-        min-width: 92px;
-        width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      border-bottom: 2px solid #f0f0f0;
+      li {
+          min-width: 92px;
+          height: 84px;
+          padding: 0 20px;
+          color: #666;
+          font-size: 24px;
+          position: relative;
+          i {
+              position: absolute;
+              left: 0;
+              bottom: 0;
+              height: 4px;
+              background: #faa0a0;
+              min-width: 92px;
+              width: 100%;
+          }
       }
-    }
   }
   .addList {
-    margin-top: 10px;
-    font-size: 24px;
-    overflow-y: auto;
-    height: 588px;
-    li {
-      height: 64px;
-      line-height: 64px;
-      color: #666;
-    }
-    .actived {
-      color: #faa0a0;
-    }
+      margin-top: 10px;
+      font-size: 24px;
+      overflow-y: auto;
+      height: 588px;
+      li {
+          height: 64px;
+          line-height: 64px;
+          color: #666;
+      }
+      .actived {
+          color: #faa0a0;
+      }
   }
 </style>
 

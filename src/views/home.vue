@@ -23,7 +23,7 @@
     <div class="buttons flex">
       <div class="btn"><img src="~assets/home/button_home.png" alt=""></div>
       <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
-      <button class="btn-txt btn-txt2" @click="goWuyougou">无忧购</button>
+      <button class="btn-txt btn-txt2" @click="$router.push({name:'freebuy'})">无忧购</button>
       <div class="btn" @click="goMypage()"><img src="~assets/home/button_my.png" alt=""></div>
     </div>
   </div>
@@ -81,9 +81,6 @@
       },
       goMypage() {
         this.$router.push({ name: 'mypage' });
-      },
-      goWuyougou() {
-        this.toast('进入无忧购TODO');
       }
     }
   };
@@ -91,48 +88,48 @@
 
 <style lang="less" scoped>
   .banner {
-    height: 450px;
+      height: 450px;
   }
 
   .activity {
-    height: 120px;
-    border-bottom: 4px;
-    margin-top: 4px;
-    img {
-      height: 100%;
-    }
+      height: 120px;
+      border-bottom: 4px;
+      margin-top: 4px;
+      img {
+          height: 100%;
+      }
   }
 
   li {
-    margin-top: 4px;
-    img {
-      height: 220px;
-    }
+      margin-top: 4px;
+      img {
+          height: 220px;
+      }
   }
 
   .buttons {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    justify-content: center;
-    padding: 24px 0;
-    .btn {
-      width: 60px;
-      border-radius: 50%;
-      background-color: #000;
-    }
-    .btn-txt {
-      width: 160px;
-      height: 60px;
-      border-radius: 30px;
-      background-color: rgba(255, 255, 255, 0.6);
-      border: 0;
-      &1 {
-        margin: 0 24px 0 91px;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      justify-content: center;
+      padding: 24px 0;
+      .btn {
+          width: 60px;
+          border-radius: 50%;
+          background-color: #000;
       }
-      &2 {
-        margin: 0 91px 0 24px;
+      .btn-txt {
+          width: 160px;
+          height: 60px;
+          border-radius: 30px;
+          background-color: rgba(255, 255, 255, 0.6);
+          border: 0;
+          &1 {
+              margin: 0 24px 0 91px;
+          }
+          &2 {
+              margin: 0 91px 0 24px;
+          }
       }
-    }
   }
 </style>

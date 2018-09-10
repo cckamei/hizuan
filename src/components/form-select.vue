@@ -2,7 +2,7 @@
   <div class="flex arrow">
     <div class="label">{{label}}</div>
     <input type="text" :value="text" :placeholder="placeholder" @click="visible = true" readonly />
-    <v-slide-up v-model="visible" :title="title" @confirm="confirm" :isConfirm="selectedIndex !== -1">
+    <v-slide-up v-if="readonly" v-model="visible" :title="title" @confirm="confirm" :isConfirm="selectedIndex !== -1">
       <v-input-radio v-model="selectedIndex" :list="list"></v-input-radio>
     </v-slide-up>
   </div>
@@ -11,6 +11,10 @@
 <script>
   export default {
     props: {
+      readonly: {
+        type: [Boolean, Number],
+        default: true
+      },
       value: {
         type: Number,
         required: true
@@ -58,22 +62,22 @@
 
 <style lang="less" scoped>
   .flex {
-    width: 100%;
-    height: 100%;
-    font-size: 30px;
-    .label {
-      flex-shrink: 0;
-      min-width: 30%;
-      color: #999;
-    }
-    input {
-      text-align: right;
       width: 100%;
-      padding: 0 10px;
-      font-size: 32px;
-      color: #333;
-      color: #666;
-    }
+      height: 100%;
+      font-size: 30px;
+      .label {
+          flex-shrink: 0;
+          min-width: 30%;
+          color: #999;
+      }
+      input {
+          text-align: right;
+          width: 100%;
+          padding: 0 10px;
+          font-size: 32px;
+          color: #333;
+          color: #666;
+      }
   }
 </style>
 
