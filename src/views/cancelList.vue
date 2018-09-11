@@ -10,7 +10,7 @@
           </div>
           <div class="listright">已取消</div>
         </div>
-        <div class="itemcontent">
+        <div class="itemcontent" @click="goDetail()">
           <div class="contentleft">
             <img src="~assets/goods/pic_wring1.png" alt="">
           </div>
@@ -28,24 +28,7 @@
             </div>
           </div>
         </div>
-        <div class="itemcontent">
-          <div class="contentleft">
-            <img src="~assets/goods/pic_wring1.png" alt="">
-          </div>
-          <div class="contentright">
-            <div class="contenttitle">
-              <span>卡美婚嫁系列 - 戒指</span>
-              <span>￥18888.00</span>
-            </div>
-            <div class="contentmessage">
-              <p>25分；VS/微瑕；H/白；奴戒-11号；基础服务保障</p>
-              <div class="messageright">
-                <s>￥18888.00</s>
-                <span>X1</span>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <div class="itemprice">
           共1件商品 实付款： <span>￥18888.00</span> （含运费￥10.00）
         </div>
@@ -58,7 +41,7 @@
           <!-- 退款中 -->
           <div class="ordertypeTK">
             <button class="btngrey btnleft">联系客服</button>
-            <button class="btngrey" @click="goRefunddetail()">查看退款</button>
+            <button class="btngrey" @click="$router.push({ name: 'refunddetail' });">查看退款</button>
           </div>
 
         </div>
@@ -79,7 +62,7 @@
     methods: {
       //跳转订单详情
       goDetail() {
-        this.$router.push({ name: 'refunddetail' });
+        this.$router.push({ name: 'goodsdetail' });
       }
     }
   };
