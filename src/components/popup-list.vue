@@ -69,6 +69,7 @@
   .popup {
     overflow: hidden;
     transition: height 0.3s linear;
+    padding-bottom: 4px;
     &-header {
       height: 70px;
       justify-content: center;
@@ -76,8 +77,10 @@
       color: #cdb49b;
       border-bottom: 1px solid #f0f0f0; /*no*/
       position: relative;
+      background-color: #fff;
       .shadow {
-        box-shadow: 0 10px 20px 10px rgba(100, 100, 100, 1);
+        box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.5);
+        // box-shadow: 0 10px 20px 10px rgba(100, 100, 100, 1);
         position: absolute;
         width: 100%;
         height: 10px;

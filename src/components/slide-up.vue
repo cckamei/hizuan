@@ -77,31 +77,32 @@
 
 <style lang="less" scoped>
   .slide {
-      border-radius: 20px 20px 0 0;
-      width: 100%;
-      &-title {
-          color: #666;
-          font-size: 30px;
-          height: 120px;
-          line-height: 140px;
-          text-align: center;
-      }
-      &-content {
-          margin: 20px;
-          margin-bottom: 0;
-          padding-bottom: 20px;
-          max-height: 700px;
-          overflow-y: auto;
-          -webkit-overflow-scrolling: touch;
-      }
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    &-title {
+      color: #666;
+      font-size: 30px;
+      height: 120px;
+      line-height: 140px;
+      text-align: center;
+    }
+    &-content {
+      margin: 20px;
+      margin-bottom: 0;
+      padding-bottom: 20px;
+      max-height: 700px;
+      min-height: 600px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 
   .btns {
-      padding: 14px 20px;
-      .btn {
-          height: 68px;
-          font-size: 30px;
-      }
+    padding: 14px 20px;
+    .btn {
+      height: 68px;
+      font-size: 30px;
+    }
   }
 </style>
 

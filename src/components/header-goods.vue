@@ -60,7 +60,7 @@
     background-color: #fff;
     z-index: 2;
     &.shadow {
-      box-shadow: 0 10px 50px 10px rgba(170, 170, 170, 0.5);
+      box-shadow: 0 7px 50px 10px rgba(170, 170, 170, 0.5);
     }
     .menu-left {
       width: 96px;
