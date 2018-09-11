@@ -4,7 +4,7 @@
       <div class="item-title" @click="goDetail()">
         <div class="titleleft">
           <img src="~assets/mypage/icon_shop.png" alt="">
-          <span>{{order.shopName}}{{order.type}}</span>
+          <span>{{order.shopName}}</span>
         </div>
         <div class="listright">{{typename(order.type)}}</div>
       </div>
@@ -75,13 +75,19 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
   export default {
     props: ['orders'],
     created() {
       console.log(this.orders);
     },
+    computed: {
+
+    },
     methods: {
+      ...mapMutations(['setCommon']),
       goDetail() {
+        this.setCommon({ goodsId: '5b851a4d1f30bfc39cddfc37' });
         this.$router.push({ name: 'goodsdetail' });
       },
       goRefunddetail() {
