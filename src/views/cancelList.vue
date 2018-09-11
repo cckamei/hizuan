@@ -62,7 +62,7 @@
     methods: {
       //跳转订单详情
       goDetail() {
-        this.$router.push({ name: 'goodsdetail' });
+        this.$router.push({ name: 'orderdetail' });
       }
     }
   };
