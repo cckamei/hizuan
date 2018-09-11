@@ -43,7 +43,7 @@
         <!-- 待付款 -->
         <div class="ordertypeDF" v-if="order.type==2">
           <button class="btngrey btnleft">联系客服</button>
-          <button class="btnpink">立即付款</button>
+          <button class="btnpink" @click="$router.push({ name: 'pay' })">立即付款</button>
         </div>
         <!-- 待收货 -->
         <div class="ordertypeDF" v-if="order.type==3">
@@ -52,17 +52,17 @@
         <!-- 待收货 -->
         <div class="ordertypeDS" v-if="order.type==4">
           <button class="btngrey btnleft">查看物流</button>
-          <button class="btnpink">确认收货</button>
+          <button class="btnpink" @click="$router.push({ name: 'orderdetail' })">确认收货</button>
         </div>
         <!-- 已完成 -->
         <div class="ordertypeWC" v-if="order.type==5">
           <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey">以旧换新</button>
+          <button class="btngrey" @click="$router.push({ name: 'orderdetail' })">以旧换新</button>
         </div>
         <!-- 已取消 -->
         <div class="ordertypeQX" v-if="order.type==6">
           <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey">再次购买</button>
+          <button class="btngrey" @click="$router.push({ name: 'orderdetail' })">再次购买</button>
         </div>
         <!-- 退款中 -->
         <div class="ordertypeTK" v-if="order.type==7">
@@ -82,7 +82,7 @@
     },
     methods: {
       goDetail() {
-        this.$router.push({ name: 'orderdetail' });
+        this.$router.push({ name: 'goodsdetail' });
       },
       goRefunddetail() {
         this.$router.push({ name: 'refunddetail' });
