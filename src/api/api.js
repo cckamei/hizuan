@@ -19,7 +19,10 @@ let api = {
   delAdress: { url: 'api/v1/address', method: 'delete' }, //删除收货地址
   getProvince: { url: '/api/v1/province', method: 'get' }, //获取省
   getCity: { url: '/api/v1/city', method: 'get' }, //获取市
-  getDistrict: { url: '/api/v1/district', method: 'get' } //获取区
+  getDistrict: { url: '/api/v1/district', method: 'get' }, //获取区
+  goodsRecommend: { url: 'api/v1/recommend', method: 'get' }, //
+  cartRecommend: { url: 'api/v1/recommendcart', method: 'get' }, //
+  coupons: { url: 'api/v1/coupons', method: 'get' } //
 };
 
 for (var k in api) {

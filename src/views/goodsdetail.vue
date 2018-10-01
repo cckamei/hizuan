@@ -42,10 +42,10 @@
       <div class="row">
         <v-form-slide-up label="领取优惠" title="领取优惠" @confirm="handleBenifit">
           <template slot="value">
-            <button v-for="card in res.benifit" v-if="card.use" class="benifit-btn">满{{card.limit}}减{{card.price}}</button>
+            <button v-for="card in benifit" v-if="card.use" class="benifit-btn">满{{card.all_money}}减{{card.discount_money}}</button>
           </template>
           <ul>
-            <li v-for="(card, index) in res.benifit">
+            <li v-for="(card, index) in benifit">
               <v-card :card="card"></v-card>
             </li>
           </ul>
@@ -196,7 +196,7 @@
         </div>
       </div>
       <div class="gap"></div>
-      <v-recommend class="section" ref="recommend" title="为你推荐" :list="res.recommend"></v-recommend>
+      <v-recommend class="section" ref="recommend" title="为你推荐" :list="recommend"></v-recommend>
     </div>
     <div class="footer flex">
       <div class="fun-btns" @click="goCustomService">
@@ -238,46 +238,11 @@
           skuClarity: [],
           skuColor: [],
           skuSpec: [],
-          benifit: [{
-            id: 1,
-            price: 1500,
-            limit: 20000,
-            use: true,
-            expiredStart: '2018.08.01',
-            expiredEnd: '2018.09.01'
-          }, {
-            id: 2,
-            price: 600,
-            limit: 1000,
-            use: true,
-            expiredStart: '2018.08.01',
-            expiredEnd: '2018.09.01'
-          }],
+
           activity: [{
             id: 1,
             title: '七夕牵线',
             desc: '满额免费购换小礼品'
-          }],
-          recommend: [{
-            url: ss,
-            name: '文承 戒指',
-            price: '6666',
-            like: false
-          }, {
-            url: ss,
-            name: '文承 戒指',
-            price: '6666',
-            like: false
-          }, {
-            url: ss,
-            name: '文承 戒指',
-            price: '6666',
-            like: false
-          }, {
-            url: ss,
-            name: '文承 戒指',
-            price: '6666',
-            like: false
           }]
         },
         sku: {
@@ -296,11 +261,31 @@
           benifit: '',
           count: 1,
           skuId: ''
-        }
+        },
+        recommend: [],
+        benifit: [
+          // {
+          //   id: 1,
+          //   price: 1500,
+          //   limit: 20000,
+          //   use: true,
+          //   expiredStart: '2018.08.01',
+          //   expiredEnd: '2018.09.01'
+          // }, {
+          //   id: 2,
+          //   price: 600,
+          //   limit: 1000,
+          //   use: true,
+          //   expiredStart: '2018.08.01',
+          //   expiredEnd: '2018.09.01'
+          // }
+        ]
       };
     },
     created() {
       this.fetchGoodsDetail();
+      this.fetchGoodsRecommend();
+      this.fetchCoupons();
     },
     mounted() {
       setTimeout(() => {
@@ -347,108 +332,7 @@
         this.ajax({
           name: 'goodsDetail',
           id: this.getCommon.goodsId
-        }).then(() => {
-          let res = {
-            merchant_code: 'DRGC00208',
-            taoxi: '婚嫁系列',
-            "zhuzuanxingzhuang": "圆形",
-            "price": 2998,
-            "fuzuanxingzhuang": "无副钻",
-            "is_shop_same": true,
-            "xiangqiancaizhi": "Pt950铂金",
-            "slide_img": [],
-            "fuzuanfenshu": "无副钻",
-            "goods_id": "5b851a4d1f30bfc39cddfc37",
-            "category": "项链/坠",
-            "is_new": true,
-            "sub_title": "结而为约 · 有承诺的爱",
-            "is_active": true,
-            "kuanshi": "戒指",
-            "img": banner,
-            "skus": [
-              {
-                merchant_code: 'DRGC00208',
-                "zuanshijingdu": "SI/小瑕",
-                "price": 9000,
-                "color": "H/白",
-                "sku_id": "5b851b341f30bfc39cddfc3d",
-                "zhushipingji": "主石评级1",
-                "count": 3,
-                "weight_unit": "克拉",
-                "guige": "女戒-11号",
-                "zhushimingcheng": "主石名称11",
-                "zhuzuanfenshu": "18分",
-                "weight_value": 0.2,
-                "default": true
-              },
-              {
-                merchant_code: 'DRGC00208',
-                "zuanshijingdu": "SI/小瑕",
-                "price": 6666,
-                "color": "F-G/优白",
-                "sku_id": "5b8d40aa8263913b53665a16",
-                "zhushipingji": "主石评级32",
-                "count": 4,
-                "weight_unit": "克拉",
-                "guige": "女戒-12号",
-                "zhushimingcheng": "主石名称21",
-                "zhuzuanfenshu": "25分",
-                "weight_value": 0.3,
-                "default": true
-              },
-              {
-                merchant_code: 'DRGC00208',
-                "zuanshijingdu": "VS/微瑕",
-                "price": 9999,
-                "color": "I-J/淡白",
-                "sku_id": "5b8d40dd8263913b518463f4",
-                "zhushipingji": "主石评级13",
-                "count": 5,
-                "weight_unit": "克拉",
-                "guige": "女戒-13号",
-                "zhushimingcheng": "主石名称3",
-                "zhuzuanfenshu": "30分",
-                "weight_value": 0.4,
-                "default": true
-              },
-              {
-                merchant_code: 'DRGC00208',
-                "zuanshijingdu": "VVS/极微瑕",
-                "price": 8888,
-                "color": "D-E/极白",
-                "sku_id": "5b8d40f78263913b565434ec",
-                "zhushipingji": "主石评级4",
-                "count": 8,
-                "weight_unit": "克拉",
-                "guige": "女戒-14号",
-                "zhushimingcheng": "主石名称2",
-                "zhuzuanfenshu": "40分",
-                "weight_value": 0.4,
-                "default": true
-              },
-              {
-                "zuanshijingdu": "VVS/极微瑕",
-                "price": 4,
-                "color": "D-E/极白",
-                "sku_id": "5b8d40f78263913b565434ec",
-                "zhushipingji": "主石评级4",
-                "count": 8,
-                "weight_unit": "克拉",
-                "guige": "女戒-15号",
-                "zhushimingcheng": "主石名称2",
-                "zhuzuanfenshu": "40分",
-                "weight_value": 0.4,
-                "default": true
-              }
-            ],
-            "zuanshiqiegong": "完美",
-            "goods_title": "CC卡美婚嫁精品钻戒",
-            "detail": "<p>醒狮MeiMei经典款项链/坠</p>\n\n<p>&nbsp;</p>\n\n<p>传承中国传统文化，以纯天然色贝母拼成，打造印象派艺术画风的时尚单品</p>\n",
-            "xiangqianfangshi": "单钻"
-          };
-
-          Object.assign(this.res, res);
-          // this.res.bannerList = res.slide_img;
+        }).then(res => {
           let skuScore = [];
           let skuClarity = [];
           let skuColor = [];
@@ -506,9 +390,35 @@
           this.res.skuClarity = skuClarity.map(item => ({ label: item, disabled: false }));
           this.res.skuColor = skuColor.map(item => ({ label: item, disabled: false }));
           this.res.skuSpec = skuSpec.map(item => ({ label: item, disabled: false }));
-          // this.reqData.skuId = this.res.goods_id;
-
-          this.reqData.benifit = this.res.benifit.map(item => item.id);
+        });
+      },
+      fetchGoodsRecommend() {
+        this.ajax({
+          name: 'goodsRecommend',
+          data: {
+            'goods_id': this.getCommon.goodsId
+          }
+        }).then(res => {
+          this.recommend = res;
+          this.recommend.forEach(item => {
+            item.like = false;
+          });
+        });
+      },
+      fetchCoupons() {
+        this.ajax({
+          name: 'coupons',
+          data: {
+            'goods_id': this.getCommon.goodsId
+          }
+        }).then(res => {
+          this.benifit = res;
+          console.log(res);
+          // this.reqData.benifit = this.res.benifit.map(item => item.id);
+          // this.recommend = res;
+          // this.recommend.forEach(item => {
+          //   item.like = false;
+          // });
         });
       },
       handleSKU() { },

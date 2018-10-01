@@ -1,9 +1,9 @@
 <template>
   <div class="card flex">
     <div class="col1 flex-auto">
-      <div class="price"><span>￥</span>{{card.price | currency}}</div>
-      <div class="limit">购物满{{card.limit}}元使用</div>
-      <div class="expired">有效期至 {{card.expiredStart}} 至 {{card.expiredStart}}</div>
+      <div class="price"><span>￥</span>{{card.discount_money | currency}}</div>
+      <div class="limit">购物满{{card.all_money}}元使用</div>
+      <div class="expired">有效期至 {{card.starttime}} 至 {{card.endtime}}</div>
     </div>
     <div v-if="card.use" class="col2">{{useText}}</div>
     <div v-else class="col2" @click="card.use = true">{{unuseText}}</div>

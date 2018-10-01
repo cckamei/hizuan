@@ -5,8 +5,8 @@
       <ul class="flex">
         <li v-for="(item, index) in list">
           <div class="recommend-item">
-            <img :src="item.url" alt="">
-            <div class="name">{{item.name}}</div>
+            <img :src="item.img" alt="">
+            <div class="name">{{item.goods_title}}</div>
             <div class="flex">
               <div class="price"><span>￥</span>{{item.price | currency}}</div>
               <div class="like" :class="{active: item.like}" @click="item.like = !item.like"></div>
