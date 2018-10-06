@@ -22,7 +22,8 @@ let api = {
   getDistrict: { url: '/api/v1/district', method: 'get' }, //获取区
   goodsRecommend: { url: 'api/v1/recommend', method: 'get' }, //
   cartRecommend: { url: 'api/v1/recommendcart', method: 'get' }, //
-  coupons: { url: 'api/v1/coupons', method: 'get' } //
+  coupons: { url: 'api/v1/coupons', method: 'get' }, //
+  getappoint: { url: 'api/v1/appointment', method: 'get' } //获取预约信息
 };
 
 for (var k in api) {

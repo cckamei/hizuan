@@ -1,6 +1,6 @@
 <template>
   <div class="mymessage">
-    <img :src="userInfo.avatar" alt="">
+    <img class="head" :src="userInfo.avatar" alt="">
     <div class="usermessage">
       <h2>{{userInfo.nick_name == null?'新用户':userInfo.nick_name}}</h2>
       <span>积分：1200</span>
@@ -50,7 +50,10 @@
           width: 120px;
           height: 120px;
           border-radius: 50%;
-          margin: 40px 30px 40px 40px;
+          margin: 40px 30px 0px 40px;
+      }
+      .head {
+          margin-top: 60px;
       }
       .usermessage {
           color: #ffffff;

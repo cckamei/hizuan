@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex';
+  import { mapMutations, mapActions, mapGetters } from 'vuex';
   import tabs from './components/tabs';
   import list from './components/list';
   export default {
@@ -27,6 +27,9 @@
         appointments: []
       };
     },
+    computed: {
+      ...mapGetters(['userId', 'token'])
+    },
     created() {
       this.fetchData();
       this.appointments = this.appointments.filter(ele => {
@@ -35,7 +38,16 @@
     },
     methods: {
       ...mapMutations(['setAppointment']),
+      ...mapActions(['ajax']),
+
       fetchData() {
+        this.ajax({
+          name: 'getappoint',
+          data: {
+          }
+        }).then(res => {
+          this.appointments = res;
+        });
         for(let index = 0; index < 10; index++) {
           let _appointment = {
             shopName: index % 2 ? '世纪金花钟楼店' : '开元商城钟楼店',

@@ -1,18 +1,19 @@
 <template>
   <div class="pt">
     <v-header>{{getAppointment.edit==0?'预约详情':(getAppointment.edit==1?'新增预约':'修改预约')}}
-      <div slot="headright" @click="cancelVisible=true">取消预约</div>
+      <div slot="headright" v-if="getAppointment.edit==0" @click="cancelVisible=true">取消预约</div>
     </v-header>
+    {{reqData}}
     <div class="content">
-      <div class="appointment-box">
+      <div class="reqData-box">
         <ul>
           <li class="section">
             <ul class="form">
               <li>
-                <v-form-input label="地区" :arrow="true" v-model="appointment.address" placeholder="请选择您要预约的地区" :readonly="!getAppointment.edit" @input-click="showSelectAddress"></v-form-input>
+                <v-form-input label="地区" :arrow="true" v-model="reqData.address" placeholder="请选择您要预约的地区" :readonly="!getAppointment.edit" @input-click="showSelectAddress"></v-form-input>
               </li>
               <li>
-                <v-form-select label="门店" title="门店选择" v-model="appointment.shop" :list="shops" placeholder="请选择您要预约的门店" :readonly="!getAppointment.edit"></v-form-select>
+                <v-form-select label="门店" title="门店选择" v-model="reqData.shop" :list="shops" placeholder="请选择您要预约的门店" :readonly="!getAppointment.edit" :arrow="true"></v-form-select>
               </li>
             </ul>
           </li>
@@ -22,14 +23,14 @@
           <li class="section">
             <ul class="form">
               <li>
-                <v-form-datepicker label="预约时间" title="预约时间" v-model="appointment.time" format="yyyy-MM-dd 日" placeholder="请选择" :readonly="!getAppointment.edit"></v-form-datepicker>
+                <v-form-datepicker label="预约时间" title="预约时间" v-model="reqData.time" format="yyyy-MM-dd 日" placeholder="请选择" :readonly="!getAppointment.edit" :arrow="true"></v-form-datepicker>
               </li>
               <li>
-                <v-form-select label="预约类型" title="预约类型" v-model="appointment.type" :list="['线下体验', '以旧换新']" placeholder="请选择预约类型" :readonly="!getAppointment.edit"></v-form-select>
+                <v-form-select label="预约类型" title="预约类型" v-model="reqData.type" :list="['线下体验', '以旧换新']" placeholder="请选择预约类型" :readonly="!getAppointment.edit" :arrow="true"></v-form-select>
               </li>
               <li class="middle">
                 <div class="instructions">补充说明</div>
-                <textarea class="textarea" v-model="appointment.detail" name="" :readonly="!getAppointment.edit"></textarea>
+                <textarea class="textarea" v-model="reqData.detail" name="" :readonly="!getAppointment.edit"></textarea>
               </li>
             </ul>
           </li>
@@ -39,19 +40,19 @@
           <li class="section">
             <ul class="form">
               <li>
-                <v-form-input label="姓名" v-model="appointment.name" placeholder="请填写您的真实姓名" :readonly="!getAppointment.edit"></v-form-input>
+                <v-form-input label="姓名" v-model="reqData.name" placeholder="请填写您的真实姓名" :readonly="!getAppointment.edit"></v-form-input>
               </li>
               <li>
-                <v-form-input label="手机" v-model="appointment.tel" placeholder="请填写您的真实手机号码" :readonly="!getAppointment.edit"></v-form-input>
+                <v-form-input label="手机" v-model="reqData.tel" placeholder="请填写您的真实手机号码" :readonly="!getAppointment.edit"></v-form-input>
               </li>
               <li>
-                <v-form-select label="性别" title="性别选择" v-model="appointment.gender" :list="['男', '女']" placeholder="请选择您的性别" :readonly="!getAppointment.edit"></v-form-select>
+                <v-form-select label="性别" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别" :readonly="!getAppointment.edit"></v-form-select>
               </li>
               <li>
-                <v-form-datepicker label="生日" title="生日日期" v-model="appointment.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日" :readonly="!getAppointment.edit"></v-form-datepicker>
+                <v-form-datepicker label="生日" title="生日日期" v-model="reqData.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日" :readonly="!getAppointment.edit"></v-form-datepicker>
               </li>
               <li>
-                <v-form-select label="职业" title="职业选择" v-model="appointment.occupation" :list="occupations" placeholder="请选择您所从事的职业" :readonly="!getAppointment.edit"></v-form-select>
+                <v-form-select label="职业" title="职业选择" v-model="reqData.occupation" :list="occupations" placeholder="请选择您所从事的职业" :readonly="!getAppointment.edit"></v-form-select>
               </li>
             </ul>
           </li>
@@ -81,21 +82,7 @@
         occupations: ['教育工作', '医务工作', '财务工作', '媒体市场', '服务行业', '零售行业', '艺术工作', '技术工作', '公务员'],
         areaList: [],
         cancelVisible: false,
-        appointment: {
-          name: '',
-          address: '',
-          gender: 1,
-          tel: '',
-          birthday: '',
-          type: 0,
-          detail: '',
-          occupation: -1,
-          time: '',
-          shop: 1112,
-          addId: 1, //1:省份选择; 2:市区； 3：地区
-          provinceId: '', //选择的省份id
-          cityId: '' //选择的市id
-        },
+        reqData: {},
         isEdit: true,
         visible: false,
         shops: [{
@@ -107,29 +94,25 @@
     computed: {
       ...mapGetters(['getAppointment']),
       isActive() {
-        return this.appointment.address.length && this.appointment.name.length;
+        return this.reqData.address.length && this.reqData.name.length && this.reqData.tel.length;
       }
     },
     created() {
-      if(this.getAppointment.edit % 2 == 0) {
-        setTimeout(() => {
-          this.appointment = {
-            name: this.getAppointment.appointment.userName,
-            address: this.getAppointment.appointment.shopAddress,
-            gender: 0,
-            tel: '13609248612',
-            birthday: '2018-08-20',
-            detail: this.getAppointment.appointment.detail,
-            occupation: this.getAppointment.appointment.occupation,
-            time: formatDate(this.getAppointment.appointment.createTime, 'yyyy-MM-dd'),
-            shop: 0,
-            type: 1,
-            addId: 1, //1:省份选择; 2:市区； 3：地区
-            provinceId: '', //选择的省份id
-            cityId: '' //选择的市id
-          };
-        }, 200);
-      }
+      this.reqData = {
+        name: '',
+        address: '',
+        gender: 0,
+        tel: '',
+        birthday: '',
+        type: 1,
+        detail: '',
+        occupation: -1,
+        time: '',
+        shop: 1112,
+        addId: 1, //1:省份选择; 2:市区； 3：地区
+        provinceId: '', //选择的省份id
+        cityId: '' //选择的市id
+      };
     },
     methods: {
       ...mapMutations(['setAppointment']),
@@ -139,15 +122,16 @@
       },
       confirm(address) {
         // this.visible = false;
-        this.appointment.address = address;
+        this.reqData.address = address;
       },
       submit() {
+        console.log(this.reqData);
         this.$router.push({ name: 'bespeak' });
       },
       update() {
-        let _appointment = serialize(this.getAppointment.appointment);
+        let _reqData = serialize(this.getAppointment.reqData);
         this.setAppointment({
-          appointment: _appointment,
+          reqData: _reqData,
           edit: 2
         });
       },
@@ -169,7 +153,7 @@
       line-height: 86px;
       font-size: 28px;
   }
-  .appointment-box {
+  .reqData-box {
       padding: 30px 20px;
       .section {
           margin-top: 16px;

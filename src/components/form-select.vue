@@ -1,5 +1,5 @@
 <template>
-  <div class="flex" :class="{arrow:!readonly}">
+  <div class="flex" :class="{arrow:arrow}">
     <div class="label">{{label}}</div>
     <input type="text" :value="text" :placeholder="placeholder" @click="!readonly&&(visible = true)" readonly />
     <v-slide-up v-model="visible" :title="title" @confirm="confirm" :isConfirm="selectedIndex !== -1">
@@ -14,6 +14,10 @@
       readonly: {
         type: [Boolean, Number],
         default: true
+      },
+      arrow: {
+        type: [Boolean, Number],
+        default: false
       },
       value: {
         type: Number,
@@ -44,8 +48,10 @@
     },
     watch: {
       value() {
+        console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', this.value);
         if(this.value !== -1) {
           let selected = this.list[this.value];
+
           this.text = typeof selected === 'string' ? selected : selected[this.keyName];
         }
       }

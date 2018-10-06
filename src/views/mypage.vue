@@ -126,7 +126,7 @@
               width: 120px;
               height: 120px;
               border-radius: 50%;
-              margin: 40px 30px 40px 40px;
+              margin: 80px 30px 80px 40px;
           }
           .usermessage {
               color: #ffffff;
