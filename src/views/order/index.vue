@@ -30,7 +30,6 @@
       searchOrders(type) {
         this.type = type;
         this.getOrders();
-        console.log(this.orders.length);
       },
       getOrders() {
         this.orders = [];

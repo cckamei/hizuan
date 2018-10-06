@@ -45,7 +45,6 @@
         this.ivisible = val;
       },
       ivisible(val) {
-        // console.log('close slide-up', val);
         // this.ivisible = val;
         this.$emit('input', val);
       }
@@ -121,40 +120,40 @@
 
 <style lang="less" scoped>
   .addChoice {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-start;
-      border-bottom: 2px solid #f0f0f0;
-      li {
-          min-width: 92px;
-          height: 84px;
-          padding: 0 20px;
-          color: #666;
-          font-size: 24px;
-          position: relative;
-          i {
-              position: absolute;
-              left: 0;
-              bottom: 0;
-              height: 4px;
-              background: #faa0a0;
-              min-width: 92px;
-              width: 100%;
-          }
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    border-bottom: 2px solid #f0f0f0;
+    li {
+      min-width: 92px;
+      height: 84px;
+      padding: 0 20px;
+      color: #666;
+      font-size: 24px;
+      position: relative;
+      i {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 4px;
+        background: #faa0a0;
+        min-width: 92px;
+        width: 100%;
       }
+    }
   }
   .addList {
-      margin-top: 10px;
-      font-size: 24px;
-      overflow-y: auto;
-      height: 588px;
-      li {
-          height: 64px;
-          line-height: 64px;
-          color: #666;
-      }
-      .actived {
-          color: #faa0a0;
-      }
+    margin-top: 10px;
+    font-size: 24px;
+    overflow-y: auto;
+    height: 588px;
+    li {
+      height: 64px;
+      line-height: 64px;
+      color: #666;
+    }
+    .actived {
+      color: #faa0a0;
+    }
   }
 </style>

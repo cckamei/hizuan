@@ -3,8 +3,8 @@
     <v-header-goods back v-show="top <= 10">
       <div slot="menus" class="menus">
         <div @click="$router.push({name: 'cart'})" class="menu"><img src="~assets/goods/button_cart_r.png" alt=""></div>
-        <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option.png" alt=""></div>
-      </div>
+          <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option.png" alt=""></div>
+          </div>
     </v-header-goods>
     <v-header-menus back shadow v-show="top > 10">
       <span class="sub-title" :class="{active: top < offsetTops[1]}" @click="setTop(0)">商品</span>
@@ -12,8 +12,8 @@
       <span class="sub-title" :class="{active: top >= offsetTops[2]}" @click="setTop(2)">推荐</span>
       <div slot="menus" class="menus">
         <div @click="goCart" class="menu"><img src="~assets/goods/button_cart_g.png" alt=""></div>
-        <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option_g.png" alt=""></div>
-      </div>
+          <div class="menu" @click.stop="menusVisible = !menusVisible"><img src="~assets/goods/button_option_g.png" alt=""></div>
+          </div>
     </v-header-menus>
     <div class="content" @scroll="scroll">
       <mt-swipe :auto="4000" class="banner">
@@ -24,204 +24,206 @@
       <div class="info">
         <div class="price">
           <i>￥</i>{{res.price | currency}}
-          <img @click="wxShare" class="right" src="~assets/goods/button_share.png" alt="">
+          <img @click="shareVisible = true" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
-        <button class="tag">七夕蜜语 浪漫大促</button>
-        <div class="name">{{res.goods_title}}</div>
-        <div class="desc">{{res.sub_title}}</div>
-        <ul class="mark flex">
-          <li class="flex" v-if="res.is_new"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>新款上架</span></li>
-          <li class="flex" v-if="res.is_shop_same"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>专柜同款</span></li>
-        </ul>
-        <div class="courier">
-          <span>快递:{{22 | currency}}元</span>
-          <span class="right">广东深圳</span>
-        </div>
-      </div>
-      <div class="gap"></div>
-      <div class="row">
-        <v-form-slide-up label="领取优惠" title="领取优惠" @confirm="handleBenifit">
-          <template slot="value">
-            <button v-for="card in benifit" v-if="card.use" class="benifit-btn">满{{card.all_money}}减{{card.discount_money}}</button>
-          </template>
-          <ul>
-            <li v-for="(card, index) in benifit">
-              <v-card :card="card"></v-card>
-            </li>
+          <button class="tag">{{res.tag}}</button>
+          <div class="name">{{res.goods_title}}</div>
+          <div class="desc">{{res.sub_title}}</div>
+          <ul class="mark flex">
+            <li class="flex" v-if="res.is_new"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>新款上架</span></li>
+            <li class="flex" v-if="res.is_shop_same"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>专柜同款</span></li>
           </ul>
-        </v-form-slide-up>
-      </div>
-      <div class="row" v-if="0">
-        <v-form-slide-up label="促销活动" title="促销活动">
-          <template slot="value">
-            <button class="activity-btn">{{res.activity[0].title}}</button>{{res.activity[0].desc}}
-          </template>
-          <ul class="activity">
-            <li class="flex" v-for="(item, index) in res.activity">
+          <div class="courier">
+            <span>快递:{{res.logitics.price | currency}}元</span>
+            <span class="right">{{res.cangku}}</span>
+          </div>
+        </div>
+        <template v-if="benifit.length">
+          <div class="gap"></div>
+          <div class="row">
+            <v-form-slide-up label="领取优惠" title="领取优惠" @confirm="handleBenifit">
+              <template slot="value">
+                <button v-for="card in benifit" v-if="card.use" class="benifit-btn">满{{card.all_money}}减{{card.discount_money}}</button>
+              </template>
+              <ul>
+                <li v-for="(card, index) in benifit">
+                  <v-card :card="card"></v-card>
+                </li>
+              </ul>
+            </v-form-slide-up>
+          </div>
+        </template>
+        <template v-if="activity.length">
+          <div class="row">
+            <v-form-slide-up label="促销活动" title="促销活动">
+              <template slot="value">
+                <button class="activity-btn">{{activity[0].title}}</button>{{activity[0].desc}}
+              </template>
+              <ul class="activity">
+                <li class="flex" v-for="(item, index) in activity">
+                  <button class="activity-btn">{{item.title}}</button>{{item.desc}}
+                </li>
+              </ul>
+            </v-form-slide-up>
+          </div>
+          <div class="row activity" v-if="activity.length > 1">
+            <div class="flex" v-for="(item, index) in activity" v-if="index > 0">
               <button class="activity-btn">{{item.title}}</button>{{item.desc}}
-            </li>
-          </ul>
-        </v-form-slide-up>
-      </div>
-      <div class="row activity" v-if="res.activity.length > 1">
-        <div class="flex" v-for="(item, index) in res.activity" v-if="index > 0">
-          <button class="activity-btn">{{item.title}}</button>{{item.desc}}
+            </div>
+          </div>
+        </template>
+        <div class="gap"></div>
+        <div class="row">
+          <v-form-slide-up :open="autoOpenSKU" label="商品规格" v-model="reqData.sku" :placeholder="`选择 ${isZuan ? '主钻分数；钻石净度；' : '主石名称；主石评级；'}颜色；规格；数量`" @confirm="handleSKU">
+            <ul class="sku">
+              <li class="sku-icon flex">
+                <img class="icon" :src="res.img" alt="">
+                <div>
+                  <div class="price"><span>￥</span>{{res.price | currency}}</div>
+                  <span class="code">商品编号：{{sku.merchantCode}}</span>
+                </div>
+              </li>
+              <li>
+                <div class="title">{{isZuan ? '主钻分数' : '主石名称'}}</div>
+                <v-button-radio v-model="sku.scoreIndex" :list="res.skuScore" :cancel="true"></v-button-radio>
+              </li>
+              <li>
+                <div class="title">{{isZuan ? '钻石净度' : '主石评级'}}</div>
+                <v-button-radio v-model="sku.clarityIndex" :list="res.skuClarity" :cancel="true"></v-button-radio>
+              </li>
+              <li>
+                <div class="title">颜色</div>
+                <v-button-radio v-model="sku.colorIndex" :list="res.skuColor" :cancel="true"></v-button-radio>
+              </li>
+              <li>
+                <div class="title">规格</div>
+                <v-button-radio v-model="sku.specIndex" :list="res.skuSpec" :cancel="true"></v-button-radio>
+              </li>
+              <li class="count flex">
+                <span>数量</span>
+                <div class="flex">
+                  <div @click="reqData.count > 1 && reqData.count--" class="btn minus" :class="{active: reqData.count > 1}"></div>
+                  <input v-model="reqData.count" type="text" readonly>
+                  <div @click="reqData.count < limit && reqData.count++" class="btn plus" :class="{active: reqData.count < limit}"></div>
+                </div>
+              </li>
+            </ul>
+          </v-form-slide-up>
         </div>
-      </div>
-      <div class="gap"></div>
-      <div class="row">
-        <v-form-slide-up label="商品规格" v-model="reqData.sku" :placeholder="`选择 ${isZuan ? '主钻分数；钻石净度；' : '主石名称；主石评级；'}颜色；规格；数量`" @confirm="handleSKU">
-          <ul class="sku">
-            <li class="sku-icon flex">
-              <img class="icon" src="~assets/goods/orderlistonly.png" alt="">
-              <div>
-                <div class="price"><span>￥</span>{{res.price | currency}}</div>
-                <span class="code">商品编号：{{sku.merchant_code}}</span>
-              </div>
-            </li>
-            <li>
-              <div class="title">{{isZuan ? '主钻分数' : '主石名称'}}</div>
-              <v-button-radio v-model="sku.scoreIndex" :list="res.skuScore" :cancel="true"></v-button-radio>
-            </li>
-            <li>
-              <div class="title">{{isZuan ? '钻石净度' : '主石评级'}}</div>
-              <v-button-radio v-model="sku.clarityIndex" :list="res.skuClarity" :cancel="true"></v-button-radio>
-            </li>
-            <li>
-              <div class="title">颜色</div>
-              <v-button-radio v-model="sku.colorIndex" :list="res.skuColor" :cancel="true"></v-button-radio>
-            </li>
-            <li>
-              <div class="title">规格</div>
-              <v-button-radio v-model="sku.specIndex" :list="res.skuSpec" :cancel="true"></v-button-radio>
-            </li>
-            <li class="count flex">
-              <span>数量</span>
-              <div class="flex">
-                <div @click="reqData.count > 1 && reqData.count--" class="btn minus" :class="{active: reqData.count > 1}"></div>
-                <input v-model="reqData.count" type="text" readonly>
-                <div @click="reqData.count < limit && reqData.count++" class="btn plus" :class="{active: reqData.count < limit}"></div>
-              </div>
-            </li>
-          </ul>
-        </v-form-slide-up>
-      </div>
-      <div class="row">
-        <v-form-slide-up label="商品参数" title="商品参数" placeholder="套系；款式；钻石切工；主钻形状；副钻形状‘副钻分数；镶嵌材质；镶嵌方式">
-          <ul class="goods-param">
-            <li class="flex">
-              <span class="label">商品货号</span>
-              <span class="value">{{res.merchant_code}}</span>
-            </li>
-            <li class="flex">
-              <span class="label">套系</span>
-              <span class="value">{{res.taoxi}}</span>
-            </li>
-            <li class="flex">
-              <span class="label">款式</span>
-              <span class="value">{{res.kuanshi}}</span>
-            </li>
-            <template v-if="isZuan">
+        <div class="row">
+          <v-form-slide-up label="商品参数" title="商品参数" placeholder="套系；款式；钻石切工；主钻形状；副钻形状‘副钻分数；镶嵌材质；镶嵌方式">
+            <ul class="goods-param">
               <li class="flex">
-                <span class="label">钻石切工</span>
-                <span class="value">{{res.zuanshiqiegong}}</span>
+                <span class="label">商品货号</span>
+                <span class="value">{{res.merchant_code}}</span>
               </li>
               <li class="flex">
-                <span class="label">主钻形状</span>
-                <span class="value">{{res.zhuzuanxingzhuang}}</span>
+                <span class="label">套系</span>
+                <span class="value">{{res.series}}</span>
               </li>
               <li class="flex">
-                <span class="label">副钻形状</span>
-                <span class="value">{{res.fuzuanxingzhuang || '无副钻'}}</span>
+                <span class="label">款式</span>
+                <span class="value">{{res.kuanshi}}</span>
+              </li>
+              <template v-if="isZuan">
+                <li class="flex">
+                  <span class="label">钻石切工</span>
+                  <span class="value">{{res.zuanshiqiegong}}</span>
+                </li>
+                <li class="flex">
+                  <span class="label">主钻形状</span>
+                  <span class="value">{{res.zhuzuanxingzhuang}}</span>
+                </li>
+                <li class="flex">
+                  <span class="label">副钻形状</span>
+                  <span class="value">{{res.fuzuanxingzhuang || '无副钻'}}</span>
+                </li>
+                <li class="flex">
+                  <span class="label">副钻分数</span>
+                  <span class="value">{{res.fuzuanfenshu || '无副钻'}}</span>
+                </li>
+              </template>
+              <li class="flex">
+                <span class="label">镶嵌材质</span>
+                <span class="value">{{res.xiangqiancaizhi}}</span>
               </li>
               <li class="flex">
-                <span class="label">副钻分数</span>
-                <span class="value">{{res.fuzuanfenshu || '无副钻'}}</span>
+                <span class="label">镶嵌方式</span>
+                <span class="value">{{res.xiangqianfangshi}}</span>
               </li>
-            </template>
-            <li class="flex">
-              <span class="label">镶嵌材质</span>
-              <span class="value">{{res.xiangqiancaizhi}}</span>
+            </ul>
+          </v-form-slide-up>
+        </div>
+        <div class="gap"></div>
+        <div class="row" v-if="res.service.length">
+          <v-form-slide-up label="基础服务" title="基础服务" :placeholder="res.service.map(i => i.name).join(';')">
+            <ul class="service">
+              <li v-for="item in res.service">
+                <div class="flex"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>{{item.name}}</span></div>
+                <span class="note">{{item.desc}}</span>
+              </li>
+            </ul>
+          </v-form-slide-up>
+        </div>
+        <div class="row">
+          <v-form-slide-up label="刻字定制" title="刻字定制" placeholder="修改您的刻字信息" v-model="reqData.lettering" @confirm="handleLettering">
+            <ul class="lettering">
+              <li class="lettering-enable">
+                <div class="title">是否刻字</div>
+                <v-button-radio v-model="lettering.disable" :list="['是', '否']"></v-button-radio>
+              </li>
+              <li>
+                <div class="title">刻字內容</div>
+                <input v-model="lettering.text" class="lettering-text" type="text" maxlength="2" placeholder="请填写您的刻字内容（不超过2个字）">
             </li>
-            <li class="flex">
-              <span class="label">镶嵌方式</span>
-              <span class="value">{{res.xiangqianfangshi}}</span>
+              <li>
+                <div class="title">要求</div>
+                <input v-model="lettering.remarks" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的要求">
             </li>
-          </ul>
-        </v-form-slide-up>
-      </div>
-      <div class="gap"></div>
-      <div class="row">
-        <v-form-slide-up label="基础服务" title="基础服务" placeholder="店铺保修；专柜联保">
-          <ul class="service">
-            <li>
-              <div class="flex"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>店铺保修</span></div>
-              <span class="note">微信商城提供为期1年的保修服务（邮费需用户自理）</span>
-            </li>
-            <li>
-              <div class="flex"><img src="~assets/goods/icon_hook_mini.png" alt=""><span>专柜联保</span></div>
-              <span class="note">微信商城所出售的商品可在CC卡美品牌专柜享受保修服务</span>
-            </li>
-          </ul>
-        </v-form-slide-up>
-      </div>
-      <div class="row">
-        <v-form-slide-up label="刻字定制" title="刻字定制" placeholder="修改您的刻字信息" v-model="reqData.lettering" @confirm="handleLettering">
-          <ul class="lettering">
-            <li class="lettering-enable">
-              <div class="title">是否刻字</div>
-              <v-button-radio v-model="lettering.disable" :list="['是', '否']"></v-button-radio>
-            </li>
-            <li>
-              <div class="title">刻字內容</div>
-              <input v-model="lettering.text" class="lettering-text" type="text" maxlength="2" placeholder="请填写您的刻字内容（不超过2个字）">
-            </li>
-            <li>
-              <div class="title">要求</div>
-              <input v-model="lettering.remarks" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的要求">
-            </li>
-          </ul>
-        </v-form-slide-up>
-      </div>
-      <div class="gap"></div>
-      <div ref="image-text" class="section image-text">
-        <div class="title flex"><span>图文详情</span></div>
-        <!-- <div class="image-text-content" v-html="res.detail"> -->
-        <div class="image-text-content">
-          <!-- <img src="~assets/goods/pic_dring.png" alt="">
+            </ul>
+          </v-form-slide-up>
+        </div>
+        <div class="gap"></div>
+        <div ref="image-text" class="section image-text">
+          <div class="title flex"><span>图文详情</span></div>
+          <div class="image-text-content" v-html="res.detail">
+            <!-- <div class="image-text-content"> -->
+            <!-- <img src="~assets/goods/pic_dring.png" alt="">
           <p>CC卡美婚嫁钻饰系列经悉心设计，力求象征中国从未消失一直存在的隽永感情。</p>
           <p>灵感取材于美对爱侣分享的幸福时刻。CC卡美创作的婚戒系列钻饰，每款设计都尽显美钻的锋芒火彩，将你的爱意表露无遗。
           </p> -->
-          <img src="~assets/goods/goods_detail.jpg" alt="">
+            <!-- <img src="~assets/goods/goods_detail.jpg" alt=""> -->
+          </div>
+        </div>
+        <div class="gap"></div>
+        <v-recommend class="section" ref="recommend" title="为你推荐" :list="recommend"></v-recommend>
+      </div>
+      <div class="footer flex">
+        <div class="fun-btns" @click="goCustomService">
+          <img src="~assets/goods/button_service.png" alt="">
+          <span>客服</span>
+        </div>
+        <div class="fun-btns" @click="collect">
+          <img src="~assets/goods/button_like.png" alt="">
+          <span>收藏</span>
+        </div>
+        <div class="btn-group flex">
+          <button class="btn cart" @click="addCart">加入购物车</button>
+          <button class="btn purchase" @click="buyNow">立即购买</button>
         </div>
       </div>
-      <div class="gap"></div>
-      <v-recommend class="section" ref="recommend" title="为你推荐" :list="recommend"></v-recommend>
+
+      <v-menus v-model="menusVisible" :menus="['home', 'search', 'collect']"></v-menus>
+      <v-scroll-top ref="scroll-top" v-model="topVisible" @top="(t)=> top = t"></v-scroll-top>
+      <v-popup-confirm title="分享类型" v-model="shareVisible" @confirm="wxShare" :isConfirm="shareIndex !== -1">
+        <v-input-radio v-model="shareIndex" :list="['普通分享','员工分享']"></v-input-radio>
+      </v-popup-confirm>
     </div>
-    <div class="footer flex">
-      <div class="fun-btns" @click="goCustomService">
-        <img src="~assets/goods/button_service.png" alt="">
-        <span>客服</span>
-      </div>
-      <div class="fun-btns" @click="collect">
-        <img src="~assets/goods/button_like.png" alt="">
-        <span>收藏</span>
-      </div>
-      <div class="btn-group flex">
-        <button class="btn cart" @click="addCart">加入购物车</button>
-        <button class="btn purchase" @click="buyNow">立即购买</button>
-      </div>
-    </div>
-    <v-menus v-model="menusVisible" :menus="['home', 'search', 'collect']"></v-menus>
-    <v-scroll-top ref="scroll-top" v-model="topVisible" @top="(t)=> top = t"></v-scroll-top>
-  </div>
 </template>
 
 <script>
   import { mapActions, mapGetters, mapMutations } from 'vuex';
   import $ from 'jquery';
-  import ss from '../assets/goods/pic_guguring.png';
-  import banner from '../assets/goods/pic_wring.png';
 
   export default {
     data() {
@@ -230,62 +232,51 @@
         topVisible: false,
         top: 0,
         offsetTops: [],
-        isZuan: true,
+        isZuan: true, //钻石/主石
+        defaultSKU: '',
         limit: 1,
         res: {
-          bannerList: [banner, banner, banner],
+          logitics: {},
+          bannerList: [],
           skuScore: [],
           skuClarity: [],
           skuColor: [],
           skuSpec: [],
-
-          activity: [{
-            id: 1,
-            title: '七夕牵线',
-            desc: '满额免费购换小礼品'
-          }]
+          service: []
         },
         sku: {
           scoreIndex: -1,
           clarityIndex: -1,
           colorIndex: -1,
-          specIndex: -1
+          specIndex: -1,
+          merchantCode: ''
         },
-        lettering: {
+        lettering: { //刻字
           disable: 1,
           text: '',
           remarks: ''
         },
-        reqData: {
+        reqData: { //发送数据
           lettering: '',
           benifit: '',
           count: 1,
           skuId: ''
         },
-        recommend: [],
-        benifit: [
-          // {
-          //   id: 1,
-          //   price: 1500,
-          //   limit: 20000,
-          //   use: true,
-          //   expiredStart: '2018.08.01',
-          //   expiredEnd: '2018.09.01'
-          // }, {
-          //   id: 2,
-          //   price: 600,
-          //   limit: 1000,
-          //   use: true,
-          //   expiredStart: '2018.08.01',
-          //   expiredEnd: '2018.09.01'
-          // }
-        ]
+        recommend: [], //推荐商品
+        benifit: [], //优惠券
+        activity: [], //促销活动
+        shareIndex: 0,
+        shareVisible: false,
+        autoOpenSKU: false
       };
     },
     created() {
       this.fetchGoodsDetail();
       this.fetchGoodsRecommend();
-      this.fetchCoupons();
+      this.fetchBenifit();
+      if(this.$route.params.openSKU) {
+        this.autoOpenSKU = true;
+      }
     },
     mounted() {
       setTimeout(() => {
@@ -311,16 +302,17 @@
               item.disabled = !result.length;
             });
           });
-          selectIndexes.includes(-1);
           if(!selectIndexes.includes(-1)) {
-            let { count, price, sku_id } = this.res.skus.filter(sku => selectIndexes.join('_') === sku.skuIds)[0];
+            let { count, price, sku_id, merchant_code } = this.res.skus.filter(sku => selectIndexes.join('_') === sku.skuIds)[0];
             this.limit = count;
             this.reqData.count = Math.min(this.reqData.count, count);
             this.res.price = price;
             this.reqData.skuId = sku_id;
+            this.sku.merchantCode = merchant_code;
           } else {
             this.limit = 1;
             this.reqData.skuId = '';
+            this.sku.merchantCode = '';
           }
         },
         deep: true
@@ -333,6 +325,7 @@
           name: 'goodsDetail',
           id: this.getCommon.goodsId
         }).then(res => {
+          this.res = res;
           let skuScore = [];
           let skuClarity = [];
           let skuColor = [];
@@ -340,6 +333,9 @@
 
           res.skus.forEach((item, index) => {
             this.isZuan = !!item.zuanshijingdu;
+            if(!index) {
+              this.defaultSKU = item.sku_id; //默认第条是默认sku
+            }
             if(this.isZuan) {
               if(item.zhuzuanfenshu) {
                 skuScore.push(item.zhuzuanfenshu);
@@ -390,6 +386,8 @@
           this.res.skuClarity = skuClarity.map(item => ({ label: item, disabled: false }));
           this.res.skuColor = skuColor.map(item => ({ label: item, disabled: false }));
           this.res.skuSpec = skuSpec.map(item => ({ label: item, disabled: false }));
+
+          this.res.bannerList = res.slide_img;
         });
       },
       fetchGoodsRecommend() {
@@ -400,12 +398,9 @@
           }
         }).then(res => {
           this.recommend = res;
-          this.recommend.forEach(item => {
-            item.like = false;
-          });
         });
       },
-      fetchCoupons() {
+      fetchBenifit() {
         this.ajax({
           name: 'coupons',
           data: {
@@ -413,12 +408,9 @@
           }
         }).then(res => {
           this.benifit = res;
-          console.log(res);
-          // this.reqData.benifit = this.res.benifit.map(item => item.id);
-          // this.recommend = res;
-          // this.recommend.forEach(item => {
-          //   item.like = false;
-          // });
+          this.benifit.forEach(item => {
+            this.$set(item, 'use', false); //TODO从接口获取
+          });
         });
       },
       handleSKU() { },
@@ -427,7 +419,7 @@
         this.reqData.lettering = this.lettering.disable ? '' : `刻字 ${this.lettering.text}；要求 ${this.lettering.remarks}`;
       },
       handleBenifit() {
-        this.reqData.benifit = this.res.benifit.map(item => item.id);
+        this.reqData.benifit = this.benifit.map(item => item.id);
       },
       scroll() {
         this.$refs['scroll-top'].scroll();
@@ -443,10 +435,7 @@
           return false;
         }
 
-        if(!this.reqData.skuId) {
-          this.toast('请选择商品规格');
-          return false;
-        }
+        //TODO
 
         this.$router.push({ name: 'confirmorder' });
       },
@@ -456,15 +445,10 @@
           return false;
         }
 
-        if(!this.reqData.skuId) {
-          this.toast('请选择商品规格');
-          return false;
-        }
-
         this.ajax({
-          name: 'collect',
+          name: 'addCollect',
           data: {
-            'collect_id': this.reqData.skuId
+            'collect_id': this.reqData.skuId || this.defaultSKU
           }
         }).then(res => {
           this.toast('收藏成功！');
@@ -484,15 +468,10 @@
           return false;
         }
 
-        if(!this.reqData.skuId) {
-          this.toast('请选择商品规格');
-          return false;
-        }
-
         this.ajax({
           name: 'addCart',
           data: {
-            'cart_id': this.reqData.skuId,
+            'cart_id': this.reqData.skuId || this.defaultSKU,
             num: this.reqData.count
           }
         }).then(res => {
@@ -503,13 +482,19 @@
         this.toast('暂未开放');
       },
       goCustomService() {
-        this.toast('暂未开放');
+        // wx.closeWindow(); TODO
       }
     }
   };
 </script>
 
 <style lang="less" scoped>
+  .header {
+    background-color: transparent !important;
+    &.shadow {
+      background-color: #fff !important;
+    }
+  }
   .goods-detail {
     background-color: #fff;
   }
@@ -535,6 +520,9 @@
 
   .banner {
     height: 600px;
+    img {
+      height: 100%;
+    }
   }
 
   .info {
@@ -847,6 +835,12 @@
         color: #666;
         text-indent: 50px;
         padding: 0 20px 30px 20px;
+      }
+
+      img {
+        display: block;
+        width: 100% !important;
+        height: auto !important;
       }
     }
   }

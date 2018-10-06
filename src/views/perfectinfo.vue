@@ -138,7 +138,6 @@
         });
       },
       edit() {
-        console.log(46);
         this.isEdit = !this.isEdit;
       },
       confirm() {
@@ -158,49 +157,49 @@
 
 <style lang="less" scoped>
   .section {
-      margin-top: 16px;
-      padding: 0 20px;
-      background-color: #fff;
-      &:first-child {
-          margin-top: 0;
-      }
+    margin-top: 16px;
+    padding: 0 20px;
+    background-color: #fff;
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
   .form {
-      background-color: #fff;
-      li {
-          border-bottom: 1px solid #f0f0f0; /*no*/
-          padding: 0 20px;
-          height: 96px;
-          &:last-child {
-              border-bottom: 0;
-          }
-          .input {
-              height: 100%;
-          }
+    background-color: #fff;
+    li {
+      border-bottom: 1px solid #f0f0f0; /*no*/
+      padding: 0 20px;
+      height: 96px;
+      &:last-child {
+        border-bottom: 0;
       }
+      .input {
+        height: 100%;
+      }
+    }
   }
   .rightTopBtn {
-      position: fixed;
-      top: 0px;
-      right: 40px;
-      width: 60px;
-      line-height: 96px;
-      z-index: 3;
-      color: #333333;
-      font-size: 26px;
+    position: fixed;
+    top: 0px;
+    right: 40px;
+    width: 60px;
+    line-height: 96px;
+    z-index: 3;
+    color: #333333;
+    font-size: 26px;
   }
   .submitBtn {
-      .btn {
-          background: #ffffff;
-          color: #ffb4b4;
-      }
+    .btn {
+      background: #ffffff;
+      color: #ffb4b4;
+    }
   }
   .more {
-      height: 60px;
-      line-height: 60px;
-      font-size: 24px;
-      color: #cdb498;
-      text-align: center;
+    height: 60px;
+    line-height: 60px;
+    font-size: 24px;
+    color: #cdb498;
+    text-align: center;
   }
 </style>
