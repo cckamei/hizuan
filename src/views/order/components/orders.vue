@@ -12,66 +12,66 @@
         <div class="contentleft">
           <img src="~/assets/goods/pic_wring1.png" alt="">
         </div>
-        <div class="contentright">
-          <div class="contenttitle">
-            <span>{{good.category}} - {{good.goodname}}</span>
-            <span>￥{{good.price}}</span>
-          </div>
-          <div class="contentmessage">
-            <p>{{good.server}}</p>
-            <div class="messageright">
-              <s>￥{{good.oprice}}</s>
-              <span>X{{good.num}}</span>
+          <div class="contentright">
+            <div class="contenttitle">
+              <span>{{good.category}} - {{good.goodname}}</span>
+              <span>￥{{good.price}}</span>
+            </div>
+            <div class="contentmessage">
+              <p>{{good.server}}</p>
+              <div class="messageright">
+                <s>￥{{good.oprice}}</s>
+                <span>X{{good.num}}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="item-price">
-        共1件商品 实付款： <span>￥{{order.price}}</span> （含运费￥{{order.freight}}）
-      </div>
-      <div class="item-footer">
-        <!-- 默认 -->
-        <div class="ordertypeDF" v-if="order.type==0">
-          <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="goRefunddetail()">查看退款</button>
+        <div class="item-price">
+          共1件商品 实付款： <span>￥{{order.price}}</span> （含运费￥{{order.freight}}）
         </div>
-        <!-- 默认 -->
-        <div class="ordertypeDF" v-if="order.type==1">
-          <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="goRefunddetail()">查看退款</button>
-        </div>
-        <!-- 待付款 -->
-        <div class="ordertypeDF" v-if="order.type==2">
-          <button class="btngrey btnleft">联系客服</button>
-          <button class="btnpink" @click="$router.push({ name: 'pay' })">立即付款</button>
-        </div>
-        <!-- 待收货 -->
-        <div class="ordertypeDF" v-if="order.type==3">
-          <button class="btngrey">联系客服</button>
-        </div>
-        <!-- 待收货 -->
-        <div class="ordertypeDS" v-if="order.type==4">
-          <button class="btngrey btnleft">查看物流</button>
-          <button class="btnpink" @click="$router.push({ name: 'orderdetail' })">确认收货</button>
-        </div>
-        <!-- 已完成 -->
-        <div class="ordertypeWC" v-if="order.type==5">
-          <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="$router.push({ name: 'orderdetail' })">以旧换新</button>
-        </div>
-        <!-- 已取消 -->
-        <div class="ordertypeQX" v-if="order.type==6">
-          <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="$router.push({ name: 'orderdetail' })">再次购买</button>
-        </div>
-        <!-- 退款中 -->
-        <div class="ordertypeTK" v-if="order.type==7">
-          <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="goRefunddetail()">查看退款</button>
+        <div class="item-footer">
+          <!-- 默认 -->
+          <div class="ordertypeDF" v-if="order.type==0">
+            <button class="btngrey btnleft">联系客服</button>
+            <button class="btngrey" @click="goRefunddetail()">查看退款</button>
+          </div>
+          <!-- 默认 -->
+          <div class="ordertypeDF" v-if="order.type==1">
+            <button class="btngrey btnleft">联系客服</button>
+            <button class="btngrey" @click="goRefunddetail()">查看退款</button>
+          </div>
+          <!-- 待付款 -->
+          <div class="ordertypeDF" v-if="order.type==2">
+            <button class="btngrey btnleft">联系客服</button>
+            <button class="btnpink" @click="$router.push({ name: 'pay' })">立即付款</button>
+          </div>
+          <!-- 待收货 -->
+          <div class="ordertypeDF" v-if="order.type==3">
+            <button class="btngrey">联系客服</button>
+          </div>
+          <!-- 待收货 -->
+          <div class="ordertypeDS" v-if="order.type==4">
+            <button class="btngrey btnleft">查看物流</button>
+            <button class="btnpink" @click="$router.push({ name: 'orderdetail' })">确认收货</button>
+          </div>
+          <!-- 已完成 -->
+          <div class="ordertypeWC" v-if="order.type==5">
+            <button class="btngrey btnleft">联系客服</button>
+            <button class="btngrey" @click="$router.push({ name: 'orderdetail' })">以旧换新</button>
+          </div>
+          <!-- 已取消 -->
+          <div class="ordertypeQX" v-if="order.type==6">
+            <button class="btngrey btnleft">联系客服</button>
+            <button class="btngrey" @click="$router.push({ name: 'orderdetail' })">再次购买</button>
+          </div>
+          <!-- 退款中 -->
+          <div class="ordertypeTK" v-if="order.type==7">
+            <button class="btngrey btnleft">联系客服</button>
+            <button class="btngrey" @click="goRefunddetail()">查看退款</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -79,7 +79,6 @@
   export default {
     props: ['orders'],
     created() {
-      console.log(this.orders);
     },
     computed: {
 

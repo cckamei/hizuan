@@ -49,7 +49,6 @@
         }
       },
       visible(val) {
-        console.log('###########', val);
         this.$emit('input', val);
       }
     },

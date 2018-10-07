@@ -1,23 +1,26 @@
-const router = [
-  {
+const router = [{
     name: 'index',
     path: '/',
-    component: () => import('@/views/home')
+    component: () =>
+      import('@/views/home')
   },
   {
     name: 'goodslist',
     path: '/goodslist',
-    component: () => import('@/views/goodslist')
+    component: () =>
+      import('@/views/goodslist')
   },
   {
     name: 'goodssearch',
     path: '/goodslist/goodssearch',
-    component: () => import('@/views/goodssearch')
+    component: () =>
+      import('@/views/goodssearch')
   },
   {
     name: 'goodsdetail',
     path: '/goodslist/goodssearch/goodsdetail',
-    component: () => import('@/views/goodsdetail'),
+    component: () =>
+      import('@/views/goodsdetail'),
     meta: {
       params: ['goodsId']
     }
@@ -25,7 +28,8 @@ const router = [
   {
     name: 'cart',
     path: '/goodslist/goodssearch/goodsdetail/cart',
-    component: () => import('@/views/cart'),
+    component: () =>
+      import('@/views/cart'),
     meta: {
       params: ['token']
     }
@@ -33,52 +37,62 @@ const router = [
   {
     name: 'confirmorder',
     path: '/goodslist/goodssearch/goodsdetail/cart/confirmorder',
-    component: () => import('@/views/confirmorder')
+    component: () =>
+      import('@/views/confirmorder')
   },
   {
     name: 'address',
     path: '/goodslist/goodssearch/goodsdetail/cart/confirmorder/address',
-    component: () => import('@/views/address')
+    component: () =>
+      import('@/views/address')
   },
   {
     name: 'pay',
     path: '/goodslist/goodssearch/goodsdetail/cart/confirmorder/pay',
-    component: () => import('@/views/pay')
+    component: () =>
+      import('@/views/pay')
   },
   {
     name: 'paysuccess',
     path: '/goodslist/goodssearch/goodsdetail/cart/confirmorder/pay/paysuccess',
-    component: () => import('@/views/paysuccess')
+    component: () =>
+      import('@/views/paysuccess')
   },
   {
     name: 'login',
     path: '/login',
-    component: () => import('@/views/login')
+    component: () =>
+      import('@/views/login')
   },
   {
     name: 'register',
     path: '/login/register',
-    component: () => import('@/views/register')
+    component: () =>
+      import('@/views/register')
   },
   {
     name: 'verifyphone',
     path: '/login/verifyphone',
-    component: () => import('@/views/verifyphone')
+    component: () =>
+      import('@/views/verifyphone')
   },
   {
     name: 'personal-data',
     path: '/login/verifyphone/personal-data',
-    component: () => import('@/views/user/personal-data')
+    component: () =>
+      import('@/views/user/personal-data')
   },
   {
     name: 'registersuccess',
     path: '/login/verifyphone/perfectinfo/registersuccess',
-    component: () => import('@/views/registersuccess')
+    component: () =>
+      import('@/views/registersuccess')
   },
   {
     name: 'mypage',
     path: '/mypage',
-    component: () => import('@/views/user/index'),
+    component: () =>
+      import('@/views/user/index'),
     meta: {
       params: ['token']
     }
@@ -86,7 +100,8 @@ const router = [
   {
     name: 'commissions',
     path: '/commissions',
-    component: () => import('@/views/commissions'),
+    component: () =>
+      import('@/views/commissions'),
     meta: {
       params: ['token']
     }
@@ -94,7 +109,8 @@ const router = [
   {
     name: 'orderlist',
     path: '/my/orderlist',
-    component: () => import('@/views/order/index'),
+    component: () =>
+      import('@/views/order/index'),
     meta: {
       params: ['token']
     }
@@ -102,7 +118,8 @@ const router = [
   {
     name: 'orderdetail',
     path: '/my/orderdetail',
-    component: () => import('@/views/orderdetail'),
+    component: () =>
+      import('@/views/orderdetail'),
     meta: {
       params: ['token']
     }
@@ -110,12 +127,14 @@ const router = [
   {
     name: 'logistics',
     path: '/my/logistics',
-    component: () => import('@/views/logisticsTrack')
+    component: () =>
+      import('@/views/logisticsTrack')
   },
   {
     name: 'mystore',
     path: '/my/mystore',
-    component: () => import('@/views/mystore'),
+    component: () =>
+      import('@/views/mystore'),
     meta: {
       params: ['token']
     }
@@ -123,7 +142,8 @@ const router = [
   {
     name: 'myset',
     path: '/my/myset',
-    component: () => import('@/views/myset'),
+    component: () =>
+      import('@/views/myset'),
     meta: {
       params: ['token']
     }
@@ -131,7 +151,8 @@ const router = [
   {
     name: 'editinfo',
     path: '/my/myset/editinfo',
-    component: () => import('@/views/editinfo'),
+    component: () =>
+      import('@/views/editinfo'),
     meta: {
       params: ['token']
     }
@@ -139,12 +160,14 @@ const router = [
   {
     name: 'myaddress',
     path: '/my/myaddress',
-    component: () => import('@/views/myaddress')
+    component: () =>
+      import('@/views/myaddress')
   },
   {
     name: 'revisepwd',
     path: '/my/revisepwd',
-    component: () => import('@/views/revisepwd'),
+    component: () =>
+      import('@/views/revisepwd'),
     meta: {
       params: ['token']
     }
@@ -152,7 +175,8 @@ const router = [
   {
     name: 'editaddress',
     path: '/my/editaddress',
-    component: () => import('@/views/editaddress'),
+    component: () =>
+      import('@/views/editaddress'),
     meta: {
       params: ['token']
     }
@@ -160,7 +184,8 @@ const router = [
   {
     name: 'applyrefund',
     path: '/my/applyrefund',
-    component: () => import('@/views/applyrefund'),
+    component: () =>
+      import('@/views/applyrefund'),
     meta: {
       params: ['token']
     }
@@ -168,7 +193,8 @@ const router = [
   {
     name: 'refunddetail',
     path: '/my/refunddetail',
-    component: () => import('@/views/refunddetail'),
+    component: () =>
+      import('@/views/refunddetail'),
     meta: {
       params: ['token']
     }
@@ -176,7 +202,8 @@ const router = [
   {
     name: 'cancelList',
     path: '/my/cancelList',
-    component: () => import('@/views/cancelList'),
+    component: () =>
+      import('@/views/cancelList'),
     meta: {
       params: ['token']
     }
@@ -184,7 +211,8 @@ const router = [
   {
     name: 'bespeak',
     path: '/mypage/bespeak',
-    component: () => import('@/views/bespeak/index'),
+    component: () =>
+      import('@/views/bespeak/index'),
     meta: {
       params: ['token']
     }
@@ -192,7 +220,8 @@ const router = [
   {
     name: 'addappointment',
     path: '/mypage/bespeak/addappointment',
-    component: () => import('@/views/bespeak/add'),
+    component: () =>
+      import('@/views/bespeak/add'),
     meta: {
       params: ['token']
     }
@@ -200,9 +229,19 @@ const router = [
   {
     name: 'freebuy',
     path: '/home/freebuy',
-    component: () => import('@/views/freebuy'),
+    component: () =>
+      import('@/views/freebuy'),
     meta: {
       params: ['token']
+    }
+  },
+  {
+    name: 'redirect',
+    path: '/redirect',
+    component: () =>
+      import('@/views/redirect'),
+    meta: {
+      params: []
     }
   },
   {

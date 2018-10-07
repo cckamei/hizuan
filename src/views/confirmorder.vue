@@ -21,14 +21,14 @@
               <div class="img">
                 <img :src="item.src" alt="">
               </div>
-              <div class="detail flex-auto flex">
-                <span class="name">{{item.name}}</span>
-                <span class="desc">{{item.desc}}</span>
-                <div class="line3 flex">
-                  <span class="price"><span>￥</span>{{item.price | currency}}</span>
-                  <div class="number">X{{item.count}}</div>
+                <div class="detail flex-auto flex">
+                  <span class="name">{{item.name}}</span>
+                  <span class="desc">{{item.desc}}</span>
+                  <div class="line3 flex">
+                    <span class="price"><span>￥</span>{{item.price | currency}}</span>
+                    <div class="number">X{{item.count}}</div>
+                  </div>
                 </div>
-              </div>
             </li>
           </ul>
         </li>
@@ -162,7 +162,6 @@
       };
     },
     created() {
-      console.log(this.getAddress);
       this.reqData.address = this.getAddress.address;
     },
     computed: {

@@ -3,37 +3,37 @@
     <v-header>购物车</v-header>
     <div class="content">
       <ul class="cart-list">
-        <li class="flex" v-for="(item, index) in res.cart" v-touch.press="handlePress" :data-index="index">
+        <li class="flex" v-for="(item, index) in cart" v-touch.press="handlePress" :data-index="index">
           <div class="checkbox" :class="{active: item.checked, disabled: !item.limit}" @click="item.limit && (item.checked = !item.checked)"></div>
           <div class="img">
             <img :src="item.img" alt="">
           </div>
-          <div class="detail flex-auto flex">
-            <span class="name">{{item.goods_title}}</span>
-            <span class="desc">{{item.sub_title}}</span>
-            <template v-if="item.limit">
-              <div class="line3">
-                <span class="price"><span>￥</span>{{item.price | currency}}</span>
-                <div class="add-minus flex">
-                  <div @click="item.count > 1 && minusCart(item)" class="btn minus" :class="{active: item.count > 1}"></div>
-                  <input v-model="item.count" type="text" readonly>
-                  <div @click="item.count < item.limit && addCart(item)" class="btn plus" :class="{active: item.count < item.limit}"></div>
+            <div class="detail flex-auto flex">
+              <span class="name">{{item.goods_title}}</span>
+              <span class="desc">{{item.sub_title}}</span>
+              <template v-if="!item.limit">
+                <div class="line3">
+                  <span class="price"><span>￥</span>{{item.price | currency}}</span>
+                  <div class="add-minus flex">
+                    <div @click="item.count > 1 && minusCart(item)" class="btn minus" :class="{active: item.count > 1}"></div>
+                    <input v-model="item.count" type="text" readonly>
+                    <div @click="item.count < item.limit && addCart(item)" class="btn plus" :class="{active: item.count < item.limit}"></div>
+                  </div>
                 </div>
-              </div>
-            </template>
-            <template v-else>
-              <div class="line3 flex">
-                <span class="note">所选规格暂时无货</span>
-                <button class="rechoose btn" @click="skuVisible = true,skuIndex = index">重选</button>
-              </div>
-            </template>
-          </div>
-          <div class="mask-delete flex" v-if="item.deleteVisible" @click="item.deleteVisible = false">
-            <div class="delete" @click="removeCart(item, index)">删除</div>
-          </div>
+              </template>
+              <template v-else>
+                <div class="line3 flex">
+                  <span class="note">所选规格暂时无货</span>
+                  <button class="rechoose btn" @click="goGoodsDetail">重选</button>
+                </div>
+              </template>
+            </div>
+            <div class="mask-delete flex" v-if="item.deleteVisible" @click="item.deleteVisible = false">
+              <div class="delete" @click="removeCart(item, index)">删除</div>
+            </div>
         </li>
       </ul>
-      <v-recommend title="为你推荐" :list="res.recommend"></v-recommend>
+      <v-recommend title="为你推荐" :list="recommend"></v-recommend>
     </div>
     <div class="footer flex">
       <div class="checkbox" :class="{active: checkedAll}" @click="checkAll"></div>
@@ -43,7 +43,7 @@
       <button class="btn settlement" @click="settlement">结算（ {{totalCount}} ）</button>
     </div>
     <!-- <v-slide-up v-model="skuVisible" @confirm="handleSKU">
-      <template v-for="(item, index) in res.cart" v-if="skuIndex === index">
+      <template v-for="(item, index) in cart" v-if="skuIndex === index">
         <ul class="sku">
           <li class="sku-icon flex">
             <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
@@ -83,8 +83,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
-  import ss from '../assets/goods/orderlistonly.png';
+  import { mapActions, mapMutations } from 'vuex';
 
   export default {
     data() {
@@ -94,107 +93,48 @@
         totalMoney: 0,
         skuVisible: false,
         skuIndex: 0,
-        res: {
-          cart: [],
-          recommend: [{
-            url: ss,
-            name: '文承 戒指',
-            price: '6666',
-            like: false
-          }, {
-            url: ss,
-            name: '文承 戒指',
-            price: '6666',
-            like: false
-          }, {
-            url: ss,
-            name: '文承 戒指',
-            price: '6666',
-            like: false
-          }, {
-            url: ss,
-            name: '文承 戒指',
-            price: '6666',
-            like: false
-          }]
-        }
+        recommend: [],
+        cart: []
       };
     },
     created() {
       this.fetchCart();
+      this.fetchRecommend();
     },
     watch: {
-      'res.cart': {
+      'cart': {
         handler(val) {
-          this.checkedAll = !this.res.cart.filter(item => item.limit && !item.checked).length;
-          this.totalCount = this.res.cart.filter(item => item.limit && item.checked).reduce((total, { count }) => total + +count, 0);
-          this.totalMoney = this.res.cart.filter(item => item.limit && item.checked).reduce((total, { price, count }) => total + price * count, 0);
+          this.checkedAll = !this.cart.filter(item => item.limit && !item.checked).length;
+          this.totalCount = this.cart.filter(item => item.limit && item.checked).reduce((total, { count }) => total + +count, 0);
+          this.totalMoney = this.cart.filter(item => item.limit && item.checked).reduce((total, { price, count }) => total + price * count, 0);
         },
         deep: true
       }
     },
     methods: {
+      ...mapMutations(['setCommon']),
       ...mapActions(['ajax']),
       fetchCart() {
         this.ajax({
           name: 'cart'
         }).then(res => {
-          res = [
-            {
-              "cart_id": "5b8d40dd8263913b518463f4",
-              "goods_title": "文乘系列呦呦鹿鸣-项链/坠",
-              "goods_id": "5b851a4d1f30bfc39cddfc37",
-              "count": "2",
-              "sub_title": "25分；VS/微瑕；H/白；女戒-11号；基础保障服务",
-              "price": 6666.0,
-              "img": ss,
-              checked: false,
-              deleteVisible: false,
-              limit: 999
-            },
-            {
-              "cart_id": "5b8d40dd8263913b518463f4",
-              "goods_title": "文乘系列呦呦鹿鸣-项链/坠",
-              "goods_id": "5b851a4d1f30bfc39cddfc37",
-              "count": "2",
-              "sub_title": "25分；VS/微瑕；H/白；女戒-11号；基础保障服务",
-              "price": 8880.0,
-              "img": ss,
-              checked: false,
-              deleteVisible: false,
-              limit: 999
-            }
-            // {
-            //   "cart_id": "5b8d40dd8263913b518463f4",
-            //   "goods_title": "醒狮MeiMei经典款项链吊坠",
-            //   "goods_id": "5b851a4d1f30bfc39cddfc37",
-            //   "count": "2",
-            //   "sub_title": "传承中国传统文化，以纯天然色贝母拼成，打造印象派艺术画风的时尚单品",
-            //   "price": 8880.0,
-            //   "img": "http://pd1957kyq.bkt.clouddn.com/1f00d57a-b505-11e8-9852-00163e0561b9",
-            //   checked: false,
-            //   deleteVisible: false,
-            //   limit: 0
-            // }
-          ];
-
-          // res.forEach(item => {
-          //   item.checked = false;
-          //   item.deleteVisible = false;
-          //   item.limit = 999;
-          // });
-          this.res.cart = res;
+          res.forEach(item => {
+            item.checked = false;
+            item.deleteVisible = false;
+            item.limit = item.stock;
+          });
+          this.cart = res;
         });
       },
       checkAll() {
         let isCheckedAll = this.checkedAll;
-        this.res.cart.filter(item => item.limit).forEach(item => {
+        this.cart.filter(item => item.limit).forEach(item => {
           item.checked = !isCheckedAll;
         });
       },
       handlePress(eventName, e, hammer) {
         if(eventName === 'press') {
-          this.res.cart[hammer.index].deleteVisible = true;
+          this.cart[hammer.index].deleteVisible = true;
         }
       },
       addCart(item) {
@@ -209,7 +149,7 @@
       },
       removeCart(item, index) {
         this.cardHandle(item.cart_id, -item.count, () => {
-          this.res.cart.splice(index, 1);
+          this.cart.splice(index, 1);
         });
       },
       cardHandle(skuId, count, cb) {
@@ -223,15 +163,19 @@
           cb();
         });
       },
-      handleSKU() {
-        // let score = this.res.skuScore[this.sku.scoreIndex];
-        // let clarity = this.res.skuClarity[this.sku.clarityIndex];
-        // let color = this.res.skuColor[this.sku.colorIndex];
-        // let spec = this.res.skuSpec[this.sku.specIndex];
-        // this.reqData.sku = `已选 ${score}；${clarity}；${color}；${spec}`;
-      },
       settlement() {
         this.$router.push({ name: 'confirmorder' });
+      },
+      fetchRecommend() {
+        this.ajax({
+          name: 'cartRecommend'
+        }).then(res => {
+          this.recommend = res;
+        });
+      },
+      goGoodsDetail(item) {
+        this.setCommon({ goodsId: item.goods_id });
+        this.$router.push({ name: 'goodsdetail', query: { openSKU: true } });
       }
     }
   };

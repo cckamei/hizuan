@@ -4,12 +4,12 @@
     <div class="recommend-content">
       <ul class="flex">
         <li v-for="(item, index) in list">
-          <div class="recommend-item">
+          <div class="recommend-item" @click="goGoodsDetail(item.goods_id)">
             <img :src="item.img" alt="">
             <div class="name">{{item.goods_title}}</div>
             <div class="flex">
               <div class="price"><span>￥</span>{{item.price | currency}}</div>
-              <div class="like" :class="{active: item.like}" @click="item.like = !item.like"></div>
+              <div class="like" :class="{active: item.like}" @click.stop="collect(item)"></div>
             </div>
           </div>
         </li>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions, mapMutations } from 'vuex';
+
   export default {
     props: {
       title: {
@@ -28,6 +30,32 @@
       list: {
         type: Array,
         required: true
+      }
+    },
+    computed: {
+      ...mapGetters(['token'])
+    },
+    methods: {
+      ...mapMutations(['setCommon']),
+      ...mapActions(['ajax']),
+      collect(item) {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+
+        this.ajax({
+          name: 'addCollect',
+          data: {
+            'collect_id': item.default_sku
+          }
+        }).then(res => {
+          this.toast('收藏成功！');
+        });
+      },
+      goGoodsDetail(goodsId) {
+        this.setCommon({ goodsId });
+        this.$router.replace({ name: 'redirect' });
       }
     }
   };

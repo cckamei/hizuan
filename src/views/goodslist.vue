@@ -4,7 +4,7 @@
       <input type="text" @click="$router.push({name: 'goodssearch'})" placeholder="请选择您要搜索的作品类型" readonly>
       <div slot="menus" class="menus">
         <div class="menu" @click="$router.push({name: 'goodssearch'})"><img src="~assets/goods/icon_search.png" alt=""></div>
-      </div>
+        </div>
     </v-header-menus>
     <div class="condition">
       <ul class="flex">
@@ -22,14 +22,14 @@
       <ul class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50" infinite-scroll-immediate-check="true">
         <li v-for="(item, index) in goodsList" :key="index" class="flex" @click="goDetail(item)">
           <div class="img"><img :src="item.img" alt=""></div>
-          <div class="detail flex-auto flex">
-            <span class="name">{{item.goods_title}}</span>
-            <span class="desc">{{item.sub_title}}</span>
-            <div class="line3 flex">
-              <div class="price"><span>￥</span>{{item.price | currency}}</div>
-              <div class="cart"></div>
+            <div class="detail flex-auto flex">
+              <span class="name">{{item.goods_title}}</span>
+              <span class="desc">{{item.sub_title}}</span>
+              <div class="line3 flex">
+                <div class="price"><span>￥</span>{{item.price | currency}}</div>
+                <div class="cart" @click.stop="addToCart"></div>
+              </div>
             </div>
-          </div>
         </li>
       </ul>
       <p v-if="pageInfo.currentPage < pageInfo.totalPage" v-show="loading" class="loading">
@@ -147,6 +147,9 @@
       goDetail(val) {
         this.setCommon({ goodsId: val.goods_id });
         this.$router.push({ name: 'goodsdetail' });
+      },
+      addToCart() {
+        this.$router.push({ name: 'goodsdetail', params: { openSKU: true } });
       }
     }
   };

@@ -25,12 +25,21 @@
         type: String
       },
       confirmText: '',
-      title: ''
+      title: '',
+      open: {
+        default: false
+      }
     },
     data() {
       return {
         visible: false
       };
+    },
+    created() {
+      setTimeout(() => {
+        this.visible = this.open;
+        console.log(this.visible);
+      }, 1000);
     },
     methods: {
       confirm() {

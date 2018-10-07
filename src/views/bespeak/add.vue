@@ -82,7 +82,21 @@
         occupations: ['教育工作', '医务工作', '财务工作', '媒体市场', '服务行业', '零售行业', '艺术工作', '技术工作', '公务员'],
         areaList: [],
         cancelVisible: false,
-        reqData: {},
+        reqData: {
+          name: '',
+          address: '',
+          gender: 0,
+          tel: '',
+          birthday: '',
+          type: 1,
+          detail: '',
+          occupation: -1,
+          time: '',
+          shop: 1112,
+          addId: 1, //1:省份选择; 2:市区； 3：地区
+          provinceId: '', //选择的省份id
+          cityId: '' //选择的市id
+        },
         isEdit: true,
         visible: false,
         shops: [{
@@ -94,30 +108,21 @@
     computed: {
       ...mapGetters(['getAppointment']),
       isActive() {
-        return this.reqData.address.length && this.reqData.name.length && this.reqData.tel.length;
+        if(this.reqData.address) {
+          return this.reqData.address.length && this.reqData.name.length && this.reqData.tel.length;
+        } else {
+          return false;
+        }
+
       }
     },
-    created() {
-      this.reqData = {
-        name: '',
-        address: '',
-        gender: 0,
-        tel: '',
-        birthday: '',
-        type: 1,
-        detail: '',
-        occupation: -1,
-        time: '',
-        shop: 1112,
-        addId: 1, //1:省份选择; 2:市区； 3：地区
-        provinceId: '', //选择的省份id
-        cityId: '' //选择的市id
-      };
+    mounted() {
+      this.reqData.type = 0;
+
     },
     methods: {
       ...mapMutations(['setAppointment']),
       showSelectAddress() {
-        console.log('showSelectAddress');
         this.visible = true;
       },
       confirm(address) {
