@@ -6,12 +6,13 @@
       <div class="expired">有效期至 {{formatDate(card.starttime, 'yyyy-MM-dd')}} 至 {{formatDate(card.endtime, 'yyyy-MM-dd')}}</div>
     </div>
     <div v-if="card.use" class="col2">{{useText}}</div>
-    <div v-else class="col2" @click="card.use = true">{{unuseText}}</div>
+    <div v-else class="col2" @click="addCoupons">{{unuseText}}</div>
   </div>
 </template>
 
 <script>
   import { formatDate } from '../utils';
+  import { mapActions } from 'vuex';
 
   export default {
     props: {
@@ -26,10 +27,30 @@
       unuseText: {
         default: '立即领取',
         type: String
+      },
+      radio: {
+        default: false,
+        type: Boolean
       }
     },
     methods: {
-      formatDate
+      ...mapActions(['ajax']),
+      formatDate,
+      addCoupons() {
+        if(this.radio) {
+          this.card.use = true;
+          this.$emit('select');
+        } else {
+          this.ajax({
+            name: 'addCoupons',
+            data: {
+              coupon_id: this.card.coupon_id
+            }
+          }).then(res => {
+            this.card.use = true;
+          });
+        }
+      }
     }
   };
 </script>

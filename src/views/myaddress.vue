@@ -63,6 +63,7 @@
       },
       selectAddress(item) {
         this.setAddress({
+          id: item.id,
           name: item.name,
           phone: item.phone,
           address: `${item.province}${item.city}${item.district}${item.street}`

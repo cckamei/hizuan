@@ -21,9 +21,13 @@ let api = {
   getProvince: { url: '/api/v1/province', method: 'get' }, //获取省
   getCity: { url: '/api/v1/city', method: 'get' }, //获取市
   getDistrict: { url: '/api/v1/district', method: 'get' }, //获取区
-  goodsRecommend: { url: 'api/v1/recommend', method: 'get' }, //
-  cartRecommend: { url: 'api/v1/recommendcart', method: 'get' }, //
-  coupons: { url: 'api/v1/coupons', method: 'get' } //
+  goodsRecommend: { url: 'api/v1/recommend', method: 'get' }, //商品详情-推荐商品
+  cartRecommend: { url: 'api/v1/recommendcart', method: 'get' }, //购物车-推荐商品
+  coupons: { url: 'api/v1/coupons', method: 'get' }, //查看店铺优惠券
+  getCoupons: { url: 'api/v1/my/coupons', method: 'get' }, //查看个人优惠券
+  addCoupons: { url: 'api/v1/my/coupons' }, //领取优惠券
+  addOrder: { url: 'api/v1/cart', method: 'put', isJson: true}, //下单
+  getLogitics: { url: 'api/v1/logitics', method: 'get' } //查看快递
 };
 
 for (var k in api) {

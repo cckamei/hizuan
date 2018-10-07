@@ -11,7 +11,7 @@
             <div class="detail flex-auto flex">
               <span class="name">{{item.goods_title}}</span>
               <span class="desc">{{item.sub_title}}</span>
-              <template v-if="!item.limit">
+              <template v-if="item.limit">
                 <div class="line3">
                   <span class="price"><span>￥</span>{{item.price | currency}}</span>
                   <div class="add-minus flex">
@@ -24,7 +24,7 @@
               <template v-else>
                 <div class="line3 flex">
                   <span class="note">所选规格暂时无货</span>
-                  <button class="rechoose btn" @click="goGoodsDetail">重选</button>
+                  <button class="rechoose btn" @click="goGoodsDetail(item)">重选</button>
                 </div>
               </template>
             </div>
@@ -42,43 +42,6 @@
       <div class="price">￥{{totalMoney | currency}}</div>
       <button class="btn settlement" @click="settlement">结算（ {{totalCount}} ）</button>
     </div>
-    <!-- <v-slide-up v-model="skuVisible" @confirm="handleSKU">
-      <template v-for="(item, index) in cart" v-if="skuIndex === index">
-        <ul class="sku">
-          <li class="sku-icon flex">
-            <img class="icon" src="~assets/goods/pic_guguring.png" alt="">
-            <div>
-              <div class="price"><span>￥</span>{{8888.00 | currency}}</div>
-              <span class="code">商品编号：DRGC00208</span>
-            </div>
-          </li>
-          <li>
-            <div class="title">主钻分数</div>
-            <v-button-radio v-model="item.sku.scoreIndex" :list="item.skuScore"></v-button-radio>
-          </li>
-          <li>
-            <div class="title">钻石净度</div>
-            <v-button-radio v-model="item.sku.clarityIndex" :list="item.skuClarity"></v-button-radio>
-          </li>
-          <li>
-            <div class="title">颜色</div>
-            <v-button-radio v-model="item.sku.colorIndex" :list="item.skuColor"></v-button-radio>
-          </li>
-          <li>
-            <div class="title">规格</div>
-            <v-button-radio v-model="item.sku.specIndex" :list="item.skuSpec"></v-button-radio>
-          </li>
-          <li class="count flex">
-            <span>数量</span>
-            <div class="flex">
-              <div @click="item.count > 1 && item.count--" class="btn minus" :class="{active: item.count > 1}"></div>
-              <input v-model="item.count" type="text" readonly>
-              <div @click="item.count < item.limit && item.count++" class="btn plus" :class="{active: item.count < item.limit}"></div>
-            </div>
-          </li>
-        </ul>
-      </template>
-    </v-slide-up> -->
   </div>
 </template>
 
@@ -112,7 +75,7 @@
       }
     },
     methods: {
-      ...mapMutations(['setCommon']),
+      ...mapMutations(['setCommon', 'setCart']),
       ...mapActions(['ajax']),
       fetchCart() {
         this.ajax({
@@ -164,6 +127,11 @@
         });
       },
       settlement() {
+        if(!this.totalCount) {
+          this.toast('请选择商品');
+          return false;
+        }
+        this.setCart(this.cart.filter(item => item.checked));
         this.$router.push({ name: 'confirmorder' });
       },
       fetchRecommend() {
@@ -175,7 +143,7 @@
       },
       goGoodsDetail(item) {
         this.setCommon({ goodsId: item.goods_id });
-        this.$router.push({ name: 'goodsdetail', query: { openSKU: true } });
+        this.$router.push({ name: 'goodsdetail', params: { openSKU: true } });
       }
     }
   };

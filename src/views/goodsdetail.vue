@@ -23,7 +23,7 @@
       </mt-swipe>
       <div class="info">
         <div class="price">
-          <i>￥</i>{{res.price | currency}}
+          <i>￥</i>{{(sku.price || res.price) | currency}}
           <img @click="shareVisible = true" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
           <button class="tag">{{res.tag}}</button>
@@ -41,7 +41,7 @@
         <template v-if="benifit.length">
           <div class="gap"></div>
           <div class="row">
-            <v-form-slide-up label="领取优惠" title="领取优惠" @confirm="handleBenifit">
+            <v-form-slide-up label="领取优惠" title="领取优惠">
               <template slot="value">
                 <button v-for="card in benifit" v-if="card.use" class="benifit-btn">满{{card.all_money}}减{{card.discount_money}}</button>
               </template>
@@ -74,37 +74,37 @@
         </template>
         <div class="gap"></div>
         <div class="row">
-          <v-form-slide-up :open="autoOpenSKU" label="商品规格" v-model="reqData.sku" :placeholder="`选择 ${isZuan ? '主钻分数；钻石净度；' : '主石名称；主石评级；'}颜色；规格；数量`" @confirm="handleSKU">
+          <v-form-slide-up :open="autoOpenSKU" label="商品规格" v-model="sku.selectedSku" :placeholder="`选择 ${isZuan ? '主钻分数；钻石净度；' : '主石名称；主石评级；'}颜色；规格；数量`">
             <ul class="sku">
               <li class="sku-icon flex">
                 <img class="icon" :src="res.img" alt="">
                 <div>
-                  <div class="price"><span>￥</span>{{res.price | currency}}</div>
+                  <div class="price"><span>￥</span>{{sku.price | currency}}</div>
                   <span class="code">商品编号：{{sku.merchantCode}}</span>
                 </div>
               </li>
               <li>
                 <div class="title">{{isZuan ? '主钻分数' : '主石名称'}}</div>
-                <v-button-radio v-model="sku.scoreIndex" :list="res.skuScore" :cancel="true"></v-button-radio>
+                <v-button-radio v-model="sku.scoreIndex" :list="sku.skuScore" :cancel="true"></v-button-radio>
               </li>
               <li>
                 <div class="title">{{isZuan ? '钻石净度' : '主石评级'}}</div>
-                <v-button-radio v-model="sku.clarityIndex" :list="res.skuClarity" :cancel="true"></v-button-radio>
+                <v-button-radio v-model="sku.clarityIndex" :list="sku.skuClarity" :cancel="true"></v-button-radio>
               </li>
               <li>
                 <div class="title">颜色</div>
-                <v-button-radio v-model="sku.colorIndex" :list="res.skuColor" :cancel="true"></v-button-radio>
+                <v-button-radio v-model="sku.colorIndex" :list="sku.skuColor" :cancel="true"></v-button-radio>
               </li>
               <li>
                 <div class="title">规格</div>
-                <v-button-radio v-model="sku.specIndex" :list="res.skuSpec" :cancel="true"></v-button-radio>
+                <v-button-radio v-model="sku.specIndex" :list="sku.skuSpec" :cancel="true"></v-button-radio>
               </li>
               <li class="count flex">
                 <span>数量</span>
                 <div class="flex">
-                  <div @click="reqData.count > 1 && reqData.count--" class="btn minus" :class="{active: reqData.count > 1}"></div>
-                  <input v-model="reqData.count" type="text" readonly>
-                  <div @click="reqData.count < limit && reqData.count++" class="btn plus" :class="{active: reqData.count < limit}"></div>
+                  <div @click="sku.count > 1 && sku.count--" class="btn minus" :class="{active: sku.count > 1}"></div>
+                  <input v-model="sku.count" type="text" readonly>
+                  <div @click="sku.count < sku.limit && sku.count++" class="btn plus" :class="{active: sku.count < sku.limit}"></div>
                 </div>
               </li>
             </ul>
@@ -166,7 +166,7 @@
           </v-form-slide-up>
         </div>
         <div class="row">
-          <v-form-slide-up label="刻字定制" title="刻字定制" placeholder="修改您的刻字信息" v-model="reqData.lettering" @confirm="handleLettering">
+          <v-form-slide-up label="刻字定制" title="刻字定制" placeholder="修改您的刻字信息" v-model="lettering.lettering">
             <ul class="lettering">
               <li class="lettering-enable">
                 <div class="title">是否刻字</div>
@@ -233,15 +233,9 @@
         top: 0,
         offsetTops: [],
         isZuan: true, //钻石/主石
-        defaultSKU: '',
-        limit: 1,
         res: {
           logitics: {},
           bannerList: [],
-          skuScore: [],
-          skuClarity: [],
-          skuColor: [],
-          skuSpec: [],
           service: []
         },
         sku: {
@@ -249,23 +243,28 @@
           clarityIndex: -1,
           colorIndex: -1,
           specIndex: -1,
-          merchantCode: ''
+          skuScore: [],
+          skuClarity: [],
+          skuColor: [],
+          skuSpec: [],
+          merchantCode: '',
+          price: 0,
+          defaultSKU: '',
+          limit: 99,
+          count: 1,
+          skuId: '',
+          selectedSku: ''
         },
         lettering: { //刻字
           disable: 1,
           text: '',
-          remarks: ''
-        },
-        reqData: { //发送数据
-          lettering: '',
-          benifit: '',
-          count: 1,
-          skuId: ''
+          remarks: '',
+          lettering: ''
         },
         recommend: [], //推荐商品
         benifit: [], //优惠券
         activity: [], //促销活动
-        shareIndex: 0,
+        shareIndex: 0, //0普通分享 1员工分享
         shareVisible: false,
         autoOpenSKU: false
       };
@@ -291,7 +290,7 @@
       sku: {
         handler({ scoreIndex, clarityIndex, colorIndex, specIndex }) {
           let selectIndexes = [scoreIndex, clarityIndex, colorIndex, specIndex];
-          [this.res.skuScore, this.res.skuClarity, this.res.skuColor, this.res.skuSpec].forEach((type, typeIndex) => {
+          [this.sku.skuScore, this.sku.skuClarity, this.sku.skuColor, this.sku.skuSpec].forEach((type, typeIndex) => {
             type.forEach((item, index) => {
               let arr = Object.assign([], selectIndexes);
               arr[typeIndex] = index;
@@ -304,21 +303,40 @@
           });
           if(!selectIndexes.includes(-1)) {
             let { count, price, sku_id, merchant_code } = this.res.skus.filter(sku => selectIndexes.join('_') === sku.skuIds)[0];
-            this.limit = count;
-            this.reqData.count = Math.min(this.reqData.count, count);
-            this.res.price = price;
-            this.reqData.skuId = sku_id;
+            this.sku.limit = count;
+            this.sku.count = Math.min(this.sku.count, count);
+            this.sku.skuId = sku_id;
+            this.sku.price = price;
             this.sku.merchantCode = merchant_code;
+
+            let selectedScore = this.sku.skuScore[this.sku.scoreIndex].label;
+            let selectedClarity = this.sku.skuClarity[this.sku.clarityIndex].label;
+            let selectedSpec = this.sku.skuSpec[this.sku.specIndex].label;
+            let selectedColor = this.sku.skuColor[this.sku.colorIndex].label;
+            this.sku.selectedSku = `${selectedScore};${selectedClarity};${selectedSpec};${selectedColor}`;
           } else {
-            this.limit = 1;
-            this.reqData.skuId = '';
+            this.sku.limit = 99;
+            this.sku.skuId = '';
             this.sku.merchantCode = '';
+            this.sku.selectedSku = '';
+          }
+        },
+        deep: true
+      },
+      lettering: {
+        handler(val) {
+          if(!val.disable) {
+            let disable = this.lettering.disable ? '否' : '是';
+            this.lettering.lettering = this.lettering.disable ? '' : `刻字 ${this.lettering.text}；要求 ${this.lettering.remarks}`;
+          } else {
+            this.lettering.lettering = '';
           }
         },
         deep: true
       }
     },
     methods: {
+      ...mapMutations(['setCart']),
       ...mapActions(['ajax']),
       fetchGoodsDetail() {
         this.ajax({
@@ -331,8 +349,9 @@
           let skuColor = [];
           let skuSpec = [];
 
+          this.isZuan = res.is_diamond;
+
           res.skus.forEach((item, index) => {
-            this.isZuan = !!item.zuanshijingdu;
             if(!index) {
               this.defaultSKU = item.sku_id; //默认第条是默认sku
             }
@@ -382,10 +401,10 @@
             }
           });
 
-          this.res.skuScore = skuScore.map(item => ({ label: item, disabled: false }));
-          this.res.skuClarity = skuClarity.map(item => ({ label: item, disabled: false }));
-          this.res.skuColor = skuColor.map(item => ({ label: item, disabled: false }));
-          this.res.skuSpec = skuSpec.map(item => ({ label: item, disabled: false }));
+          this.sku.skuScore = skuScore.map(item => ({ label: item, disabled: false }));
+          this.sku.skuClarity = skuClarity.map(item => ({ label: item, disabled: false }));
+          this.sku.skuColor = skuColor.map(item => ({ label: item, disabled: false }));
+          this.sku.skuSpec = skuSpec.map(item => ({ label: item, disabled: false }));
 
           this.res.bannerList = res.slide_img;
         });
@@ -409,17 +428,9 @@
         }).then(res => {
           this.benifit = res;
           this.benifit.forEach(item => {
-            this.$set(item, 'use', false); //TODO从接口获取
+            this.$set(item, 'use', item.already);
           });
         });
-      },
-      handleSKU() { },
-      handleLettering() {
-        let disable = this.lettering.disable ? '否' : '是';
-        this.reqData.lettering = this.lettering.disable ? '' : `刻字 ${this.lettering.text}；要求 ${this.lettering.remarks}`;
-      },
-      handleBenifit() {
-        this.reqData.benifit = this.benifit.map(item => item.id);
       },
       scroll() {
         this.$refs['scroll-top'].scroll();
@@ -435,9 +446,26 @@
           return false;
         }
 
-        //TODO
-
-        this.$router.push({ name: 'confirmorder' });
+        this.ajax({
+          name: 'addCart',
+          data: {
+            'cart_id': this.sku.skuId || this.defaultSKU,
+            num: this.sku.count,
+            kezi: '', //TODO
+            emp_id: '' //TODO
+          }
+        }).then(res => {
+          this.setCart([{
+            cart_id: this.sku.skuId || this.defaultSKU,
+            count: this.sku.count,
+            goods_id: this.res.goods_id,
+            goods_title: this.res.goods_title,
+            img: this.res.img,
+            price: this.sku.price || this.res.price,
+            sub_title: this.res.sub_title
+          }]);
+          this.$router.push({ name: 'confirmorder' });
+        });
       },
       collect() {
         if(!this.token) {
@@ -448,7 +476,7 @@
         this.ajax({
           name: 'addCollect',
           data: {
-            'collect_id': this.reqData.skuId || this.defaultSKU
+            'collect_id': this.sku.skuId || this.defaultSKU
           }
         }).then(res => {
           this.toast('收藏成功！');
@@ -471,8 +499,10 @@
         this.ajax({
           name: 'addCart',
           data: {
-            'cart_id': this.reqData.skuId || this.defaultSKU,
-            num: this.reqData.count
+            'cart_id': this.sku.skuId || this.defaultSKU,
+            num: this.sku.count,
+            kezi: '', //TODO
+            emp_id: '' //TODO
           }
         }).then(res => {
           this.toast('已加入购物车');
