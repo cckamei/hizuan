@@ -174,7 +174,7 @@
               </li>
               <li>
                 <div class="title">刻字內容</div>
-                <input v-model="lettering.text" class="lettering-text" type="text" maxlength="2" placeholder="请填写您的刻字内容（不超过2个字）">
+                <input v-model="lettering.text" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的刻字内容">
             </li>
               <li>
                 <div class="title">要求</div>
@@ -451,7 +451,7 @@
           data: {
             'cart_id': this.sku.skuId || this.defaultSKU,
             num: this.sku.count,
-            kezi: '', //TODO
+            kezi:  this.lettering.text,
             emp_id: '' //TODO
           }
         }).then(res => {
@@ -501,7 +501,7 @@
           data: {
             'cart_id': this.sku.skuId || this.defaultSKU,
             num: this.sku.count,
-            kezi: '', //TODO
+            kezi: this.lettering.text,
             emp_id: '' //TODO
           }
         }).then(res => {
