@@ -19,12 +19,12 @@
     },
     data() {
       return {
-        type: 1,
+        type: -1,
         orders: []
       };
     },
     created() {
-      this.type = this.$route.params.type || 1;
+      this.type = this.$route.params.type || -1;
       this.getOrders();
     },
     methods: {
@@ -34,13 +34,17 @@
         this.getOrders();
       },
       getOrders() {
-        this.orders = [];
         this.ajax({
           name: 'getOrders'
         }).then(res => {
           this.orders = res;
+          console.log(this.type);
+          if(this.type != -1) {
+            this.orders = this.orders.filter(order => {
+              return order.status == this.type;
+            });
+          }
         });
-
       }
     }
   };

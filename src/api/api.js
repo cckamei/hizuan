@@ -28,7 +28,13 @@ let api = {
   addAppointment: { url: 'api/v1/appointment', method: 'post' },
   getStore: { url: 'api/v1/store', method: 'get' },
   cancelAppointment: { url: 'api/v1/appointment', method: 'put', isJson: true },
-  getOrders: { url: 'api/v1/my/orders', method: 'get' }
+  getOrders: { url: 'api/v1/my/orders', method: 'get' },
+  getCoupons: { url: 'api/v1/my/coupons', method: 'get' }, //查看个人优惠券
+  addCoupons: { url: 'api/v1/my/coupons' }, //领取优惠券
+  addOrder: { url: 'api/v1/cart', method: 'put', isJson: true }, //下单
+  getLogitics: { url: 'api/v1/logitics', method: 'get' }, //查看快递
+  getTicheng: { url: 'api/v1/ticheng', method: 'get' },
+  lastTicheng: { url: 'api/v1/lastticheng', method: 'get' }
 };
 
 for (var k in api) {

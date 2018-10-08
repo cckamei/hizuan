@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
   export default {
     data() {
       return {
@@ -50,6 +51,7 @@
       this.getCommissions();
     },
     methods: {
+      ...mapActions(['ajax']),
       getCommissions() {
         this.pageInfo = {
           currentPage: this.pageInfo.currentPage + 1,
@@ -59,48 +61,15 @@
           this.goodsList = [];
         }
         let commissions = [];
-        for(let i = 0; i < 10; i++) {
-          let commission = {
-            createDate: '2018-09-30 09:30:06',
-            personName: '用户VIP卡号',
-            orderNo: '2018000001110112',
-            commissionMoney: '20000.00',
-            goods: [
-              {
-                categoryName: '卡美婚嫁系列',
-                goodName: '戒指',
-                price: '35530.00',
-                tprice: '800.00'
-              },
-              {
-                categoryName: '卡美婚嫁系列',
-                goodName: '戒指',
-                price: '35530.00',
-                tprice: '800.00'
-              },
-              {
-                categoryName: '卡美婚嫁系列',
-                goodName: '戒指',
-                price: '35530.00',
-                tprice: '800.00'
-              },
-              {
-                categoryName: '卡美婚嫁系列',
-                goodName: '戒指',
-                price: '35530.00',
-                tprice: '800.00'
-              },
-              {
-                categoryName: '卡美婚嫁系列',
-                goodName: '戒指',
-                price: '35530.00',
-                tprice: '800.00'
-              }
-            ]
-          };
-          commissions.push(commission);
-        }
-        this.commissions = this.commissions.concat(commissions);
+        this.ajax({
+          name: 'getTicheng',
+          page: this.pageInfo.currentPage,
+          size: 10
+        }).then(res => {
+          this.pageInfo.totalPage = res.pages;
+          this.commissions = this.commissions.concat(res.list);
+          console.log(this.commissions);
+        });
 
         if(this.pageInfo.currentPage < this.pageInfo.totalPage) {
           this.loading = false;
