@@ -48,38 +48,27 @@
         }).then(res => {
           this.appointments = res;
         });
-        for(let index = 0; index < 10; index++) {
-          let _appointment = {
-            shopName: index % 2 ? '世纪金花钟楼店' : '开元商城钟楼店',
-            shopAddress: '陕西省-西安市-雁塔区',
-            createTime: new Date(),
-            linkUser: 'A女士（132****9811）',
-            userName: 'A女士',
-            type: 0,
-            tel: '13609247777',
-            sex: 1,
-            occupation: 1,
-            birthday: new Date(),
-            detail: '购买一套彩宝，需要珠宝顾问协助挑选，还有其他的购买需求',
-            id: index,
-            status: index % 2
-          };
-          this.appointments.push(_appointment);
-        }
       },
       searchAppointment(tab) {
         this.activeTab = tab;
-        let type = this.activeTab == 1 ? 1 : 0;
-        this.fetchData();
-        this.appointments = this.appointments.filter(ele => {
-          return ele.status == type;
+        let type = this.activeTab == 1 ? 0 : 1;
+        this.ajax({
+          name: 'getappoint',
+          data: {
+          }
+        }).then(res => {
+          this.appointments = res;
+          this.appointments = this.appointments.filter(ele => {
+            return ele.status == type;
+          });
         });
       },
       add() {
         this.setAppointment({
           appointment: {
           },
-          edit: 1
+          edit: 1,
+          type: 1
         });
         this.$router.push({ name: 'addappointment' });
       }

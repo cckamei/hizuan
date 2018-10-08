@@ -1,9 +1,8 @@
 <template>
   <div class="pt">
     <v-header>{{getAppointment.edit==0?'预约详情':(getAppointment.edit==1?'新增预约':'修改预约')}}
-      <div slot="headright" v-if="getAppointment.edit==0" @click="cancelVisible=true">取消预约</div>
+      <div slot="headright" v-if="getAppointment.edit==0" @click="cancelAppoinment">取消预约</div>
     </v-header>
-    {{reqData}}
     <div class="content">
       <div class="reqData-box">
         <ul>
@@ -13,7 +12,7 @@
                 <v-form-input label="地区" :arrow="true" v-model="reqData.address" placeholder="请选择您要预约的地区" :readonly="!getAppointment.edit" @input-click="showSelectAddress"></v-form-input>
               </li>
               <li>
-                <v-form-select label="门店" title="门店选择" v-model="reqData.shop" :list="shops" placeholder="请选择您要预约的门店" :readonly="!getAppointment.edit" :arrow="true"></v-form-select>
+                <v-form-select label="门店" title="门店选择" v-model="reqData.shop" :list="shops" :keyName="'label'" placeholder="请选择您要预约的门店" :readonly="!getAppointment.edit" :arrow="true"></v-form-select>
               </li>
             </ul>
           </li>
@@ -23,14 +22,14 @@
           <li class="section">
             <ul class="form">
               <li>
-                <v-form-datepicker label="预约时间" title="预约时间" v-model="reqData.time" format="yyyy-MM-dd 日" placeholder="请选择" :readonly="!getAppointment.edit" :arrow="true"></v-form-datepicker>
+                <v-form-datepicker label="预约时间" title="预约时间" v-model="reqData.time" format="yyyy-MM-dd" placeholder="请选择" :readonly="!getAppointment.edit" :arrow="true"></v-form-datepicker>
               </li>
               <li>
                 <v-form-select label="预约类型" title="预约类型" v-model="reqData.type" :list="['线下体验', '以旧换新']" placeholder="请选择预约类型" :readonly="!getAppointment.edit" :arrow="true"></v-form-select>
               </li>
               <li class="middle">
                 <div class="instructions">补充说明</div>
-                <textarea class="textarea" v-model="reqData.detail" name="" :readonly="!getAppointment.edit"></textarea>
+                <textarea class="textarea" placeholder="请填写预约的具体内容，以便工作人员配合，不超过500字（选填）" v-model="reqData.detail" name="" :readonly="!getAppointment.edit"></textarea>
               </li>
             </ul>
           </li>
@@ -60,7 +59,7 @@
         <div class="btn-submit" v-if="getAppointment.edit==0" :class="{active: isActive}" @click="isActive && update()">修改预约</div>
         <div class="btn-submit" v-else :class="{active: isActive}" @click="isActive && submit()">确认提交</div>
       </div>
-      <select-address v-model="visible" @confirm="confirm"></select-address>
+      <select-address v-model="visible" :sprovinceId="reqData.provinceId" :scityId="reqData.cityId" :sdistrictId="reqData.districtId" @confirm="confirm"></select-address>
     </div>
     <v-popup-confirm v-model="cancelVisible" @confirm="handleConfirm">
       <div class="text">确定取消此预约？</div>
@@ -69,7 +68,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex';
+  import { mapGetters, mapMutations, mapActions } from 'vuex';
   import { formatDate, serialize } from '@/utils';
   import selectAddress from './components/select-address';
   export default {
@@ -80,7 +79,6 @@
       return {
         empty: '',
         occupations: ['教育工作', '医务工作', '财务工作', '媒体市场', '服务行业', '零售行业', '艺术工作', '技术工作', '公务员'],
-        areaList: [],
         cancelVisible: false,
         reqData: {
           name: '',
@@ -90,19 +88,16 @@
           birthday: '',
           type: 1,
           detail: '',
-          occupation: -1,
+          occupation: 1,
           time: '',
-          shop: 1112,
-          addId: 1, //1:省份选择; 2:市区； 3：地区
-          provinceId: '', //选择的省份id
-          cityId: '' //选择的市id
+          shop: -1,
+          districtId: '210321', //1:省份选择; 2:市区； 3：地区
+          provinceId: '210000', //选择的省份id
+          cityId: '210300' //选择的市id
         },
         isEdit: true,
         visible: false,
-        shops: [{
-          label: '世纪金花科技二路店',
-          value: 1112
-        }]
+        shops: []
       };
     },
     computed: {
@@ -113,25 +108,110 @@
         } else {
           return false;
         }
-
       }
     },
     mounted() {
-      this.reqData.type = 0;
+      console.log(this.getAppointment);
+      if(this.getAppointment.edit == 1) {
+        if(this.getAppointment.type !== 1) {
+          this.reqData.type = 0;
+        } else {
+          this.reqData.type = 1;
+        }
+        this.getStores();
+      }
 
+
+      if(this.getAppointment.edit == 0) {
+        this.getAppointmentDetail();
+      }
     },
     methods: {
       ...mapMutations(['setAppointment']),
+      ...mapActions(['ajax']),
+      getStores() {
+        this.ajax({
+          name: 'getStore'
+        }).then(res => {
+          res.forEach(element => {
+            this.shops.push({
+              label: element.name,
+              value: element.id
+            });
+          });
+        });
+      },
+      getAppointmentDetail() {
+        this.ajax({
+          name: 'getStore'
+        }).then(res => {
+          res.forEach(element => {
+            this.shops.push({
+              label: element.name,
+              value: element.id
+            });
+          });
+          let shopIndex = 0;
+          this.shops.forEach((ele, i) => {
+            if(ele.label == this.getAppointment.appointment.store.name) {
+              shopIndex = i;
+            }
+          });
+          this.reqData = {
+            name: this.getAppointment.appointment.name,
+            address: this.getAppointment.appointment.store.province + this.getAppointment.appointment.store.city + this.getAppointment.appointment.store.street,
+            gender: 1,
+            tel: this.getAppointment.appointment.phone,
+            birthday: this.getAppointment.appointment.birthday,
+            type: 1,
+            detail: this.getAppointment.appointment.ext,
+            occupation: 1,
+            time: this.getAppointment.appointment.appoint_time,
+            shop: shopIndex,
+            districtId: '210321', //1:省份选择; 2:市区； 3：地区
+            provinceId: '210000', //选择的省份id
+            cityId: '210300' //选择的市id
+          };
+        });
+
+      },
       showSelectAddress() {
         this.visible = true;
       },
       confirm(address) {
-        // this.visible = false;
-        this.reqData.address = address;
+        this.reqData.provinceId = address.provinceId;
+        this.reqData.cityId = address.cityId;
+        this.reqData.districtId = address.districtId;
+        this.reqData.address = address.address;
       },
       submit() {
-        console.log(this.reqData);
-        this.$router.push({ name: 'bespeak' });
+        if(this.getAppointment.edit == 1) {
+          this.addAppointment();
+        }
+
+      },
+      addAppointment() {
+        console.log(1);
+        this.ajax({
+          name: 'addAppointment',
+          data: {
+            type: this.reqData.type,
+            store: this.shops[this.reqData.shop].value.toString(),
+            appoint_time: formatDate(this.reqData.time, 'yyyy-MM-dd'),
+            name: this.reqData.name,
+            sex: this.reqData.sex,
+            career: this.reqData.occupation,
+            phone: this.reqData.tel,
+            birthday: formatDate(this.reqData.birthday, 'yyyy-MM-dd'),
+            ext: this.reqData.detail
+          }
+        }).then(res => {
+          console.log(res);
+        });
+      },
+      cancelAppoinment() {
+        this.cancelVisible = true;
+
       },
       update() {
         let _reqData = serialize(this.getAppointment.reqData);
@@ -141,7 +221,15 @@
         });
       },
       handleConfirm() {
-        this.$router.push({ name: 'bespeak' });
+        this.ajax({
+          name: 'cancelAppointment',
+          data: {
+            appoint_id: this.getAppointment.appointment.appoint_id,
+            status: 3
+          }
+        }).then(res => {
+          this.$router.push({ name: 'bespeak' });
+        });
       }
     }
   };
@@ -153,9 +241,9 @@
       margin-top: 15px;
   }
   .text {
-      height: 96px;
+      height: 150px;
       text-align: center;
-      line-height: 86px;
+      line-height: 150px;
       font-size: 28px;
   }
   .reqData-box {
@@ -195,8 +283,9 @@
                       border-radius: 5px;
                       margin: 10px 0;
                       height: 240px;
-                      text-indent: 10px;
+                      padding: 15px;
                       line-height: 60px;
+                      font-size: 24px;
                   }
               }
           }

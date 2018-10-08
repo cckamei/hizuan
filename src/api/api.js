@@ -11,7 +11,7 @@ let api = {
   cart: { url: 'api/v1/cart', method: 'get' }, //获取购物车的商品列表
   addCart: { url: 'api/v1/cart' }, //添加删除购物车
   addCollect: { url: 'api/v1/collects' }, //收藏商品
-  delCollect: { url: 'api/v1/collects' ,method:'delete'}, //移除收藏商品
+  delCollect: { url: 'api/v1/collects', method: 'delete' }, //移除收藏商品
   getUserInfo: { url: 'api/v1/user_info', method: 'get' }, //获取个人信息
   editUserInfo: { url: 'api/v1/user_info', method: 'post' }, //个人资料完善
   getAddress: { url: 'api/v1/address', method: 'get' }, //获取收货地址
@@ -24,7 +24,11 @@ let api = {
   goodsRecommend: { url: 'api/v1/recommend', method: 'get' }, //
   cartRecommend: { url: 'api/v1/recommendcart', method: 'get' }, //
   coupons: { url: 'api/v1/coupons', method: 'get' }, //
-  getappoint: { url: 'api/v1/appointment', method: 'get' } //获取预约信息
+  getappoint: { url: 'api/v1/appointment', method: 'get' }, //获取预约信息
+  addAppointment: { url: 'api/v1/appointment', method: 'post' },
+  getStore: { url: 'api/v1/store', method: 'get' },
+  cancelAppointment: { url: 'api/v1/appointment', method: 'put', isJson: true },
+  getOrders: { url: 'api/v1/my/orders', method: 'get' }
 };
 
 for (var k in api) {

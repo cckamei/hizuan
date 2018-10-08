@@ -42,7 +42,7 @@
       return {
         visible: false,
         text: '',
-        date: new Date('1980/01/01')
+        date: new Date()
       };
     },
     components: {

@@ -1,6 +1,6 @@
 <template>
   <mt-popup v-if="visible" v-model="visible" class="popup-confirm">
-    <div class="popup-confirm-title">{{title}}</div>
+    <div class="popup-confirm-title" v-if="title">{{title}}</div>
     <div class="popup-confirm-content">
       <slot></slot>
     </div>
