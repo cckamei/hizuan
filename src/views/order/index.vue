@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
   import tabs from './components/tabs';
   import orderList from './components/orders';
   export default {
@@ -18,52 +19,32 @@
     },
     data() {
       return {
-        type: 1,
+        type: -1,
         orders: []
       };
     },
     created() {
-      this.type = this.$route.params.type || 1;
+      this.type = this.$route.params.type || -1;
       this.getOrders();
     },
     methods: {
+      ...mapActions(['ajax']),
       searchOrders(type) {
         this.type = type;
         this.getOrders();
       },
       getOrders() {
-        this.orders = [];
-        let _order = {
-          category: '卡美婚嫁系列',
-          goodname: '婚戒',
-          price: 19999,
-          oprice: 29999,
-          num: 1,
-          server: '25分；VS/微瑕；H/白；奴戒-11号；基础服务保障',
-          freight: 10
-        };
-
-        for(let i = 0; i < 15; i++) {
-          let orders = [];
-          let shoporder = {
-            shopName: 'CC卡美珠宝',
-            freight: 10,
-            price: 100000.00,
-            type: (i % 6) + 1
-          };
-          orders.push(_order);
-          if(i % 2) {
-            orders.push(_order);
+        this.ajax({
+          name: 'getOrders'
+        }).then(res => {
+          this.orders = res;
+          console.log(this.type);
+          if(this.type != -1) {
+            this.orders = this.orders.filter(order => {
+              return order.status == this.type;
+            });
           }
-          shoporder.goods = orders;
-          this.orders.push(shoporder);
-        }
-        if(this.type != 1) {
-          this.orders = this.orders.filter(order => {
-            return order.type == this.type;
-          });
-        }
-
+        });
       }
     }
   };

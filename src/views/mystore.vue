@@ -16,8 +16,8 @@
     <div class="content">
       <ul class="list">
         <li v-for="(item, index) in goodsList" :key="index" class="flex" v-touch.press="handlePress">
-          <div class="libox" @click="goDetail(item)">
-            <div class="img"><img :src="item.src" alt=""></div>
+          <div class="libox">
+            <div class="img" @click="goDetail(item)"><img :src="item.src" alt=""></div>
             <div class="detail flex-auto flex">
               <span class="name">{{item.name}}</span>
               <span class="desc">{{item.desc}}</span>
@@ -66,6 +66,7 @@
     },
     created() {
       this.getGoods();
+      this.gteCategory();
     },
     methods: {
       ...mapMutations(['setCommon']),
@@ -82,6 +83,13 @@
           };
           this.goodsList.push(good);
         }
+      },
+      gteCategory() {
+        this.ajax({
+          name: 'getCategory'
+        }).then(res => {
+          this.filters = res;
+        });
       },
       handleFilterConfirm() {
         this.getGoods();

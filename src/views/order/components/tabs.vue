@@ -16,27 +16,27 @@
           {
             title: "全部",
             isChoiced: false,
-            type: 1
+            type: -1
           },
           {
             title: "待付款",
             isChoiced: false,
-            type: 2
+            type: 0
           },
           {
             title: "待发货",
             isChoiced: false,
-            type: 3
+            type: 2
           },
           {
             title: "待收货",
             isChoiced: false,
-            type: 4
+            type: 3
           },
           {
             title: "已完成",
             isChoiced: false,
-            type: 5
+            type: 7
           }
         ]
       };

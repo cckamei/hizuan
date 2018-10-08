@@ -27,7 +27,7 @@
         </li>
       </ul>
       <div class="btns fix">
-        <button class="btn" :class="{active: isActive}" @click="isActive && confirmSubmit()">确认提交</button>
+        <button class="btn" :class="{active: isActive}" @click="isActive && confirmSubmit()">保存</button>
       </div>
     </div>
     <v-slide-up v-model="visible" title="选择区域" @confirm="confirm()">
@@ -176,96 +176,96 @@
 </script>
 <style lang="less" scoped>
   .deleteAddresss {
-    float: right;
-    font-size: 28px;
-    color: #999999;
+      float: right;
+      font-size: 28px;
+      color: #999999;
   }
   .editaddress {
-    .form {
-      background-color: #fff;
-      li {
-        border-bottom: 1px solid #f0f0f0; /*no*/
-        margin: 0 24px;
-        height: 96px;
-        line-height: 94px;
-        font-size: 30px;
-        color: #999999;
-        &.address {
-          padding: 0 16px;
-        }
-        &:last-child {
-          border-bottom: 0;
-        }
-        .input {
-          height: 100%;
-        }
+      .form {
+          background-color: #fff;
+          li {
+              border-bottom: 1px solid #f0f0f0; /*no*/
+              margin: 0 24px;
+              height: 96px;
+              line-height: 94px;
+              font-size: 30px;
+              color: #999999;
+              &.address {
+                  padding: 0 16px;
+              }
+              &:last-child {
+                  border-bottom: 0;
+              }
+              .input {
+                  height: 100%;
+              }
 
-        span {
-          float: right;
-          margin-top: 28px;
-        }
-        label {
-          float: left;
-        }
-        input {
-          float: right;
-          height: 100%;
-          text-align: right;
-          color: #666;
-          font-size: 32px;
-        }
+              span {
+                  float: right;
+                  margin-top: 28px;
+              }
+              label {
+                  float: left;
+              }
+              input {
+                  float: right;
+                  height: 100%;
+                  text-align: right;
+                  color: #666;
+                  font-size: 32px;
+              }
+          }
       }
-    }
   }
   .addChoice {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    border-bottom: 2px solid #f0f0f0;
-    li {
-      min-width: 92px;
-      height: 84px;
-      padding: 0 20px;
-      color: #666;
-      font-size: 24px;
-      position: relative;
-      i {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 4px;
-        background: #faa0a0;
-        min-width: 92px;
-        width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      border-bottom: 2px solid #f0f0f0;
+      li {
+          min-width: 92px;
+          height: 84px;
+          padding: 0 20px;
+          color: #666;
+          font-size: 24px;
+          position: relative;
+          i {
+              position: absolute;
+              left: 0;
+              bottom: 0;
+              height: 4px;
+              background: #faa0a0;
+              min-width: 92px;
+              width: 100%;
+          }
       }
-    }
   }
   .addList {
-    margin-top: 10px;
-    font-size: 24px;
-    overflow-y: auto;
-    height: 588px;
-    li {
-      height: 64px;
-      line-height: 64px;
-      color: #666;
-    }
-    .actived {
-      color: #faa0a0;
-    }
+      margin-top: 10px;
+      font-size: 24px;
+      overflow-y: auto;
+      height: 588px;
+      li {
+          height: 64px;
+          line-height: 64px;
+          color: #666;
+      }
+      .actived {
+          color: #faa0a0;
+      }
   }
   .fix {
-    position: fixed;
-    bottom: 20px;
-    width: 710px;
-    margin: 0 auto;
+      position: fixed;
+      bottom: 20px;
+      width: 710px;
+      margin: 0 auto;
   }
 </style>
 
 <style lang="less">
   .editaddress {
-    .mint-switch-core {
-      width: 84px !important;
-    }
+      .mint-switch-core {
+          width: 84px !important;
+      }
   }
 </style>

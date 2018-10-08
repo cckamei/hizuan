@@ -26,6 +26,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
   export default {
     data() {
       return {
@@ -35,6 +36,16 @@
           time: '2018-09-30 16：30'
         }
       };
+    },
+    created() {
+      this.ajax({
+        name: 'lastTicheng'
+      }).then(res => {
+        this.commission = res;
+      });
+    },
+    methods: {
+      ...mapActions(['ajax'])
     }
   };
 </script>
