@@ -452,6 +452,7 @@
             'cart_id': this.sku.skuId || this.defaultSKU,
             num: this.sku.count,
             kezi:  this.lettering.text,
+            yaoqiu: this.lettering.remarks,
             emp_id: '' //TODO
           }
         }).then(res => {
@@ -502,6 +503,7 @@
             'cart_id': this.sku.skuId || this.defaultSKU,
             num: this.sku.count,
             kezi: this.lettering.text,
+            yaoqiu: this.lettering.remarks,
             emp_id: '' //TODO
           }
         }).then(res => {

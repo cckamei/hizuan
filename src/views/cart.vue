@@ -10,7 +10,7 @@
           </div>
             <div class="detail flex-auto flex">
               <span class="name">{{item.goods_title}}</span>
-              <span class="desc">{{item.sub_title}}</span>
+              <span class="desc">{{item.skuLabel}}</span>
               <template v-if="item.limit">
                 <div class="line3">
                   <span class="price"><span>￥</span>{{item.price | currency}}</span>
@@ -85,6 +85,11 @@
             item.checked = false;
             item.deleteVisible = false;
             item.limit = item.stock;
+            if(item.is_diamond) {
+              item.skuLabel = `${item.zhuzuanfenshu};${item.zuanshijingdu};${item.guige};${item.guige}`;
+            }else {
+              item.skuLabel = `${item.zhushimingcheng};${item.zhushipingji};${item.guige};${item.guige}`;
+            }
           });
           this.cart = res;
         });
@@ -144,6 +149,19 @@
       goGoodsDetail(item) {
         this.setCommon({ goodsId: item.goods_id });
         this.$router.push({ name: 'goodsdetail', params: { openSKU: true } });
+      },
+      handleKezi() {
+        this.ajax({
+          name: 'addCart',
+          data: {
+            'cart_id': this.sku.skuId || this.defaultSKU,
+            num: 0,
+            kezi: this.lettering.text,
+            yaoqiu: this.lettering.remarks
+          }
+        }).then(res => {
+  
+        });
       }
     }
   };
