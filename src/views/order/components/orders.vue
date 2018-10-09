@@ -4,7 +4,7 @@
       <div class="item-title" @click="goDetail()">
         <div class="titleleft">
           <img src="~assets/mypage/icon_shop.png" alt="">
-          <span>{{order.shopName}}</span>
+          <span>CC卡美珠宝</span>
         </div>
         <div class="listright">{{typename(order.status)}}</div>
       </div>

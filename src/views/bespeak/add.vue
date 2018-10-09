@@ -90,10 +90,7 @@
           detail: '',
           occupation: 1,
           time: '',
-          shop: -1,
-          districtId: '210321', //1:省份选择; 2:市区； 3：地区
-          provinceId: '210000', //选择的省份id
-          cityId: '210300' //选择的市id
+          shop: -1
         },
         isEdit: true,
         visible: false,
@@ -121,7 +118,9 @@
         this.getStores();
       }
 
-
+      if(this.getAppointment.edit == 2) {
+        this.getAppointmentDetail();
+      }
       if(this.getAppointment.edit == 0) {
         this.getAppointmentDetail();
       }
@@ -157,15 +156,21 @@
               shopIndex = i;
             }
           });
+          let occupation = 0;
+          this.occupations.forEach((ele, i) => {
+            if(ele == this.getAppointment.appointment.career) {
+              occupation = i;
+            }
+          });
           this.reqData = {
             name: this.getAppointment.appointment.name,
             address: this.getAppointment.appointment.store.province + this.getAppointment.appointment.store.city + this.getAppointment.appointment.store.street,
             gender: 1,
             tel: this.getAppointment.appointment.phone,
             birthday: this.getAppointment.appointment.birthday,
-            type: 1,
+            type: this.getAppointment.appointment.type,
             detail: this.getAppointment.appointment.ext,
-            occupation: 1,
+            occupation: occupation,
             time: this.getAppointment.appointment.appoint_time,
             shop: shopIndex,
             districtId: '210321', //1:省份选择; 2:市区； 3：地区
@@ -183,15 +188,32 @@
         this.reqData.cityId = address.cityId;
         this.reqData.districtId = address.districtId;
         this.reqData.address = address.address;
+        this.ajax({
+          name: 'getStore'
+        }).then(res => {
+          this.shops = [];
+          let shops = res.filter(ele => {
+            return ele.province == address.provinceId || ele.city == address.cityId || ele.street == address.districtId;
+          });
+          shops.forEach(element => {
+            this.shops.push({
+              label: element.name,
+              value: element.id
+            });
+          });
+        });
       },
       submit() {
         if(this.getAppointment.edit == 1) {
           this.addAppointment();
         }
+        if(this.getAppointment.edit == 2) {
+          this.updateAppointment();
+        }
 
       },
       addAppointment() {
-        console.log(1);
+        console.log(this.reqData.type);
         this.ajax({
           name: 'addAppointment',
           data: {
@@ -200,13 +222,32 @@
             appoint_time: formatDate(this.reqData.time, 'yyyy-MM-dd'),
             name: this.reqData.name,
             sex: this.reqData.sex,
-            career: this.reqData.occupation,
+            career: this.occupations[this.reqData.occupation],
             phone: this.reqData.tel,
             birthday: formatDate(this.reqData.birthday, 'yyyy-MM-dd'),
             ext: this.reqData.detail
           }
         }).then(res => {
-          console.log(res);
+          this.$router.push({ name: 'bespeak' });
+        });
+      },
+      updateAppointment() {
+        this.ajax({
+          name: 'updateAppointment',
+          data: {
+            appoint_id: this.getAppointment.appointment.appoint_id,
+            type: this.reqData.type,
+            store: this.shops[this.reqData.shop].value.toString(),
+            appoint_time: formatDate(this.reqData.time, 'yyyy-MM-dd'),
+            name: this.reqData.name,
+            sex: this.reqData.sex,
+            career: this.occupations[this.reqData.occupation],
+            phone: this.reqData.tel,
+            birthday: formatDate(this.reqData.birthday, 'yyyy-MM-dd'),
+            ext: this.reqData.detail
+          }
+        }).then(res => {
+          this.$router.push({ name: 'bespeak' });
         });
       },
       cancelAppoinment() {

@@ -16,10 +16,10 @@
         <span>最近提成：暂无提成记录</span>
       </div>
       <div class="detail" v-if="commission.money">
-        <span>购买人：{{commission.user}}</span>
+        <span>购买人：{{commission.buyer}}</span>
       </div>
       <div class="detail" v-if="commission.money">
-        <span>提成时间：{{commission.time}}</span>
+        <span>提成时间：{{commission.created_at}}</span>
       </div>
     </div>
   </div>

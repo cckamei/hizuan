@@ -125,11 +125,7 @@ let xhr = config => {
   } else {
     let name = config.name;
     let data = config.data || {};
-    let {
-      url,
-      method = 'post',
-      isJson
-    } = api[name];
+    let { url, method = 'post', isJson } = api[name];
     if (/:id/.test(url)) {
       url = url.replace(':id', config.id);
     }
@@ -145,7 +141,9 @@ let xhr = config => {
     let headers = {
       'X-AUTH-TOKEN': store.getters.getCommon.token,
       'X-AUTH-USER': store.getters.getCommon.userId,
-      'Content-Type': isJson ? 'application/json; charset=UTF-8' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      'Content-Type': isJson ?
+        'application/json; charset=UTF-8' :
+        'application/x-www-form-urlencoded; charset=UTF-8'
     };
 
     switch (method) {
@@ -153,9 +151,9 @@ let xhr = config => {
       case 'delete':
         return new Promise((resolve, reject) => {
           axios[method](url, {
-              params: data,
-              headers
-            })
+            params: data,
+            headers
+          })
             .then(res => {
               checkStatus(resolve, reject, res, config);
             })
@@ -167,8 +165,8 @@ let xhr = config => {
       case 'put':
         return new Promise((resolve, reject) => {
           axios[method](url, data, {
-              headers
-            })
+            headers
+          })
             .then(res => {
               checkStatus(resolve, reject, res, config);
             })
@@ -181,7 +179,4 @@ let xhr = config => {
   }
 };
 
-export {
-  xhr,
-  api
-};
+export { xhr, api };

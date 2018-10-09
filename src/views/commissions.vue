@@ -3,13 +3,13 @@
     <v-header>提成列表</v-header>
     <div class="list" :class="{'no-data':commissions.length==0}" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50" infinite-scroll-immediate-check="true">
       <div class="commission" v-for="(commission,i) in commissions" :key="i">
-        <div class="time">{{commission.createDate}}</div>
+        <div class="time">{{commission.created_at}}</div>
         <div class="order">
           <div class="order-user">
-            购买人：{{commission.personName}}
+            购买人：{{commission.buyer}}
           </div>
           <div class="order-num">
-            订单编号：{{commission.orderNo}}
+            订单编号：{{commission.order_id}}
           </div>
         </div>
         <div class="goods">
@@ -17,13 +17,13 @@
             <div class="title">商品（售价）</div>
             <div class="price">提成价</div>
           </div>
-          <div class="good" v-for="(good ,j) in commission.goods" :key="j">
-            <div class="title">{{good.categoryName}} - {{good.goodName}}（￥{{good.price}}）</div>
-            <div class="price">￥{{good.tprice}}</div>
+          <div class="good" v-for="(good ,j) in commission.info" :key="j">
+            <div class="title">{{good.goods_name}}（￥{{good.subtotal}}）</div>
+            <div class="price">￥{{good.ticheng}}</div>
           </div>
         </div>
         <div class="commission-footer">
-          提成总额：<span class="pick">￥{{commission.commissionMoney}}</span>
+          提成总额：<span class="pick">￥{{commission.money}}</span>
         </div>
       </div>
     </div>
