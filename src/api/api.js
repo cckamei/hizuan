@@ -1,4 +1,5 @@
 let api = {
+  getWxSign: { url: 'getWxSign', method: 'get' }, //微信签名
   authCode: { url: 'api/v1/vcode', method: 'get' }, //获取短信验证码
   register: { url: 'api/v1/register' }, //手机号注册
   login: { url: 'api/v1/login' }, //手机号登陆
