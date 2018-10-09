@@ -41,7 +41,7 @@
     },
     methods: {
       ...mapActions(['ajax']),
-      ...mapMutations(['setCommon']),
+      ...mapMutations(['setUserInfo']),
       login() {
         this.ajax({
           name: 'login',
@@ -51,7 +51,7 @@
           },
           error: true
         }).then(res => {
-          this.setCommon({ token: res.token, userId: res.user_id });
+          this.setUserInfo({ token: res.token, userId: res.user_id });
           this.$router.go(-1);
         }).catch(res => {
           this.toast('用户名或密码错误');

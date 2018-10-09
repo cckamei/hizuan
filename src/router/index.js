@@ -35,27 +35,29 @@ router.beforeEach((to, from, next) => {
     document.querySelector('.mint-msgbox-cancel').click();
   }
 
-  if(browser().isWeixin) {
-    store.dispatch('ajax', {
-      name: 'getWxSign',
-      data: {
-        url: encodeURIComponent(window.location.href.split('#')[0])
-      }
-    }).then(res => {
-      window.wx.config({
-        debug: false,
-        appId: window.htp.appid,
-        timestamp: res.wxsign.timestamp,
-        nonceStr: res.wxsign.nonceStr,
-        signature: res.wxsign.signature,
-        jsApiList: window.htp.wxconfig
-      });
+  if (browser().isWeixin) {
+    store
+      .dispatch('ajax', {
+        name: 'getWxSign',
+        data: {
+          url: encodeURIComponent(window.location.href.split('#')[0])
+        }
+      })
+      .then(res => {
+        window.wx.config({
+          debug: false,
+          appId: window.htp.appid,
+          timestamp: res.wxsign.timestamp,
+          nonceStr: res.wxsign.nonceStr,
+          signature: res.wxsign.signature,
+          jsApiList: window.htp.wxconfig
+        });
 
-      window.wx.ready(function() {
-        window.wx && window.wx.hideOptionMenu && window.wx.hideOptionMenu();
-        skip(metas);
+        window.wx.ready(function() {
+          window.wx && window.wx.hideOptionMenu && window.wx.hideOptionMenu();
+          skip(metas);
+        });
       });
-    });
   } else {
     skip(metas);
   }
