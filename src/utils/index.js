@@ -186,7 +186,10 @@ Date.prototype.format = function(fmt) {
   }
   for (let k in o) {
     if (new RegExp('(' + k + ')').test(fmt)) {
-      fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(String(o[k]).length));
+      fmt = fmt.replace(
+        RegExp.$1,
+        RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(String(o[k]).length)
+      );
     }
   }
   return fmt;
@@ -215,6 +218,15 @@ export function checkPassword(pwd) {
 //验证验证吗
 export function checkVerify(code) {
   return Boolean(/^\d{4}$/.test(code));
+}
+
+//验证身份证
+export function checkIdentityCard(code) {
+  return Boolean(
+    /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9xX]$/.test(
+      code
+    )
+  );
 }
 
 //去除字符串左右两边的空格

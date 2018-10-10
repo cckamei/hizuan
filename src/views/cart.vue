@@ -10,7 +10,7 @@
           </div>
           <div class="detail flex-auto flex">
             <span class="name">{{item.goods_title}}</span>
-            <span class="desc">{{item.sub_title}}</span>
+            <span class="desc">{{item.skuLabel}}</span>
             <span class="kezi" @click="openKezi(item)">刻字</span>
             <template v-if="item.limit">
               <div class="line3">
@@ -109,6 +109,11 @@
             item.checked = false;
             item.deleteVisible = false;
             item.limit = item.stock;
+            if(item.is_diamond) {
+              item.skuLabel = `${item.zhuzuanfenshu};${item.zuanshijingdu};${item.guige};${item.guige}`;
+            } else {
+              item.skuLabel = `${item.zhushimingcheng};${item.zhushipingji};${item.guige};${item.guige}`;
+            }
           });
           this.cart = res;
         });
@@ -178,6 +183,18 @@
       handleKezi() {
         //TODO 刻字接口
         this.fetchCart();
+
+        this.ajax({
+          name: 'addCart',
+          data: {
+            'cart_id': this.sku.skuId || this.defaultSKU,
+            num: 0,
+            kezi: this.lettering.text,
+            yaoqiu: this.lettering.remarks
+          }
+        }).then(res => {
+
+        });
       }
     }
   };

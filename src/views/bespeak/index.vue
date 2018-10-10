@@ -47,11 +47,14 @@
           }
         }).then(res => {
           this.appointments = res;
+          this.appointments = this.appointments.filter(ele => {
+            return ele.status == 0;
+          });
         });
       },
       searchAppointment(tab) {
         this.activeTab = tab;
-        let type = this.activeTab == 1 ? 0 : 1;
+        let type = this.activeTab == 1 ? 0 : 3;
         this.ajax({
           name: 'getappoint',
           data: {

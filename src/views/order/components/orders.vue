@@ -1,14 +1,14 @@
 <template>
   <div class="order-list">
     <div class="item" v-for="(order,i) in orders">
-      <div class="item-title" @click="goDetail()">
+      <div class="item-title" @click="goDetail(order.order_id)">
         <div class="titleleft">
           <img src="~assets/mypage/icon_shop.png" alt="">
-          <span>{{order.shopName}}</span>
+          <span>CC卡美珠宝</span>
         </div>
         <div class="listright">{{typename(order.status)}}</div>
       </div>
-      <div class="item-content" v-for="(good,j) in order.goods" @click="goDetail()">
+      <div class="item-content" v-for="(good,j) in order.goods" @click="goDetail(order.order_id)">
         <div class="contentleft">
           <img :src="good.goods_img" alt="">
         </div>
@@ -30,45 +30,42 @@
         共{{order.goods.length}}件商品 实付款： <span>￥{{order.rest_money}}</span> （含运费￥{{order.logistics_money}}）
       </div>
       <div class="item-footer">
-        <!-- 等待付款 -->
+        <!-- 待收货 2-->
+        <div class="ordertypeDF" v-if="order.status==2">
+          <!-- <button class="btngrey btnleft">查看物流</button>
+          <button class="btnpink" @click="$router.push({ name: 'pay' })">确认收货</button> -->
+          <button class="btngrey btnleft">查看物流</button>
+          <button class="btngrey" @click="goDetail(order.order_id)">确认收货</button>
+        </div>
+        <!-- 已完成 3-->
+        <div class="ordertypeDF" v-if="order.status==3">
+          <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey" @click="tradeIn">以旧换新</button>
+        </div>
+        <!-- 待付款 0-->
         <div class="ordertypeDF" v-if="order.status==0">
           <button class="btngrey btnleft">联系客服</button>
           <button class="btnpink" @click="$router.push({ name: 'pay' })">立即付款</button>
-
         </div>
-        <!-- 已付款 -->
-        <div class="ordertypeDF" v-if="order.status==1">
-          <button class="btngrey btnleft">查看物流</button>
-          <button class="btngrey" @click="goRefunddetail()">确认收货</button>
-        </div>
-        <!-- 待发货 -->
-        <div class="ordertypeDF" v-if="order.status==2">
+        <!-- 已取消 8-->
+        <div class="ordertypeDF" v-if="order.status==8">
           <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey">申请退款</button>
+          <button class="btngrey" @click="goGoodsDetail">再次购买</button>
         </div>
-        <!-- 确认收货 -->
-        <div class="ordertypeDF" v-if="order.status==3">
-          <button class="btngrey btnleft">查看物流</button>
-          <button class="btngrey" @click="goRefunddetail()">确认收货</button>
-        </div>
-        <!-- 退货中 -->
+        <!-- 退款中 4-->
         <div class="ordertypeDS" v-if="order.status==4">
           <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
         </div>
-        <!-- 已完成 -->
+        <!-- 待发货 1-->
+        <div class="ordertypeWC" v-if="order.status==1">
+          <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
+        </div>
+        <!-- 已退款 6-->
         <div class="ordertypeWC" v-if="order.status==6">
           <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey">查看详情</button>
-        </div>
-        <!-- 已关闭 -->
-        <div class="ordertypeQX" v-if="order.status==7">
-          <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="$router.push({ name: 'orderdetail' })">再次购买</button>
-        </div>
-        <!-- 已取消 -->
-        <div class="ordertypeTK" v-if="order.status==8">
-          <button class="btngrey btnleft">联系客服</button>
-          <button class="btngrey" @click="$router.push({ name: 'orderdetail' })">再次购买</button>
+          <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
         </div>
       </div>
     </div>
@@ -85,16 +82,28 @@
 
     },
     methods: {
-      ...mapMutations(['setCommon']),
-      goDetail() {
-        // this.setCommon({ goodsId: '5b851a4d1f30bfc39cddfc37' });
+      ...mapMutations(['setCommon', 'setAppointment']),
+      goDetail(orderId) {
+        this.setCommon({ orderId: orderId });
         this.$router.push({ name: 'orderdetail' });
       },
       goRefunddetail() {
         this.$router.push({ name: 'refunddetail' });
       },
+      tradeIn() {
+        this.setAppointment({
+          appointment: {
+          },
+          edit: 1,
+          type: 1
+        });
+        this.$router.push({ name: 'addappointment' });
+      },
+      goGoodsDetail() {
+        this.$router.push({ name: 'goodslist' });
+      },
       typename(type) {
-        let _typenames = ['待付款', '已付款', '发货中', '待收货', '待收货', '已退货', '已完成', '已取消'];
+        let _typenames = ['待付款', '待发货', '待收货', '已完成', '退款中', '', '已退款', '', '已取消'];
         return _typenames[type];
       }
     }
