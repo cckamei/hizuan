@@ -80,7 +80,8 @@
           disable: 1,
           text: '',
           remarks: '',
-          lettering: ''
+          lettering: '',
+          skuId: ''
         }
       };
     },
@@ -176,24 +177,22 @@
       },
       openKezi(val) {
         this.lettering.keziVisible = true;
-        this.lettering.disable = Number(!val.kezi);
-        this.lettering.text = val.kezi;
-        this.lettering.remarks = val.yaoqiu;
+        this.lettering.disable = Number(!val.kezi.kezi);
+        this.lettering.text = val.kezi.kezi;
+        this.lettering.remarks = val.kezi.yaoqiu;
+        this.lettering.skuId = val.cart_id;
       },
       handleKezi() {
-        //TODO 刻字接口
-        this.fetchCart();
-
         this.ajax({
           name: 'addCart',
           data: {
-            'cart_id': this.sku.skuId || this.defaultSKU,
+            'cart_id': this.lettering.skuId,
             num: 0,
-            kezi: this.lettering.text,
-            yaoqiu: this.lettering.remarks
+            kezi: this.lettering.disable ? '' : this.lettering.text,
+            yaoqiu: this.lettering.disable ? '' : this.lettering.remarks
           }
         }).then(res => {
-
+          this.fetchCart();
         });
       }
     }

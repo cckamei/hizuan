@@ -52,20 +52,20 @@ function start() {
 if (browser().isWeixin) {
   //2.没有userId，有code时进行授权登录
   if (!store.getters.userId && window.location.href.match(/code=[\w]{32}/, 'g')) {
-    store._actions._ajax[0]({
-      name: 'login',
-      options: {
-        code: window.location.href.match(/code=([\w]{32})/, 'g')[1],
-        loginType: 1,
-        userType: 'H5WECHAT'
-      }
-    }).then(res => {
-      store._actions._userInfo[0](res.wechatLoginWY);
-      window.localStorage.setItem('accpet', 'cckamei');
-      //3.去掉code参数,防止直接复制链接出去带上旧的code
-      window.location.href = window.location.href.replace(/[&?]code=[\w]{32}/, '');
-      start();
-    });
+    store
+      .dispatch('ajax', {
+        name: 'wxLogin',
+        data: {
+          code: window.location.href.match(/code=([\w]{32})/, 'g')[1]
+        }
+      })
+      .then(res => {
+        store.commit('userInfo', res);
+        window.localStorage.setItem('accpet', 'cckamei');
+        //3.去掉code参数,防止直接复制链接出去带上旧的code
+        window.location.href = window.location.href.replace(/[&?]code=[\w]{32}/, '');
+        start();
+      });
   } else if (!store.getters.userId) {
     let sco = window.localStorage.getItem('accpet') ? 'snsapi_base' : 'snsapi_userinfo';
 

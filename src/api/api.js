@@ -1,4 +1,5 @@
 let api = {
+  wxLogin: { url: 'api/v1/wechat_login' }, //微信授权登陆
   getWxSign: { url: 'getWxSign', method: 'get' }, //微信签名
   authCode: { url: 'api/v1/vcode', method: 'get' }, //获取短信验证码
   register: { url: 'api/v1/register' }, //手机号注册
