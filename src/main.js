@@ -61,7 +61,7 @@ if (browser().isWeixin) {
       }
     }).then(res => {
       store._actions._userInfo[0](res.wechatLoginWY);
-      window.localStorage.setItem('accpet', 'quanmeishi');
+      window.localStorage.setItem('accpet', 'cckamei');
       //3.去掉code参数,防止直接复制链接出去带上旧的code
       window.location.href = window.location.href.replace(/[&?]code=[\w]{32}/, '');
       start();

@@ -1,5 +1,5 @@
 <template>
-  <div class="pt pb">
+  <div class="cart pt pb">
     <v-header>购物车</v-header>
     <div class="content">
       <ul class="cart-list">
@@ -8,29 +8,30 @@
           <div class="img">
             <img :src="item.img" alt="">
           </div>
-            <div class="detail flex-auto flex">
-              <span class="name">{{item.goods_title}}</span>
-              <span class="desc">{{item.sub_title}}</span>
-              <template v-if="item.limit">
-                <div class="line3">
-                  <span class="price"><span>￥</span>{{item.price | currency}}</span>
-                  <div class="add-minus flex">
-                    <div @click="item.count > 1 && minusCart(item)" class="btn minus" :class="{active: item.count > 1}"></div>
-                    <input v-model="item.count" type="text" readonly>
-                    <div @click="item.count < item.limit && addCart(item)" class="btn plus" :class="{active: item.count < item.limit}"></div>
-                  </div>
+          <div class="detail flex-auto flex">
+            <span class="name">{{item.goods_title}}</span>
+            <span class="desc">{{item.sub_title}}</span>
+            <span class="kezi" @click="openKezi(item)">刻字</span>
+            <template v-if="item.limit">
+              <div class="line3">
+                <span class="price"><span>￥</span>{{item.price | currency}}</span>
+                <div class="add-minus flex">
+                  <div @click="item.count > 1 && minusCart(item)" class="btn minus" :class="{active: item.count > 1}"></div>
+                  <input v-model="item.count" type="text" readonly>
+                  <div @click="item.count < item.limit && addCart(item)" class="btn plus" :class="{active: item.count < item.limit}"></div>
                 </div>
-              </template>
-              <template v-else>
-                <div class="line3 flex">
-                  <span class="note">所选规格暂时无货</span>
-                  <button class="rechoose btn" @click="goGoodsDetail(item)">重选</button>
-                </div>
-              </template>
-            </div>
-            <div class="mask-delete flex" v-if="item.deleteVisible" @click="item.deleteVisible = false">
-              <div class="delete" @click="removeCart(item, index)">删除</div>
-            </div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="line3 flex">
+                <span class="note">所选规格暂时无货</span>
+                <button class="rechoose btn" @click="goGoodsDetail(item)">重选</button>
+              </div>
+            </template>
+          </div>
+          <div class="mask-delete flex" v-if="item.deleteVisible" @click="item.deleteVisible = false">
+            <div class="delete" @click="removeCart(item, index)">删除</div>
+          </div>
         </li>
       </ul>
       <v-recommend title="为你推荐" :list="recommend"></v-recommend>
@@ -42,6 +43,22 @@
       <div class="price">￥{{totalMoney | currency}}</div>
       <button class="btn settlement" @click="settlement">结算（ {{totalCount}} ）</button>
     </div>
+    <v-slide-up v-model="lettering.keziVisible" title="刻字定制" @confirm="handleKezi">
+      <ul class="lettering">
+        <li class="lettering-enable">
+          <div class="title">是否刻字</div>
+          <v-button-radio v-model="lettering.disable" :list="['是', '否']"></v-button-radio>
+        </li>
+        <li>
+          <div class="title">刻字內容</div>
+          <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的刻字内容">
+        </li>
+        <li>
+          <div class="title">要求</div>
+          <input :disabled="!!lettering.disable" v-model="lettering.remarks" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的要求">
+        </li>
+      </ul>
+    </v-slide-up>
   </div>
 </template>
 
@@ -57,7 +74,14 @@
         skuVisible: false,
         skuIndex: 0,
         recommend: [],
-        cart: []
+        cart: [],
+        lettering: { //刻字
+          keziVisible: false,
+          disable: 1,
+          text: '',
+          remarks: '',
+          lettering: ''
+        }
       };
     },
     created() {
@@ -144,6 +168,16 @@
       goGoodsDetail(item) {
         this.setCommon({ goodsId: item.goods_id });
         this.$router.push({ name: 'goodsdetail', params: { openSKU: true } });
+      },
+      openKezi(val) {
+        this.lettering.keziVisible = true;
+        this.lettering.disable = Number(!val.kezi);
+        this.lettering.text = val.kezi;
+        this.lettering.remarks = val.yaoqiu;
+      },
+      handleKezi() {
+        //TODO 刻字接口
+        this.fetchCart();
       }
     }
   };
@@ -200,6 +234,11 @@
         .desc {
           font-size: 20px;
           color: #999;
+          padding-top: 20px;
+        }
+        .kezi {
+          font-size: 20px;
+          color: #cdb49b;
           padding-top: 24px;
         }
         .line3 {
@@ -397,4 +436,29 @@
       }
     }
   }
+
+  .lettering {
+    li {
+      padding: 20px;
+      font-size: 24px;
+      color: #666;
+      .lettering-text {
+        height: 84px;
+        line-height: 84px;
+        font-size: 24px;
+        color: #999;
+        border-bottom: 1px solid #f0f0f0; /*no*/
+        width: 100%;
+        margin-top: 20px;
+        background-color: #fff;
+      }
+    }
+  }
 </style>
+
+<style lang="less">
+  .cart .lettering-enable button {
+    width: 272px;
+  }
+</style>
+

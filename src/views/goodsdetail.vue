@@ -174,11 +174,11 @@
             </li>
             <li>
               <div class="title">刻字內容</div>
-              <input v-model="lettering.text" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的刻字内容">
+              <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的刻字内容">
             </li>
             <li>
               <div class="title">要求</div>
-              <input v-model="lettering.remarks" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的要求">
+              <input :disabled="!!lettering.disable" v-model="lettering.remarks" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的要求">
             </li>
           </ul>
         </v-form-slide-up>
@@ -846,6 +846,7 @@
         border-bottom: 1px solid #f0f0f0; /*no*/
         width: 100%;
         margin-top: 20px;
+        background-color: #fff;
       }
     }
   }
