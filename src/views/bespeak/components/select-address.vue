@@ -12,13 +12,13 @@
       </li>
     </ul>
     <ul class="addList" v-if="active==1">
-      <li v-for="(item,index) in provinces" :key="index" :class="{actived: provinceId==item.id}" @click="chooseProvice(item)">{{item.name}}</li>
+      <li v-for="(item,index) in provinces" :key="index" :class="{actived: provinceId==item}" @click="chooseProvice(item)">{{item}}</li>
     </ul>
     <ul class="addList" v-if="active==2">
-      <li v-for="(item,index) in citys" :key="index" :class="{actived: cityId==item.id}" @click="chooseCity(item)">{{item.name}}</li>
+      <li v-for="(item,index) in citys" :key="index" :class="{actived: cityId==item}" @click="chooseCity(item)">{{item}}</li>
     </ul>
     <ul class="addList" v-if="active==3">
-      <li v-for="(item,index) in districts" :key="index" :class="{actived: districtId==item.id}" @click="districtId=item.id;district=item.name">{{item.name}}</li>
+      <li v-for="(item,index) in districts" :key="index" :class="{actived: districtId==item}" @click="districtId=item;district=item">{{item}}</li>
     </ul>
   </v-slide-up>
 </template>
@@ -39,7 +39,8 @@
         districtId: '',
         province: '',
         city: '',
-        district: ''
+        district: '',
+        stores: []
       };
     },
     watch: {
@@ -51,69 +52,56 @@
       }
     },
     created() {
-      this.provinceId = this.sprovinceId;
-      this.cityId = this.scityId;
-      this.districtId = this.sdistrictId;
-      this.ajax({
-        name: 'getProvince'
-      }).then(res => {
-        this.provinces = res;
-        this.province = this.getValue('id', this.provinces, this.provinceId).name;
-      });
-      if(this.provinceId.length > 0) {
-        this.ajax({
-          name: 'getCity',
-          data: { pre: this.provinceId }
-        }).then(res => {
-          this.citys = res;
-          this.city = this.getValue('id', this.citys, this.cityId).name;
-        });
-      }
-      if(this.cityId.length > 0) {
-        this.ajax({
-          name: 'getDistrict',
-          data: { pre: this.cityId }
-        }).then(res => {
-          this.districts = res;
-          this.district = this.getValue('id', this.districts, this.districtId).name;
-        });
-      }
+      this.getStores();
     },
     methods: {
       ...mapActions(["ajax"]),
-      getProvince() {
+      getStores() {
         this.ajax({
-          name: 'getProvince'
+          name: 'getStore'
         }).then(res => {
-          this.provinces = res;
-
+          this.stores = res;
+          this.getProvince();
         });
+      },
+      getProvince() {
+        let set = new Set();
+        this.stores.forEach(element => {
+          set.add(element.province);
+        });
+        this.provinces = Array.from(set);
       },
       getCity() {
-        this.ajax({
-          name: 'getCity',
-          data: { pre: this.provinceId }
-        }).then(res => {
-          this.citys = res;
+        let set = new Set();
+        this.stores.forEach(element => {
+          if(element.province == this.province) {
+            if(element.city) {
+              set.add(element.city);
+            }
+          }
         });
+        this.citys = Array.from(set);
       },
       getDistrict() {
-        this.ajax({
-          name: 'getDistrict',
-          data: { pre: this.cityId }
-        }).then(res => {
-          this.districts = res;
+        let districtsset = new Set();
+        this.stores.forEach(element => {
+          if(element.province == this.province && element.city == this.city) {
+            if(element.street) {
+              districtsset.add(element.street);
+            }
+          }
         });
+        this.districts = Array.from(districtsset);
       },
       chooseProvice(item) {
-        this.province = item.name;
-        this.provinceId = item.id;
+        this.province = item;
+        this.provinceId = item;
         this.active = 2;
         this.getCity();
       },
       chooseCity(item) {
-        this.city = item.name;
-        this.cityId = item.id;
+        this.city = item;
+        this.cityId = item;
         this.active = 3;
         this.getDistrict();
       },

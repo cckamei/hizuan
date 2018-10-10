@@ -12,16 +12,14 @@
               <v-form-input :readonly="!isEdit" label="姓名*" v-model="reqData.name" maxlength="4" placeholder="请填写您的真实姓名"></v-form-input>
             </li>
             <li>
-              <v-form-select label="性别*" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别"></v-form-select>
+              <v-form-select :readonly="!isEdit" label="性别*" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别"></v-form-select>
             </li>
             <li>
-              <v-form-datepicker label="生日*" title="生日日期" v-model="reqData.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日"></v-form-datepicker>
+              <v-form-datepicker :readonly="!isEdit" label="生日*" title="生日日期" v-model="reqData.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日"></v-form-datepicker>
             </li>
+
             <li>
-              <v-form-input :readonly="!isEdit" label="身份证号*" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
-            </li>
-            <li>
-              <v-form-select label="职业*" title="职业选择" v-model="reqData.occupation" :list="occupation" placeholder="请选择您所从事的职业"></v-form-select>
+              <v-form-select :readonly="!isEdit" label="职业*" title="职业选择" v-model="reqData.occupation" :list="occupation" placeholder="请选择您所从事的职业"></v-form-select>
             </li>
           </ul>
           <div class="more" v-if="!loadmore" @click="loadmore = true">点击展开填写详细资料获取更多优惠（选填）</div>
@@ -29,35 +27,35 @@
         <li class="section" v-if="loadmore">
           <ul class="form">
             <li>
-              <v-form-input :readonly="!isEdit" label="中指指圈号" v-model="reqData.zzqh" maxlength="20"></v-form-input>
+              <v-form-input :type="'number'" :readonly="!isEdit" label="中指指圈号" v-model="reqData.zzqh" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input :readonly="!isEdit" label="无名指指圈号" v-model="reqData.wmzqh" maxlength="20"></v-form-input>
+              <v-form-input :type="'number'" :readonly="!isEdit" label="无名指指圈号" v-model="reqData.wmzqh" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input :readonly="!isEdit" label="项链长度" v-model="reqData.xlcd" maxlength="20" unit="cm"></v-form-input>
+              <v-form-input :type="'number'" :readonly="!isEdit" label="项链长度" v-model="reqData.xlcd" maxlength="20" unit="cm"></v-form-input>
             </li>
             <li>
-              <v-form-input label="手镯尺寸" :readonly="!isEdit" v-model="reqData.szsc" maxlength="20" unit="mm"></v-form-input>
+              <v-form-input :type="'number'" label="手镯尺寸" :readonly="!isEdit" v-model="reqData.szsc" maxlength="20" unit="mm"></v-form-input>
             </li>
           </ul>
         </li>
         <li class="section" v-if="loadmore">
           <ul class="form">
             <li>
-              <v-form-datepicker label="结婚纪念日" title="结婚纪念日" v-model="reqData.wedding_day" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker :readonly="!isEdit" label="结婚纪念日" title="结婚纪念日" v-model="reqData.wedding_day" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker label="配偶生日" title="配偶生日" v-model="reqData.lover_birth" format="yyyy - MM - dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker :readonly="!isEdit" label="配偶生日" title="配偶生日" v-model="reqData.lover_birth" format="yyyy - MM - dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker label="儿子生日" title="儿子生日" v-model="reqData.son_birth" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker :readonly="!isEdit" label="儿子生日" title="儿子生日" v-model="reqData.son_birth" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker label="女儿生日" title="女儿生日" v-model="reqData.daughter_birth" format="yyyy-MM-dd 日" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker :readonly="!isEdit" label="女儿生日" title="女儿生日" v-model="reqData.daughter_birth" format="yyyy-MM-dd 日" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-input :readonly="!isEdit" label="兴趣爱好" v-model="reqData.hobbit" maxlength="20"></v-form-input>
+              <v-form-input :readonly="!isEdit" :type="'number'" label="身份证号" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
             </li>
           </ul>
         </li>
@@ -157,49 +155,49 @@
 
 <style lang="less" scoped>
   .section {
-    margin-top: 16px;
-    padding: 0 20px;
-    background-color: #fff;
-    &:first-child {
-      margin-top: 0;
-    }
+      margin-top: 16px;
+      padding: 0 20px;
+      background-color: #fff;
+      &:first-child {
+          margin-top: 0;
+      }
   }
 
   .form {
-    background-color: #fff;
-    li {
-      border-bottom: 1px solid #f0f0f0; /*no*/
-      padding: 0 20px;
-      height: 96px;
-      &:last-child {
-        border-bottom: 0;
+      background-color: #fff;
+      li {
+          border-bottom: 1px solid #f0f0f0; /*no*/
+          padding: 0 20px;
+          height: 96px;
+          &:last-child {
+              border-bottom: 0;
+          }
+          .input {
+              height: 100%;
+          }
       }
-      .input {
-        height: 100%;
-      }
-    }
   }
   .rightTopBtn {
-    position: fixed;
-    top: 0px;
-    right: 40px;
-    width: 60px;
-    line-height: 96px;
-    z-index: 3;
-    color: #333333;
-    font-size: 26px;
+      position: fixed;
+      top: 0px;
+      right: 40px;
+      width: 60px;
+      line-height: 96px;
+      z-index: 3;
+      color: #333333;
+      font-size: 26px;
   }
   .submitBtn {
-    .btn {
-      background: #ffffff;
-      color: #ffb4b4;
-    }
+      .btn {
+          background: #ffffff;
+          color: #ffb4b4;
+      }
   }
   .more {
-    height: 60px;
-    line-height: 60px;
-    font-size: 24px;
-    color: #cdb498;
-    text-align: center;
+      height: 60px;
+      line-height: 60px;
+      font-size: 24px;
+      color: #cdb498;
+      text-align: center;
   }
 </style>

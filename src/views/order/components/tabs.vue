@@ -26,17 +26,17 @@
           {
             title: "待发货",
             isChoiced: false,
-            type: 2
+            type: 1
           },
           {
             title: "待收货",
             isChoiced: false,
-            type: 3
+            type: 2
           },
           {
             title: "已完成",
             isChoiced: false,
-            type: 7
+            type: 3
           }
         ]
       };

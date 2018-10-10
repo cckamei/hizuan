@@ -10,13 +10,13 @@
       </div>
       <div class="appointment-conetnt">
         <div class="time">预约时间：{{formatDate(appointment.appoint_time,'yyyy-MM-dd')}}</div>
-        <div class="user">预约类型：{{appointment.type?'线下体验':'以旧换新'}}</div>
+        <div class="user">预约类型：{{appointment.type?'以旧换新':'线下体验'}}</div>
         <div class="user">联系人：{{appointment.name}}</div>
         <div class="detail">补充说明：{{appointment.ext}}</div>
       </div>
       <div class="appointment-footer">
         <div class="btn" @click="viewDetail(appointment)">查看详情</div>
-        <div class="btn" v-if="appointment.status" @click="updateAppointment(appointment)">修改预约</div>
+        <div class="btn" v-if="appointment.status==0" @click="updateAppointment(appointment)">修改预约</div>
         <div class="btn" v-else>联系客服</div>
       </div>
     </div>
