@@ -24,7 +24,7 @@
       <div class="info">
         <div class="price">
           <i>￥</i>{{(sku.price || res.price) | currency}}
-          <img @click="shareVisible = true" class="right" src="~assets/goods/button_share.png" alt="">
+          <img @click="clickShare" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
         <button class="tag">{{res.tag}}</button>
         <div class="name">{{res.goods_title}}</div>
@@ -224,6 +224,7 @@
 <script>
   import { mapActions, mapGetters, mapMutations } from 'vuex';
   import $ from 'jquery';
+  import { getParams, browser } from '../utils';
 
   export default {
     data() {
@@ -266,7 +267,8 @@
         activity: [], //促销活动
         shareIndex: 0, //0普通分享 1员工分享
         shareVisible: false,
-        autoOpenSKU: false
+        autoOpenSKU: false,
+        emp_id: getParams().emp_id || ''
       };
     },
     created() {
@@ -284,7 +286,7 @@
       }, 1000);
     },
     computed: {
-      ...mapGetters(['getCommon', 'token'])
+      ...mapGetters(['getCommon', 'token', 'userId'])
     },
     watch: {
       sku: {
@@ -451,9 +453,9 @@
           data: {
             'cart_id': this.sku.skuId || this.defaultSKU,
             num: this.sku.count,
-            kezi:  this.lettering.text,
+            kezi: this.lettering.text,
             yaoqiu: this.lettering.remarks,
-            emp_id: '' //TODO
+            emp_id: this.emp_id
           }
         }).then(res => {
           this.setCart([{
@@ -510,11 +512,39 @@
           this.toast('已加入购物车');
         });
       },
+      clickShare() {
+        this.shareVisible = true;
+        if(this.is_distributor) {
+        }
+      },
       wxShare() {
-        this.toast('暂未开放');
+        if(browser().isWeixin) {
+          return false;
+        }
+        //微信分享
+        window.wx.showOptionMenu();
+        // 分享给朋友
+        console.log({
+          'imgUrl': this.res.img,
+          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?emp_id=${this.userId || ''}`,
+          'title': this.res.goods_title,
+          'desc': this.res.sub_title
+        });
+        window.wx.onMenuShareAppMessage({
+          'imgUrl': this.res.img,
+          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?emp_id=${this.userId || ''}`,
+          'title': this.res.goods_title,
+          'desc': this.res.sub_title
+        });
+        // 分享到朋友圈
+        window.wx.onMenuShareTimeline({
+          'imgUrl': this.res.img,
+          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?emp_id=${this.userId || ''}`,
+          'title': this.res.goods_title + ',' + this.res.sub_title
+        });
       },
       goCustomService() {
-        // wx.closeWindow(); TODO
+        window.wx.closeWindow();
       }
     }
   };
