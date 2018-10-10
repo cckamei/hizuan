@@ -139,8 +139,8 @@ let xhr = config => {
     }
 
     let headers = {
-      'X-AUTH-TOKEN': store.getters.getCommon.token,
-      'X-AUTH-USER': store.getters.getCommon.userId,
+      'X-AUTH-TOKEN': store.getters.getUserInfo.token,
+      'X-AUTH-USER': store.getters.getUserInfo.userId,
       'Content-Type': isJson ?
         'application/json; charset=UTF-8' :
         'application/x-www-form-urlencoded; charset=UTF-8'

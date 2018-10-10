@@ -10,8 +10,6 @@ export default new Vuex.Store({
   state: {
     cacheData: getSen('cacheData') || {},
     common: getSen('common') || {
-      token: '',
-      userId: '',
       goodsId: '',
       goodsType: '',
       orderId: ''
@@ -25,8 +23,8 @@ export default new Vuex.Store({
     getCacheData: state => serialize(state.cacheData),
     getCommon: state => state.common,
     getAppointment: state => state.appointment,
-    token: state => state.common.token,
-    userId: state => state.common.userId,
+    token: state => state.userInfo.token,
+    userId: state => state.userInfo.userId,
     getAddress: state => state.address,
     getUserInfo: state => state.userInfo,
     getCart: state => state.cart,
