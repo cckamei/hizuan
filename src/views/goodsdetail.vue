@@ -513,6 +513,11 @@
         });
       },
       clickShare() {
+        if(!this.token) {
+          this.$router.push({ name: 'login' });
+          return false;
+        }
+  
         this.shareVisible = true;
         if(this.is_distributor) {
         }

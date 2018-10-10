@@ -3,9 +3,9 @@
     <v-header>收银台</v-header>
     <div class="content">
       <div class="order-info section">
-        <div class="order">订单内容：卡美婚嫁系列 - 戒指等 共2件</div>
+        <div class="order">订单内容：{{getPayOrder.goods[0].goods_name}}{{getPayOrder.goods.length>1?'等':''}} 共{{getPayOrder.goods.length}}件</div>
         <div class="order-time">下单时间：2018-08-18 18:08:56</div>
-        <div class="order-total">需支付：<span>{{33565.80 | currency}}元</span></div>
+        <div class="order-total">需支付：<span>{{getPayOrder.all_money | currency}}元</span></div>
       </div>
       <div class="title">支付方式</div>
       <ul class="pay-select section">
@@ -17,7 +17,7 @@
           </div>
           <div class="select" :class="{active: selectIndex === 0}"></div>
         </li>
-        <li class="flex" @click="selectIndex = 1">
+        <li v-if="0" class="flex" @click="selectIndex = 1">
           <img src="~assets/payment/icon_UnionPay.png" alt="">
           <div class="flex-auto">
             <p>银联支付</p>
@@ -36,7 +36,8 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
+  import { weChatPay } from '../utils/wechat';
 
   export default {
     data() {
@@ -44,10 +45,32 @@
         selectIndex: 0
       };
     },
+    computed: {
+      ...mapGetters(['getPayOrder'])
+    },
     methods: {
       ...mapActions(['ajax']),
       pay() {
-        this.$router.push({ name: 'paysuccess' });
+        this.ajax({
+          name: 'pay1',
+          data: {
+            order_id: this.getPayOrder.order_id
+          }
+        }).then(res => {
+          this.ajax({
+            name: 'pay2',
+            data: {
+              pay_id: res.pay_id,
+              order_id: this.getPayOrder.order_id
+            }
+          }).then(res => {
+            weChatPay(res, () => {
+              setTimeout(() => {
+                this.$router.replace('paysuccess');
+              }, 500);
+            });
+          });
+        });
       }
     }
   };

@@ -67,7 +67,8 @@ if (location.href.indexOf('from=wechat') == -1) {
           }
         })
         .then(res => {
-          store.commit('userInfo', res);
+          res.userId = res.user_id;
+          store.commit('setUserInfo', res);
           window.localStorage.setItem('accpet', 'cckamei');
           //3.去掉code参数,防止直接复制链接出去带上旧的code
           window.location.href = window.location.href.replace(/[&?]code=[\w]{32}/, '');

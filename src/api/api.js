@@ -39,7 +39,9 @@ let api = {
   lastTicheng: { url: 'api/v1/lastticheng', method: 'get' },
   updateAppointment: { url: 'api/v1/appointment', method: 'put', isJson: true },
   getOrder: { url: 'api/v1/order/detail/:id', method: 'get' },
-  changeOrder: { url: 'api/v1/change_order', method: 'post' }
+  changeOrder: { url: 'api/v1/change_order', method: 'post' },
+  pay1: { url: 'api/v1/pay_prepare', method: 'post' }, //支付1
+  pay2: { url: 'api/v1/pay_submit', method: 'post' } //支付2
 };
 
 for (var k in api) {

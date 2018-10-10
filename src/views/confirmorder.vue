@@ -97,7 +97,7 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
 
   export default {
     data() {
@@ -141,6 +141,7 @@
       }
     },
     methods: {
+      ...mapMutations(['setPayOrder']),
       ...mapActions(['ajax']),
       fetchMyCoupons() {
         this.ajax({ name: 'getCoupons' }).then(res => {
@@ -158,6 +159,7 @@
       addOrder() {
         this.reqData.logitics_id = this.delivery[this.deliveryIndex].id;
         this.ajax({ name: 'addOrder', data: this.reqData }).then(res => {
+          this.setPayOrder(res);
           this.$router.push({ name: 'pay' });
         });
       },

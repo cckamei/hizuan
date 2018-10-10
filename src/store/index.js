@@ -17,7 +17,8 @@ export default new Vuex.Store({
     appointment: getSen('appointment') || {},
     userInfo: getSen('userInfo') || {},
     address: getSen('address') || {},
-    cart: getSen('cart') || {}
+    cart: getSen('cart') || {},
+    payOrder: getSen('payOrder') || {}
   },
   getters: {
     getCacheData: state => serialize(state.cacheData),
@@ -28,7 +29,8 @@ export default new Vuex.Store({
     getAddress: state => state.address,
     getUserInfo: state => state.userInfo,
     getCart: state => state.cart,
-    getOrderId: state => state.common.orderId
+    getOrderId: state => state.common.orderId,
+    getPayOrder: state => serialize(state.payOrder)
   },
   mutations: {
     setCacheData(state, data) {
@@ -54,6 +56,10 @@ export default new Vuex.Store({
     setCart(state, data) {
       state.cart = data;
       setSen('cart', data);
+    },
+    setPayOrder(state, data) {
+      state.payOrder = { ...state.payOrder, ...data };
+      setSen('payOrder', state.payOrder);
     }
   },
   actions: {
