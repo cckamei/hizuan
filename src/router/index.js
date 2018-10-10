@@ -47,9 +47,9 @@ router.beforeEach((to, from, next) => {
         window.wx.config({
           debug: false,
           appId: window.htp.appid,
-          timestamp: res.wxsign.timestamp,
-          nonceStr: res.wxsign.nonceStr,
-          signature: res.wxsign.signature,
+          timestamp: res.timestamp,
+          nonceStr: res.nonce,
+          signature: res.sign,
           jsApiList: window.htp.wxconfig
         });
 
