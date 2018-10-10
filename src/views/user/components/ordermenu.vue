@@ -12,15 +12,15 @@
         <img src="~assets/mypage/icon_order_1.png" alt="">
         <span>待付款</span>
       </div>
-      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:2 } })">
+      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:1 } })">
         <img src="~assets/mypage/icon_order_2.png" alt="">
         <span>待发货</span>
       </div>
-      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:3 } })">
+      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:2 } })">
         <img src="~assets/mypage/icon_order_3.png" alt="">
         <span>待收货</span>
       </div>
-      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:7 } })">
+      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:3 } })">
         <img src="~assets/mypage/icon_order_4.png" alt="">
         <span>已完成</span>
       </div>

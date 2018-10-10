@@ -26,25 +26,25 @@
     <div class="myorder">
       <div class="ordertitle">
         <span>我的订单</span>
-        <div class="titleright" @click="goOrderList(1)">
+        <div class="titleright" @click="goOrderList(-1)">
           <span>查看全部订单</span>
           <img src="~assets/mypage/icon_arrow_r_s.png" alt="">
         </div>
       </div>
       <div class="ordertype">
-        <div class="orderitem" @click="goOrderList(2)">
+        <div class="orderitem" @click="goOrderList(0)">
           <img src="~assets/mypage/icon_order_1.png" alt="">
           <span>待付款</span>
         </div>
-        <div class="orderitem" @click="goOrderList(3)">
+        <div class="orderitem" @click="goOrderList(1)">
           <img src="~assets/mypage/icon_order_2.png" alt="">
           <span>待发货</span>
         </div>
-        <div class="orderitem" @click="goOrderList(4)">
+        <div class="orderitem" @click="goOrderList(2)">
           <img src="~assets/mypage/icon_order_3.png" alt="">
           <span>待收货</span>
         </div>
-        <div class="orderitem" @click="goOrderList(5)">
+        <div class="orderitem" @click="goOrderList(3)">
           <img src="~assets/mypage/icon_order_4.png" alt="">
           <span>已完成</span>
         </div>

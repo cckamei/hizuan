@@ -36,7 +36,9 @@ let api = {
   getLogitics: { url: 'api/v1/logitics', method: 'get' }, //查看快递
   getTicheng: { url: 'api/v1/ticheng', method: 'get' },
   lastTicheng: { url: 'api/v1/lastticheng', method: 'get' },
-  updateAppointment: { url: 'api/v1/appointment', method: 'put', isJson: true }
+  updateAppointment: { url: 'api/v1/appointment', method: 'put', isJson: true },
+  getOrder: { url: 'api/v1/order/detail/:id', method: 'get' },
+  changeOrder: { url: 'api/v1/change_order', method: 'post' }
 };
 
 for (var k in api) {

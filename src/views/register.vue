@@ -26,7 +26,7 @@
 
 <script>
   import { mapActions, mapMutations } from 'vuex';
-
+  import { checkPhone } from '@/utils';
   export default {
     data() {
       return {
@@ -39,7 +39,7 @@
     },
     computed: {
       isActive() {
-        return this.phone.length && this.code.length && this.password.length && this.confirmPws.length && this.checked;
+        return this.phone.length && this.code.length && this.password.length && this.confirmPws.length && this.checked && checkPhone(this.phone);
       }
     },
     methods: {
