@@ -18,7 +18,7 @@
           <p>{{order.all_money}}元</p>
         </li>
       </ul>
-      <div class="refunditem refundline">
+      <div class="refunditem refundline" v-if="order.is_rejected==false">
         <div class="line" v-if="order.status==4">
           <s :class="{active: lines==1}"></s>
           <i :class="{active: lines==2}"></i>
@@ -46,6 +46,26 @@
           </li>
           <li>
             <p :class="{active: lines==2}">审核通过</p>
+          </li>
+          <li>
+            <p :class="{active: lines==3}">退款成功</p>
+          </li>
+        </ul>
+      </div>
+      <div class="refunditem refundline" v-else>
+        <div class="line">
+          <s :class="{active: lines==1}"></s>
+          <i :class="{active: lines==1}"></i>
+          <s :class="{active: lines==1}"></s>
+          <i :class="{active: lines==2}"></i>
+          <s :class="{active: lines==3}"></s>
+        </div>
+        <ul class="lintext">
+          <li>
+            <p :class="{active: lines==1}">发起退款</p>
+          </li>
+          <li>
+            <p :class="{active: lines==2}">审核不通过</p>
           </li>
           <li>
             <p :class="{active: lines==3}">退款成功</p>

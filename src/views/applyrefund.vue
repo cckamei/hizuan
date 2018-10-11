@@ -18,6 +18,26 @@
           <p>{{order.all_money}}元</p>
         </li>
       </ul>
+      <div class="refunditem refundline" v-if="order.is_rejected">
+        <div class="line">
+          <s :class="{active: lines==1}"></s>
+          <i :class="{active: lines==1}"></i>
+          <s :class="{active: lines==1}"></s>
+          <i :class="{active: lines==2}"></i>
+          <s :class="{active: lines==3}"></s>
+        </div>
+        <ul class="lintext">
+          <li>
+            <p :class="{active: lines==1}">发起退款</p>
+          </li>
+          <li>
+            <p :class="{active: lines==2}">审核不通过</p>
+          </li>
+          <li>
+            <p :class="{active: lines==3}">退款成功</p>
+          </li>
+        </ul>
+      </div>
       <div class="refunditem applyreason">
         <div class="reasonchoice">
           <span>申请原因</span>
@@ -61,6 +81,7 @@
       return {
         selectedIndex: -1,
         visible: false,
+        lines: 1,
         order: {},
         reasonlist: ['拍错货/产品规格选错/数量填错', '联系信息填错/地址填错', '发错货/发漏货', '产品发生损坏/有质量问题', '不喜欢/不想要'],
         reqData: {
@@ -78,6 +99,12 @@
         id: orderId
       }).then(res => {
         this.order = res;
+        if(this.order.is_rejected) {
+          this.reqData.reason = this.reasonlist[Number.parseInt(this.order.refund_info.choice)];
+          this.reqData.linkman = this.order.refund_info.name;
+          this.reqData.linkphone = this.order.refund_info.phone;
+          this.reqData.desc = this.order.refund_info.desc;
+        }
       });
     },
     computed: {
@@ -218,6 +245,57 @@
               }
               &:last-child {
                   border-bottom: 0;
+              }
+          }
+      }
+      .refundline {
+          padding: 54px 0 40px;
+          .line {
+              display: flex;
+              flex-flow: row nowrap;
+              justify-content: flex-start;
+              align-items: center;
+              margin-left: 108px;
+              s {
+                  width: 20px;
+                  height: 20px;
+                  background: #dcdcdc;
+                  border-radius: 50%;
+              }
+              s.active {
+                  background: #acd598;
+              }
+              i {
+                  width: 217px;
+                  height: 4px;
+                  background: #dcdcdc;
+              }
+              i.active {
+                  background: #acd598;
+              }
+          }
+          .lintext {
+              display: flex;
+              flex-flow: row nowrap;
+              justify-content: flex-start;
+              align-items: center;
+              margin-top: 30px;
+              margin-left: 10px;
+              text-align: center;
+              li {
+                  flex: 1;
+              }
+              p {
+                  font-size: 24px;
+                  color: #999999;
+                  margin-bottom: 12px;
+              }
+              p.active {
+                  color: #666666;
+              }
+              span {
+                  font-size: 20px;
+                  color: #999999;
               }
           }
       }
