@@ -26,6 +26,9 @@
       menus: {
         type: Array,
         required: true
+      },
+      name: {
+        type: String
       }
     },
     data() {
@@ -49,7 +52,7 @@
           this.$router.push({ name: 'goodssearch' });
         } else if(item === 'collect') {
           if(!this.token) {
-            this.$router.push({ name: 'login' });
+            this.$router.push({ name: 'login', params: { name: this.name } });
             return false;
           }
           this.$router.push({ name: 'mystore' });

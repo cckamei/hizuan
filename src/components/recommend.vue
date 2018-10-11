@@ -40,7 +40,7 @@
       ...mapActions(['ajax']),
       collect(item) {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: this.name } });
           return false;
         }
 

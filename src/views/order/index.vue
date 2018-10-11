@@ -38,7 +38,6 @@
           name: 'getOrders'
         }).then(res => {
           this.orders = res;
-          console.log(this.type);
           if(this.type != -1) {
             this.orders = this.orders.filter(order => {
               return order.status == this.type;

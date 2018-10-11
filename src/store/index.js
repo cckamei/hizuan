@@ -12,7 +12,8 @@ export default new Vuex.Store({
     common: getSen('common') || {
       goodsId: '',
       goodsType: '',
-      orderId: ''
+      orderId: '',
+      lastPage: 'index'
     },
     appointment: getSen('appointment') || {},
     userInfo: getSen('userInfo') || {},

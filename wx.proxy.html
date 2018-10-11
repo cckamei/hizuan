@@ -47,7 +47,7 @@
       if (params.code) {
         var url = sessionStorage.getItem('redirect_uri');
 
-        if (url.indexOf('?') != -1) {
+        if (url.split('#')[1].indexOf('?') != -1) {
           location.href = url + '&code=' + params.code;
         } else {
           location.href = url + '?code=' + params.code;

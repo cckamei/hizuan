@@ -61,7 +61,7 @@
       },
       visibleItemCount: {
         type: Number,
-        default: 3
+        default: 5
       },
       closeOnClickModal: {
         type: Boolean,

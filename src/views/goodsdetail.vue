@@ -24,7 +24,7 @@
       <div class="info">
         <div class="price">
           <i>￥</i>{{(sku.price || res.price) | currency}}
-          <img @click="clickShare" class="right" src="~assets/goods/button_share.png" alt="">
+          <img v-if="0" @click="clickShare" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
         <button class="tag">{{res.tag}}</button>
         <div class="name">{{res.goods_title}}</div>
@@ -213,7 +213,7 @@
       </div>
     </div>
 
-    <v-menus v-model="menusVisible" :menus="['home', 'search', 'collect']"></v-menus>
+    <v-menus v-model="menusVisible" :menus="['home', 'search', 'collect']" name="goodsdetail"></v-menus>
     <v-scroll-top ref="scroll-top" v-model="topVisible" @top="(t)=> top = t"></v-scroll-top>
     <v-popup-confirm title="分享类型" v-model="shareVisible" @confirm="wxShare" :isConfirm="shareIndex !== -1">
       <v-input-radio v-model="shareIndex" :list="['普通分享','员工分享']"></v-input-radio>
@@ -286,7 +286,7 @@
       }, 1000);
     },
     computed: {
-      ...mapGetters(['getCommon', 'token', 'userId'])
+      ...mapGetters(['getCommon', 'token', 'userId', 'getUserInfo'])
     },
     watch: {
       sku: {
@@ -409,6 +409,8 @@
           this.sku.skuSpec = skuSpec.map(item => ({ label: item, disabled: false }));
 
           this.res.bannerList = res.slide_img;
+
+          this.wxShare();
         });
       },
       fetchGoodsRecommend() {
@@ -444,7 +446,7 @@
       },
       buyNow() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
           return false;
         }
 
@@ -472,7 +474,7 @@
       },
       collect() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
           return false;
         }
 
@@ -487,7 +489,7 @@
       },
       goCart() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
           return false;
         }
 
@@ -495,7 +497,7 @@
       },
       addCart() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
           return false;
         }
 
@@ -506,46 +508,50 @@
             num: this.sku.count,
             kezi: this.lettering.text,
             yaoqiu: this.lettering.remarks,
-            emp_id: '' //TODO
+            emp_id: this.getUserInfo.is_distributor || ''
           }
         }).then(res => {
           this.toast('已加入购物车');
         });
       },
       clickShare() {
-        if(!this.token) {
-          this.$router.push({ name: 'login' });
-          return false;
-        }
-  
-        this.shareVisible = true;
-        if(this.is_distributor) {
-        }
+        // if(!this.token) {
+        //   this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
+        //   return false;
+        // }
+
+        // this.shareVisible = true;
       },
       wxShare() {
-        if(browser().isWeixin) {
+        if(!browser().isWeixin) {
           return false;
+        }
+
+        let ext = '';
+        if(this.getUserInfo.is_distributor && this.userId) {
+          ext = `?emp_id=${this.userId}`;
         }
         //微信分享
         window.wx.showOptionMenu();
         // 分享给朋友
-        console.log({
-          'imgUrl': this.res.img,
-          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?emp_id=${this.userId || ''}`,
-          'title': this.res.goods_title,
-          'desc': this.res.sub_title
-        });
         window.wx.onMenuShareAppMessage({
           'imgUrl': this.res.img,
-          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?emp_id=${this.userId || ''}`,
+          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail${ext}`,
           'title': this.res.goods_title,
           'desc': this.res.sub_title
         });
         // 分享到朋友圈
         window.wx.onMenuShareTimeline({
           'imgUrl': this.res.img,
-          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?emp_id=${this.userId || ''}`,
+          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail${ext}`,
           'title': this.res.goods_title + ',' + this.res.sub_title
+        });
+
+        console.log({
+          'imgUrl': this.res.img,
+          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail${ext}`,
+          'title': this.res.goods_title,
+          'desc': this.res.sub_title
         });
       },
       goCustomService() {
