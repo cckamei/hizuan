@@ -87,7 +87,12 @@
           error: true
         }).then(res => {
           this.setUserInfo({ token: res.token, userId: res.user_id });
-          this.$router.go(-1);
+          this.ajax({
+            name: 'getUserInfo'
+          }).then(res2 => {
+            this.setUserInfo(res2);
+            this.$router.go(-1);
+          });
         }).catch(res => {
           this.toast('用户名或密码错误');
         });

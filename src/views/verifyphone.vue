@@ -38,7 +38,15 @@
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon']),
       next() {
-        this.$router.push({ name: 'perfectinfo' });
+        this.ajax({
+          name: 'wxBindPhone',
+          data: {
+            vcode: this.code,
+            phone: this.account
+          }
+        }).then(res => {
+          this.$router.push({ name: 'perfectinfo' });
+        });
       }
     }
   };
