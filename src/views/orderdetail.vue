@@ -15,7 +15,15 @@
                   </div> -->
         <!-- 待收货、已完成、退款中、已退款 -->
         <!-- 物流信息 -->
-        <div class="logisticsInfo" v-for="(item,i) in order.logistics.info.data">
+        <div class="logisticsInfo" v-if="order.logistics.info.data.length==0">
+          <div class="logitem">
+            <div>
+              <img src="~assets/mypage/icon_exp.png" alt="">
+              <span class="logInfo">暂无物流信息</span>
+            </div>
+          </div>
+        </div>
+        <div class="logisticsInfo" v-else v-for="(item,i) in order.logistics.info.data">
           <div class="logitem">
             <div>
               <img src="~assets/mypage/icon_exp.png" alt="">
@@ -174,6 +182,13 @@
         id: orderId
       }).then(res => {
         this.order = res;
+        if(!this.order.logistics.info) {
+          this.order.logistics = {
+            info: {
+              data: []
+            }
+          };
+        }
       });
     },
     computed: {
