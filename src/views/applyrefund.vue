@@ -32,7 +32,7 @@
         </div>
         <p>如需退货请注意保持商品的完好，建议您先与买家沟通</p>
         <h1>问题描述</h1>
-        <textarea placeholder="请描述申请退款的详细信息，不超过500字（选填）"></textarea>
+        <textarea placeholder="请描述申请退款的详细信息，不超过500字（选填）" v-model="reqData.desc"></textarea>
       </div>
       <div class="refunditem">
         <ul class="refundMessage">
@@ -66,7 +66,8 @@
         reqData: {
           reason: '',
           linkman: '',
-          linkphone: ''
+          linkphone: '',
+          desc: ''
         }
       };
     },
@@ -101,11 +102,11 @@
             action: 'refund',
             choice: this.selectedIndex,
             name: this.reqData.linkman,
-            desc: this.reqData.reason,
+            desc: this.reqData.desc,
             phone: this.reqData.linkphone
           }
         }).then(res => {
-          this.$router.push({ name: 'orderlist', params: { type: 3 } });
+          this.$router.push({ name: 'orderlist', params: { type: -1 } });
         });
       }
     }

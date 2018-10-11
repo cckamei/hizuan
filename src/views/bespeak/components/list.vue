@@ -17,7 +17,7 @@
       <div class="appointment-footer">
         <div class="btn" @click="viewDetail(appointment)">查看详情</div>
         <div class="btn" v-if="appointment.status==0" @click="updateAppointment(appointment)">修改预约</div>
-        <div class="btn" v-else>联系客服</div>
+        <div class="btn" v-else @click="goCustomService">联系客服</div>
       </div>
     </div>
   </div>
@@ -44,6 +44,9 @@
           edit: 2
         });
         this.$router.push({ name: 'addappointment' });
+      },
+      goCustomService() {
+        window.wx.closeWindow();
       }
     }
   };

@@ -15,15 +15,15 @@
                   </div> -->
         <!-- 待收货、已完成、退款中、已退款 -->
         <!-- 物流信息 -->
-        <div class="logisticsInfo">
+        <div class="logisticsInfo" v-for="(item,i) in order.logistics.info.data">
           <div class="logitem">
             <div>
               <img src="~assets/mypage/icon_exp.png" alt="">
-              <span class="logInfo">[西安市]陕西省西安市碑林区长安北路261陕西省西安市碑林区长安北路261</span>
+              <span class="logInfo">{{item.context}}</span>
             </div>
             <img @click="gotLogistics()" class="rightarrow" src="~assets/common/icon_right_arrow.png" alt="">
           </div>
-          <p>2018-08-08 18:06:06</p>
+          <p>{{item.time}}</p>
         </div>
         <!-- 收货地址 -->
         <div class="receiverInfo">
@@ -91,13 +91,13 @@
           <!-- 待收货 -->
           <div class="ordertypeDS" v-if="order.status==2">
             <button class="btngrey btnleft flexleft" @click="goApplyRefund()">申请退款</button>
-            <button class="btngrey btnleft">联系客服</button>
+            <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
             <button class="btnpink" @click="confirm">确认收货</button>
           </div>
           <!-- 待发货 -->
           <div class="ordertypeWC" v-if="order.status==1">
             <button class="btngrey btnleft flexleft" @click="goApplyRefund">申请退款</button>
-            <button class="btngrey">联系客服</button>
+            <button class="btngrey" @click="goCustomService">联系客服</button>
           </div>
           <!-- 待付款 -->
           <div class="ordertypeDF" v-if="order.status==0">
@@ -112,7 +112,7 @@
                         </div> -->
           <!-- 退款中 -->
           <div class="ordertypeTK" v-if="order.status==4">
-            <button class="btngrey btnleft">联系客服</button>
+            <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
             <button class="btngrey" @click="goRefundDetail">查看详情</button>
           </div>
           <!-- 已退款 -->
@@ -145,6 +145,9 @@
         </div>
       </div>
     </div>
+    <v-popup-confirm v-model="cancelVisible" @confirm="handleConfirm">
+      <div class="text">确定取消此订单？</div>
+    </v-popup-confirm>
   </div>
 </template>
 <script>
@@ -153,8 +156,14 @@
   export default {
     data() {
       return {
+        cancelVisible: false,
         order: {
-          address: {}
+          address: {},
+          logistics: {
+            info: {
+              data: []
+            }
+          }
         }
       };
     },
@@ -198,6 +207,9 @@
         });
       },
       cancelOrder() {
+        this.cancelVisible = true;
+      },
+      handleConfirm() {
         this.ajax({
           name: 'changeOrder',
           data: {
@@ -205,13 +217,22 @@
             action: 'cancel'
           }
         }).then(res => {
-          this.$router.push({ name: 'orderlist', params: { type: 3 } });
+          this.$router.push({ name: 'orderlist', params: { type: -1 } });
         });
+      },
+      goCustomService() {
+        window.wx.closeWindow();
       }
     }
   };
 </script>
 <style lang="less" scoped>
+  .text {
+      height: 150px;
+      text-align: center;
+      line-height: 150px;
+      font-size: 28px;
+  }
   .orderdetailpage {
       background: #f0f0f0;
       overflow-y: scroll;
@@ -253,7 +274,6 @@
           }
       }
       .logisticsInfo {
-          margin-bottom: 60px;
           padding-top: 34px;
           span {
               color: #666666;
@@ -265,6 +285,7 @@
       }
       .receiverInfo {
           padding-bottom: 40px;
+          margin-top: 60px;
           span {
               color: #666666;
               font-weight: bold;
