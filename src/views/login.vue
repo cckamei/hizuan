@@ -35,7 +35,6 @@
       };
     },
     created() {
-      alert(this.$route.params.name);
       if(this.$route.params.name) {
         this.setCommon({ lastPage: this.$route.params.name });
       }

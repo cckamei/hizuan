@@ -47,7 +47,6 @@
       };
     },
     created() {
-      console.log(this.value);
       if(this.value !== -1) {
         let selected = this.list[this.value];
         this.text = typeof selected == 'string' ? selected : selected[this.keyName];

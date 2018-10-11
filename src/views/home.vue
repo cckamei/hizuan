@@ -87,7 +87,7 @@
       },
       goMypage() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'index' } });
           return false;
         }
         this.$router.push({ name: 'mypage' });

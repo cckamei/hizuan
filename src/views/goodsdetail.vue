@@ -213,7 +213,7 @@
       </div>
     </div>
 
-    <v-menus v-model="menusVisible" :menus="['home', 'search', 'collect']"></v-menus>
+    <v-menus v-model="menusVisible" :menus="['home', 'search', 'collect']" name="goodsdetail"></v-menus>
     <v-scroll-top ref="scroll-top" v-model="topVisible" @top="(t)=> top = t"></v-scroll-top>
     <v-popup-confirm title="分享类型" v-model="shareVisible" @confirm="wxShare" :isConfirm="shareIndex !== -1">
       <v-input-radio v-model="shareIndex" :list="['普通分享','员工分享']"></v-input-radio>
@@ -472,7 +472,7 @@
       },
       collect() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
           return false;
         }
 
@@ -487,7 +487,7 @@
       },
       goCart() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
           return false;
         }
 
@@ -495,7 +495,7 @@
       },
       addCart() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
           return false;
         }
 
@@ -514,7 +514,7 @@
       },
       clickShare() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
           return false;
         }
 
@@ -529,12 +529,6 @@
         //微信分享
         window.wx.showOptionMenu();
         // 分享给朋友
-        console.log({
-          'imgUrl': this.res.img,
-          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?emp_id=${this.userId || ''}`,
-          'title': this.res.goods_title,
-          'desc': this.res.sub_title
-        });
         window.wx.onMenuShareAppMessage({
           'imgUrl': this.res.img,
           'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?emp_id=${this.userId || ''}`,
