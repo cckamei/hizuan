@@ -19,25 +19,36 @@
         </li>
       </ul>
       <div class="refunditem refundline">
-        <div class="line">
+        <div class="line" v-if="order.status==4">
           <s :class="{active: lines==1}"></s>
           <i :class="{active: lines==2}"></i>
-          <s :class="{active: lines==2}"></s>
-          <i :class="{active: lines==3}"></i>
           <s :class="{active: lines==3}"></s>
+          <i :class="{active: lines==2}"></i>
+          <s :class="{active: lines==3}"></s>
+        </div>
+        <div class="line" v-if="order.status==5">
+          <s :class="{active: lines==1}"></s>
+          <i :class="{active: lines==1}"></i>
+          <s :class="{active: lines==1}"></s>
+          <i :class="{active: lines==2}"></i>
+          <s :class="{active: lines==3}"></s>
+        </div>
+        <div class="line" v-if="order.status==6">
+          <s :class="{active: lines==1}"></s>
+          <i :class="{active: lines==1}"></i>
+          <s :class="{active: lines==1}"></s>
+          <i :class="{active: lines==1}"></i>
+          <s :class="{active: lines==1}"></s>
         </div>
         <ul class="lintext">
           <li>
             <p :class="{active: lines==1}">发起退款</p>
-            <span>2018-01-18 18:08:08</span>
           </li>
           <li>
-            <p :class="{active: lines==2}">发起退款</p>
-            <span>2018-01-18 18:08:08</span>
+            <p :class="{active: lines==2}">审核通过</p>
           </li>
           <li>
-            <p :class="{active: lines==3}">发起退款</p>
-            <span>2018-01-18 18:08:08</span>
+            <p :class="{active: lines==3}">退款成功</p>
           </li>
         </ul>
       </div>

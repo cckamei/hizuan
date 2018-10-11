@@ -3,13 +3,13 @@
     <user-header></user-header>
     <user-tabs></user-tabs>
     <order-menu></order-menu>
-    <commission></commission>
+    <commission v-if="getUserInfo.is_distributor"></commission>
     <user-footer></user-footer>
   </div>
 </template>
 
 <script>
-  import { mapMutations, mapActions } from 'vuex';
+  import { mapMutations, mapActions, mapGetters } from 'vuex';
   import userHeader from './components/header';
   import userTabs from './components/usertabs';
   import userFooter from './components/footer';
@@ -24,6 +24,9 @@
       userTabs,
       orderMenu,
       commission
+    },
+    computed: {
+      ...mapGetters(['getUserInfo'])
     },
     mixins: [mixin]
   };
