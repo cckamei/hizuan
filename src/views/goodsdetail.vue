@@ -508,7 +508,7 @@
             num: this.sku.count,
             kezi: this.lettering.text,
             yaoqiu: this.lettering.remarks,
-            emp_id: '' //TODO
+            emp_id: this.getUserInfo.is_distributor || ''
           }
         }).then(res => {
           this.toast('已加入购物车');
