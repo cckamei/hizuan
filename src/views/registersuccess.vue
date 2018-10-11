@@ -34,7 +34,7 @@
     methods: {
       ...mapActions(['ajax']),
       go() {
-        this.$router.push({ name: 'index' });
+        this.$router.push({ name: 'registersuccess' });
       }
     }
   };

@@ -71,7 +71,7 @@
           error: true
         }).then(res => {
           this.setUserInfo({ token: res.token, userId: res.user_id });
-          this.$router.push({ name: 'personal-data' });
+          this.$router.push({ name: 'perfectinfo' });
         }).catch(() => {
           this.toast('手机号或验证码不正确');
         });

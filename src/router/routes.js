@@ -66,9 +66,9 @@ const router = [
     component: () => import('@/views/verifyphone')
   },
   {
-    name: 'personal-data',
-    path: '/login/verifyphone/personal-data',
-    component: () => import('@/views/user/personal-data')
+    name: 'perfectinfo',
+    path: '/login/verifyphone/perfectinfo',
+    component: () => import('@/views/perfectinfo')
   },
   {
     name: 'registersuccess',

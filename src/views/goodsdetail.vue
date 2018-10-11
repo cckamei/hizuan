@@ -444,7 +444,7 @@
       },
       buyNow() {
         if(!this.token) {
-          this.$router.push({ name: 'login' });
+          this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
           return false;
         }
 
@@ -517,7 +517,7 @@
           this.$router.push({ name: 'login' });
           return false;
         }
-  
+
         this.shareVisible = true;
         if(this.is_distributor) {
         }
