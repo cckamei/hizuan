@@ -15,15 +15,15 @@
     </div>
     <div class="content">
       <ul class="list">
-        <li v-for="(item, index) in goodsList" :key="index" class="flex" v-touch.press="handlePress">
+        <li v-for="(item, index) in goodsList" :key="index" class="flex" v-touch.press="handlePress" @click.stop="goDetail(item)">
           <div class="libox">
-            <div class="img" @click="goDetail(item)"><img :src="item.src" alt=""></div>
+            <div class="img"><img :src="item.img" alt=""></div>
             <div class="detail flex-auto flex">
-              <span class="name">{{item.name}}</span>
-              <span class="desc">{{item.desc}}</span>
+              <span class="name">{{item.goods_title}}</span>
+              <span class="desc">{{item.sub_title}}</span>
               <div class="line3 flex">
                 <div class="price"><span>￥</span>{{item.price | currency}}</div>
-                <div class="cart"></div>
+                <div class="cart" @click.stop="addToCart"></div>
               </div>
             </div>
             <div class="mask-delete flex" v-if="item.deleteVisible" @click="item.deleteVisible = false">
@@ -72,17 +72,11 @@
       ...mapMutations(['setCommon']),
       ...mapActions(['ajax']),
       getGoods() {
-        for(let i = 0; i < 16; i++) {
-          let good = {
-            src: icon,
-            type: i % 9,
-            name: this.filters[i % 9] + 'MeiMei项链/坠',
-            desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-            price: 6666 + i,
-            deleteVisible: false
-          };
-          this.goodsList.push(good);
-        }
+        this.ajax({
+          name: 'collects'
+        }).then(res => {
+          this.goodsList = res;
+        });
       },
       gteCategory() {
         this.ajax({
@@ -100,6 +94,9 @@
       handleSortConfirm(val) {
         this.goodsList = this.goodsList.sort(this.compare('price'));
       },
+      addToCart() {
+        this.$router.push({ name: 'goodsdetail', params: { openSKU: true } });
+      },
       compare(property) {
         let vm = this;
         return function(obj1, obj2) {
@@ -114,51 +111,7 @@
         };
       },
       fetchGoods() {
-        // this.ajax({
-        //   name: 'goodsList',
-        //   data: {
-        //   currentPage: (this.pageInfo.currentPage || 0) + 1,
-        // }
-        // }).then(res => {
-        setTimeout(() => {
-          let res = {
-            pageInfo: {
-              totalPage: 10,
-              currentPage: 2
-            },
-            goodsList: [{
-              src: '',
-              name: '醒狮MeiMei项链/坠',
-              desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '6666',
-              type: 1
-            }, {
-              src: '',
-              name: '醒狮MeiMei项链/坠',
-              desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '6666',
-              type: 2
-            }, {
-              src: '',
-              name: '醒狮MeiMei项链/坠',
-              desc: '玫瑰金，红玉髓，白珍珠贝母，钻石，黑玛瑙，紫玉',
-              price: '6666',
-              type: 3
-            }]
-          };
-          this.pageInfo = res.pageInfo;
-          if(this.pageInfo.currentPage == 1) {
-            this.goodsList = [];
-          }
-          this.goodsList = this.goodsList.concat(res.goodsList);
 
-          if(this.pageInfo.currentPage < this.pageInfo.totalPage) {
-            this.loading = false;
-          } else if(this.pageInfo.currentPage != 1) {
-            this.toast('没有更多数据了');
-          }
-        }, 1000);
-        // });
       },
       removeCart(item, index) {
         this.goodsList.splice(index, 1);

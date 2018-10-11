@@ -42,7 +42,8 @@ let api = {
   getOrder: { url: 'api/v1/order/detail/:id', method: 'get' },
   changeOrder: { url: 'api/v1/change_order', method: 'post' },
   pay1: { url: 'api/v1/pay_prepare', method: 'post' }, //支付1
-  pay2: { url: 'api/v1/pay_submit', method: 'post' } //支付2
+  pay2: { url: 'api/v1/pay_submit', method: 'post' }, //支付2
+  collects: { url: 'api/v1/collects', method: 'get' }
 };
 
 for (var k in api) {

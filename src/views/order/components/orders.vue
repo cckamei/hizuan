@@ -39,32 +39,32 @@
         </div>
         <!-- 已完成 3-->
         <div class="ordertypeDF" v-if="order.status==3">
-          <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
           <button class="btngrey" @click="tradeIn">以旧换新</button>
         </div>
         <!-- 待付款 0-->
         <div class="ordertypeDF" v-if="order.status==0">
-          <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
           <button class="btnpink" @click="$router.push({ name: 'pay' })">立即付款</button>
         </div>
         <!-- 已取消 8-->
         <div class="ordertypeDF" v-if="order.status==8">
-          <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
           <button class="btngrey" @click="goGoodsDetail">再次购买</button>
         </div>
         <!-- 退款中 4-->
         <div class="ordertypeDS" v-if="order.status==4">
-          <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
           <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
         </div>
         <!-- 待发货 1-->
         <div class="ordertypeWC" v-if="order.status==1">
-          <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
           <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
         </div>
         <!-- 已退款 6-->
         <div class="ordertypeWC" v-if="order.status==6">
-          <button class="btngrey btnleft">联系客服</button>
+          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
           <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
         </div>
       </div>
@@ -105,6 +105,9 @@
       typename(type) {
         let _typenames = ['待付款', '待发货', '待收货', '已完成', '退款中', '', '已退款', '', '已取消'];
         return _typenames[type];
+      },
+      goCustomService() {
+        window.wx.closeWindow();
       }
     }
   };
