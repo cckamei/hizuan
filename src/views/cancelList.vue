@@ -2,7 +2,7 @@
   <div class="pt">
     <v-header>订单列表</v-header>
     <div class="content">
-      <div class="listitem">
+      <div class="listitem" v-for="(order,i) in orders">
         <div class="itemtitle" @click="goDetail()">
           <div class="titleleft">
             <img src="~assets/mypage/icon_shop.png" alt="">
@@ -10,38 +10,33 @@
           </div>
           <div class="listright">已取消</div>
         </div>
-        <div class="itemcontent" @click="goDetail()">
+        <div class="itemcontent" v-for="(good,j) in order.goods" @click="goDetail(order.order_id)">
           <div class="contentleft">
-            <img src="~assets/goods/pic_wring1.png" alt="">
+            <img :src="good.goods_img" alt="">
           </div>
           <div class="contentright">
             <div class="contenttitle">
-              <span>卡美婚嫁系列 - 戒指</span>
-              <span>￥18888.00</span>
+              <span>{{good.goods_name}}</span>
+              <span>￥{{good.goods_price}}</span>
             </div>
             <div class="contentmessage">
-              <p>25分；VS/微瑕；H/白；奴戒-11号；基础服务保障</p>
+              <p>{{good.server}}</p>
               <div class="messageright">
-                <s>￥18888.00</s>
-                <span>X1</span>
+                <s>￥{{good.subtotal}}</s>
+                <span>X{{good.goods_count}}</span>
               </div>
             </div>
           </div>
         </div>
 
         <div class="itemprice">
-          共1件商品 实付款： <span>￥18888.00</span> （含运费￥10.00）
+          共{{order.goods.length}}件商品 实付款： <span>￥{{order.rest_money}}</span> （含运费￥{{order.logistics_money}}）
         </div>
         <div class="itemfoot">
           <!-- 已取消 -->
-          <!-- <div class="ordertypeQX">
-                                    <button class="btngrey btnleft">联系客服</button>
-                                    <button class="btngrey">再次购买</button>
-                              </div> -->
-          <!-- 退款中 -->
-          <div class="ordertypeTK">
+          <div class="ordertypeQX">
             <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
-            <button class="btngrey" @click="$router.push({ name: 'refunddetail' });">查看退款</button>
+            <button class="btngrey" @click="goGoodsDetail">再次购买</button>
           </div>
 
         </div>
@@ -49,23 +44,40 @@
     </div>
   </div>
 </template>
+
 <script>
+  import { mapActions, mapMutations } from 'vuex';
   export default {
     data() {
       return {
-
+        orders: []
       };
     },
     created() {
-
+      this.getOrders();
     },
     methods: {
-      //跳转订单详情
-      goDetail() {
+      ...mapActions(['ajax']),
+      getOrders() {
+        this.ajax({
+          name: 'getOrders',
+          data: {
+            status: 8
+          }
+        }).then(res => {
+          this.orders = res;
+        });
+      },
+      ...mapMutations(['setCommon']),
+      goDetail(orderId) {
+        this.setCommon({ orderId: orderId });
         this.$router.push({ name: 'orderdetail' });
       },
       goCustomService() {
         window.wx.closeWindow();
+      },
+      goGoodsDetail() {
+        this.$router.push({ name: 'goodslist' });
       }
     }
   };
