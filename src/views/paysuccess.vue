@@ -7,11 +7,11 @@
           <img src="~assets/payment/icon_pay_suc.png" alt="">
           <div class="pay-info">
             <p>支付方式：<span>微信支付</span></p>
-            <p>支付金额：<span>33565.80元</span></p>
+            <p>支付金额：<span>{{getPayOrder.rest_money | currency}}元</span></p>
           </div>
         </div>
         <div class="btns">
-          <button class="btn" @click="$router.push({name: 'orderdetail'})">查看订单</button>
+          <button class="btn" @click="goOrderDetail">查看订单</button>
           <button class="btn" @click="$router.push({name: 'index'})">回到首页</button>
         </div>
       </div>
@@ -20,17 +20,23 @@
 </template>
 
 <script>
-  import { mapActions, mapMutations } from 'vuex';
-  import ss from '../assets/goods/pic_guguring.png';
+  import { mapActions, mapMutations, mapGetters } from 'vuex';
 
   export default {
     data() {
       return {
       };
     },
-    // mapActions
+    computed: {
+      ...mapGetters(['getPayOrder'])
+    },
     methods: {
-      ...mapActions(['ajax'])
+      ...mapActions(['ajax']),
+      ...mapMutations(['setCommon']),
+      goOrderDetail() {
+        this.setCommon({ orderId: this.getPayOrder.order_id });
+        this.$router.push({ name: 'orderdetail' });
+      }
     }
   };
 </script>

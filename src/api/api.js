@@ -46,7 +46,8 @@ let api = {
   collects: { url: 'api/v1/collects', method: 'get' },
   updateOrder: { url: 'api/v1/update_order' }, //修改订单
   forgetPwd: { url: 'api/v1/forget_password' }, //忘记密码
-  resetPwd: { url: 'api/v1/reset_password' } //重置密码
+  resetPwd: { url: 'api/v1/reset_password' }, //重置密码
+  buyNow: { url: 'api/v1/buy_now' } //立即购买
 };
 
 for (var k in api) {
