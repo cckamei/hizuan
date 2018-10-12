@@ -148,9 +148,9 @@
           <li><span>支付时间</span> {{order.pay_time}}</li>
         </ul>
         <!-- 完成时间 -->
-        <div class="finishtime">
-          完成时间：2018-08-05 18:06:06
-        </div>
+        <!-- <div class="finishtime">
+          完成时间：{{order.pay_time}}
+        </div> -->
       </div>
     </div>
     <v-popup-confirm v-model="cancelVisible" @confirm="handleConfirm">
