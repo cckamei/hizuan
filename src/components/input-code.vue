@@ -28,6 +28,10 @@
       phone: {
         type: String,
         required: true
+      },
+      action: {
+        type: String,
+        required: true
       }
     },
     data() {
@@ -58,7 +62,7 @@
         this.ajax({
           name: 'authCode',
           data: {
-            action: 'register',
+            action: this.action,
             phone: this.phone
           }
         }).then(res => {

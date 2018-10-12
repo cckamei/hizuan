@@ -9,8 +9,10 @@
   </div>
 </template>
 <script>
+  import { mapMutations } from 'vuex';
   export default {
     methods: {
+      ...mapMutations(['logout']),
       goMyData() {
         this.$router.push({ name: 'editinfo' });
       },
@@ -18,29 +20,30 @@
         this.$router.push({ name: 'revisepwd' });
       },
       goback() {
-
+        this.logout();
+        this.$router.push({ name: 'index' });
       }
     }
   };
 </script>
 <style lang="less" scoped>
   .myset {
-      ul {
-          margin-top: 96px;
-          background: #ffffff;
-          padding: 0 24px;
-          li {
-              width: '100%';
-              height: 96px;
-              line-height: 96px;
-              color: #666666;
-              font-size: 30px;
-              border-bottom: 2px solid #f0f0f0;
-          }
-          li:last-child {
-              border-bottom: none;
-          }
+    ul {
+      margin-top: 96px;
+      background: #ffffff;
+      padding: 0 24px;
+      li {
+        width: '100%';
+        height: 96px;
+        line-height: 96px;
+        color: #666666;
+        font-size: 30px;
+        border-bottom: 2px solid #f0f0f0;
       }
+      li:last-child {
+        border-bottom: none;
+      }
+    }
   }
 </style>
 

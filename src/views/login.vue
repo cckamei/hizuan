@@ -55,6 +55,21 @@
               window.location.href = window.location.href.replace(/[&?]code=[\w]{32}/, '');
 
               this.ajax({
+                name: 'getAddress'
+              }).then(res => {
+                let data = res;
+                this.addressList = data;
+                let index = res.findIndex(item => item.default);
+                let address = res[index];
+                this.setAddress({
+                  id: address.id,
+                  name: address.name,
+                  phone: address.phone,
+                  address: `${address.province}${address.city}${address.district}${address.street}`
+                });
+              });
+
+              this.ajax({
                 name: 'getUserInfo'
               }).then(res2 => {
                 this.setUserInfo(res2);
@@ -69,14 +84,14 @@
       }
     },
     computed: {
-      ...mapGetters(['userId']),
+      ...mapGetters(['userId', 'getCommon']),
       isActive() {
         return this.phone.length && this.password.length && checkPhone(this.phone);
       }
     },
     methods: {
       ...mapActions(['ajax']),
-      ...mapMutations(['setUserInfo', 'setCommon']),
+      ...mapMutations(['setUserInfo', 'setCommon', 'setAddress']),
       login() {
         this.ajax({
           name: 'login',
@@ -92,6 +107,21 @@
           }).then(res2 => {
             this.setUserInfo(res2);
             this.$router.go(-1);
+          });
+
+          this.ajax({
+            name: 'getAddress'
+          }).then(res => {
+            let data = res;
+            this.addressList = data;
+            let index = res.findIndex(item => item.default);
+            let address = res[index];
+            this.setAddress({
+              id: address.id,
+              name: address.name,
+              phone: address.phone,
+              address: `${address.province}${address.city}${address.district}${address.street}`
+            });
           });
         }).catch(res => {
           this.toast('用户名或密码错误');

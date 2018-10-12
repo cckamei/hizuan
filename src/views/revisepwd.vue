@@ -1,16 +1,17 @@
 <template>
+
   <div class="revisepwd">
     <v-header>修改密码</v-header>
     <ul>
       <li>
         <input type="password" v-model="reqData.oldPwd" placeholder="请输入当前密码" />
-                  </li>
+      </li>
       <li>
         <input type="password" v-model="reqData.newPwd" placeholder="请输入新密码" />
-                  </li>
+      </li>
       <li>
         <input type="password" v-model="reqData.repeatPwd" placeholder="请再次输入新密码" />
-                  </li>
+      </li>
     </ul>
     <div class="btns">
       <button class="btn" :class="{active: isActive}" @click="isActive && confirm()">确认提交</button>
@@ -18,6 +19,7 @@
   </div>
 </template>
 <script>
+  import { mapActions } from 'vuex';
   export default {
     data() {
       return {
@@ -29,7 +31,22 @@
       };
     },
     methods: {
+      ...mapActions(['ajax']),
       confirm() {
+        if(this.newPwd != this.repeatPwd) {
+          this.toast('两次输入密码不一致');
+          return false;
+        }
+
+        this.ajax({
+          name: 'resetPwd',
+          data: {
+            old_password: this.oldPwd,
+            new_password: this.newPwd
+          }
+        }).then(() => {
+          this.toast('修改成功！');
+        });
       }
     },
     computed: {

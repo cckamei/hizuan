@@ -40,19 +40,19 @@
             </li>
           </ul>
         </li>
-        <li class="section" v-if="loadmore">
+        <li class="section" v-show="loadmore">
           <ul class="form">
             <li>
-              <v-form-datepicker :readonly="!isEdit" label="结婚纪念日" title="结婚纪念日" v-model="reqData.wedding_day" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker :readonly="!isEdit" label="结婚纪念日" title="结婚纪念日" v-model="reqData.wedding_day" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker :readonly="!isEdit" label="配偶生日" title="配偶生日" v-model="reqData.lover_birth" format="yyyy - MM - dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker :readonly="!isEdit" label="配偶生日" title="配偶生日" v-model="reqData.lover_birth" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
               <v-form-datepicker :readonly="!isEdit" label="儿子生日" title="儿子生日" v-model="reqData.son_birth" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
-              <v-form-datepicker :readonly="!isEdit" label="女儿生日" title="女儿生日" v-model="reqData.daughter_birth" format="yyyy-MM-dd 日" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
+              <v-form-datepicker :readonly="!isEdit" label="女儿生日" title="女儿生日" v-model="reqData.daughter_birth" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
             <li>
               <v-form-input :readonly="!isEdit" :type="'number'" label="身份证号" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
@@ -155,49 +155,49 @@
 
 <style lang="less" scoped>
   .section {
-      margin-top: 16px;
-      padding: 0 20px;
-      background-color: #fff;
-      &:first-child {
-          margin-top: 0;
-      }
+    margin-top: 16px;
+    padding: 0 20px;
+    background-color: #fff;
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
   .form {
-      background-color: #fff;
-      li {
-          border-bottom: 1px solid #f0f0f0; /*no*/
-          padding: 0 20px;
-          height: 96px;
-          &:last-child {
-              border-bottom: 0;
-          }
-          .input {
-              height: 100%;
-          }
+    background-color: #fff;
+    li {
+      border-bottom: 1px solid #f0f0f0; /*no*/
+      padding: 0 20px;
+      height: 96px;
+      &:last-child {
+        border-bottom: 0;
       }
+      .input {
+        height: 100%;
+      }
+    }
   }
   .rightTopBtn {
-      position: fixed;
-      top: 0px;
-      right: 40px;
-      width: 60px;
-      line-height: 96px;
-      z-index: 3;
-      color: #333333;
-      font-size: 26px;
+    position: fixed;
+    top: 0px;
+    right: 40px;
+    width: 60px;
+    line-height: 96px;
+    z-index: 3;
+    color: #333333;
+    font-size: 26px;
   }
   .submitBtn {
-      .btn {
-          background: #ffffff;
-          color: #ffb4b4;
-      }
+    .btn {
+      background: #ffffff;
+      color: #ffb4b4;
+    }
   }
   .more {
-      height: 60px;
-      line-height: 60px;
-      font-size: 24px;
-      color: #cdb498;
-      text-align: center;
+    height: 60px;
+    line-height: 60px;
+    font-size: 24px;
+    color: #cdb498;
+    text-align: center;
   }
 </style>

@@ -21,20 +21,20 @@
               <div class="img">
                 <img :src="item.img" alt="">
               </div>
-                <div class="detail flex-auto flex">
-                  <span class="name">{{item.goods_title}}</span>
-                  <span class="desc">{{item.sub_title}}</span>
-                  <div class="line3 flex">
-                    <span class="price"><span>￥</span>{{item.price | currency}}</span>
-                    <div class="number">X{{item.count}}</div>
-                  </div>
+              <div class="detail flex-auto flex">
+                <span class="name">{{item.goods_title}}</span>
+                <span class="desc">{{item.sub_title}}</span>
+                <div class="line3 flex">
+                  <span class="price"><span>￥</span>{{item.price | currency}}</span>
+                  <div class="number">X{{item.count}}</div>
                 </div>
+              </div>
             </li>
           </ul>
         </li>
         <li class="option section">
           <div class="row">
-            <v-form-slide-up label="优惠券" title="选择优惠券" placeholder="无可用">
+            <v-form-slide-up label="优惠券" title="选择优惠券" placeholder="选择优惠券">
               <template slot="value">
                 <div v-for="card in benifit" v-if="card.use" class="benifit-btn">已选 优惠{{card.discount_money}}元&nbsp;</div>
               </template>
@@ -126,11 +126,18 @@
       if(this.getAddress) {
         this.reqData.address_id = this.getAddress.id;
       }
+
+      if(this.getPayOrder.order_id) {
+        this.reqData.coupon_id = this.getPayOrder.coupon_id;
+        this.reqData.yaoqiu = this.getPayOrder.yaoqiu;
+        this.reqData.logitics_id = this.getPayOrder.logitics_id;
+      }
+
       this.fetchMyCoupons();
       this.fetchLogitics();
     },
     computed: {
-      ...mapGetters(['getAddress', 'getCart']),
+      ...mapGetters(['getAddress', 'getCart', 'getPayOrder']),
       totalMoney() {
         let deliveryMoney = 0;
         if(this.delivery.length) {
@@ -148,20 +155,50 @@
           res.forEach(item => {
             item.use = false;
           });
+
+          if(this.getPayOrder.order_id) {
+            res = res.concat(this.getPayOrder.selectCoupons);
+          }
           this.benifit = res;
+          if(this.getPayOrder.order_id) {
+            this.handleUse(res.length - 1);
+          }
         });
       },
       fetchLogitics() {
         this.ajax({ name: 'getLogitics' }).then(res => {
           this.delivery = res;
+          let index = res.findIndex(item => item.id == this.getPayOrder.logitics_id);
+          if(index != -1) {
+            this.deliveryIndex = index;
+          }
         });
       },
       addOrder() {
         this.reqData.logitics_id = this.delivery[this.deliveryIndex].id;
-        this.ajax({ name: 'addOrder', data: this.reqData }).then(res => {
-          this.setPayOrder(res);
-          this.$router.push({ name: 'pay' });
-        });
+        this.reqData.selectCoupons = this.benifit.filter(item => item.use);
+        //修改
+        if(this.getPayOrder.order_id) {
+          this.ajax({
+            name: 'updateOrder',
+            data: {
+              order_id: this.getPayOrder.order_id,
+              coupon_id: this.reqData.coupon_id,
+              logitics_id: this.reqData.logitics_id,
+              yaoqiu: this.reqData.yaoqiu
+            }
+          }).then(res => {
+            Object.assign(res, this.reqData);
+            this.setPayOrder(res);
+            this.$router.push({ name: 'pay' });
+          });
+        } else { //新增
+          this.ajax({ name: 'addOrder', data: this.reqData }).then(res => {
+            Object.assign(res, this.reqData);
+            this.setPayOrder(res);
+            this.$router.push({ name: 'pay' });
+          });
+        }
       },
       handleUse(index) {
         this.benifit.forEach(item => {

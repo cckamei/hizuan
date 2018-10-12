@@ -61,6 +61,14 @@ export default new Vuex.Store({
     setPayOrder(state, data) {
       state.payOrder = { ...state.payOrder, ...data };
       setSen('payOrder', state.payOrder);
+    },
+    clearPayOrder(state, data) {
+      state.payOrder = {};
+      setSen('payOrder', state.payOrder);
+    },
+    logout(state, data) {
+      state.userInfo = {};
+      setSen('userInfo', state.userInfo);
     }
   },
   actions: {

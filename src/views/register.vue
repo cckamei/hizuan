@@ -7,7 +7,7 @@
           <v-input-text placeholder="请输入手机号码" v-model="phone" clear maxlength="16" class="input"></v-input-text>
         </li>
         <li>
-          <v-input-code placeholder="请输入验证码" v-model="code" :phone="phone" maxlength="16" class="input"></v-input-code>
+          <v-input-code placeholder="请输入验证码" v-model="code" :phone="phone" maxlength="16" class="input" action="register"></v-input-code>
         </li>
         <li>
           <v-input-pwd placeholder="请输入账户密码" v-model="password" eye maxlength="16" class="input"></v-input-pwd>

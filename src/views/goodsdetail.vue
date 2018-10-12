@@ -338,7 +338,7 @@
       }
     },
     methods: {
-      ...mapMutations(['setCart']),
+      ...mapMutations(['setCart', 'clearPayOrder']),
       ...mapActions(['ajax']),
       fetchGoodsDetail() {
         this.ajax({
@@ -469,6 +469,7 @@
             price: this.sku.price || this.res.price,
             sub_title: this.res.sub_title
           }]);
+          this.clearPayOrder();
           this.$router.push({ name: 'confirmorder' });
         });
       },
@@ -545,13 +546,6 @@
           'imgUrl': this.res.img,
           'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail${ext}`,
           'title': this.res.goods_title + ',' + this.res.sub_title
-        });
-
-        console.log({
-          'imgUrl': this.res.img,
-          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail${ext}`,
-          'title': this.res.goods_title,
-          'desc': this.res.sub_title
         });
       },
       goCustomService() {

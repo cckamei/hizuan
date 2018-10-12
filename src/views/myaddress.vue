@@ -76,83 +76,83 @@
 
 <style lang="less" scoped>
   .myaddress {
-      overflow-y: auto;
-      .addresslist {
-          background: #ffffff;
-          li {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              padding: 40px 30px;
-              border-bottom: 2px solid #f0f0f0;
-          }
-          li:last-child {
-              border-bottom: none;
-          }
+    overflow-y: auto;
+    .addresslist {
+      background: #ffffff;
+      li {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        padding: 40px 30px;
+        border-bottom: 2px solid #f0f0f0;
       }
-      .listleft {
-          width: 600px;
-          padding-left: 20px;
-          .receiver {
-              color: #666666;
-              font-size: 30px;
-              font-weight: bold;
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: flex-start;
-              span {
-                  margin-left: 60px;
-              }
-              i {
-                  width: 72px;
-                  height: 30px;
-                  line-height: 30px;
-                  background: #e1c8af;
-                  font-size: 20px;
-                  color: #ffffff;
-                  border-radius: 15px;
-                  margin-left: 30px;
-                  text-align: center;
-              }
-          }
-          .address {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: flex-start;
-              margin-top: 20px;
-              font-size: 24px;
-              color: #666666;
-              span {
-                  width: 120px;
-              }
-              p {
-                  width: 460px;
-              }
-          }
+      li:last-child {
+        border-bottom: none;
       }
-      .listright {
-          width: 40px;
+    }
+    .listleft {
+      width: 600px;
+      padding-left: 20px;
+      .receiver {
+        color: #666666;
+        font-size: 30px;
+        font-weight: bold;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        span {
+          margin-left: 60px;
+        }
+        i {
+          width: 72px;
+          height: 30px;
+          line-height: 30px;
+          background: #e1c8af;
+          font-size: 20px;
+          color: #ffffff;
+          border-radius: 15px;
+          margin-left: 30px;
+          text-align: center;
+        }
+      }
+      .address {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        margin-top: 20px;
+        font-size: 24px;
+        color: #666666;
+        span {
+          width: 120px;
+        }
+        p {
+          width: 460px;
+        }
+      }
+    }
+    .listright {
+      width: 40px;
 
-          padding-top: 40px;
-          img {
-              display: block;
-              width: 40px;
-              height: 40px;
-          }
+      padding-top: 40px;
+      img {
+        display: block;
+        width: 40px;
+        height: 40px;
       }
+    }
   }
 
   .default-address {
-      margin-top: 30px;
-      margin-right: 2px;
-      width: 36px;
-      height: 36px;
+    margin-top: 30px;
+    margin-right: 2px;
+    width: 36px;
+    height: 36px;
   }
   .fix {
-      padding: 0.4rem;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+    padding: 0.4rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
   }
 </style>
 

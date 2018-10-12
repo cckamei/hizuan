@@ -2,7 +2,7 @@
   <div class="card flex">
     <div class="col1 flex-auto">
       <div class="price"><span>￥</span>{{card.discount_money | currency}}</div>
-      <div class="limit">购物满{{card.all_money}}元使用{{card.use}}</div>
+      <div class="limit">购物满{{card.all_money}}元使用</div>
       <div class="expired">有效期至 {{formatDate(card.starttime, 'yyyy-MM-dd')}} 至 {{formatDate(card.endtime, 'yyyy-MM-dd')}}</div>
     </div>
     <div v-if="card.use" class="col2">{{useText}}</div>
