@@ -5,7 +5,7 @@
       <img :src="userInfo.avatar" alt="">
       <div class="usermessage">
         <h2>{{userInfo.nick_name}}</h2>
-        <span>积分：1200</span>
+        <span>积分：{{userInfo.score || 0}}</span>
       </div>
       <img class="userset" src="~assets/mypage/set-icon.png" alt="" @click="goMySet()">
     </div>
@@ -112,140 +112,140 @@
 </script>
 <style lang="less" scoped>
   .mypage {
-      background: #f0f0f0;
-      .mymessage {
-          width: 100%;
-          height: 280px;
-          position: relative;
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: flex-start;
-          background: url('~assets/mypage/bg-img.png') no-repeat;
-          background-size: 100% 100%;
+    background: #f0f0f0;
+    .mymessage {
+      width: 100%;
+      height: 280px;
+      position: relative;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      background: url('~assets/mypage/bg-img.png') no-repeat;
+      background-size: 100% 100%;
+      img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: 80px 30px 80px 40px;
+      }
+      .usermessage {
+        color: #ffffff;
+        h2 {
+          font-size: 30px;
+          margin: 60px 0 10px 0;
+        }
+        span {
+          font-size: 20pxm;
+        }
+      }
+      .userset {
+        position: absolute;
+        top: 40px;
+        right: 50px;
+        width: 70px;
+        height: 70px;
+      }
+    }
+    .myitem {
+      position: relative;
+      z-index: 2;
+      width: 710px;
+      padding: 40px 0 36px;
+      margin: -50px auto 0;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      background: #ffffff;
+      border-radius: 10px;
+      .item {
+        text-align: center;
+        img {
+          width: 88px;
+          height: 88px;
+          display: block;
+          margin-bottom: 20px;
+        }
+        span {
+          color: #999999;
+          font-size: 24px;
+        }
+      }
+    }
+    .myorder {
+      background: #ffffff;
+      width: 710px;
+      margin: 20px auto 0;
+      border-radius: 10px;
+      .ordertitle {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        height: 84px;
+        line-height: 84px;
+        font-size: 24px;
+        padding: 0 20px;
+        border-bottom: 2px solid #f0f0f0;
+        span {
+          color: #666666;
+        }
+        .titleright {
           img {
-              width: 120px;
-              height: 120px;
-              border-radius: 50%;
-              margin: 80px 30px 80px 40px;
+            display: inline;
+            width: 18px;
+            height: 18px;
+            margin-left: 16px;
           }
-          .usermessage {
-              color: #ffffff;
-              h2 {
-                  font-size: 30px;
-                  margin: 60px 0 10px 0;
-              }
-              span {
-                  font-size: 20pxm;
-              }
+          span {
+            color: #999999;
           }
-          .userset {
-              position: absolute;
-              top: 40px;
-              right: 50px;
-              width: 70px;
-              height: 70px;
-          }
+        }
       }
-      .myitem {
-          position: relative;
-          z-index: 2;
-          width: 710px;
-          padding: 40px 0 36px;
-          margin: -50px auto 0;
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: space-around;
-          background: #ffffff;
-          border-radius: 10px;
-          .item {
-              text-align: center;
-              img {
-                  width: 88px;
-                  height: 88px;
-                  display: block;
-                  margin-bottom: 20px;
-              }
-              span {
-                  color: #999999;
-                  font-size: 24px;
-              }
+      .ordertype {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+        .orderitem {
+          text-align: center;
+          img {
+            display: block;
+            width: 88px;
+            height: 88px;
+            margin: 30px auto 20px;
           }
+          span {
+            display: block;
+            width: 100%;
+            margin-bottom: 30px;
+            color: #999999;
+            font-size: 20px;
+          }
+        }
       }
-      .myorder {
-          background: #ffffff;
-          width: 710px;
-          margin: 20px auto 0;
-          border-radius: 10px;
-          .ordertitle {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              height: 84px;
-              line-height: 84px;
-              font-size: 24px;
-              padding: 0 20px;
-              border-bottom: 2px solid #f0f0f0;
-              span {
-                  color: #666666;
-              }
-              .titleright {
-                  img {
-                      display: inline;
-                      width: 18px;
-                      height: 18px;
-                      margin-left: 16px;
-                  }
-                  span {
-                      color: #999999;
-                  }
-              }
-          }
-          .ordertype {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-around;
-              .orderitem {
-                  text-align: center;
-                  img {
-                      display: block;
-                      width: 88px;
-                      height: 88px;
-                      margin: 30px auto 20px;
-                  }
-                  span {
-                      display: block;
-                      width: 100%;
-                      margin-bottom: 30px;
-                      color: #999999;
-                      font-size: 20px;
-                  }
-              }
-          }
+    }
+    .buttons {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      justify-content: center;
+      padding: 24px 0;
+      .btn {
+        width: 60px;
+        border-radius: 50%;
+        background-color: #000;
       }
-      .buttons {
-          position: absolute;
-          width: 100%;
-          bottom: 0;
-          justify-content: center;
-          padding: 24px 0;
-          .btn {
-              width: 60px;
-              border-radius: 50%;
-              background-color: #000;
-          }
-          .btn-txt {
-              width: 160px;
-              height: 60px;
-              border-radius: 30px;
-              background-color: rgba(255, 255, 255, 0.6);
-              border: 0;
-              &1 {
-                  margin: 0 24px 0 91px;
-              }
-              &2 {
-                  margin: 0 91px 0 24px;
-              }
-          }
+      .btn-txt {
+        width: 160px;
+        height: 60px;
+        border-radius: 30px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border: 0;
+        &1 {
+          margin: 0 24px 0 91px;
+        }
+        &2 {
+          margin: 0 91px 0 24px;
+        }
       }
+    }
   }
 </style>

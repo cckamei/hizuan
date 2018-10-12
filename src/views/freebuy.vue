@@ -3,18 +3,18 @@
     <div class="appointment" @click="$router.push({'name':'bespeak'})">
       <img src="~assets/payment/card1.png" alt="" srcset="">
     </div>
-      <div class="instalments">
-        <img src="~assets/payment/card2.png" alt="" srcset="">
+    <div class="instalments">
+      <img src="~assets/payment/card2.png" alt="" srcset="">
     </div>
-        <div class="buttons flex">
-          <div class="btn" @click="$router.push({name:'index'})"><img src="~assets/home/button_home_b.png" alt=""></div>
-            <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
-            <button class="btn-txt btn-txt2">无忧购</button>
-            <div class="btn" @click="gomypage">
-              <img src="http://pd1957kyq.bkt.clouddn.com/new_avatar.png" alt="">
+    <div class="buttons flex">
+      <div class="btn" @click="$router.push({name:'index'})"><img src="~assets/home/button_home_b.png" alt=""></div>
+      <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
+      <button class="btn-txt btn-txt2">无忧购</button>
+      <div class="btn" @click="gomypage">
+        <img src="http://pd1957kyq.bkt.clouddn.com/new_avatar.png" alt="">
       </div>
-            </div>
-          </div>
+    </div>
+  </div>
 </template>
 
 <script>

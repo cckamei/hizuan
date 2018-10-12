@@ -15,41 +15,20 @@
           <button class="btn" @click="$router.push({name: 'index'})">回到首页</button>
         </div>
       </div>
-      <v-recommend title="继续购买" :list="recommend"></v-recommend>
     </div>
   </div>
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapMutations } from 'vuex';
   import ss from '../assets/goods/pic_guguring.png';
 
   export default {
     data() {
       return {
-        recommend: [{
-          url: ss,
-          name: '文承 戒指',
-          price: '6666',
-          like: false
-        }, {
-          url: ss,
-          name: '文承 戒指',
-          price: '6666',
-          like: false
-        }, {
-          url: ss,
-          name: '文承 戒指',
-          price: '6666',
-          like: false
-        }, {
-          url: ss,
-          name: '文承 戒指',
-          price: '6666',
-          like: false
-        }]
       };
     },
+    // mapActions
     methods: {
       ...mapActions(['ajax'])
     }
