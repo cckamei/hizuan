@@ -338,7 +338,7 @@
       }
     },
     methods: {
-      ...mapMutations(['setCart', 'clearPayOrder']),
+      ...mapMutations(['setCart', 'clearPayOrder', 'setPayOrder']),
       ...mapActions(['ajax']),
       fetchGoodsDetail() {
         this.ajax({
@@ -450,28 +450,24 @@
           return false;
         }
 
-        // this.ajax({
-        //   name: 'buyNow',
-        //   data: {
-        //     'cart_id': this.sku.skuId || this.defaultSKU,
-        //     num: this.sku.count,
-        //     kezi: this.lettering.text,
-        //     kezi_yaoqiu: this.lettering.remarks,
-        //     emp_id: this.emp_id
-        //   }
-        // }).then(res => {
-        //   this.setCart([{
-        //     cart_id: this.sku.skuId || this.defaultSKU,
-        //     count: this.sku.count,
-        //     goods_id: this.res.goods_id,
-        //     goods_title: this.res.goods_title,
-        //     img: this.res.img,
-        //     price: this.sku.price || this.res.price,
-        //     sub_title: this.res.sub_title
-        //   }]);
-        //   this.clearPayOrder();
-        //   this.$router.push({ name: 'confirmorder' });
-        // });TODO
+        this.setCart([{
+          cart_id: this.sku.skuId || this.defaultSKU,
+          count: this.sku.count,
+          goods_id: this.res.goods_id,
+          goods_title: this.res.goods_title,
+          img: this.res.img,
+          price: this.sku.price || this.res.price,
+          sub_title: this.res.sub_title
+        }]);
+        this.clearPayOrder();
+        this.setPayOrder({
+          cart_id: this.sku.skuId || this.defaultSKU,
+          num: this.sku.count,
+          kezi: this.lettering.text,
+          kezi_yaoqiu: this.lettering.remarks,
+          emp_id: this.emp_id
+        });
+        this.$router.push({ name: 'confirmorder' });
       },
       collect() {
         if(!this.token) {

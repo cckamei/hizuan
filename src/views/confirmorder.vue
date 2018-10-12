@@ -192,12 +192,35 @@
             this.setPayOrder(res);
             this.$router.push({ name: 'pay' });
           });
-        } else { //新增
-          this.ajax({ name: 'addOrder', data: this.reqData }).then(res => {
-            Object.assign(res, this.reqData);
-            this.setPayOrder(res);
-            this.$router.push({ name: 'pay' });
-          });
+        } else {
+          if(!this.getPayOrder.num) {
+            //购物车支付
+            this.ajax({ name: 'addOrder', data: this.reqData }).then(res => {
+              Object.assign(res, this.reqData);
+              this.setPayOrder(res);
+              this.$router.push({ name: 'pay' });
+            });
+          } else {
+            //立即购买
+            this.ajax({
+              name: 'buyNow',
+              data: {
+                coupon_id: this.reqData.coupon_id, //优惠券id
+                address_id: this.reqData.address_id, //地址id
+                yaoqiu: this.reqData.yaoqiu,
+                logitics_id: this.reqData.logitics_id, //快递id
+                sku: this.getPayOrder.cart_id,
+                num: this.getPayOrder.num,
+                kezi: this.getPayOrder.kezi,
+                kezi_yaoqiu: this.getPayOrder.kezi_yaoqiu,
+                emp_id: this.getPayOrder.emp_id
+              }
+            }).then(res => {
+              Object.assign(res, this.reqData);
+              this.setPayOrder(res);
+              this.$router.push({ name: 'pay' });
+            });
+          }
         }
       },
       handleUse(index) {
