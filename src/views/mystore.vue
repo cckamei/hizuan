@@ -15,7 +15,7 @@
     </div>
     <div class="content">
       <ul class="list">
-        <li v-for="(item, index) in goodsList" :key="index" class="flex" v-touch.press="handlePress" @click.stop="goDetail(item)">
+        <li v-for="(item, index) in goodsList" :key="index" class="flex" @click.stop="goDetail(item)">
           <div class="libox">
             <div class="img"><img :src="item.img" alt=""></div>
             <div class="detail flex-auto flex">
@@ -25,9 +25,6 @@
                 <div class="price"><span>￥</span>{{item.price | currency}}</div>
                 <div class="cart" @click.stop="addToCart"></div>
               </div>
-            </div>
-            <div class="mask-delete flex" v-if="item.deleteVisible" @click="item.deleteVisible = false">
-              <div class="delete" @click="removeCart(item, index)">删除</div>
             </div>
           </div>
         </li>
@@ -57,7 +54,7 @@
         sortVisible: false,
         filterIndex: -1,
         sortIndex: -1,
-        filters: ['结', '醒狮MeiMei', '婚嫁', '情侣', 'CHIC潮', '文承', 'TANG玲珑', '点亮'],
+        filters: [],
         sorts: ['价格从高到低', '价格从低到高'],
         goodsList: [],
         pageInfo: {},

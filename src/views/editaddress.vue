@@ -12,7 +12,7 @@
           <v-form-input label="姓名" v-model="reqData.name" maxlength="20" placeholder="请填写收货人姓名"></v-form-input>
         </li>
         <li>
-          <v-form-input label="手机号" :type="'number'" v-model="reqData.phone" maxlength="11" placeholder="请填写收货人手机号"></v-form-input>
+          <v-form-input label="手机号" type="tel" v-model="reqData.phone" maxlength="11" placeholder="请填写收货人手机号"></v-form-input>
         </li>
         <li class="address">
           <label>所在地区</label>

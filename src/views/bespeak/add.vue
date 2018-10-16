@@ -42,7 +42,7 @@
                 <v-form-input label="姓名" v-model="reqData.name" placeholder="请填写您的真实姓名" :readonly="!getAppointment.edit"></v-form-input>
               </li>
               <li>
-                <v-form-input label="手机" :type="'number'" v-model="reqData.tel" placeholder="请填写您的真实手机号码" :readonly="!getAppointment.edit"></v-form-input>
+                <v-form-input label="手机" v-model="reqData.tel" type="tel" placeholder="请填写您的真实手机号码" :readonly="!getAppointment.edit"></v-form-input>
               </li>
               <li>
                 <v-form-select label="性别" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别" :readonly="!getAppointment.edit"></v-form-select>

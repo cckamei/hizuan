@@ -62,7 +62,7 @@
           </li>
           <li>
             <label>联系人电话</label>
-            <input type="text" :type="'number'" v-model="reqData.linkphone" maxlength="11" placeholder="请填写联系人手机号" />
+            <input type="tel" v-model="reqData.linkphone" maxlength="11" placeholder="请填写联系人手机号" />
           </li>
         </ul>
       </div>

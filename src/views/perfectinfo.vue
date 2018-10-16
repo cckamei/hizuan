@@ -18,13 +18,17 @@
               <v-form-datepicker :arrow="true" label="生日*" title="生日日期" v-model="reqData.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日"></v-form-datepicker>
             </li>
             <li>
-              <v-form-input label="身份证号*" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
-            </li>
-            <li>
               <v-form-select label="职业*" :arrow="true" title="职业选择" v-model="career" :list="careerList" placeholder="请选择您所从事的职业"></v-form-select>
             </li>
           </ul>
           <div class="more" v-if="!loadmore" @click="loadmore = true">点击展开填写详细资料获取更多优惠（选填）</div>
+        </li>
+        <li class="section" v-if="loadmore">
+          <ul class="form">
+            <li>
+              <v-form-input label="身份证号*" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
+            </li>
+          </ul>
         </li>
         <li class="section" v-if="loadmore">
           <ul class="form">
@@ -56,12 +60,9 @@
             <li>
               <v-form-datepicker :arrow="true" label="女儿生日" title="女儿生日" v-model="reqData.daughter_birth" format="yyyy-MM-dd" yearFormat="{value}年" monthFormat="{value}月" dateFormat="{value}日" placeholder="请选择"></v-form-datepicker>
             </li>
-            <li>
-              <v-form-input label="兴趣爱好" v-model="reqData.hobbit" maxlength="20"></v-form-input>
-            </li>
           </ul>
         </li>
-        <li class="section" v-if="reqData.store_code">
+        <li class="section">
           <div class="more">以下内容由线下门店填写（选填）</div>
           <ul class="form">
             <li>
@@ -111,7 +112,7 @@
     },
     computed: {
       isActive() {
-        return this.reqData.nick_name.length && this.reqData.name.length && this.reqData.gender !== -1 && this.reqData.birthday.length && this.reqData.idcard.length && this.reqData.career !== -1;
+        return this.reqData.nick_name.length && this.reqData.name.length && this.reqData.gender !== -1 && this.reqData.birthday.length && this.reqData.career !== -1;
       }
     },
     methods: {

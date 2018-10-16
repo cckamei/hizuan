@@ -199,7 +199,7 @@
       <v-recommend class="section" ref="recommend" title="为你推荐" :list="recommend"></v-recommend>
     </div>
     <div class="footer flex">
-      <div class="fun-btns" @click="goCustomService">
+      <div class="fun-btns" @click="serviceVisible = true">
         <img src="~assets/goods/button_service.png" alt="">
         <span>客服</span>
       </div>
@@ -218,6 +218,11 @@
     <v-popup-confirm title="分享类型" v-model="shareVisible" @confirm="wxShare" :isConfirm="shareIndex !== -1">
       <v-input-radio v-model="shareIndex" :list="['普通分享','员工分享']"></v-input-radio>
     </v-popup-confirm>
+    <v-popup-confirm title="" v-model="serviceVisible" @confirm="goCustomService">
+      <div class="txt-center">
+        即将离开商城，接通您的专属客服。<br>您可以在公众号中回复“人工服务”与客服进行联系与沟通。
+      </div>
+    </v-popup-confirm>
   </div>
 </template>
 
@@ -231,6 +236,7 @@
       return {
         menusVisible: false,
         topVisible: false,
+        serviceVisible: false,
         top: 0,
         offsetTops: [],
         isZuan: true, //钻石/主石
@@ -887,13 +893,17 @@
 
 
 <style lang="less">
+  .txt-center {
+    text-align: center;
+    font-size: 28px;
+  }
+
   .goods-detail {
     .lettering-enable {
       button {
         width: 272px;
       }
     }
-
     .image-text {
       p {
         color: #666;

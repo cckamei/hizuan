@@ -4,7 +4,7 @@
     <div class="content">
       <ul class="form">
         <li>
-          <v-input-text placeholder="请输入手机号码" v-model="phone" clear maxlength="16" class="input"></v-input-text>
+          <v-input-text placeholder="请输入手机号码" type="tel" v-model="phone" clear maxlength="16" class="input"></v-input-text>
         </li>
         <li>
           <v-input-code placeholder="请输入验证码" v-model="code" :phone="phone" maxlength="16" class="input" action="register"></v-input-code>

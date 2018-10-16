@@ -126,7 +126,6 @@
     .btn {
       width: 60px;
       border-radius: 50%;
-      background-color: #000;
       overflow: hidden;
     }
     .btn-txt {

@@ -1,12 +1,13 @@
 <template>
   <div class="flex">
-    <input :maxlength="maxlength" type="text" v-model="code" :placeholder="placeholder" />
+    <input :maxlength="maxlength" type="tel" v-model="code" :placeholder="placeholder" />
     <button class="btn" :class="{active: !sending}" @click="!sending && sendAuthCode()">{{text}}</button>
   </div>
 </template>
 
 <script>
   import { mapActions } from 'vuex';
+  import { checkPhone } from '../utils';
 
   export default {
     props: {
@@ -54,7 +55,7 @@
           return false;
         }
 
-        if(this.phone.length !== 11) {
+        if(!checkPhone(this.phone)) {
           this.toast('手机号格式不正确');
           return false;
         }
