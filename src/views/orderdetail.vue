@@ -63,7 +63,7 @@
               <span>￥{{good.goods_price}}</span>
             </div>
             <div class="contentmessage">
-              <p>25分；VS/微瑕；H/白；奴戒-11号；基础服务保障</p>
+              <p>{{good.skuLabel}}</p>
               <div class="messageright">
                 <s>￥{{good.subtotal}}</s>
                 <span>X{{good.goods_count}}</span>
@@ -143,7 +143,7 @@
           配送方式：快递运输
         </div>
         <!-- 支付方式 -->
-        <ul class="paymethod">
+        <ul class="paymethod" v-if="order.pay_time">
           <li><span>支付方式</span> 微信支付</li>
           <li><span>支付时间</span> {{order.pay_time}}</li>
         </ul>
@@ -167,6 +167,7 @@
         cancelVisible: false,
         order: {
           address: {},
+          goods: [],
           logistics: {
             info: {
               data: []
@@ -182,6 +183,13 @@
         id: orderId
       }).then(res => {
         this.order = res;
+        this.order.goods.forEach(item => {
+          if(item.is_diamond) {
+            item.skuLabel = `${item.zhuzuanfenshu};${item.zuanshijingdu};${item.guige};${item.guige}`;
+          } else {
+            item.skuLabel = `${item.zhushimingcheng};${item.zhushipingji};${item.guige};${item.guige}`;
+          }
+        });
         if(!this.order.logistics.info) {
           this.order.logistics = {
             info: {
