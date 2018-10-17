@@ -26,7 +26,7 @@
         <li class="section" v-if="loadmore">
           <ul class="form">
             <li>
-              <v-form-input label="身份证号*" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
+              <v-form-input type="tel" label="身份证号" v-model="reqData.idcard" maxlength="20" placeholder="请填写您的身份证号码"></v-form-input>
             </li>
           </ul>
         </li>

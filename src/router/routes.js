@@ -202,7 +202,7 @@ const router = [
     path: '/home/freebuy',
     component: () => import('@/views/freebuy'),
     meta: {
-      params: ['token']
+      params: []
     }
   },
   {

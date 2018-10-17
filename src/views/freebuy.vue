@@ -11,7 +11,7 @@
       <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
       <button class="btn-txt btn-txt2">无忧购</button>
       <div class="btn" @click="gomypage">
-        <img src="http://pd1957kyq.bkt.clouddn.com/new_avatar.png" alt="">
+        <img :src="getUserInfo.avatar || 'http://pd1957kyq.bkt.clouddn.com/new_avatar.png'" alt="">
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
   import { mapMutations, mapActions, mapGetters } from 'vuex';
   export default {
     computed: {
-      ...mapGetters(['token'])
+      ...mapGetters(['token', 'getUserInfo'])
     },
     methods: {
       ...mapMutations(["setCommon"]),
@@ -65,7 +65,7 @@
       .btn {
         width: 60px;
         border-radius: 50%;
-        background-color: #000;
+        overflow: hidden;
       }
       .btn-txt {
         width: 160px;

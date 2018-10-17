@@ -896,6 +896,7 @@
   .txt-center {
     text-align: center;
     font-size: 28px;
+    padding: 40px 0;
   }
 
   .goods-detail {
