@@ -12,7 +12,7 @@
               <v-form-input label="姓名*" v-model="reqData.name" maxlength="4" placeholder="请填写您的真实姓名"></v-form-input>
             </li>
             <li>
-              <v-form-select label="性别*" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别"></v-form-select>
+              <v-form-select :arrow="true" label="性别*" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别"></v-form-select>
             </li>
             <li>
               <v-form-datepicker :arrow="true" label="生日*" title="生日日期" v-model="reqData.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日"></v-form-datepicker>
@@ -33,16 +33,16 @@
         <li class="section" v-if="loadmore">
           <ul class="form">
             <li>
-              <v-form-input label="中指指圈号" v-model="reqData.zzqh" maxlength="20"></v-form-input>
+              <v-form-input type="tel" label="中指指圈号" v-model="reqData.zzqh" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input label="无名指指圈号" v-model="reqData.wmzqh" maxlength="20"></v-form-input>
+              <v-form-input type="tel" label="无名指指圈号" v-model="reqData.wmzqh" maxlength="20"></v-form-input>
             </li>
             <li>
-              <v-form-input label="项链长度" v-model="reqData.xlcd" maxlength="20" unit="cm"></v-form-input>
+              <v-form-input type="tel" label="项链长度" v-model="reqData.xlcd" maxlength="20" unit="cm"></v-form-input>
             </li>
             <li>
-              <v-form-input label="手镯尺寸" v-model="reqData.szsc" maxlength="20" unit="mm"></v-form-input>
+              <v-form-input type="tel" label="手镯尺寸" v-model="reqData.szsc" maxlength="20" unit="mm"></v-form-input>
             </li>
           </ul>
         </li>

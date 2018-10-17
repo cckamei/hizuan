@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <input :maxlength="maxlength" type="text" v-model="account" :placeholder="placeholder" @focus="focus = true" @blur="focus = false" />
+    <input :maxlength="maxlength" :type="type" v-model="account" :placeholder="placeholder" @focus="focus = true" @blur="focus = false" />
     <div v-if="isDefined('clear')" v-show="focus && account.length" class="clear" @click="account = ''"></div>
   </div>
 </template>
@@ -22,6 +22,10 @@
       clear: {
         type: Boolean,
         default: false
+      },
+      type: {
+        type: String,
+        default: 'text'
       }
     },
     data() {
