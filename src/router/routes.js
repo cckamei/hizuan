@@ -19,7 +19,7 @@ const router = [
     path: '/goodslist/goodssearch/goodsdetail',
     component: () => import('@/views/goodsdetail'),
     meta: {
-      params: ['goodsId']
+      params: []
     }
   },
   {

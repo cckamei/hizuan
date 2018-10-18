@@ -274,16 +274,27 @@
         shareIndex: 0, //0普通分享 1员工分享
         shareVisible: false,
         autoOpenSKU: false,
-        emp_id: getParams().emp_id || ''
+        emp_id: getParams().emp_id || '',
+        goodsId: getParams().goodsId || ''
       };
     },
     created() {
-      this.fetchGoodsDetail();
-      this.fetchGoodsRecommend();
-      this.fetchBenifit();
       if(this.$route.params.openSKU) {
         this.autoOpenSKU = true;
       }
+
+      if(!this.goodsId) {
+        this.goodsId = this.getCommon.goodsId;
+      }
+
+      if(!this.goodsId) {
+        this.$router.push({ name: 'goodslist' });
+      }
+
+      this.fetchGoodsDetail();
+      this.fetchGoodsRecommend();
+      this.fetchBenifit();
+      console.log(this.goodsId);
     },
     mounted() {
       setTimeout(() => {
@@ -349,7 +360,7 @@
       fetchGoodsDetail() {
         this.ajax({
           name: 'goodsDetail',
-          id: this.getCommon.goodsId
+          id: this.goodsId
         }).then(res => {
           this.res = res;
           let skuScore = [];
@@ -423,7 +434,7 @@
         this.ajax({
           name: 'goodsRecommend',
           data: {
-            'goods_id': this.getCommon.goodsId
+            'goods_id': this.goodsId
           }
         }).then(res => {
           this.recommend = res;
@@ -433,7 +444,7 @@
         this.ajax({
           name: 'coupons',
           data: {
-            'goods_id': this.getCommon.goodsId
+            'goods_id': this.goodsId
           }
         }).then(res => {
           this.benifit = res;
@@ -511,7 +522,7 @@
             num: this.sku.count,
             kezi: this.lettering.text,
             yaoqiu: this.lettering.remarks,
-            emp_id: this.getUserInfo.is_distributor || ''
+            emp_id: this.emp_id
           }
         }).then(res => {
           this.toast('已加入购物车');
@@ -532,21 +543,21 @@
 
         let ext = '';
         if(this.getUserInfo.is_distributor && this.userId) {
-          ext = `?emp_id=${this.userId}`;
+          ext = `&emp_id=${this.userId}`;
         }
         //微信分享
         window.wx.showOptionMenu();
         // 分享给朋友
         window.wx.onMenuShareAppMessage({
           'imgUrl': this.res.img,
-          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail${ext}`,
+          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?goodsId=${this.goodsId}${ext}`,
           'title': this.res.goods_title,
           'desc': this.res.sub_title
         });
         // 分享到朋友圈
         window.wx.onMenuShareTimeline({
           'imgUrl': this.res.img,
-          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail${ext}`,
+          'link': `${window.location.origin}/?from=wechat#/goodslist/goodssearch/goodsdetail?goodsId=${this.goodsId}${ext}`,
           'title': this.res.goods_title + ',' + this.res.sub_title
         });
       },
