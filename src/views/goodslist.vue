@@ -63,7 +63,7 @@
         goodsList: [],
         pageInfo: {},
         loading: false,
-        category: ''
+        category: {}
       };
     },
     created() {
@@ -105,9 +105,7 @@
           Object.assign(reqData, { orderby: Math.abs(this.sortSelectedIndex - 1) });
         }
 
-        if(this.category) {
-          Object.assign(reqData, this.category);
-        }
+        Object.assign(reqData, this.category);
 
         this.ajax({
           name: 'goods',

@@ -146,11 +146,23 @@ let xhr = config => {
 
     switch (method) {
       case 'get':
-      case 'delete':
         return new Promise((resolve, reject) => {
           axios[method](url, {
             params: data,
             headers
+          })
+            .then(res => {
+              checkStatus(resolve, reject, res, config);
+            })
+            .catch(res => {
+              reject(res);
+            });
+        });
+      case 'delete':
+        return new Promise((resolve, reject) => {
+          axios[method](url, {
+            headers,
+            data
           })
             .then(res => {
               checkStatus(resolve, reject, res, config);
