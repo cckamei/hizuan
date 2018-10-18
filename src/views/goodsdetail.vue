@@ -74,7 +74,7 @@
       </template>
       <div class="gap"></div>
       <div class="row">
-        <v-form-slide-up :open="autoOpenSKU" label="商品规格" v-model="sku.selectedSku" :placeholder="`选择 ${isZuan ? '主钻分数；钻石净度；' : '主石名称；主石评级；'}颜色；规格；数量`">
+        <v-form-slide-up :open.sync="autoOpenSKU" label="商品规格" v-model="sku.selectedSku" :placeholder="`选择 ${isZuan ? '主钻分数；钻石净度；' : '主石名称；主石评级；'}颜色；规格；数量`">
           <ul class="sku">
             <li class="sku-icon flex">
               <img class="icon" :src="res.img" alt="">
@@ -361,7 +361,7 @@
 
           res.skus.forEach((item, index) => {
             if(!index) {
-              this.defaultSKU = item.sku_id; //默认第条是默认sku
+              this.defaultSKU = item.sku_id; //默认第1条是默认sku
             }
             if(this.isZuan) {
               if(item.zhuzuanfenshu) {
@@ -456,6 +456,11 @@
           return false;
         }
 
+        if(!this.sku.skuId) {
+          this.autoOpenSKU = true;
+          return false;
+        }
+
         this.setCart([{
           cart_id: this.sku.skuId || this.defaultSKU,
           count: this.sku.count,
@@ -501,6 +506,11 @@
       addCart() {
         if(!this.token) {
           this.$router.push({ name: 'login', params: { name: 'goodsdetail' } });
+          return false;
+        }
+
+        if(!this.sku.skuId) {
+          this.autoOpenSKU = true;
           return false;
         }
 

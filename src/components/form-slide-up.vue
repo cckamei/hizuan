@@ -40,6 +40,14 @@
         this.visible = this.open;
       }, 1000);
     },
+    watch: {
+      open(val) {
+        this.visible = val;
+      },
+      visible(val) {
+        this.$emit('update:open', val);
+      }
+    },
     methods: {
       confirm() {
         this.visible = false;
