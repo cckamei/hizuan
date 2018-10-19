@@ -53,7 +53,6 @@
               window.localStorage.setItem('accpet', 'cckamei');
               //3.去掉code参数,防止直接复制链接出去带上旧的code
               window.location.href = window.location.href.replace(/[&?]code=[\w]{32}/, '');
-
               this.ajax({
                 name: 'getAddress'
               }).then(res => {
@@ -67,17 +66,16 @@
                   phone: address.phone,
                   address: `${address.province}${address.city}${address.district}${address.street}`
                 });
-              });
-
-              this.ajax({
-                name: 'getUserInfo'
-              }).then(res2 => {
-                this.setUserInfo(res2);
-                if(res2.phone) {
-                  this.$router.replace({ name: this.getCommon.lastPage });
-                } else {
-                  this.$router.push({ name: 'verifyphone' });
-                }
+                this.ajax({
+                  name: 'getUserInfo'
+                }).then(res2 => {
+                  this.setUserInfo(res2);
+                  if(res2.phone) {
+                    this.$router.replace({ name: this.getCommon.lastPage });
+                  } else {
+                    this.$router.push({ name: 'verifyphone' });
+                  }
+                });
               });
             });
         }
