@@ -3,14 +3,17 @@
     <v-header>设置</v-header>
     <ul>
       <li @click="goMyData()">个人资料</li>
-      <li @click="goRevisePwd()">修改密码</li>
+      <li @click="goRevisePwd()" v-if="getUserInfo.phone_login == 1">修改密码</li>
       <li @click="goback()">退出</li>
     </ul>
   </div>
 </template>
 <script>
-  import { mapMutations } from 'vuex';
+  import { mapMutations, mapGetters } from 'vuex';
   export default {
+    computed: {
+      ...mapGetters(['getUserInfo'])
+    },
     methods: {
       ...mapMutations(['logout']),
       goMyData() {
