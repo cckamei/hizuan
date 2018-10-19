@@ -71,7 +71,11 @@
                 }).then(res2 => {
                   this.setUserInfo(res2);
                   if(res2.phone) {
-                    this.$router.replace({ name: this.getCommon.lastPage });
+                    if(res2.vip_code) {
+                      this.$router.replace({ name: this.getCommon.lastPage });
+                    } else {
+                      this.$router.push({ name: 'perfectinfo' });
+                    }
                   } else {
                     this.$router.push({ name: 'verifyphone' });
                   }
@@ -101,13 +105,6 @@
         }).then(res => {
           this.setUserInfo({ token: res.token, userId: res.user_id });
           this.ajax({
-            name: 'getUserInfo'
-          }).then(res2 => {
-            this.setUserInfo(res2);
-            this.$router.go(-1);
-          });
-
-          this.ajax({
             name: 'getAddress'
           }).then(res => {
             let data = res;
@@ -119,6 +116,22 @@
               name: address.name,
               phone: address.phone,
               address: `${address.province}${address.city}${address.district}${address.street}`
+            });
+
+            this.ajax({
+              name: 'getUserInfo'
+            }).then(res2 => {
+              this.setUserInfo(res2);
+
+              if(res2.phone) {
+                if(res2.vip_code) {
+                  this.$router.go(-1);
+                } else {
+                  this.$router.push({ name: 'perfectinfo' });
+                }
+              } else {
+                this.$router.push({ name: 'verifyphone' });
+              }
             });
           });
         }).catch(res => {
