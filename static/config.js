@@ -5,7 +5,7 @@
     designWidth: 750,
     mock: false,
     wxproxy: 'http://shop.cc-jewel.com/wx.proxy.html',
-    iswxproxy: false,
+    iswxproxy: true,
     wxconfig: ['hideOptionMenu', 'showOptionMenu', 'checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'openLocation', 'getLocation', 'chooseWXPay', 'addCard', 'chooseCard', 'openCard', 'scanQRCode']
   };
 })(window);
