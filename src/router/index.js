@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
       .dispatch('ajax', {
         name: 'getWxSign',
         data: {
-          url: encodeURIComponent(window.location.href.split('#')[0])
+          url: encodeURIComponent(window.location.href.split('#')[0].split('&')[0])
         }
       })
       .then(res => {
