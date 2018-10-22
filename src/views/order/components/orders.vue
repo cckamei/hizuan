@@ -32,7 +32,7 @@
       <div class="item-footer">
         <!-- 待收货 2-->
         <div class="ordertypeDF" v-if="order.status==2">
-          <!-- <button class="btngrey btnleft">查看物流</button>
+          <!-- <button class="btngrey btnleft"> </button>
           <button class="btnpink" @click="$router.push({ name: 'pay' })">确认收货</button> -->
           <button class="btngrey btnleft" @click="gotLogistics(order.order_id)">查看物流</button>
           <button class="btngrey" @click="confirm(order.order_id)">确认收货</button>
