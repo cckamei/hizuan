@@ -44,7 +44,7 @@
     },
     methods: {
       ...mapActions(['ajax']),
-      ...mapMutations(['setCommon']),
+      ...mapMutations(['setCommon', 'setUserInfo']),
       next() {
         if(!this.phone.length) {
           this.toast('手机号码不能为空');
@@ -82,19 +82,19 @@
 
 <style lang="less" scoped>
   .form {
-    padding: 0 20px;
-    background-color: #fff;
-    li {
-      border-bottom: 1px solid #f0f0f0; /*no*/
       padding: 0 20px;
-      height: 96px;
-      .input {
-        height: 100%;
+      background-color: #fff;
+      li {
+          border-bottom: 1px solid #f0f0f0; /*no*/
+          padding: 0 20px;
+          height: 96px;
+          .input {
+              height: 100%;
+          }
       }
-    }
   }
 
   .btns {
-    padding: 36px 40px;
+      padding: 36px 40px;
   }
 </style>
