@@ -44,7 +44,7 @@
     },
     methods: {
       ...mapActions(['ajax']),
-      ...mapMutations(['setCommon']),
+      ...mapMutations(['setCommon', 'setUserInfo']),
       next() {
         if(!this.phone.length) {
           this.toast('手机号码不能为空');

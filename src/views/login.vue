@@ -108,15 +108,17 @@
             name: 'getAddress'
           }).then(res => {
             let data = res;
-            this.addressList = data;
-            let index = res.findIndex(item => item.default);
-            let address = res[index];
-            this.setAddress({
-              id: address.id,
-              name: address.name,
-              phone: address.phone,
-              address: `${address.province}${address.city}${address.district}${address.street}`
-            });
+            if(res.length) {
+              this.addressList = data;
+              let index = res.findIndex(item => item.default);
+              let address = res[index];
+              this.setAddress({
+                id: address.id,
+                name: address.name,
+                phone: address.phone,
+                address: `${address.province}${address.city}${address.district}${address.street}`
+              });
+            }
 
             this.ajax({
               name: 'getUserInfo'
