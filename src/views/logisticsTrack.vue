@@ -2,13 +2,19 @@
   <div class="logisticsTrack">
     <v-header>物流跟踪</v-header>
     <div class="content">
-      <div class="logisticsTrackTop">
+      <div class="logisticsTrackTop" v-if="!order.logistics.info.data.length">
+        <ul>
+          <li><span>暂无物流信息</span></li>
+        </ul>
+      </div>
+
+      <div class="logisticsTrackTop" v-if="order.logistics.info.data.length">
         <ul>
           <li><span>运单号：</span>{{order.logistics.id}}</li>
           <li><span>承运公司：</span>{{order.logistics.name}}快递</li>
         </ul>
       </div>
-      <div class="logisticsLine">
+      <div class="logisticsLine" v-if="order.logistics.info.data.length">
         <ul>
           <li v-for="(item,i) in order.logistics.info.data">
             <i class="point" :class="{colorpoint:i==0}"></i>
@@ -41,11 +47,15 @@
     },
     created() {
       let orderId = this.getOrderId;
+      console.log(orderId);
       this.ajax({
         name: 'getOrder',
         id: orderId
       }).then(res => {
-        this.order = res;
+        console.log(res);
+        if(res.logistics.info) {
+          this.order = res;
+        }
       });
     },
     computed: {
