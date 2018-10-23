@@ -32,10 +32,10 @@
       <div class="item-footer">
         <!-- 待收货 2-->
         <div class="ordertypeDF" v-if="order.status==2">
-          <!-- <button class="btngrey btnleft">查看物流</button>
+          <!-- <button class="btngrey btnleft"> </button>
           <button class="btnpink" @click="$router.push({ name: 'pay' })">确认收货</button> -->
-          <button class="btngrey btnleft">查看物流</button>
-          <button class="btngrey" @click="goDetail(order.order_id)">确认收货</button>
+          <button class="btngrey btnleft" @click="gotLogistics(order.order_id)">查看物流</button>
+          <button class="btngrey" @click="confirm(order.order_id)">确认收货</button>
         </div>
         <!-- 已完成 3-->
         <div class="ordertypeDF" v-if="order.status==3">
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex';
+  import { mapMutations, mapActions } from 'vuex';
   export default {
     props: ['orders'],
     created() {
@@ -82,6 +82,7 @@
 
     },
     methods: {
+      ...mapActions(['ajax']),
       ...mapMutations(['setCommon', 'setAppointment']),
       goDetail(orderId) {
         this.setCommon({ orderId: orderId });
@@ -105,6 +106,21 @@
       typename(type) {
         let _typenames = ['待付款', '待发货', '待收货', '已完成', '退款中', '', '已退款', '', '已取消'];
         return _typenames[type];
+      },
+      gotLogistics(orderId) {
+        this.setCommon({ orderId: orderId });
+        this.$router.push({ name: 'logistics' });
+      },
+      confirm(orderId) {
+        this.ajax({
+          name: 'changeOrder',
+          data: {
+            order_id: orderId,
+            action: 'affirm'
+          }
+        }).then(res => {
+          this.$router.push({ name: 'orderlist', params: { type: 3 } });
+        });
       },
       goCustomService() {
         window.wx.closeWindow();

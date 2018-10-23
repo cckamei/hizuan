@@ -110,7 +110,7 @@
           <!-- 待付款 -->
           <div class="ordertypeDF" v-if="order.status==0">
             <button class="btngrey btnleft flexleft" @click="cancelOrder">取消订单</button>
-            <button class="btngrey btnleft">查看物流</button>
+            <button class="btngrey btnleft" @click="gotLogistics()">查看物流</button>
             <button class="btnpink" @click="$router.push({ name: 'pay' })">立即付款</button>
           </div>
           <!-- 已取消 -->
@@ -240,7 +240,7 @@
             action: 'cancel'
           }
         }).then(res => {
-          this.$router.push({ name: 'orderlist', params: { type: -1 } });
+          this.$router.push({ name: 'orderlist', params: { type: 3 } });
         });
       },
       goCustomService() {
