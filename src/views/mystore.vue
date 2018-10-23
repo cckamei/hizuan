@@ -129,7 +129,6 @@
       handlePress(eventName, e, hammer) {
         if(eventName === 'press') {
           this.goodsList[hammer.index].deleteVisible = true;
-          console.log(this.goodsList[hammer.index]);
         }
       },
       removeCart(item, index) {

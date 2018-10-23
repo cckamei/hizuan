@@ -11,7 +11,9 @@
           <div class="detail flex-auto flex">
             <span class="name">{{item.goods_title}}</span>
             <span class="desc">{{item.skuLabel}}</span>
-            <span class="kezi" @click="openKezi(item)">刻字</span>
+            <div class="kezi">
+              <span @click="openKezi(item)">刻字</span> <span>&nbsp;&nbsp;&nbsp;库存：{{item.limit}}</span>
+            </div>
             <template v-if="item.limit">
               <div class="line3">
                 <span class="price"><span>￥</span>{{item.price | currency}}</span>
@@ -24,7 +26,7 @@
             </template>
             <template v-else>
               <div class="line3 flex">
-                <span class="note">所选规格暂时无货</span>
+                <span class="note">所选规格库存不足</span>
                 <button class="rechoose btn" @click="goGoodsDetail(item)">重选</button>
               </div>
             </template>
@@ -230,11 +232,13 @@
       }
       .img {
         width: 200px;
-        height: 200px;
+        height: 240px;
+        padding-top:20px;
+        padding-bottom:20px;
         margin-left: 20px;
         margin-right: 30px;
         flex-shrink: 0;
-        background-color: #f5f5f5;
+        // background-color: #f5f5f5;
         img {
           height: 100%;
         }

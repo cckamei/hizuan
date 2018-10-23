@@ -1,6 +1,6 @@
 <template>
   <ul class="flex">
-    <li v-for="(item, index) in list" @click="switchBtn(item, index)" :key="index">
+    <li v-for="(item, index) in list" @click="!disabled && switchBtn(item, index)" :key="index">
       <button :class="{active: selectIndex === index, disabled: item.disabled}">{{typeof item === 'string' ? item : item[keyName]}}</button>
     </li>
   </ul>
@@ -22,6 +22,10 @@
         default: 'label'
       },
       cancel: {
+        type: Boolean,
+        default: false
+      },
+      disabled: {
         type: Boolean,
         default: false
       }

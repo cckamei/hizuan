@@ -23,7 +23,10 @@
               </div>
               <div class="detail flex-auto flex">
                 <span class="name">{{item.goods_title}}</span>
-                <span class="desc">{{item.sub_title}}</span>
+                <span class="desc">{{item.skuLabel}}</span>
+                <div class="kezi">
+                  <span @click="openKezi(item)">刻字</span> <span>&nbsp;&nbsp;&nbsp;库存：{{item.limit}}</span>
+                </div>
                 <div class="line3 flex">
                   <span class="price"><span>￥</span>{{item.price | currency}}</span>
                   <div class="number">X{{item.count}}</div>
@@ -93,6 +96,22 @@
       <div class="price">￥{{totalMoney | currency}}</div>
       <button class="btn settlement" @click="addOrder">提交订单</button>
     </div>
+    <v-slide-up v-model="lettering.keziVisible" title="刻字定制">
+      <ul class="lettering">
+        <li class="lettering-enable">
+          <div class="title">是否刻字</div>
+          <v-button-radio :disabled="true" v-model="lettering.disable" :list="['是', '否']"></v-button-radio>
+        </li>
+        <li>
+          <div class="title">刻字內容</div>
+          <input :disabled="true" v-model="lettering.text" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的刻字内容">
+        </li>
+        <li>
+          <div class="title">要求</div>
+          <input :disabled="true" v-model="lettering.remarks" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的要求">
+        </li>
+      </ul>
+    </v-slide-up>
   </div>
 </template>
 
@@ -108,6 +127,14 @@
         benifit: [], //优惠
         deliveryIndex: 0,
         delivery: [], //快递
+        lettering: { //刻字
+          keziVisible: false,
+          disable: 1,
+          text: '',
+          remarks: '',
+          lettering: '',
+          skuId: ''
+        },
         reqData: {
           skus: [],
           coupon_id: '', //优惠券id
@@ -232,6 +259,12 @@
         let selectBenefit = this.benifit[index];
         this.benefitMoney = selectBenefit.discount_money;
         this.reqData.coupon_id = selectBenefit.coupon_id;
+      },
+      openKezi(val) {
+        this.lettering.keziVisible = true;
+        this.lettering.disable = Number(!val.kezi.kezi);
+        this.lettering.text = val.kezi.kezi;
+        this.lettering.remarks = val.kezi.yaoqiu;
       }
     }
   };
@@ -280,10 +313,12 @@
           }
           .img {
             width: 200px;
-            height: 200px;
+            height: 240px;
+            padding-top:20px;
+            padding-bottom:20px;
             margin-right: 30px;
             flex-shrink: 0;
-            background-color: #f5f5f5;
+            // background-color: #f5f5f5;
             img {
               height: 100%;
             }
@@ -300,6 +335,11 @@
             .desc {
               font-size: 20px;
               color: #999;
+              padding-top: 24px;
+            }
+            .kezi {
+              font-size: 20px;
+              color: #cdb49b;
               padding-top: 24px;
             }
             .line3 {
@@ -425,5 +465,30 @@
       }
     }
   }
+
+  .lettering {
+    li {
+      padding: 20px;
+      font-size: 24px;
+      color: #666;
+      .lettering-text {
+        height: 84px;
+        line-height: 84px;
+        font-size: 24px;
+        color: #999;
+        border-bottom: 1px solid #f0f0f0; /*no*/
+        width: 100%;
+        margin-top: 20px;
+        background-color: #fff;
+      }
+    }
+  }
 </style>
+
+<style lang="less">
+  .confirm-order .lettering-enable button {
+    width: 272px;
+  }
+</style>
+
 

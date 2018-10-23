@@ -80,24 +80,24 @@
               <img class="icon" :src="res.img" alt="">
               <div>
                 <div class="price"><span>￥</span>{{sku.price | currency}}</div>
-                <span class="code">商品编号：{{sku.merchantCode}}</span>
+                <span class="code">商品编号：{{sku.merchantCode}} &nbsp;&nbsp;&nbsp; 库存：{{sku.stock}}</span>
               </div>
             </li>
             <li>
               <div class="title">{{isZuan ? '主钻分数' : '主石名称'}}</div>
-              <v-button-radio v-model="sku.scoreIndex" :list="sku.skuScore" :cancel="true"></v-button-radio>
+              <v-button-radio v-model="skuIndex.scoreIndex" :list="sku.skuScore" :cancel="true"></v-button-radio>
             </li>
             <li>
               <div class="title">{{isZuan ? '钻石净度' : '主石评级'}}</div>
-              <v-button-radio v-model="sku.clarityIndex" :list="sku.skuClarity" :cancel="true"></v-button-radio>
+              <v-button-radio v-model="skuIndex.clarityIndex" :list="sku.skuClarity" :cancel="true"></v-button-radio>
             </li>
             <li>
               <div class="title">颜色</div>
-              <v-button-radio v-model="sku.colorIndex" :list="sku.skuColor" :cancel="true"></v-button-radio>
+              <v-button-radio v-model="skuIndex.colorIndex" :list="sku.skuColor" :cancel="true"></v-button-radio>
             </li>
             <li>
               <div class="title">规格</div>
-              <v-button-radio v-model="sku.specIndex" :list="sku.skuSpec" :cancel="true"></v-button-radio>
+              <v-button-radio v-model="skuIndex.specIndex" :list="sku.skuSpec" :cancel="true"></v-button-radio>
             </li>
             <li class="count flex">
               <span>数量</span>
@@ -245,11 +245,13 @@
           bannerList: [],
           service: []
         },
-        sku: {
+        skuIndex: {
           scoreIndex: -1,
           clarityIndex: -1,
           colorIndex: -1,
-          specIndex: -1,
+          specIndex: -1
+        },
+        sku: {
           skuScore: [],
           skuClarity: [],
           skuColor: [],
@@ -294,7 +296,6 @@
       this.fetchGoodsDetail();
       this.fetchGoodsRecommend();
       this.fetchBenifit();
-      console.log(this.goodsId);
     },
     mounted() {
       setTimeout(() => {
@@ -306,7 +307,7 @@
       ...mapGetters(['getCommon', 'token', 'userId', 'getUserInfo'])
     },
     watch: {
-      sku: {
+      skuIndex: {
         handler({ scoreIndex, clarityIndex, colorIndex, specIndex }) {
           let selectIndexes = [scoreIndex, clarityIndex, colorIndex, specIndex];
           [this.sku.skuScore, this.sku.skuClarity, this.sku.skuColor, this.sku.skuSpec].forEach((type, typeIndex) => {
@@ -328,16 +329,21 @@
             this.sku.price = price;
             this.sku.merchantCode = merchant_code;
 
-            let selectedScore = this.sku.skuScore[this.sku.scoreIndex].label;
-            let selectedClarity = this.sku.skuClarity[this.sku.clarityIndex].label;
-            let selectedSpec = this.sku.skuSpec[this.sku.specIndex].label;
-            let selectedColor = this.sku.skuColor[this.sku.colorIndex].label;
+            let selectedScore = this.sku.skuScore[scoreIndex].label;
+            let selectedClarity = this.sku.skuClarity[clarityIndex].label;
+            let selectedSpec = this.sku.skuSpec[specIndex].label;
+            let selectedColor = this.sku.skuColor[colorIndex].label;
             this.sku.selectedSku = `${selectedScore};${selectedClarity};${selectedSpec};${selectedColor}`;
+
+            this.getGoodsStock(sku_id, stock => {
+              this.sku.stock = stock;
+            });
           } else {
             this.sku.limit = 99;
             this.sku.skuId = '';
             this.sku.merchantCode = '';
             this.sku.selectedSku = '';
+            this.sku.stock = '';
           }
         },
         deep: true
@@ -472,24 +478,36 @@
           return false;
         }
 
-        this.setCart([{
-          cart_id: this.sku.skuId || this.defaultSKU,
-          count: this.sku.count,
-          goods_id: this.res.goods_id,
-          goods_title: this.res.goods_title,
-          img: this.res.img,
-          price: this.sku.price || this.res.price,
-          sub_title: this.res.sub_title
-        }]);
-        this.clearPayOrder();
-        this.setPayOrder({
-          cart_id: this.sku.skuId || this.defaultSKU,
-          num: this.sku.count,
-          kezi: this.lettering.text,
-          kezi_yaoqiu: this.lettering.remarks,
-          emp_id: this.emp_id
+        this.getGoodsStock(this.sku.skuId || this.defaultSKU, () => {
+          this.setCart([{
+            cart_id: this.sku.skuId || this.defaultSKU,
+            count: this.sku.count,
+            goods_id: this.res.goods_id,
+            goods_title: this.res.goods_title,
+            img: this.res.img,
+            price: this.sku.price || this.res.price,
+            sub_title: this.res.sub_title
+          }]);
+          this.clearPayOrder();
+          this.setPayOrder({
+            cart_id: this.sku.skuId || this.defaultSKU,
+            num: this.sku.count,
+            kezi: this.lettering.text,
+            kezi_yaoqiu: this.lettering.remarks,
+            emp_id: this.emp_id
+          });
+          this.$router.push({ name: 'confirmorder' });
         });
-        this.$router.push({ name: 'confirmorder' });
+      },
+      getGoodsStock(skuId, cb) {
+        this.ajax({
+          name: 'goodsStock',
+          data: {
+            sku: skuId
+          }
+        }).then(res => {
+          cb(res.stock);
+        });
       },
       collect() {
         if(!this.token) {
