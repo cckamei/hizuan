@@ -18,7 +18,7 @@
             <span>￥{{good.goods_price}}</span>
           </div>
           <div class="contentmessage">
-            <p>{{good.server}}</p>
+            <p>{{good.skuLabel}}</p>
             <div class="messageright">
               <s>￥{{good.subtotal}}</s>
               <span>X{{good.goods_count}}</span>
@@ -131,119 +131,119 @@
 
 <style lang="less" scoped>
   .order-list {
-      margin-top: 112px;
-      .item {
-          background: #ffffff;
-          margin-bottom: 16px;
-          &-title {
-              padding: 0 30px;
-              height: 64px;
-              line-height: 64px;
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              .titleleft {
-                  img {
-                      display: inline-block;
-                      width: 24px;
-                      height: 24px;
-                      margin-right: 12px;
-                  }
-              }
-              .listright {
-                  font-size: 24px;
-                  color: #cdb498;
-              }
+    margin-top: 112px;
+    .item {
+      background: #ffffff;
+      margin-bottom: 16px;
+      &-title {
+        padding: 0 30px;
+        height: 64px;
+        line-height: 64px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        .titleleft {
+          img {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
           }
-          &-content {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              padding: 0 30px;
-              background: #f5f5f5;
-              margin-bottom: 8px;
-              .contentleft {
-                  width: 120px;
-                  height: 120px;
-                  margin: 20px 20px 20px 0;
-                  background: #ffffff;
-                  img {
-                      display: block;
-                      width: 100%;
-                      height: auto;
-                  }
-              }
-              .contentright {
-                  flex: 1;
-                  .contenttitle {
-                      display: flex;
-                      flex-flow: row nowrap;
-                      justify-content: space-between;
-                      margin: 30px 0 20px;
-                      color: #666666;
-                      font-size: 24px;
-                      span:nth-child-of(2) {
-                          text-align: right;
-                      }
-                  }
-                  .contentmessage {
-                      flex: 1;
-                      display: flex;
-                      flex-flow: row nowrap;
-                      justify-content: space-between;
-                      font-size: 24px;
-                      margin-bottom: 30px;
-                      color: #999999;
-                      p {
-                          width: 360px;
-                      }
-                      .messageright {
-                          text-align: right;
-                      }
-                      s {
-                          color: #cccccc;
-                          display: block;
-                      }
-                  }
-              }
-          }
-          &-price {
-              height: 64px;
-              line-height: 64px;
-              text-align: right;
-              padding: 0 30px;
-              font-size: 20px;
-              color: #666666;
-              border-bottom: 2px solid #cccccc;
-              span {
-                  font-size: 24px;
-              }
-          }
-          &-footer {
-              height: 80px;
-              text-align: right;
-              padding: 0 30px;
-              button {
-                  width: 140px;
-                  height: 52px;
-                  border-radius: 26px;
-                  font-size: 20px;
-                  margin-top: 14px;
-              }
-              .btnleft {
-                  margin-right: 30px;
-              }
-              .btngrey {
-                  background: #ffffff;
-                  border: 2px solid #cccccc;
-                  color: #666666;
-              }
-              .btnpink {
-                  background: #ffb4b4;
-                  border: 2px solid #ffb4b4;
-                  color: #ffffff;
-              }
-          }
+        }
+        .listright {
+          font-size: 24px;
+          color: #cdb498;
+        }
       }
+      &-content {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        padding: 0 30px;
+        background: #f5f5f5;
+        margin-bottom: 8px;
+        .contentleft {
+          width: 120px;
+          height: 120px;
+          margin: 20px 20px 20px 0;
+          background: #ffffff;
+          img {
+            display: block;
+            width: 100%;
+            height: auto;
+          }
+        }
+        .contentright {
+          flex: 1;
+          .contenttitle {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            margin: 30px 0 20px;
+            color: #666666;
+            font-size: 24px;
+            span:nth-child-of(2) {
+              text-align: right;
+            }
+          }
+          .contentmessage {
+            flex: 1;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #999999;
+            p {
+              width: 360px;
+            }
+            .messageright {
+              text-align: right;
+            }
+            s {
+              color: #cccccc;
+              display: block;
+            }
+          }
+        }
+      }
+      &-price {
+        height: 64px;
+        line-height: 64px;
+        text-align: right;
+        padding: 0 30px;
+        font-size: 20px;
+        color: #666666;
+        border-bottom: 2px solid #cccccc;
+        span {
+          font-size: 24px;
+        }
+      }
+      &-footer {
+        height: 80px;
+        text-align: right;
+        padding: 0 30px;
+        button {
+          width: 140px;
+          height: 52px;
+          border-radius: 26px;
+          font-size: 20px;
+          margin-top: 14px;
+        }
+        .btnleft {
+          margin-right: 30px;
+        }
+        .btngrey {
+          background: #ffffff;
+          border: 2px solid #cccccc;
+          color: #666666;
+        }
+        .btnpink {
+          background: #ffb4b4;
+          border: 2px solid #ffb4b4;
+          color: #ffffff;
+        }
+      }
+    }
   }
 </style>
