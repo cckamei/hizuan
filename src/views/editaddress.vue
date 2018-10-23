@@ -165,12 +165,21 @@
         this.address = this.reqData.province + '-' + this.reqData.city + '-' + this.reqData.district;
       },
       confirmSubmit() {
-        this.ajax({
-          name: 'setAdress',
-          data: Object.assign({}, this.reqData, { default: Number(this.reqData.default), address_id: this.reqData.id })
-        }).then(res => {
-          this.$router.back(-1);
-        });
+        if(this.isEdit) {
+          this.ajax({
+            name: 'setAdress',
+            data: Object.assign({}, this.reqData, { default: Number(this.reqData.default), address_id: this.reqData.id })
+          }).then(res => {
+            this.$router.back(-1);
+          });
+        } else {
+          this.ajax({
+            name: 'addAdress',
+            data: Object.assign({}, this.reqData, { default: Number(this.reqData.default) })
+          }).then(res => {
+            this.$router.back(-1);
+          });
+        }
       }
     }
   };

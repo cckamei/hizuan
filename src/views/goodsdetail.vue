@@ -478,7 +478,7 @@
           return false;
         }
 
-        this.getGoodsStock(this.sku.skuId || this.defaultSKU, () => {
+        this.getGoodsStock(this.sku.skuId || this.defaultSKU, stock => {
           this.setCart([{
             cart_id: this.sku.skuId || this.defaultSKU,
             count: this.sku.count,
@@ -486,7 +486,13 @@
             goods_title: this.res.goods_title,
             img: this.res.img,
             price: this.sku.price || this.res.price,
-            sub_title: this.res.sub_title
+            sub_title: this.res.sub_title,
+            limit: stock,
+            skuLabel: this.sku.selectedSku,
+            kezi: {
+              kezi: this.lettering.text,
+              yaoqiu: this.lettering.remarks
+            }
           }]);
           this.clearPayOrder();
           this.setPayOrder({

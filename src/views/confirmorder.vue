@@ -177,6 +177,23 @@
     methods: {
       ...mapMutations(['setPayOrder']),
       ...mapActions(['ajax']),
+      getGoodsStock(skuId, cb) {
+        this.ajax({
+          name: 'goodsStock',
+          data: {
+            sku: skuId
+          }
+        }).then(res => {
+          cb(res.stock);
+        });
+      },
+      setGoodsStock() {
+        this.cart.forEach(item => {
+          this.getGoodsStock(item.cart_id, stock => {
+            item.limit = stock;
+          });
+        });
+      },
       fetchMyCoupons() {
         this.ajax({ name: 'getCoupons' }).then(res => {
           res.forEach(item => {
@@ -187,7 +204,7 @@
             res = res.concat(this.getPayOrder.selectCoupons);
           }
           this.benifit = res;
-          if(this.getPayOrder.order_id) {
+          if(res.length && this.getPayOrder.order_id) {
             this.handleUse(res.length - 1);
           }
         });
@@ -204,6 +221,12 @@
       addOrder() {
         this.reqData.logitics_id = this.delivery[this.deliveryIndex].id;
         this.reqData.selectCoupons = this.benifit.filter(item => item.use);
+
+        if(this.cart.filter(item => item.limit == 0).length) {
+          this.toast('商品库存不足');
+          return false;
+        }
+
         //修改
         if(this.getPayOrder.order_id) {
           this.ajax({
@@ -218,6 +241,8 @@
             Object.assign(res, this.reqData);
             this.setPayOrder(res);
             this.$router.push({ name: 'pay' });
+          }).catch(() => {
+            this.setGoodsStock();
           });
         } else {
           if(!this.getPayOrder.num) {
@@ -226,6 +251,8 @@
               Object.assign(res, this.reqData);
               this.setPayOrder(res);
               this.$router.push({ name: 'pay' });
+            }).catch(() => {
+              this.setGoodsStock();
             });
           } else {
             //立即购买
