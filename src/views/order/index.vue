@@ -43,6 +43,15 @@
               return order.status == this.type;
             });
           }
+          this.orders.forEach(order => {
+            order.goods.forEach(item => {
+              if(item.is_diamond) {
+                item.skuLabel = `${item.zhuzuanfenshu};${item.zuanshijingdu};${item.guige};${item.guige}`;
+              } else {
+                item.skuLabel = `${item.zhushimingcheng};${item.zhushipingji};${item.guige};${item.guige}`;
+              }
+            });
+          });
         });
       }
     }
