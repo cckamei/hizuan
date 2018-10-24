@@ -3,6 +3,7 @@
     <img class="head" :src="userInfo.avatar" alt="">
     <div class="usermessage">
       <h2>{{userInfo.nick_name == null?'新用户':userInfo.nick_name}}</h2>
+      <span class="card">VIP卡号：{{userInfo.vip_code}}</span><br>
       <span>积分：{{userInfo.score || 0}}</span>
     </div>
     <img class="userset" src="~assets/mypage/set-icon.png" alt="" @click="$router.push({ name: 'myset' })">
@@ -63,6 +64,7 @@
       }
       span {
         font-size: 20pxm;
+        padding: 14px 0;
       }
     }
     .userset {
