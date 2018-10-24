@@ -25,7 +25,7 @@
                 <span class="name">{{item.goods_title}}</span>
                 <span class="desc">{{item.skuLabel}}</span>
                 <div class="kezi">
-                  <span @click="openKezi(item)">刻字</span> <span>&nbsp;&nbsp;&nbsp;库存：{{item.limit}}</span>
+                  <span @click="openKezi(item)">刻字</span> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存：{{item.limit}}</span>
                 </div>
                 <div class="line3 flex">
                   <span class="price"><span>￥</span>{{item.price | currency}}</span>

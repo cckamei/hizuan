@@ -79,8 +79,8 @@
             <li class="sku-icon flex">
               <img class="icon" :src="res.img" alt="">
               <div>
-                <div class="price"><span>￥</span>{{sku.price | currency}}</div>
-                <span class="code">商品编号：{{sku.merchantCode}} &nbsp;&nbsp;&nbsp; 库存：{{sku.stock}}</span>
+                <div class="price"><span>￥</span>{{sku.price || sku.defaultPrice | currency}}</div>
+                <span class="code">商品编号：{{sku.merchantCode || sku.defaultMerchantCode}} &nbsp;&nbsp;&nbsp; 库存：{{sku.stock}}</span>
               </div>
             </li>
             <li>
@@ -259,10 +259,13 @@
           merchantCode: '',
           price: 0,
           defaultSKU: '',
+          defaultMerchantCode:'',
+          defaultPrice: 0,
           limit: 99,
           count: 1,
           skuId: '',
-          selectedSku: ''
+          selectedSku: '',
+          stock: 0 //经销库存
         },
         lettering: { //刻字
           disable: 1,
@@ -341,9 +344,9 @@
           } else {
             this.sku.limit = 99;
             this.sku.skuId = '';
-            this.sku.merchantCode = '';
+            // this.sku.merchantCode = '';
             this.sku.selectedSku = '';
-            this.sku.stock = '';
+            // this.sku.stock = '';
           }
         },
         deep: true
@@ -378,7 +381,12 @@
 
           res.skus.forEach((item, index) => {
             if(!index) {
-              this.defaultSKU = item.sku_id; //默认第1条是默认sku
+              this.sku.defaultSKU = item.sku_id; //默认第1条是默认sku
+              this.sku.defaultPrice = item.price;
+              this.sku.defaultMerchantCode = item.merchant_code;
+              this.getGoodsStock(item.sku_id, stock => {
+                this.sku.stock = stock;
+            });
             }
             if(this.isZuan) {
               if(item.zhuzuanfenshu) {
@@ -478,9 +486,9 @@
           return false;
         }
 
-        this.getGoodsStock(this.sku.skuId || this.defaultSKU, stock => {
+        this.getGoodsStock(this.sku.skuId || this.sku.defaultSKU, stock => {
           this.setCart([{
-            cart_id: this.sku.skuId || this.defaultSKU,
+            cart_id: this.sku.skuId || this.sku.defaultSKU,
             count: this.sku.count,
             goods_id: this.res.goods_id,
             goods_title: this.res.goods_title,
@@ -496,7 +504,7 @@
           }]);
           this.clearPayOrder();
           this.setPayOrder({
-            cart_id: this.sku.skuId || this.defaultSKU,
+            cart_id: this.sku.skuId || this.sku.defaultSKU,
             num: this.sku.count,
             kezi: this.lettering.text,
             kezi_yaoqiu: this.lettering.remarks,
@@ -524,7 +532,7 @@
         this.ajax({
           name: 'addCollect',
           data: {
-            'collect_id': this.sku.skuId || this.defaultSKU
+            'collect_id': this.sku.skuId || this.sku.defaultSKU
           }
         }).then(res => {
           this.toast('收藏成功！');
@@ -552,7 +560,7 @@
         this.ajax({
           name: 'addCart',
           data: {
-            'cart_id': this.sku.skuId || this.defaultSKU,
+            'cart_id': this.sku.skuId || this.sku.defaultSKU,
             num: this.sku.count,
             kezi: this.lettering.text,
             yaoqiu: this.lettering.remarks,
