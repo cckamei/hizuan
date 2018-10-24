@@ -23,15 +23,15 @@
             </div>
           </div>
         </div>
-        <div class="logisticsInfo" v-else v-for="(item,i) in order.logistics.info.data">
+        <div class="logisticsInfo" v-else>
           <div class="logitem">
             <div>
               <img src="~assets/mypage/icon_exp.png" alt="">
-              <span class="logInfo">{{item.context}}</span>
+              <span class="logInfo">{{order.logistics.info.data[0].context}}</span>
             </div>
             <img @click="gotLogistics()" class="rightarrow" src="~assets/common/icon_right_arrow.png" alt="">
           </div>
-          <p>{{item.time}}</p>
+          <p>{{order.logistics.info.data[0].time}}</p>
         </div>
         <!-- 收货地址 -->
         <div class="receiverInfo">
@@ -134,7 +134,7 @@
       <!-- 订单信息 -->
       <div class="orderInfo">
         <ul class="orderInfoItem">
-          <li><span>订单编号：</span> {{order.order_id}}</li>
+          <li><span>订单编号：</span> {{order.orderid}}</li>
           <li><span>下单时间：</span> {{formatDate(order.created_at,'yyyy-MM-dd hh:mm:ss')}}</li>
           <!-- <li><span>取消时间：</span> 2018-08-05 18:06:06</li> -->
         </ul>
@@ -251,234 +251,234 @@
 </script>
 <style lang="less" scoped>
   .text {
-      height: 150px;
-      text-align: center;
-      line-height: 150px;
-      font-size: 28px;
+    height: 150px;
+    text-align: center;
+    line-height: 150px;
+    font-size: 28px;
   }
   .orderdetailpage {
-      background: #f0f0f0;
-      overflow-y: scroll;
-      .logistics {
-          width: 710px;
-          margin: 116px auto 16px;
-          margin-top: 16px;
-          padding: 0 30px;
-          border-radius: 10px;
-          background: #ffffff;
-          font-size: 24px;
-          .logitem {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              > div {
-                  display: flex;
-                  flex-flow: row nowrap;
-                  justify-content: flex-start;
-              }
-              .rightarrow {
-                  width: 18px;
-                  height: 18px;
-                  margin-top: 30px;
-              }
-          }
-          .logInfo {
-              max-width: 500px;
-          }
+    background: #f0f0f0;
+    overflow-y: scroll;
+    .logistics {
+      width: 710px;
+      margin: 116px auto 16px;
+      margin-top: 16px;
+      padding: 0 30px;
+      border-radius: 10px;
+      background: #ffffff;
+      font-size: 24px;
+      .logitem {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        > div {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: flex-start;
+        }
+        .rightarrow {
+          width: 18px;
+          height: 18px;
+          margin-top: 30px;
+        }
+      }
+      .logInfo {
+        max-width: 500px;
+      }
+      img {
+        display: inline;
+        width: 36px;
+        height: 36px;
+        margin-right: 20px;
+      }
+      p {
+        margin-left: 62px;
+        margin-top: 10px;
+      }
+    }
+    .logisticsInfo {
+      padding-top: 34px;
+      span {
+        color: #666666;
+        padding-top: 6px;
+      }
+      p {
+        color: #999999;
+      }
+    }
+    .receiverInfo {
+      padding-bottom: 40px;
+      margin-top: 60px;
+      span {
+        color: #666666;
+        font-weight: bold;
+        display: inline;
+      }
+      span.phone {
+        margin-left: 100px;
+      }
+      p {
+        color: #999999;
+      }
+    }
+    .listitem {
+      background: #ffffff;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+      .itemtitle {
+        padding: 0 30px;
+        height: 64px;
+        line-height: 64px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        .titleleft {
           img {
-              display: inline;
-              width: 36px;
-              height: 36px;
-              margin-right: 20px;
+            display: inline;
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
           }
-          p {
-              margin-left: 62px;
-              margin-top: 10px;
-          }
-      }
-      .logisticsInfo {
-          padding-top: 34px;
-          span {
-              color: #666666;
-              padding-top: 6px;
-          }
-          p {
-              color: #999999;
-          }
-      }
-      .receiverInfo {
-          padding-bottom: 40px;
-          margin-top: 60px;
-          span {
-              color: #666666;
-              font-weight: bold;
-              display: inline;
-          }
-          span.phone {
-              margin-left: 100px;
-          }
-          p {
-              color: #999999;
-          }
-      }
-      .listitem {
-          background: #ffffff;
-          margin-bottom: 16px;
-          position: relative;
-          z-index: 1;
-          .itemtitle {
-              padding: 0 30px;
-              height: 64px;
-              line-height: 64px;
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              .titleleft {
-                  img {
-                      display: inline;
-                      width: 24px;
-                      height: 24px;
-                      margin-right: 12px;
-                  }
-              }
-              .listright {
-                  font-size: 24px;
-                  color: #cdb498;
-              }
-          }
-          .itemcontent {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              padding: 0 30px;
-              background: #f5f5f5;
-              margin-bottom: 8px;
-              .contentleft {
-                  width: 120px;
-                  height: 120px;
-                  margin: 20px 20px 20px 0;
-                  background: #ffffff;
-                  img {
-                      display: block;
-                      width: 100%;
-                      height: auto;
-                  }
-              }
-              .contentright {
-                  flex: 1;
-                  .contenttitle {
-                      display: flex;
-                      flex-flow: row nowrap;
-                      justify-content: space-between;
-                      margin: 30px 0 10px;
-                      color: #666666;
-                      font-size: 24px;
-                      span:nth-child-of(2) {
-                          text-align: right;
-                      }
-                  }
-                  .contentmessage {
-                      flex: 1;
-                      display: flex;
-                      flex-flow: row nowrap;
-                      justify-content: space-between;
-                      font-size: 24px;
-                      margin-bottom: 30px;
-                      color: #999999;
-                      p {
-                          width: 360px;
-                      }
-                      .messageright {
-                          text-align: right;
-                      }
-                      s {
-                          color: #cccccc;
-                          display: block;
-                      }
-                  }
-              }
-          }
-          .itemprice {
-              padding: 20px 30px 0;
-              background: #ffffff;
-              border-bottom: 2px solid #cccccc;
-              margin-bottom: 16px;
-              li {
-                  display: flex;
-                  flex-flow: row nowrap;
-                  justify-content: space-between;
-                  font-size: 20px;
-                  color: #666666;
-                  margin-bottom: 20px;
-              }
-              li.realPaymoney {
-                  font-size: 24px;
-                  color: #333333;
-                  .paymoney {
-                      color: #faa0a0;
-                  }
-              }
-          }
-          .itemfoot {
-              height: 80px;
-              text-align: right;
-              padding: 0 30px;
-              button {
-                  width: 140px;
-                  height: 52px;
-                  border-radius: 25px;
-                  font-size: 20px;
-                  margin-top: 5px;
-              }
-              .btnleft {
-                  margin-right: 30px;
-              }
-              .flexleft {
-                  float: left;
-              }
-              .btngrey {
-                  background: #ffffff;
-                  border: 2px solid #cccccc;
-                  color: #666666;
-              }
-              .btnpink {
-                  background: #ffb4b4;
-                  border: 2px solid #ffb4b4;
-                  color: #ffffff;
-              }
-          }
-      }
-      .orderInfo {
-          background: #ffffff;
+        }
+        .listright {
           font-size: 24px;
+          color: #cdb498;
+        }
+      }
+      .itemcontent {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        padding: 0 30px;
+        background: #f5f5f5;
+        margin-bottom: 8px;
+        .contentleft {
+          width: 120px;
+          height: 120px;
+          margin: 20px 20px 20px 0;
+          background: #ffffff;
+          img {
+            display: block;
+            width: 100%;
+            height: auto;
+          }
+        }
+        .contentright {
+          flex: 1;
+          .contenttitle {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            margin: 30px 0 10px;
+            color: #666666;
+            font-size: 24px;
+            span:nth-child-of(2) {
+              text-align: right;
+            }
+          }
+          .contentmessage {
+            flex: 1;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #999999;
+            p {
+              width: 360px;
+            }
+            .messageright {
+              text-align: right;
+            }
+            s {
+              color: #cccccc;
+              display: block;
+            }
+          }
+        }
+      }
+      .itemprice {
+        padding: 20px 30px 0;
+        background: #ffffff;
+        border-bottom: 2px solid #cccccc;
+        margin-bottom: 16px;
+        li {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          font-size: 20px;
           color: #666666;
           margin-bottom: 20px;
-          .orderInfoItem {
-              border-bottom: 2px solid #cccccc;
-              padding: 30px 30px 0;
-              li {
-                  margin-bottom: 20px;
-              }
-              li:last-child {
-                  margin-bottom: 30px;
-              }
+        }
+        li.realPaymoney {
+          font-size: 24px;
+          color: #333333;
+          .paymoney {
+            color: #faa0a0;
           }
-          .giveMethod {
-              padding: 30px;
-              border-bottom: 2px solid #cccccc;
-          }
-          .paymethod {
-              border-bottom: 2px solid #cccccc;
-              padding: 30px 30px 0;
-              li {
-                  margin-bottom: 20px;
-              }
-          }
-          .finishtime {
-              padding: 30px;
-              border-bottom: 2px solid #cccccc;
-          }
+        }
       }
+      .itemfoot {
+        height: 80px;
+        text-align: right;
+        padding: 0 30px;
+        button {
+          width: 140px;
+          height: 52px;
+          border-radius: 25px;
+          font-size: 20px;
+          margin-top: 5px;
+        }
+        .btnleft {
+          margin-right: 30px;
+        }
+        .flexleft {
+          float: left;
+        }
+        .btngrey {
+          background: #ffffff;
+          border: 2px solid #cccccc;
+          color: #666666;
+        }
+        .btnpink {
+          background: #ffb4b4;
+          border: 2px solid #ffb4b4;
+          color: #ffffff;
+        }
+      }
+    }
+    .orderInfo {
+      background: #ffffff;
+      font-size: 24px;
+      color: #666666;
+      margin-bottom: 20px;
+      .orderInfoItem {
+        border-bottom: 2px solid #cccccc;
+        padding: 30px 30px 0;
+        li {
+          margin-bottom: 20px;
+        }
+        li:last-child {
+          margin-bottom: 30px;
+        }
+      }
+      .giveMethod {
+        padding: 30px;
+        border-bottom: 2px solid #cccccc;
+      }
+      .paymethod {
+        border-bottom: 2px solid #cccccc;
+        padding: 30px 30px 0;
+        li {
+          margin-bottom: 20px;
+        }
+      }
+      .finishtime {
+        padding: 30px;
+        border-bottom: 2px solid #cccccc;
+      }
+    }
   }
 </style>
 
