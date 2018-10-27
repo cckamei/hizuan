@@ -51,43 +51,44 @@
 
 <style lang="less" scoped>
   .tab {
-      position: fixed;
-      height: 96px;
+    position: fixed;
+    height: 96px;
+    line-height: 96px;
+    top: 96px;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 20px 50px 10px rgba(170, 170, 170, 0.5);
+    background-color: #fff;
+    z-index: 2;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    padding: 0 45px;
+    span {
+      color: #666666;
+      text-align: center;
       line-height: 96px;
-      top: 96px;
-      width: 100%;
-      box-shadow: 0 20px 50px 10px rgba(170, 170, 170, 0.5);
-      background-color: #fff;
-      z-index: 2;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-around;
-      padding: 0 45px;
-      span {
-          color: #666666;
-          text-align: center;
-          line-height: 96px;
-          flex: 1;
-          position: relative;
-          font-size: 20px;
-      }
+      flex: 1;
+      position: relative;
+      font-size: 20px;
+    }
 
-      .active {
-          color: #333333;
-          font-weight: bold;
-          font-size: 24px;
-          &:after {
-              content: '';
-              position: absolute;
-              width: 108px;
-              height: 6px;
-              bottom: -1px;
-              background: #faa0a0;
-              left: 0;
-              right: 0;
-              margin: auto;
-          }
+    .active {
+      color: #333333;
+      font-weight: bold;
+      font-size: 24px;
+      &:after {
+        content: '';
+        position: absolute;
+        width: 108px;
+        height: 6px;
+        bottom: -1px;
+        background: #faa0a0;
+        left: 0;
+        right: 0;
+        margin: auto;
       }
+    }
   }
 </style>
 
