@@ -1,8 +1,8 @@
 <template>
   <div class="commission">
-    <div class="panel-header">
+    <div class="panel-header" @click="$router.push({ name: 'commissions' })">
       <span>我的提成</span>
-      <div class="more" @click="$router.push({ name: 'commissions' })">
+      <div class="more">
         <span>查看全部记录</span>
         <img src="~assets/mypage/icon_arrow_r_s.png" alt="">
       </div>
@@ -53,22 +53,22 @@
 
 <style lang="less" scoped>
   .commission {
-      background: #fff;
-      width: 710px;
-      margin: 20px auto 0;
-      border-radius: 10px;
-      .panel-content {
-          padding: 20px 20px;
-      }
-      .detail {
-          padding: 8px 0px;
-          font-size: 24px;
-          color: #999;
-          line-height: 30px;
-          line-height: 30px;
-      }
+    background: #fff;
+    width: 710px;
+    margin: 20px auto 0;
+    border-radius: 10px;
+    .panel-content {
+      padding: 20px 20px;
+    }
+    .detail {
+      padding: 8px 0px;
+      font-size: 24px;
+      color: #999;
+      line-height: 30px;
+      line-height: 30px;
+    }
   }
   .mt-10 {
-      margin-top: 10px;
+    margin-top: 10px;
   }
 </style>

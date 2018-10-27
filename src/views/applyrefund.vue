@@ -1,6 +1,6 @@
 <template>
   <div class="applyrefundPage">
-    <v-header>申请退款</v-header>
+    <v-header @back="back">申请退款</v-header>
     <div class="pagecontent">
       <ul class=" refunditem refundGoods">
         <li>
@@ -41,7 +41,7 @@
       <div class="refunditem applyreason">
         <div class="reasonchoice">
           <span>申请原因</span>
-          <p>
+          <p class="reasion">
             <input type="text" v-model="reqData.reason" placeholder="请选择申请原因" @click="visible = true" readonly />
             <img src="~assets/mypage/icon_arrow_r_s.png" alt="">
           </p>
@@ -67,14 +67,14 @@
         </ul>
       </div>
       <div class="btns fix">
-        <button class="btn" :class="{active: isActive}" @click="submit">保存</button>
+        <button class="btn" :class="{active: isActive}" @click="submit">申请退款</button>
       </div>
     </div>
 
   </div>
 </template>
 <script>
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
   import { formatDate } from '@/utils';
   export default {
     data() {
@@ -115,6 +115,7 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      ...mapMutations(['setCommon']),
       formatDate,
       confirm() {
         let selected = this.reasonlist[this.selectedIndex];
@@ -133,172 +134,181 @@
             phone: this.reqData.linkphone
           }
         }).then(res => {
-          this.$router.push({ name: 'orderlist', params: { type: -1 } });
+          this.setCommon({ orderId: this.getOrderId });
+          this.$router.push({ name: 'orderdetail' });
         });
+      },
+      back() {
+        this.setCommon({ orderId: this.getOrderId });
+        this.$router.push({ name: 'orderdetail' });
       }
     }
   };
 </script>
 <style lang="less" scoped>
   .applyrefundPage {
-      .pagecontent {
-          padding: 0 20px;
+    .pagecontent {
+      padding: 0 20px;
+    }
+    .refunditem {
+      background: #ffffff;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    .refundGoods {
+      margin-top: 96px;
+      padding: 40px 20px;
+      li {
+        padding: 0 20px;
+        display: flex;
+        flex-flow: row nowrap;
+        font-size: 24px;
+        color: #666666;
+        margin-bottom: 20px;
+        span {
+          width: 120px;
+        }
+        p {
+          width: 500px;
+          span {
+            display: inline;
+            margin-left: 10px;
+          }
+        }
       }
-      .refunditem {
-          background: #ffffff;
-          border-radius: 10px;
-          margin-bottom: 16px;
+      li:last-child {
+        padding: 0 20px;
+        display: flex;
+        flex-flow: row nowrap;
+        font-size: 30px;
+        color: #333333;
+        margin-bottom: 20px;
       }
-      .refundGoods {
-          margin-top: 96px;
-          padding: 40px 20px;
-          li {
-              padding: 0 20px;
-              display: flex;
-              flex-flow: row nowrap;
-              font-size: 24px;
-              color: #666666;
-              margin-bottom: 20px;
-              span {
-                  width: 120px;
-              }
-              p {
-                  width: 500px;
-                  span {
-                      display: inline;
-                      margin-left: 10px;
-                  }
-              }
-          }
-          li:last-child {
-              padding: 0 20px;
-              display: flex;
-              flex-flow: row nowrap;
-              font-size: 30px;
-              color: #333333;
-              margin-bottom: 20px;
-          }
+    }
+    .applyreason {
+      padding: 0 20px 30px;
+      .reasonchoice {
+        font-size: 24px;
+        color: #666666;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #f0f0f0;
+        p {
+          text-align: right;
+        }
+        img {
+          width: 18px;
+          height: 18px;
+          margin-left: 15px;
+        }
+        input {
+          text-align: right;
+          width: 300px;
+          color: #999999;
+        }
       }
-      .applyreason {
-          padding: 0 20px 30px;
-          .reasonchoice {
-              font-size: 24px;
-              color: #666666;
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              align-items: center;
-              p {
-                  text-align: right;
-              }
-              img {
-                  width: 18px;
-                  height: 18px;
-                  margin-left: 15px;
-              }
-              input {
-                  text-align: right;
-                  width: 300px;
-                  color: #999999;
-              }
-          }
-          p {
-              margin-top: 20px;
-              color: #cdb49b;
-              font-size: 20px;
-              border-bottom: 2px solid #f0f0f0;
-              padding-bottom: 30px;
-          }
-          h1 {
-              font-size: 24px;
-              color: #666666;
-              margin: 30px 0;
-              font-weight: normal;
-          }
-          textarea {
-              background: #f5f5f5;
-              border-radius: 10px;
-              height: 240px;
-              padding: 30px;
-              font-size: 24px;
-              color: #999999;
-          }
+      p {
+        margin-top: 20px;
+        color: #cdb49b;
+        font-size: 20px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 30px;
       }
-      .refundMessage {
-          padding: 10px 20px;
-          border-radius: 10px;
-          li {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              height: 84px;
-              line-height: 84px;
-              border-bottom: 2px solid #f0f0f0;
-              label {
-                  color: #666666;
-              }
-              input {
-                  width: 300px;
-                  height: 100%;
-                  text-align: right;
-                  color: #999999;
-              }
-              &:last-child {
-                  border-bottom: 0;
-              }
-          }
+      p.reasion {
+        border-bottom: 0;
       }
-      .refundline {
-          padding: 54px 0 40px;
-          .line {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: flex-start;
-              align-items: center;
-              margin-left: 108px;
-              s {
-                  width: 20px;
-                  height: 20px;
-                  background: #dcdcdc;
-                  border-radius: 50%;
-              }
-              s.active {
-                  background: #acd598;
-              }
-              i {
-                  width: 217px;
-                  height: 4px;
-                  background: #dcdcdc;
-              }
-              i.active {
-                  background: #acd598;
-              }
-          }
-          .lintext {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: flex-start;
-              align-items: center;
-              margin-top: 30px;
-              margin-left: 10px;
-              text-align: center;
-              li {
-                  flex: 1;
-              }
-              p {
-                  font-size: 24px;
-                  color: #999999;
-                  margin-bottom: 12px;
-              }
-              p.active {
-                  color: #666666;
-              }
-              span {
-                  font-size: 20px;
-                  color: #999999;
-              }
-          }
+      h1 {
+        font-size: 24px;
+        color: #666666;
+        margin: 30px 0;
+        font-weight: normal;
       }
+      textarea {
+        background: #f5f5f5;
+        border-radius: 10px;
+        height: 240px;
+        padding: 30px;
+        font-size: 24px;
+        color: #999999;
+      }
+    }
+    .refundMessage {
+      padding: 10px 20px;
+      border-radius: 10px;
+      li {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        height: 84px;
+        line-height: 84px;
+        border-bottom: 2px solid #f0f0f0;
+        label {
+          color: #666666;
+        }
+        input {
+          width: 300px;
+          height: 100%;
+          text-align: right;
+          color: #999999;
+        }
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+    .refundline {
+      padding: 54px 0 40px;
+      .line {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        margin-left: 108px;
+        s {
+          width: 20px;
+          height: 20px;
+          background: #dcdcdc;
+          border-radius: 50%;
+        }
+        s.active {
+          background: #acd598;
+        }
+        i {
+          width: 217px;
+          height: 4px;
+          background: #dcdcdc;
+        }
+        i.active {
+          background: #acd598;
+        }
+      }
+      .lintext {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 30px;
+        margin-left: 10px;
+        text-align: center;
+        li {
+          flex: 1;
+        }
+        p {
+          font-size: 24px;
+          color: #999999;
+          margin-bottom: 12px;
+        }
+        p.active {
+          color: #666666;
+        }
+        span {
+          font-size: 20px;
+          color: #999999;
+        }
+      }
+    }
   }
 </style>
 

@@ -1,8 +1,8 @@
 <template>
   <div class="myorder">
-    <div class="panel-header">
+    <div class="panel-header" @click="$router.push({ name: 'orderlist', params: { type:-1 } })">
       <span>我的订单</span>
-      <div class="more" @click="$router.push({ name: 'orderlist', params: { type:-1 } })">
+      <div class="more">
         <span>查看全部订单</span>
         <img src="~assets/mypage/icon_arrow_r_s.png" alt="">
       </div>
@@ -34,30 +34,30 @@
 
 <style lang="less" scoped>
   .myorder {
-      background: #ffffff;
-      width: 710px;
-      margin: 20px auto 0;
-      border-radius: 10px;
-      .ordertype {
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: space-around;
-          .orderitem {
-              text-align: center;
-              img {
-                  display: block;
-                  width: 88px;
-                  height: 88px;
-                  margin: 30px auto 20px;
-              }
-              span {
-                  display: block;
-                  width: 100%;
-                  margin-bottom: 30px;
-                  color: #999999;
-                  font-size: 20px;
-              }
-          }
+    background: #ffffff;
+    width: 710px;
+    margin: 20px auto 0;
+    border-radius: 10px;
+    .ordertype {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      .orderitem {
+        text-align: center;
+        img {
+          display: block;
+          width: 88px;
+          height: 88px;
+          margin: 30px auto 20px;
+        }
+        span {
+          display: block;
+          width: 100%;
+          margin-bottom: 30px;
+          color: #999999;
+          font-size: 20px;
+        }
       }
+    }
   }
 </style>

@@ -3,19 +3,8 @@
     <v-header>订单详情</v-header>
     <!-- 订单地址、收货人、物流信息 -->
     <div class="content">
-
       <div class="logistics">
-        <!-- 待付款、待发货 、已取消-->
-        <!-- <div class="logisticsInfo">
-                        <div>
-                              <img src="~assets/mypage/icon_exp.png" alt=""> 
-                              <span>暂无物流信息</span>
-                        </div>
-                        <p>订单等待付款中</p>
-                  </div> -->
-        <!-- 待收货、已完成、退款中、已退款 -->
-        <!-- 物流信息 -->
-        <div class="logisticsInfo" v-if="order.logistics.info.data.length==0">
+        <div class="logisticsInfo" v-if="order.logistics.info.data.length==0" @click="gotLogistics()">
           <div class="logitem">
             <div>
               <img src="~assets/mypage/icon_exp.png" alt="">
@@ -46,14 +35,14 @@
 
       <!-- 商品信息 -->
       <div class="listitem">
-        <div class="itemtitle" @click="goDetail()">
+        <div class="itemtitle">
           <div class="titleleft">
             <img src="~assets/mypage/icon_shop.png" alt="">
             <span>CC卡美珠宝</span>
           </div>
           <div class="listright">{{typename(order.status)}}</div>
         </div>
-        <div class="itemcontent" v-for="(good,i) in order.goods">
+        <div class="itemcontent" v-for="(good,i) in order.goods" @click="goGoodsDetail(good.goods_id)">
           <div class="contentleft">
             <img :src="good.goods_img" alt="">
           </div>
@@ -65,7 +54,7 @@
             <div class="contentmessage">
               <p>{{good.skuLabel}}</p>
               <div class="messageright">
-                <s>￥{{good.subtotal}}</s>
+                <s>&nbsp;</s>
                 <span>X{{good.goods_count}}</span>
               </div>
             </div>
@@ -99,19 +88,19 @@
           <!-- 待收货 -->
           <div class="ordertypeDS" v-if="order.status==2">
             <button class="btngrey btnleft flexleft" @click="goApplyRefund()">申请退款</button>
-            <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
+            <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
             <button class="btnpink" @click="confirm">确认收货</button>
           </div>
           <!-- 待发货 -->
           <div class="ordertypeWC" v-if="order.status==1">
             <button class="btngrey btnleft flexleft" @click="goApplyRefund">申请退款</button>
-            <button class="btngrey" @click="goCustomService">联系客服</button>
+            <button class="btngrey" @click="serviceVisible = true">联系客服</button>
           </div>
           <!-- 待付款 -->
           <div class="ordertypeDF" v-if="order.status==0">
             <button class="btngrey btnleft flexleft" @click="cancelOrder">取消订单</button>
-            <button class="btngrey btnleft" @click="gotLogistics()">查看物流</button>
-            <button class="btnpink" @click="$router.push({ name: 'pay' })">立即付款</button>
+            <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
+            <button class="btnpink" @click="parOrder(order)">立即付款</button>
           </div>
           <!-- 已取消 -->
           <!-- <div class="ordertypeQX">
@@ -120,7 +109,7 @@
                         </div> -->
           <!-- 退款中 -->
           <div class="ordertypeTK" v-if="order.status==4">
-            <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
+            <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
             <button class="btngrey" @click="goRefundDetail">查看详情</button>
           </div>
           <!-- 已退款 -->
@@ -143,9 +132,9 @@
           配送方式：快递运输
         </div>
         <!-- 支付方式 -->
-        <ul class="paymethod" v-if="order.pay_time">
-          <li><span>支付方式</span> 微信支付</li>
-          <li><span>支付时间</span> {{order.pay_time}}</li>
+        <ul class="paymethod">
+          <li><span>支付方式：</span> 微信支付</li>
+          <li><span>支付时间：</span> {{order.pay_time}}</li>
         </ul>
         <!-- 完成时间 -->
         <!-- <div class="finishtime">
@@ -156,15 +145,21 @@
     <v-popup-confirm v-model="cancelVisible" @confirm="handleConfirm">
       <div class="text">确定取消此订单？</div>
     </v-popup-confirm>
+    <v-popup-confirm title="" v-model="serviceVisible" @confirm="goCustomService">
+      <div class="txt-center">
+        即将离开商城，接通您的专属客服。<br>您可以在公众号中回复“人工服务”与客服进行联系与沟通。
+      </div>
+    </v-popup-confirm>
   </div>
 </template>
 <script>
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
   import { formatDate } from '@/utils';
   export default {
     data() {
       return {
         cancelVisible: false,
+        serviceVisible: false,
         order: {
           address: {},
           goods: [],
@@ -203,6 +198,7 @@
       ...mapGetters(['getOrderId'])
     },
     methods: {
+      ...mapMutations(['setCommon', 'setPayOrder']),
       ...mapActions(['ajax']),
       typename(type) {
         let _typenames = ['待付款', '待发货', '待收货', '已完成', '退款中', '', '已退款', '', '已取消'];
@@ -240,11 +236,20 @@
             action: 'cancel'
           }
         }).then(res => {
-          this.$router.push({ name: 'orderlist', params: { type: 3 } });
+          this.$router.push({ name: 'orderlist', params: { type: 0 } });
         });
       },
       goCustomService() {
         window.wx.closeWindow();
+      },
+      //商品详情
+      goGoodsDetail(id) {
+        this.setCommon({ goodsId: id });
+        this.$router.push({ name: 'goodsdetail' });
+      },
+      parOrder(order) {
+        this.setPayOrder(order);
+        this.$router.push({ name: 'pay' });
       }
     }
   };
@@ -352,6 +357,8 @@
         justify-content: space-between;
         padding: 0 30px;
         background: #f5f5f5;
+        vertical-align: middle;
+        align-items: center;
         margin-bottom: 8px;
         .contentleft {
           width: 120px;

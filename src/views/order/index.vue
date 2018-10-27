@@ -24,7 +24,7 @@
       };
     },
     created() {
-      this.type = this.$route.params.type || -1;
+      this.type = this.$route.params.type;
       this.getOrders();
     },
     methods: {
