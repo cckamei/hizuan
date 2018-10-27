@@ -24,7 +24,11 @@
       };
     },
     created() {
-      this.type = this.$route.params.type;
+      if(this.$route.params.type == 0) {
+        this.type = 0;
+      } else {
+        this.type = this.$route.params.type || -1;
+      }
       this.getOrders();
     },
     methods: {
