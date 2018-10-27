@@ -3,18 +3,7 @@
     <v-header>订单详情</v-header>
     <!-- 订单地址、收货人、物流信息 -->
     <div class="content">
-
       <div class="logistics">
-        <!-- 待付款、待发货 、已取消-->
-        <!-- <div class="logisticsInfo">
-                        <div>
-                              <img src="~assets/mypage/icon_exp.png" alt=""> 
-                              <span>暂无物流信息</span>
-                        </div>
-                        <p>订单等待付款中</p>
-                  </div> -->
-        <!-- 待收货、已完成、退款中、已退款 -->
-        <!-- 物流信息 -->
         <div class="logisticsInfo" v-if="order.logistics.info.data.length==0">
           <div class="logitem">
             <div>
@@ -46,14 +35,14 @@
 
       <!-- 商品信息 -->
       <div class="listitem">
-        <div class="itemtitle" @click="goDetail()">
+        <div class="itemtitle">
           <div class="titleleft">
             <img src="~assets/mypage/icon_shop.png" alt="">
             <span>CC卡美珠宝</span>
           </div>
           <div class="listright">{{typename(order.status)}}</div>
         </div>
-        <div class="itemcontent" v-for="(good,i) in order.goods">
+        <div class="itemcontent" v-for="(good,i) in order.goods" @click="goGoodsDetail(good.goods_id)">
           <div class="contentleft">
             <img :src="good.goods_img" alt="">
           </div>
@@ -159,7 +148,7 @@
   </div>
 </template>
 <script>
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
   import { formatDate } from '@/utils';
   export default {
     data() {
@@ -203,6 +192,7 @@
       ...mapGetters(['getOrderId'])
     },
     methods: {
+      ...mapMutations(['setCommon']),
       ...mapActions(['ajax']),
       typename(type) {
         let _typenames = ['待付款', '待发货', '待收货', '已完成', '退款中', '', '已退款', '', '已取消'];
@@ -245,6 +235,12 @@
       },
       goCustomService() {
         window.wx.closeWindow();
+      },
+      //商品详情
+      goGoodsDetail(id) {
+        console.log(id);
+        this.setCommon({ goodsId: id });
+        this.$router.push({ name: 'goodsdetail' });
       }
     }
   };
