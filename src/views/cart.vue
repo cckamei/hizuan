@@ -12,7 +12,7 @@
             <span class="name">{{item.goods_title}}</span>
             <span class="desc">{{item.skuLabel}}</span>
             <div class="kezi">
-              <span @click="openKezi(item)">刻字</span> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存：{{item.limit}}</span>
+              <span v-if="has_kezi" @click="openKezi(item)">刻字&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span>库存：{{item.limit}}</span>
             </div>
             <template v-if="item.limit">
               <div class="line3">
@@ -53,11 +53,11 @@
         </li>
         <li>
           <div class="title">刻字內容</div>
-          <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的刻字内容">
+          <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的刻字内容">
         </li>
         <li>
           <div class="title">要求</div>
-          <input :disabled="!!lettering.disable" v-model="lettering.remarks" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的要求">
+          <input :disabled="!!lettering.disable" v-model="lettering.remarks" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的要求">
         </li>
       </ul>
     </v-slide-up>

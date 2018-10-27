@@ -4,7 +4,7 @@
     <div class="content">
       <div class="order-info section">
         <div class="order">订单内容：{{getPayOrder.goods[0].goods_name}}{{getPayOrder.goods.length>1?'等':''}} 共{{getPayOrder.goods.length}}件</div>
-        <div class="order-time">下单时间：{{getPayOrder.created_at}}</div>
+        <div class="order-time">下单时间：{{formatDate(getPayOrder.created_at,'yyyy-MM-dd hh:mm:ss')}}</div>
         <div class="order-total">需支付：<span>{{getPayOrder.rest_money | currency}}元</span></div>
       </div>
       <div class="title">支付方式</div>
@@ -38,6 +38,7 @@
 <script>
   import { mapActions, mapGetters } from 'vuex';
   import { weChatPay } from '../utils/wechat';
+  import { formatDate } from '../utils';
 
   export default {
     data() {
@@ -50,6 +51,7 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      formatDate,
       pay() {
         this.ajax({
           name: 'pay1',
@@ -66,7 +68,7 @@
           }).then(res => {
             weChatPay(res, () => {
               setTimeout(() => {
-                this.$router.replace('paysuccess');
+                this.$router.replace({name: 'paysuccess'});
               }, 500);
             });
           });

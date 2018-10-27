@@ -165,7 +165,7 @@
           </ul>
         </v-form-slide-up>
       </div>
-      <div class="row">
+      <div class="row" v-if="res.has_kezi">
         <v-form-slide-up label="刻字定制" title="刻字定制" placeholder="修改您的刻字信息" v-model="lettering.lettering">
           <ul class="lettering">
             <li class="lettering-enable">
@@ -174,11 +174,11 @@
             </li>
             <li>
               <div class="title">刻字內容</div>
-              <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的刻字内容">
+              <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的刻字内容">
             </li>
             <li>
               <div class="title">要求</div>
-              <input :disabled="!!lettering.disable" v-model="lettering.remarks" class="lettering-text" type="text" maxlength="20" placeholder="请填写您的要求">
+              <input :disabled="!!lettering.disable" v-model="lettering.remarks" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的要求">
             </li>
           </ul>
         </v-form-slide-up>
@@ -497,6 +497,7 @@
             sub_title: this.res.sub_title,
             limit: stock,
             skuLabel: this.sku.selectedSku,
+            has_kezi: this.res.has_kezi,
             kezi: {
               kezi: this.lettering.text,
               yaoqiu: this.lettering.remarks

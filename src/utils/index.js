@@ -202,7 +202,7 @@ export function formatDate(nS, format) {
     return '';
   }
   format = format || 'yyyy-MM-dd hh:mm:ss';
-  return new Date(nS).format(format);
+  return new Date(nS.replace(/-/g, '/')).format(format);
 }
 
 //验证手机号码
