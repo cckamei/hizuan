@@ -8,7 +8,7 @@
             <img src="~assets/mypage/icon_shop.png" alt="">
             <span>CC卡美珠宝</span>
           </div>
-          <div class="listright">已取消</div>
+          <div class="listright">{{order.status===4?'退款中':(order.status === 8?'已取消':'')}}</div>
         </div>
         <div class="itemcontent" v-for="(good,j) in order.goods" @click="goDetail(order.order_id)">
           <div class="contentleft">
@@ -66,6 +66,14 @@
           }
         }).then(res => {
           this.orders = res;
+          this.ajax({
+            name: 'getOrders',
+            data: {
+              status: 4
+            }
+          }).then(res => {
+            this.orders = this.orders.concat(res);
+          });
         });
       },
       ...mapMutations(['setCommon']),
@@ -84,118 +92,118 @@
 </script>
 <style lang="less" scoped>
   .listitem {
-      background: #ffffff;
-      margin-bottom: 16px;
-      .itemtitle {
-          padding: 0 30px;
-          height: 64px;
-          line-height: 64px;
-          margin-top: 20px;
+    background: #ffffff;
+    margin-bottom: 16px;
+    .itemtitle {
+      padding: 0 30px;
+      height: 64px;
+      line-height: 64px;
+      margin-top: 20px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      .titleleft {
+        img {
+          display: inline;
+          width: 24px;
+          height: 24px;
+          margin-right: 12px;
+        }
+      }
+      .listright {
+        font-size: 24px;
+        color: #cdb498;
+      }
+    }
+    .itemcontent {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      padding: 0 30px;
+      background: #f5f5f5;
+      margin-bottom: 8px;
+      .contentleft {
+        width: 120px;
+        height: 120px;
+        margin: 20px 20px 20px 0;
+        background: #ffffff;
+        img {
+          display: block;
+          width: 100%;
+          height: auto;
+        }
+      }
+      .contentright {
+        flex: 1;
+        .contenttitle {
           display: flex;
           flex-flow: row nowrap;
           justify-content: space-between;
-          .titleleft {
-              img {
-                  display: inline;
-                  width: 24px;
-                  height: 24px;
-                  margin-right: 12px;
-              }
-          }
-          .listright {
-              font-size: 24px;
-              color: #cdb498;
-          }
-      }
-      .itemcontent {
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: space-between;
-          padding: 0 30px;
-          background: #f5f5f5;
-          margin-bottom: 8px;
-          .contentleft {
-              width: 120px;
-              height: 120px;
-              margin: 20px 20px 20px 0;
-              background: #ffffff;
-              img {
-                  display: block;
-                  width: 100%;
-                  height: auto;
-              }
-          }
-          .contentright {
-              flex: 1;
-              .contenttitle {
-                  display: flex;
-                  flex-flow: row nowrap;
-                  justify-content: space-between;
-                  margin: 30px 0 20px;
-                  color: #666666;
-                  font-size: 24px;
-                  span:nth-child-of(2) {
-                      text-align: right;
-                  }
-              }
-              .contentmessage {
-                  flex: 1;
-                  display: flex;
-                  flex-flow: row nowrap;
-                  justify-content: space-between;
-                  font-size: 24px;
-                  margin-bottom: 30px;
-                  color: #999999;
-                  p {
-                      width: 360px;
-                  }
-                  .messageright {
-                      text-align: right;
-                  }
-                  s {
-                      color: #cccccc;
-                      display: block;
-                  }
-              }
-          }
-      }
-      .itemprice {
-          height: 64px;
-          line-height: 64px;
-          text-align: right;
-          padding: 0 30px;
-          font-size: 20px;
+          margin: 30px 0 20px;
           color: #666666;
-          border-bottom: 2px solid #cccccc;
-          span {
-              font-size: 24px;
+          font-size: 24px;
+          span:nth-child-of(2) {
+            text-align: right;
           }
+        }
+        .contentmessage {
+          flex: 1;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          font-size: 24px;
+          margin-bottom: 30px;
+          color: #999999;
+          p {
+            width: 360px;
+          }
+          .messageright {
+            text-align: right;
+          }
+          s {
+            color: #cccccc;
+            display: block;
+          }
+        }
       }
-      .itemfoot {
-          height: 80px;
-          text-align: right;
-          padding: 0 30px;
-          button {
-              width: 140px;
-              height: 52px;
-              border-radius: 25px;
-              font-size: 20px;
-              margin-top: 14px;
-          }
-          .btnleft {
-              margin-right: 30px;
-          }
-          .btngrey {
-              background: #ffffff;
-              border: 2px solid #cccccc;
-              color: #666666;
-          }
-          .btnpink {
-              background: #ffb4b4;
-              border: 2px solid #ffb4b4;
-              color: #ffffff;
-          }
+    }
+    .itemprice {
+      height: 64px;
+      line-height: 64px;
+      text-align: right;
+      padding: 0 30px;
+      font-size: 20px;
+      color: #666666;
+      border-bottom: 2px solid #cccccc;
+      span {
+        font-size: 24px;
       }
+    }
+    .itemfoot {
+      height: 80px;
+      text-align: right;
+      padding: 0 30px;
+      button {
+        width: 140px;
+        height: 52px;
+        border-radius: 25px;
+        font-size: 20px;
+        margin-top: 14px;
+      }
+      .btnleft {
+        margin-right: 30px;
+      }
+      .btngrey {
+        background: #ffffff;
+        border: 2px solid #cccccc;
+        color: #666666;
+      }
+      .btnpink {
+        background: #ffb4b4;
+        border: 2px solid #ffb4b4;
+        color: #ffffff;
+      }
+    }
   }
 </style>
 

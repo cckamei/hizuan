@@ -20,7 +20,7 @@
           <div class="contentmessage">
             <p>{{good.skuLabel}}</p>
             <div class="messageright">
-              <s>￥{{good.subtotal}}</s>
+              <s>&nbsp;</s>
               <span>X{{good.goods_count}}</span>
             </div>
           </div>
@@ -35,46 +35,55 @@
           <!-- <button class="btngrey btnleft"> </button>
           <button class="btnpink" @click="$router.push({ name: 'pay' })">确认收货</button> -->
           <button class="btngrey btnleft" @click="gotLogistics(order.order_id)">查看物流</button>
-          <button class="btngrey" @click="confirm(order.order_id)">确认收货</button>
+          <button class="btnpink" @click="confirm(order.order_id)">确认收货</button>
         </div>
         <!-- 已完成 3-->
         <div class="ordertypeDF" v-if="order.status==3">
-          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
+          <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
           <button class="btngrey" @click="tradeIn">以旧换新</button>
         </div>
         <!-- 待付款 0-->
         <div class="ordertypeDF" v-if="order.status==0">
-          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
-          <button class="btnpink" @click="$router.push({ name: 'pay' })">立即付款</button>
+          <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
+          <button class="btnpink" @click="parOrder(order)">立即付款</button>
         </div>
         <!-- 已取消 8-->
         <div class="ordertypeDF" v-if="order.status==8">
-          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
+          <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
           <button class="btngrey" @click="goGoodsDetail">再次购买</button>
         </div>
         <!-- 退款中 4-->
         <div class="ordertypeDS" v-if="order.status==4">
-          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
+          <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
           <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
         </div>
         <!-- 待发货 1-->
         <div class="ordertypeWC" v-if="order.status==1">
-          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
-          <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
+          <button class="btngrey" @click="serviceVisible = true">联系客服</button>
         </div>
         <!-- 已退款 6-->
         <div class="ordertypeWC" v-if="order.status==6">
-          <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
+          <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
           <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
         </div>
       </div>
     </div>
+    <v-popup-confirm title="" v-model="serviceVisible" @confirm="goCustomService">
+      <div class="txt-center">
+        即将离开商城，接通您的专属客服。<br>您可以在公众号中回复“人工服务”与客服进行联系与沟通。
+      </div>
+    </v-popup-confirm>
   </div>
 </template>
 
 <script>
   import { mapMutations, mapActions } from 'vuex';
   export default {
+    data() {
+      return {
+        serviceVisible: false
+      };
+    },
     props: ['orders'],
     created() {
     },
@@ -83,7 +92,7 @@
     },
     methods: {
       ...mapActions(['ajax']),
-      ...mapMutations(['setCommon', 'setAppointment']),
+      ...mapMutations(['setCommon', 'setAppointment', 'setPayOrder']),
       goDetail(orderId) {
         this.setCommon({ orderId: orderId });
         this.$router.push({ name: 'orderdetail' });
@@ -124,6 +133,10 @@
       },
       goCustomService() {
         window.wx.closeWindow();
+      },
+      parOrder(order) {
+        this.setPayOrder(order);
+        this.$router.push({ name: 'pay' });
       }
     }
   };
@@ -159,6 +172,8 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
+        vertical-align: middle;
+        align-items: center;
         padding: 0 30px;
         background: #f5f5f5;
         margin-bottom: 8px;
