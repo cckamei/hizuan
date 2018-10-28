@@ -53,11 +53,11 @@
         </li>
         <li>
           <div class="title">刻字內容</div>
-          <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的刻字信息">
+          <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的刻字内容（详细描述不超过50个字）">
         </li>
         <li>
           <div class="title">要求</div>
-          <input :disabled="!!lettering.disable" v-model="lettering.remarks" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的要求">
+          <input :disabled="!!lettering.disable" v-model="lettering.remarks" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的要求（不超过50个字）">
         </li>
       </ul>
     </v-slide-up>
