@@ -174,7 +174,7 @@
             </li>
             <li>
               <div class="title">刻字內容</div>
-              <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的刻字内容">
+              <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的刻字信息">
             </li>
             <li>
               <div class="title">要求</div>
@@ -294,6 +294,12 @@
 
       if(!this.goodsId) {
         this.$router.push({ name: 'goodslist' });
+      } else {
+         this.setCommon({goodsId: this.goodsId});
+      }
+
+      if(this.emp_id) {
+        this.setCommon({emp_id: this.emp_id});
       }
 
       this.fetchGoodsDetail();
@@ -364,7 +370,7 @@
       }
     },
     methods: {
-      ...mapMutations(['setCart', 'clearPayOrder', 'setPayOrder']),
+      ...mapMutations(['setCart', 'clearPayOrder', 'setPayOrder', 'setCommon']),
       ...mapActions(['ajax']),
       fetchGoodsDetail() {
         this.ajax({
@@ -509,7 +515,7 @@
             num: this.sku.count,
             kezi: this.lettering.text,
             kezi_yaoqiu: this.lettering.remarks,
-            emp_id: this.emp_id
+            emp_id: this.getCommon.emp_id
           });
           this.$router.push({ name: 'confirmorder' });
         });
@@ -565,7 +571,7 @@
             num: this.sku.count,
             kezi: this.lettering.text,
             yaoqiu: this.lettering.remarks,
-            emp_id: this.emp_id
+            emp_id: this.getCommon.emp_id
           }
         }).then(res => {
           this.toast('已加入购物车');

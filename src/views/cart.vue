@@ -53,7 +53,7 @@
         </li>
         <li>
           <div class="title">刻字內容</div>
-          <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的刻字内容">
+          <input :disabled="!!lettering.disable" v-model="lettering.text" class="lettering-text" type="text" maxlength="50" placeholder="请填写您的刻字信息">
         </li>
         <li>
           <div class="title">要求</div>
