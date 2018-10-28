@@ -1,15 +1,15 @@
 <template>
   <div class="order pt">
-    <v-header>订单列表</v-header>
+    <v-header @back="back">订单列表</v-header>
     <div class="content">
-      <tabs :type="type" @search-orders="searchOrders"></tabs>
-      <order-list :orders="orders"></order-list>
+      <tabs :type="getOrderType" @search-orders="searchOrders"></tabs>
+      <order-list :orders="orders" @reload-orders="reloadOrders"></order-list>
     </div>
   </div>
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import tabs from './components/tabs';
   import orderList from './components/orders';
   export default {
@@ -23,18 +23,19 @@
         orders: []
       };
     },
+    computed: {
+      ...mapGetters(['getOrderType'])
+    },
     created() {
-      if(this.$route.params.type == 0) {
-        this.type = 0;
-      } else {
-        this.type = this.$route.params.type || -1;
-      }
+
       this.getOrders();
     },
     methods: {
       ...mapActions(['ajax']),
-      searchOrders(type) {
-        this.type = type;
+      searchOrders() {
+        this.getOrders();
+      },
+      reloadOrders() {
         this.getOrders();
       },
       getOrders() {
@@ -42,9 +43,9 @@
           name: 'getOrders'
         }).then(res => {
           this.orders = res;
-          if(this.type != -1) {
+          if(this.getOrderType != -1) {
             this.orders = this.orders.filter(order => {
-              return order.status == this.type;
+              return order.status == this.getOrderType;
             });
           }
           this.orders.forEach(order => {
@@ -57,6 +58,9 @@
             });
           });
         });
+      },
+      back() {
+        this.$router.push({ name: 'mypage' });
       }
     }
   };

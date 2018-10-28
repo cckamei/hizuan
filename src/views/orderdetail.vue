@@ -89,7 +89,7 @@
           <div class="ordertypeDS" v-if="order.status==2">
             <button class="btngrey btnleft flexleft" @click="goApplyRefund()">申请退款</button>
             <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
-            <button class="btnpink" @click="confirm">确认收货</button>
+            <button class="btnpink" @click="isConform = true">确认收货</button>
           </div>
           <!-- 待发货 -->
           <div class="ordertypeWC" v-if="order.status==1">
@@ -102,21 +102,25 @@
             <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
             <button class="btnpink" @click="parOrder(order)">立即付款</button>
           </div>
-          <!-- 已取消 -->
-          <!-- <div class="ordertypeQX">
-                              <button class="btngrey btnleft">联系客服</button>
-                              <button class="btngrey">再次购买</button>
-                        </div> -->
+          <!-- 已完成 -->
+          <div class="ordertypeQX" v-if="order.status==3">
+            <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
+            <button class="btngrey" @click="tradeIn">以旧换新</button>
+          </div>
           <!-- 退款中 -->
           <div class="ordertypeTK" v-if="order.status==4">
             <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
-            <button class="btngrey" @click="goRefundDetail">查看详情</button>
+            <button class="btngrey" @click="goRefundDetail">查看退款</button>
           </div>
           <!-- 已退款 -->
-          <!-- <div class="ordertypeTK">
-                              <button class="btngrey btnleft">联系客服</button>
-                              <button class="btngrey">查看详情</button>
-                        </div> -->
+          <div class="ordertypeTK" v-if="order.status==6">
+            <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
+            <button class="btngrey" @click="goRefundDetail">查看退款</button>
+          </div>
+          <div class="ordertypeTK" v-if="order.status==8">
+            <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
+            <button class="btngrey" @click="goGoods">再次购买</button>
+          </div>
 
         </div>
       </div>
@@ -125,25 +129,28 @@
         <ul class="orderInfoItem">
           <li><span>订单编号：</span> {{order.orderid}}</li>
           <li><span>下单时间：</span> {{formatDate(order.created_at,'yyyy-MM-dd hh:mm:ss')}}</li>
-          <!-- <li><span>取消时间：</span> 2018-08-05 18:06:06</li> -->
+          <li v-if="order.status==8"><span>取消时间：</span> {{formatDate(order.finish_at,'yyyy-MM-dd hh:mm:ss')}}</li>
         </ul>
         <!-- 配送方式 -->
         <div class="giveMethod">
           配送方式：快递运输
         </div>
         <!-- 支付方式 -->
-        <ul class="paymethod">
+        <ul class="paymethod" v-if="getOrderStat(order.status)">
           <li><span>支付方式：</span> 微信支付</li>
-          <li><span>支付时间：</span> {{order.pay_time}}</li>
+          <li><span>支付时间：</span> {{formatDate(order.pay_time)}}</li>
         </ul>
         <!-- 完成时间 -->
-        <!-- <div class="finishtime">
-          完成时间：{{order.pay_time}}
-        </div> -->
+        <div class="finishtime" v-if="order.status==3||order.status==6">
+          完成时间：{{formatDate(order.finish_at)}}
+        </div>
       </div>
     </div>
     <v-popup-confirm v-model="cancelVisible" @confirm="handleConfirm">
       <div class="text">确定取消此订单？</div>
+    </v-popup-confirm>
+    <v-popup-confirm v-model="isConform" @confirm="handleSConfirm">
+      <div class="text">确定商品已被本人亲自签收了吗？</div>
     </v-popup-confirm>
     <v-popup-confirm title="" v-model="serviceVisible" @confirm="goCustomService">
       <div class="txt-center">
@@ -160,6 +167,7 @@
       return {
         cancelVisible: false,
         serviceVisible: false,
+        isConform: false,
         order: {
           address: {},
           goods: [],
@@ -173,33 +181,59 @@
     },
     created() {
       let orderId = this.getOrderId;
-      this.ajax({
-        name: 'getOrder',
-        id: orderId
-      }).then(res => {
-        this.order = res;
-        this.order.goods.forEach(item => {
-          if(item.is_diamond) {
-            item.skuLabel = `${item.zhuzuanfenshu};${item.zuanshijingdu};${item.guige};${item.guige}`;
-          } else {
-            item.skuLabel = `${item.zhushimingcheng};${item.zhushipingji};${item.guige};${item.guige}`;
-          }
-        });
-        if(!this.order.logistics.info) {
-          this.order.logistics = {
-            info: {
-              data: []
-            }
-          };
-        }
-      });
+      this.getorderDetail(orderId);
     },
     computed: {
       ...mapGetters(['getOrderId'])
     },
     methods: {
-      ...mapMutations(['setCommon', 'setPayOrder']),
+      ...mapMutations(['setCommon', 'setPayOrder', 'setOrderType', 'setAppointment']),
       ...mapActions(['ajax']),
+      getOrderStat(status) {
+        if(status === 0) {
+          return false;
+        } else {
+          if(status === 8) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+      },
+      getorderDetail(orderId) {
+        this.ajax({
+          name: 'getOrder',
+          id: orderId
+        }).then(res => {
+          this.order = res;
+          this.order.goods.forEach(item => {
+            if(item.is_diamond) {
+              item.skuLabel = `${item.zhuzuanfenshu};${item.zuanshijingdu};${item.guige};${item.guige}`;
+            } else {
+              item.skuLabel = `${item.zhushimingcheng};${item.zhushipingji};${item.guige};${item.guige}`;
+            }
+          });
+          if(!this.order.logistics.info) {
+            this.order.logistics = {
+              info: {
+                data: []
+              }
+            };
+          }
+        });
+      },
+      tradeIn() {
+        this.setAppointment({
+          appointment: {
+          },
+          edit: 1,
+          type: 1
+        });
+        this.$router.push({ name: 'addappointment' });
+      },
+      goGoods() {
+        this.$router.push({ name: 'goodslist' });
+      },
       typename(type) {
         let _typenames = ['待付款', '待发货', '待收货', '已完成', '退款中', '', '已退款', '', '已取消'];
         return _typenames[type];
@@ -214,7 +248,10 @@
       goRefundDetail() {
         this.$router.push({ name: 'refunddetail' });
       },
-      confirm() {
+      cancelOrder() {
+        this.cancelVisible = true;
+      },
+      handleSConfirm() {
         this.ajax({
           name: 'changeOrder',
           data: {
@@ -222,11 +259,9 @@
             action: 'affirm'
           }
         }).then(res => {
-          this.$router.push({ name: 'orderlist', params: { type: 3 } });
+          this.setOrderType(3);
+          this.$router.push({ name: 'orderlist' });
         });
-      },
-      cancelOrder() {
-        this.cancelVisible = true;
       },
       handleConfirm() {
         this.ajax({
@@ -236,7 +271,8 @@
             action: 'cancel'
           }
         }).then(res => {
-          this.$router.push({ name: 'orderlist', params: { type: 0 } });
+          this.setOrderType(0);
+          this.$router.push({ name: 'orderlist' });
         });
       },
       goCustomService() {
@@ -255,6 +291,9 @@
   };
 </script>
 <style lang="less" scoped>
+  .txt-center {
+    padding: 30px 0;
+  }
   .text {
     height: 150px;
     text-align: center;

@@ -8,19 +8,19 @@
       </div>
     </div>
     <div class="ordertype">
-      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:0 } })">
+      <div class="orderitem" @click="goOrders(0)">
         <img src="~assets/mypage/icon_order_1.png" alt="">
         <span>待付款</span>
       </div>
-      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:1 } })">
+      <div class="orderitem" @click="goOrders(1)">
         <img src="~assets/mypage/icon_order_2.png" alt="">
         <span>待发货</span>
       </div>
-      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:2 } })">
+      <div class="orderitem" @click="goOrders(2)">
         <img src="~assets/mypage/icon_order_3.png" alt="">
         <span>待收货</span>
       </div>
-      <div class="orderitem" @click="$router.push({ name: 'orderlist', params: { type:3 } })">
+      <div class="orderitem" @click="goOrders(3)">
         <img src="~assets/mypage/icon_order_4.png" alt="">
         <span>已完成</span>
       </div>
@@ -31,6 +31,19 @@
     </div>
   </div>
 </template>
+<script>
+  import { mapMutations } from "vuex";
+
+  export default {
+    methods: {
+      ...mapMutations(['setOrderType']),
+      goOrders(type) {
+        this.setOrderType(type);
+        this.$router.push({ name: 'orderlist' });
+      }
+    }
+  };
+</script>
 
 <style lang="less" scoped>
   .myorder {
