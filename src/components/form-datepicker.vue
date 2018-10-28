@@ -74,14 +74,14 @@
     .label {
       flex-shrink: 0;
       min-width: 30%;
-      color: #999;
+      color: #666;
+      font-size: 24px;
     }
     input {
       text-align: right;
       width: 100%;
       padding: 0 10px;
-      font-size: 32px;
-      color: #333;
+      font-size: 24px;
       color: #666;
     }
   }

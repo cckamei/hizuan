@@ -19,7 +19,7 @@
         <span>购买人：{{commission.buyer}}</span>
       </div>
       <div class="detail" v-if="commission.money">
-        <span>提成时间：{{commission.created_at}}</span>
+        <span>提成时间：{{formatDate(commission.created_at)}}</span>
       </div>
     </div>
   </div>
@@ -27,6 +27,7 @@
 
 <script>
   import { mapActions } from 'vuex';
+  import { formatDate } from '@/utils';
   export default {
     data() {
       return {
@@ -45,6 +46,7 @@
       });
     },
     methods: {
+      formatDate,
       ...mapActions(['ajax'])
     }
   };

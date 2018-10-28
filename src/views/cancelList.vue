@@ -34,14 +34,22 @@
         </div>
         <div class="itemfoot">
           <!-- 已取消 -->
-          <div class="ordertypeQX">
-            <button class="btngrey btnleft" @click="goCustomService">联系客服</button>
+          <div class="ordertypeQX" v-if="order.status === 8">
+            <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
             <button class="btngrey" @click="goGoodsDetail">再次购买</button>
           </div>
-
+          <div class="ordertypeQX" v-if="order.status === 4">
+            <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
+            <button class="btngrey" @click="goRefundDetail(order.order_id)">查看退款</button>
+          </div>
         </div>
       </div>
     </div>
+    <v-popup-confirm title="" v-model="serviceVisible" @confirm="goCustomService">
+      <div class="txt-center">
+        即将离开商城，接通您的专属客服。<br>您可以在公众号中回复“人工服务”与客服进行联系与沟通。
+      </div>
+    </v-popup-confirm>
   </div>
 </template>
 
@@ -50,7 +58,8 @@
   export default {
     data() {
       return {
-        orders: []
+        orders: [],
+        serviceVisible: false
       };
     },
     created() {
@@ -58,21 +67,25 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      goCustomService() {
+        window.wx.closeWindow();
+      },
       getOrders() {
         this.ajax({
-          name: 'getOrders',
-          data: {
-            status: 8
-          }
+          name: 'getOrders'
         }).then(res => {
           this.orders = res;
-          this.ajax({
-            name: 'getOrders',
-            data: {
-              status: 4
-            }
-          }).then(res => {
-            this.orders = this.orders.concat(res);
+          this.orders = this.orders.filter(order => {
+            return order.status == 4 || order.status == 8 || order.status == 6;
+          });
+          this.orders.forEach(order => {
+            order.goods.forEach(item => {
+              if(item.is_diamond) {
+                item.skuLabel = `${item.zhuzuanfenshu};${item.zuanshijingdu};${item.guige};${item.guige}`;
+              } else {
+                item.skuLabel = `${item.zhushimingcheng};${item.zhushipingji};${item.guige};${item.guige}`;
+              }
+            });
           });
         });
       },
@@ -81,16 +94,20 @@
         this.setCommon({ orderId: orderId });
         this.$router.push({ name: 'orderdetail' });
       },
-      goCustomService() {
-        window.wx.closeWindow();
-      },
       goGoodsDetail() {
         this.$router.push({ name: 'goodslist' });
+      },
+      goRefundDetail(orderId) {
+        this.setCommon({ orderId: orderId });
+        this.$router.push({ name: 'refunddetail' });
       }
     }
   };
 </script>
 <style lang="less" scoped>
+  .txt-center {
+    padding: 30px 0;
+  }
   .listitem {
     background: #ffffff;
     margin-bottom: 16px;

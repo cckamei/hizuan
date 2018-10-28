@@ -68,22 +68,23 @@
 
 <style lang="less" scoped>
   .flex {
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    padding: 0 16px;
+    .label {
+      flex-shrink: 0;
+      min-width: 30%;
+      color: #666;
+      font-size: 24px;
+    }
+    input {
+      text-align: right;
       width: 100%;
-      height: 100%;
-      font-size: 30px;
-      padding: 0 16px;
-      .label {
-          flex-shrink: 0;
-          min-width: 30%;
-          color: #999;
-      }
-      input {
-          text-align: right;
-          width: 100%;
-          padding: 0 10px;
-          font-size: 32px;
-          color: #666;
-      }
+      padding: 0 10px;
+      font-size: 24px;
+      color: #666;
+    }
   }
 </style>
 

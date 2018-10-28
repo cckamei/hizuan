@@ -186,20 +186,31 @@ Date.prototype.format = function(fmt) {
   }
   for (let k in o) {
     if (new RegExp('(' + k + ')').test(fmt)) {
-      fmt = fmt.replace(
-        RegExp.$1,
-        RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(String(o[k]).length)
-      );
+      fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(String(o[k]).length));
     }
   }
   return fmt;
 };
-
+function formatDateNS(date) {
+  date = new Date(date);
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  var d = date.getDate();
+  var h = date.getHours();
+  var m1 = date.getMinutes();
+  var s = date.getSeconds();
+  m = m < 10 ? '0' + m : m;
+  d = d < 10 ? '0' + d : d;
+  return y + '-' + m + '-' + d + ' ' + h + ':' + m1 + ':' + s;
+}
 //格式化日期
 export function formatDate(nS, format) {
   //日期格式化
   if (!nS) {
     return '';
+  }
+  if (typeof nS == 'object') {
+    nS = formatDateNS(nS);
   }
   format = format || 'yyyy-MM-dd hh:mm:ss';
   return new Date(nS.replace(/-/g, '/')).format(format);
@@ -222,11 +233,7 @@ export function checkVerify(code) {
 
 //验证身份证
 export function checkIdentityCard(code) {
-  return Boolean(
-    /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9xX]$/.test(
-      code
-    )
-  );
+  return Boolean(/^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9xX]$/.test(code));
 }
 
 //去除字符串左右两边的空格

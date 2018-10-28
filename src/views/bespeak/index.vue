@@ -54,7 +54,7 @@
       },
       searchAppointment(tab) {
         this.activeTab = tab;
-        let type = this.activeTab == 1 ? 0 : 3;
+        let type = this.activeTab == 1 ? 0 : 2;
         this.ajax({
           name: 'getappoint',
           data: {
@@ -82,20 +82,20 @@
 
 <style lang="less" >
   .bespeak {
-      .header {
-          box-shadow: 0 0 0 0 rgba(170, 170, 170, 0.5) !important;
-      }
+    .header {
+      box-shadow: 0 0 0 0 rgba(170, 170, 170, 0.5) !important;
+    }
   }
   .add-btn {
-      font-size: 28px;
-      color: #faa0a0;
+    font-size: 28px;
+    color: #faa0a0;
   }
   .bespeak-warp {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 96px;
-      bottom: 0;
-      background: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 96px;
+    bottom: 0;
+    background: #fff;
   }
 </style>

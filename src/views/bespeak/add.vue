@@ -1,7 +1,7 @@
 <template>
   <div class="pt">
     <v-header>{{getAppointment.edit==0?'预约详情':(getAppointment.edit==1?'新增预约':'修改预约')}}
-      <div slot="headright" v-if="getAppointment.edit==0" @click="cancelAppoinment">取消预约</div>
+      <div slot="headright" v-if="getAppointment.edit==0" @click="cancelAppoinment">{{getAppointment.appointment.status===2?'':'取消预约'}}</div>
     </v-header>
     <div class="content">
       <div class="reqData-box">
@@ -56,8 +56,10 @@
             </ul>
           </li>
         </ul>
-        <div class="btn-submit" v-if="getAppointment.edit==0" :class="{active: isActive}" @click="isActive && update()">修改预约</div>
-        <div class="btn-submit" v-else :class="{active: isActive}" @click="isActive && submit()">确认提交</div>
+        <div v-if="getAppointment.appointment.status!==2">
+          <div class="btn-submit" v-if="getAppointment.edit==0" :class="{active: isActive}" @click="isActive && update()">修改预约</div>
+          <div class="btn-submit" v-else :class="{active: isActive}" @click="isActive && submit()">确认提交</div>
+        </div>
       </div>
       <select-address v-model="visible" :sprovinceId="reqData.provinceId" :scityId="reqData.cityId" :sdistrictId="reqData.districtId" @confirm="confirm"></select-address>
     </div>
@@ -108,7 +110,6 @@
       }
     },
     mounted() {
-      console.log(this.getAppointment);
       if(this.getAppointment.edit == 1) {
         if(this.getAppointment.type !== 1) {
           this.reqData.type = 0;
@@ -162,6 +163,7 @@
               occupation = i;
             }
           });
+
           this.reqData = {
             name: this.getAppointment.appointment.name,
             address: this.getAppointment.appointment.store.province + this.getAppointment.appointment.store.city + this.getAppointment.appointment.store.street,
@@ -279,72 +281,72 @@
 
 <style lang="less" scoped>
   .mt-15 {
-      margin-top: 15px;
+    margin-top: 15px;
   }
   .text {
-      height: 150px;
-      text-align: center;
-      line-height: 150px;
-      font-size: 28px;
+    height: 150px;
+    text-align: center;
+    line-height: 150px;
+    font-size: 28px;
   }
   .reqData-box {
-      padding: 30px 20px;
-      .section {
-          margin-top: 16px;
+    padding: 30px 20px;
+    .section {
+      margin-top: 16px;
+      padding: 0 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    .form {
+      background-color: #fff;
+      li {
+        border-bottom: 1px solid #f0f0f0; /*no*/
+        height: 96px;
+        &:last-child {
+          border-bottom: 0;
+        }
+        .input {
+          height: 100%;
+        }
+        &.middle {
+          height: auto;
           padding: 0 20px;
-          background-color: #fff;
-          border-radius: 8px;
-          &:first-child {
-              margin-top: 0;
+          .instructions {
+            color: #666;
+            font-size: 24px;
+            height: 96px;
+            line-height: 96px;
           }
+          .textarea {
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            margin: 10px 0;
+            height: 240px;
+            padding: 15px;
+            line-height: 60px;
+            font-size: 24px;
+          }
+        }
       }
+    }
 
-      .form {
-          background-color: #fff;
-          li {
-              border-bottom: 1px solid #f0f0f0; /*no*/
-              height: 96px;
-              &:last-child {
-                  border-bottom: 0;
-              }
-              .input {
-                  height: 100%;
-              }
-              &.middle {
-                  height: auto;
-                  padding: 0 20px;
-                  .instructions {
-                      color: #999;
-                      font-size: 28px;
-                      height: 96px;
-                      line-height: 96px;
-                  }
-                  .textarea {
-                      background-color: #f5f5f5;
-                      border-radius: 5px;
-                      margin: 10px 0;
-                      height: 240px;
-                      padding: 15px;
-                      line-height: 60px;
-                      font-size: 24px;
-                  }
-              }
-          }
+    .btn-submit {
+      height: 70px;
+      line-height: 70px;
+      text-align: center;
+      margin: 30px 20px;
+      background-color: #999;
+      font-size: 28px;
+      color: #fff;
+      border-radius: 30px;
+      &.active {
+        background-color: #ffb4b4;
       }
-
-      .btn-submit {
-          height: 70px;
-          line-height: 70px;
-          text-align: center;
-          margin: 30px 20px;
-          background-color: #999;
-          font-size: 28px;
-          color: #fff;
-          border-radius: 30px;
-          &.active {
-              background-color: #ffb4b4;
-          }
-      }
+    }
   }
 </style>
 

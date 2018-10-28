@@ -9,6 +9,7 @@ export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
   state: {
     cacheData: getSen('cacheData') || {},
+    ordertype: -1,
     common: getSen('common') || {
       goodsId: '',
       goodsType: '',
@@ -31,7 +32,8 @@ export default new Vuex.Store({
     getUserInfo: state => state.userInfo,
     getCart: state => state.cart,
     getOrderId: state => state.common.orderId,
-    getPayOrder: state => serialize(state.payOrder)
+    getPayOrder: state => serialize(state.payOrder),
+    getOrderType: state => state.ordertype
   },
   mutations: {
     setCacheData(state, data) {
@@ -69,6 +71,9 @@ export default new Vuex.Store({
     logout(state, data) {
       state.userInfo = {};
       setSen('userInfo', state.userInfo);
+    },
+    setOrderType(state, data) {
+      state.ordertype = data;
     }
   },
   actions: {

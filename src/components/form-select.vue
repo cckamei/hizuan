@@ -79,7 +79,8 @@
     .label {
       flex-shrink: 0;
       min-width: 30%;
-      color: #999;
+      color: #666;
+      font-size: 24px;
     }
     input {
       text-align: right;
@@ -88,6 +89,7 @@
       font-size: 32px;
       color: #333;
       color: #666;
+      font-size: 24px;
     }
   }
 </style>

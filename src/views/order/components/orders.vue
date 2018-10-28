@@ -35,7 +35,7 @@
           <!-- <button class="btngrey btnleft"> </button>
           <button class="btnpink" @click="$router.push({ name: 'pay' })">确认收货</button> -->
           <button class="btngrey btnleft" @click="gotLogistics(order.order_id)">查看物流</button>
-          <button class="btnpink" @click="confirm(order.order_id)">确认收货</button>
+          <button class="btnpink" @click="isConform = true;orderId = order.order_id; ">确认收货</button>
         </div>
         <!-- 已完成 3-->
         <div class="ordertypeDF" v-if="order.status==3">
@@ -55,16 +55,16 @@
         <!-- 退款中 4-->
         <div class="ordertypeDS" v-if="order.status==4">
           <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
-          <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
+          <button class="btngrey" @click="goRefundDetail(order.order_id)">查看退款</button>
         </div>
         <!-- 待发货 1-->
         <div class="ordertypeWC" v-if="order.status==1">
           <button class="btngrey" @click="serviceVisible = true">联系客服</button>
         </div>
         <!-- 已退款 6-->
-        <div class="ordertypeWC" v-if="order.status==6">
+        <div class="ordertypeDS" v-if="order.status==6">
           <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
-          <button class="btngrey" @click="goDetail(order.order_id)">查看详情</button>
+          <button class="btngrey" @click="goRefundDetail(order.order_id)">查看退款</button>
         </div>
       </div>
     </div>
@@ -72,6 +72,9 @@
       <div class="txt-center">
         即将离开商城，接通您的专属客服。<br>您可以在公众号中回复“人工服务”与客服进行联系与沟通。
       </div>
+    </v-popup-confirm>
+    <v-popup-confirm v-model="isConform" @confirm="handleSConfirm">
+      <div class="txt-center">确定商品已被本人亲自签收了吗？</div>
     </v-popup-confirm>
   </div>
 </template>
@@ -81,23 +84,24 @@
   export default {
     data() {
       return {
-        serviceVisible: false
+        serviceVisible: false,
+        isConform: false,
+        orderId: ''
       };
     },
     props: ['orders'],
     created() {
     },
-    computed: {
 
-    },
     methods: {
       ...mapActions(['ajax']),
-      ...mapMutations(['setCommon', 'setAppointment', 'setPayOrder']),
+      ...mapMutations(['setCommon', 'setAppointment', 'setPayOrder', 'setOrderType']),
       goDetail(orderId) {
         this.setCommon({ orderId: orderId });
         this.$router.push({ name: 'orderdetail' });
       },
-      goRefunddetail() {
+      goRefundDetail(orderId) {
+        this.setCommon({ orderId: orderId });
         this.$router.push({ name: 'refunddetail' });
       },
       tradeIn() {
@@ -120,15 +124,15 @@
         this.setCommon({ orderId: orderId });
         this.$router.push({ name: 'logistics' });
       },
-      confirm(orderId) {
+      handleSConfirm() {
         this.ajax({
           name: 'changeOrder',
           data: {
-            order_id: orderId,
+            order_id: this.orderId,
             action: 'affirm'
           }
         }).then(res => {
-          this.$router.push({ name: 'orderlist', params: { type: 3 } });
+          window.location.reload();
         });
       },
       goCustomService() {
@@ -143,6 +147,9 @@
 </script>
 
 <style lang="less" scoped>
+  .txt-center {
+    padding: 30px 0;
+  }
   .order-list {
     margin-top: 112px;
     .item {
@@ -260,5 +267,8 @@
         }
       }
     }
+  }
+  .txt-center {
+    padding: 50px 0;
   }
 </style>

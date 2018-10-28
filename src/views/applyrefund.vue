@@ -1,7 +1,7 @@
 <template>
   <div class="applyrefundPage">
     <v-header @back="back">申请退款</v-header>
-    <div class="pagecontent">
+    <div class="content">
       <ul class=" refunditem refundGoods">
         <li>
           <span>订单内容：</span>
@@ -67,7 +67,7 @@
         </ul>
       </div>
       <div class="btns fix">
-        <button class="btn" :class="{active: isActive}" @click="submit">申请退款</button>
+        <button class="btn" :class="{active: isActive}" @click="submit">{{order.is_rejected?'重新提交':'确认提交'}}</button>
       </div>
     </div>
 
@@ -110,7 +110,7 @@
     computed: {
       ...mapGetters(['getOrderId']),
       isActive() {
-        return this.reqData.linkman && this.reqData.linkphone;
+        return this.reqData.linkman && this.reqData.linkphone && this.reqData.reason;
       }
     },
     methods: {
@@ -147,7 +147,7 @@
 </script>
 <style lang="less" scoped>
   .applyrefundPage {
-    .pagecontent {
+    .content {
       padding: 0 20px;
     }
     .refunditem {
@@ -273,7 +273,7 @@
           border-radius: 50%;
         }
         s.active {
-          background: #acd598;
+          background: #ffb4b4;
         }
         i {
           width: 217px;
@@ -281,7 +281,7 @@
           background: #dcdcdc;
         }
         i.active {
-          background: #acd598;
+          background: #ffb4b4;
         }
       }
       .lintext {
