@@ -14,7 +14,8 @@ export default new Vuex.Store({
       goodsId: '',
       goodsType: '',
       orderId: '',
-      lastPage: 'index'
+      lastPage: 'index',
+      emp_id: ''
     },
     appointment: getSen('appointment') || {},
     userInfo: getSen('userInfo') || {},
