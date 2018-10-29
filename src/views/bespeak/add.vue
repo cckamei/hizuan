@@ -22,7 +22,7 @@
           <li class="section">
             <ul class="form">
               <li>
-                <v-form-datepicker label="预约时间" title="预约时间" v-model="reqData.time" format="yyyy-MM-dd" placeholder="请选择" :readonly="!getAppointment.edit" :arrow="true"></v-form-datepicker>
+                <v-form-datepicker label="预约时间" title="预约时间" v-model="reqData.time" format="yyyy-MM-dd" placeholder="请选择" :startDate="new Date()" :endDate="new Date('2050/01/01')" :readonly="!getAppointment.edit" :arrow="true"></v-form-datepicker>
               </li>
               <li>
                 <v-form-select label="预约类型" title="预约类型" v-model="reqData.type" :list="['线下体验', '以旧换新']" placeholder="请选择预约类型" :readonly="!getAppointment.edit" :arrow="true"></v-form-select>
@@ -45,7 +45,7 @@
                 <v-form-input label="手机" v-model="reqData.tel" type="tel" placeholder="请填写您的真实手机号码" :readonly="!getAppointment.edit"></v-form-input>
               </li>
               <li>
-                <v-form-select label="性别" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别" :readonly="!getAppointment.edit"></v-form-select>
+                <v-form-select label="性别" title="性别选择" v-model="reqData.gender" :list="['女','男']" placeholder="请选择您的性别" :readonly="!getAppointment.edit"></v-form-select>
               </li>
               <li>
                 <v-form-datepicker label="生日" title="生日日期" v-model="reqData.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日" :readonly="!getAppointment.edit"></v-form-datepicker>
@@ -163,11 +163,11 @@
               occupation = i;
             }
           });
-
+          console.log(this.getAppointment.appointment);
           this.reqData = {
             name: this.getAppointment.appointment.name,
             address: this.getAppointment.appointment.store.province + this.getAppointment.appointment.store.city + this.getAppointment.appointment.store.street,
-            gender: 1,
+            gender: this.getAppointment.appointment.sex,
             tel: this.getAppointment.appointment.phone,
             birthday: this.getAppointment.appointment.birthday,
             type: this.getAppointment.appointment.type,
@@ -223,11 +223,12 @@
             store: this.shops[this.reqData.shop].value.toString(),
             appoint_time: formatDate(this.reqData.time, 'yyyy-MM-dd'),
             name: this.reqData.name,
-            sex: this.reqData.sex,
+            sex: this.reqData.gender,
             career: this.occupations[this.reqData.occupation],
             phone: this.reqData.tel,
             birthday: formatDate(this.reqData.birthday, 'yyyy-MM-dd'),
-            ext: this.reqData.detail
+            ext: this.reqData.detail,
+            gender: this.reqData.gender
           }
         }).then(res => {
           this.$router.push({ name: 'bespeak' });
@@ -242,11 +243,12 @@
             store: this.shops[this.reqData.shop].value.toString(),
             appoint_time: formatDate(this.reqData.time, 'yyyy-MM-dd'),
             name: this.reqData.name,
-            sex: this.reqData.sex,
+            sex: this.reqData.gender,
             career: this.occupations[this.reqData.occupation],
             phone: this.reqData.tel,
             birthday: formatDate(this.reqData.birthday, 'yyyy-MM-dd'),
-            ext: this.reqData.detail
+            ext: this.reqData.detail,
+            gender: this.reqData.gender
           }
         }).then(res => {
           this.$router.push({ name: 'bespeak' });

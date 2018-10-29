@@ -1,6 +1,6 @@
 <template>
   <div class="applyrefundPage">
-    <v-header @back="back">申请退款</v-header>
+    <v-header :godetail="true">申请退款</v-header>
     <div class="content">
       <ul class=" refunditem refundGoods">
         <li>
@@ -94,6 +94,7 @@
     },
     created() {
       let orderId = this.getOrderId;
+      this.setCommon({ orderId: this.getOrderId });
       this.ajax({
         name: 'getOrder',
         id: orderId
@@ -137,10 +138,6 @@
           this.setCommon({ orderId: this.getOrderId });
           this.$router.push({ name: 'orderdetail' });
         });
-      },
-      back() {
-        this.setCommon({ orderId: this.getOrderId });
-        this.$router.push({ name: 'orderdetail' });
       }
     }
   };

@@ -8,7 +8,7 @@
             <img src="~assets/mypage/icon_shop.png" alt="">
             <span>CC卡美珠宝</span>
           </div>
-          <div class="listright">{{order.status===4?'退款中':(order.status === 8?'已取消':'')}}</div>
+          <div class="listright">{{order.status===4?'退款中':(order.status === 8?'已取消':'已退款')}}</div>
         </div>
         <div class="itemcontent" v-for="(good,j) in order.goods" @click="goDetail(order.order_id)">
           <div class="contentleft">
@@ -20,9 +20,9 @@
               <span>￥{{good.goods_price}}</span>
             </div>
             <div class="contentmessage">
-              <p>{{good.server}}</p>
+              <p>{{good.skuLabel}}</p>
               <div class="messageright">
-                <s>￥{{good.subtotal}}</s>
+                <s>&nbsp;</s>
                 <span>X{{good.goods_count}}</span>
               </div>
             </div>
@@ -39,6 +39,10 @@
             <button class="btngrey" @click="goGoodsDetail">再次购买</button>
           </div>
           <div class="ordertypeQX" v-if="order.status === 4">
+            <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
+            <button class="btngrey" @click="goRefundDetail(order.order_id)">查看退款</button>
+          </div>
+          <div class="ordertypeQX" v-if="order.status === 6">
             <button class="btngrey btnleft" @click="serviceVisible = true">联系客服</button>
             <button class="btngrey" @click="goRefundDetail(order.order_id)">查看退款</button>
           </div>
@@ -139,6 +143,8 @@
       padding: 0 30px;
       background: #f5f5f5;
       margin-bottom: 8px;
+      vertical-align: middle;
+      align-items: center;
       .contentleft {
         width: 120px;
         height: 120px;
