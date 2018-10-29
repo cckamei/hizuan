@@ -1,8 +1,8 @@
 <template>
-  <div class="tabs">
-    <div class="ordertab">
-      <div class="ordertab-nav" :class="{active: item.type == type}" v-for="(item, index) in orderTab" :key="index" @click="changeTab(item.type)">
-        <i>{{item.title}}</i>
+  <div class="tabs-warp">
+    <div class="tabs">
+      <div class="tab" v-for="(item, index) in orderTab" :key="index" @click="changeTab(item.type)">
+        <span :class="{active:item.type == type}">{{item.title}}</span>
       </div>
     </div>
   </div>
@@ -49,36 +49,43 @@
 </script>
 
 <style lang="less" scoped>
-  .tabs {
-    position: fixed;
+  .tabs-warp {
+    position: absolute;
     height: 96px;
-    width: 100%;
-    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 7px 50px 10px rgba(170, 170, 170, 0.5);
+    z-index: 1;
+    background: #fff;
   }
-  .ordertab {
-    position: fixed;
-    height: 96px;
-    line-height: 96px;
-    width: 100%;
-    background-color: #fff;
-    padding: 0 45px;
-    box-shadow: 0 20px 50px 10px rgba(170, 170, 170, 0.5);
+  .tabs {
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    height: 100%;
+    background: #fff;
+    border-top: 1px solid #f0f0f0; /*no*/
     display: flex;
-    &-nav {
-      // width: 20%;
-      height: 100%;
-      // float: left;
+    align-items: center;
+    text-align: center;
+    .tab {
       flex: 1;
-      color: #666666;
-      text-align: center;
-      line-height: 96px;
       font-size: 20px;
-      margin: 0 20px;
-      &.active {
-        color: #333333;
-        font-weight: bold;
-        font-size: 24px;
-        border-bottom: 6px solid #faa0a0;
+      color: #666;
+      height: 100%;
+      span {
+        display: inline-block;
+        height: 96px;
+        line-height: 96px;
+        width: 80%;
+        text-align: center;
+        &.active {
+          color: #333333;
+          font-weight: bold;
+          font-size: 24px;
+          border-bottom: 3px solid #faa0a0; /*no*/
+        }
       }
     }
   }

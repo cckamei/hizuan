@@ -2,8 +2,10 @@
   <div class="order pt">
     <v-header @back="back">订单列表</v-header>
     <div class="content">
-      <tabs :type="getOrderType" @search-orders="searchOrders"></tabs>
-      <order-list :orders="orders" @reload-orders="reloadOrders"></order-list>
+      <div class="order-warp">
+        <tabs :type="getOrderType" @search-orders="searchOrders"></tabs>
+        <order-list :orders="orders" @reload-orders="reloadOrders"></order-list>
+      </div>
     </div>
   </div>
 </template>
@@ -65,3 +67,21 @@
     }
   };
 </script>
+
+<style lang="less" scoped>
+  .order {
+    .header {
+      box-shadow: 0 0 0 0 rgba(170, 170, 170, 0.5) !important;
+    }
+  }
+  .order-warp {
+    .bespeak-warp {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 96px;
+      bottom: 0;
+      background: #fff;
+    }
+  }
+</style>
