@@ -1,6 +1,6 @@
 <template>
   <div class="order pt">
-    <v-header @back="back">订单列表</v-header>
+    <v-header :mypage="true">订单列表</v-header>
     <div class="content">
       <div class="order-warp">
         <tabs :type="getOrderType" @search-orders="searchOrders"></tabs>
@@ -60,9 +60,6 @@
             });
           });
         });
-      },
-      back() {
-        this.$router.push({ name: 'mypage' });
       }
     }
   };

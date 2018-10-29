@@ -62,10 +62,10 @@
         </div>
         <ul class="lintext">
           <li>
-            <p :class="{active: lines==1}">发起退款</p>
+            <p :class="{active: lines==2}">发起退款</p>
           </li>
           <li>
-            <p :class="{active: lines==2}">审核不通过</p>
+            <p :class="{active: lines==1}">审核不通过</p>
           </li>
           <li>
             <p :class="{active: lines==3}">退款成功</p>
@@ -133,158 +133,158 @@
 </script>
 <style lang="less" scoped>
   .applyrefundPage {
-      overflow-y: auto;
-      .pagecontent {
-          padding: 0 20px 30px;
+    overflow-y: auto;
+    .pagecontent {
+      padding: 0 20px 30px;
+    }
+    .refunditem {
+      background: #ffffff;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    .refundGoods {
+      margin-top: 96px;
+      padding: 40px 20px;
+      li {
+        padding: 0 20px;
+        display: flex;
+        flex-flow: row nowrap;
+        font-size: 24px;
+        color: #666666;
+        margin-bottom: 20px;
+        span {
+          width: 120px;
+        }
+        p {
+          width: 500px;
+          span {
+            display: inline;
+            margin-left: 10px;
+          }
+        }
       }
-      .refunditem {
-          background: #ffffff;
-          border-radius: 10px;
-          margin-bottom: 16px;
+      li:last-child {
+        padding: 0 20px;
+        display: flex;
+        flex-flow: row nowrap;
+        font-size: 30px;
+        color: #333333;
+        margin-bottom: 20px;
       }
-      .refundGoods {
-          margin-top: 96px;
-          padding: 40px 20px;
-          li {
-              padding: 0 20px;
-              display: flex;
-              flex-flow: row nowrap;
-              font-size: 24px;
-              color: #666666;
-              margin-bottom: 20px;
-              span {
-                  width: 120px;
-              }
-              p {
-                  width: 500px;
-                  span {
-                      display: inline;
-                      margin-left: 10px;
-                  }
-              }
-          }
-          li:last-child {
-              padding: 0 20px;
-              display: flex;
-              flex-flow: row nowrap;
-              font-size: 30px;
-              color: #333333;
-              margin-bottom: 20px;
-          }
+    }
+    .applyreason {
+      padding: 40px 20px 30px;
+      .reasonchoice {
+        font-size: 24px;
+        color: #666666;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        h2 {
+          text-align: right;
+          color: #999999;
+          border: none;
+          font-weight: normal;
+        }
       }
-      .applyreason {
-          padding: 40px 20px 30px;
-          .reasonchoice {
-              font-size: 24px;
-              color: #666666;
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              align-items: center;
-              h2 {
-                  text-align: right;
-                  color: #999999;
-                  border: none;
-                  font-weight: normal;
-              }
-          }
-          p {
-              margin-top: 20px;
-              color: #cdb49b;
-              font-size: 20px;
-              border-bottom: 2px solid #f0f0f0;
-              padding-bottom: 30px;
-          }
-          h1 {
-              font-size: 24px;
-              color: #666666;
-              margin: 30px 0;
-              font-weight: normal;
-          }
-          .reasontext {
-              background: #f5f5f5;
-              border-radius: 10px;
-              height: 240px;
-              padding: 30px;
-              font-size: 24px;
-              color: #999999;
-          }
+      p {
+        margin-top: 20px;
+        color: #cdb49b;
+        font-size: 20px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 30px;
       }
-      .refundMessage {
-          padding: 10px 20px;
-          border-radius: 10px;
-          li {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: space-between;
-              height: 84px;
-              line-height: 84px;
-              border-bottom: 2px solid #f0f0f0;
-              label {
-                  color: #666666;
-              }
-              p {
-                  width: 300px;
-                  height: 100%;
-                  text-align: right;
-                  color: #999999;
-              }
-              &:last-child {
-                  border-bottom: 0;
-              }
-          }
+      h1 {
+        font-size: 24px;
+        color: #666666;
+        margin: 30px 0;
+        font-weight: normal;
       }
-      .refundline {
-          padding: 54px 0 40px;
-          .line {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: flex-start;
-              align-items: center;
-              margin-left: 108px;
-              s {
-                  width: 20px;
-                  height: 20px;
-                  background: #dcdcdc;
-                  border-radius: 50%;
-              }
-              s.active {
-                  background: #acd598;
-              }
-              i {
-                  width: 217px;
-                  height: 4px;
-                  background: #dcdcdc;
-              }
-              i.active {
-                  background: #acd598;
-              }
-          }
-          .lintext {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: flex-start;
-              align-items: center;
-              margin-top: 30px;
-              margin-left: 10px;
-              text-align: center;
-              li {
-                  flex: 1;
-              }
-              p {
-                  font-size: 24px;
-                  color: #999999;
-                  margin-bottom: 12px;
-              }
-              p.active {
-                  color: #666666;
-              }
-              span {
-                  font-size: 20px;
-                  color: #999999;
-              }
-          }
+      .reasontext {
+        background: #f5f5f5;
+        border-radius: 10px;
+        height: 240px;
+        padding: 30px;
+        font-size: 24px;
+        color: #999999;
       }
+    }
+    .refundMessage {
+      padding: 10px 20px;
+      border-radius: 10px;
+      li {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        height: 84px;
+        line-height: 84px;
+        border-bottom: 2px solid #f0f0f0;
+        label {
+          color: #666666;
+        }
+        p {
+          width: 300px;
+          height: 100%;
+          text-align: right;
+          color: #999999;
+        }
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+    .refundline {
+      padding: 54px 0 40px;
+      .line {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        margin-left: 108px;
+        s {
+          width: 20px;
+          height: 20px;
+          background: #dcdcdc;
+          border-radius: 50%;
+        }
+        s.active {
+          background: #acd598;
+        }
+        i {
+          width: 217px;
+          height: 4px;
+          background: #dcdcdc;
+        }
+        i.active {
+          background: #acd598;
+        }
+      }
+      .lintext {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 30px;
+        margin-left: 10px;
+        text-align: center;
+        li {
+          flex: 1;
+        }
+        p {
+          font-size: 24px;
+          color: #999999;
+          margin-bottom: 12px;
+        }
+        p.active {
+          color: #666666;
+        }
+        span {
+          font-size: 20px;
+          color: #999999;
+        }
+      }
+    }
   }
 </style>
 

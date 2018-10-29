@@ -3,7 +3,7 @@
     <div class="appointment" @click="$router.push({'name':'bespeak'})">
       <img src="~assets/payment/card1.png" alt="" srcset="">
     </div>
-    <div class="instalments">
+    <div class="instalments" @click="goPage">
       <img src="~assets/payment/card2.png" alt="" srcset="">
     </div>
     <div class="buttons flex">
@@ -35,6 +35,9 @@
         } else {
           this.$router.push({ name: 'mypage' });
         }
+      },
+      goPage() {
+        window.location.href = 'https://mp.weixin.qq.com/s/14P5TU2BtwRwEwyLKI1H1A';
       }
     }
   };

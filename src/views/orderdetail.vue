@@ -1,10 +1,10 @@
 <template>
   <div class="orderdetailpage pt">
-    <v-header>订单详情</v-header>
+    <v-header :gocancel="true">订单详情</v-header>
     <!-- 订单地址、收货人、物流信息 -->
     <div class="content">
-      <div class="logistics">
-        <div class="logisticsInfo" v-if="order.logistics.info.data.length==0" @click="gotLogistics()">
+      <div class="logistics" @click="gotLogistics()">
+        <div class="logisticsInfo" v-if="order.logistics.info.data.length==0">
           <div class="logitem">
             <div>
               <img src="~assets/mypage/icon_exp.png" alt="">
@@ -132,18 +132,22 @@
           <li v-if="order.status==8"><span>取消时间：</span> {{formatDate(order.finish_at,'yyyy-MM-dd hh:mm:ss')}}</li>
         </ul>
         <!-- 配送方式 -->
-        <div class="giveMethod">
+        <!-- <div class="giveMethod" v-if="order.status!=8">
           配送方式：快递运输
-        </div>
+        </div> -->
+        <ul class="orderInfoItem" v-if="order.status!=8">
+          <li><span>配送方式：</span> 快递运输</li>
+        </ul>
         <!-- 支付方式 -->
-        <ul class="paymethod" v-if="getOrderStat(order.status)">
+        <ul class="orderInfoItem" v-if="getOrderStat(order.status)">
           <li><span>支付方式：</span> 微信支付</li>
           <li><span>支付时间：</span> {{formatDate(order.pay_time)}}</li>
         </ul>
         <!-- 完成时间 -->
-        <div class="finishtime" v-if="order.status==3||order.status==6">
-          完成时间：{{formatDate(order.finish_at)}}
-        </div>
+        <ul class="orderInfoItem" v-if="order.status==3||order.status==6">
+          <li><span>完成时间：</span> {{formatDate(order.finish_at)}}</li>
+        </ul>
+
       </div>
     </div>
     <v-popup-confirm v-model="cancelVisible" @confirm="handleConfirm">
