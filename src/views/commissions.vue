@@ -3,7 +3,7 @@
     <v-header>提成列表</v-header>
     <div class="list" :class="{'no-data':commissions.length==0}" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50" infinite-scroll-immediate-check="true">
       <div class="commission" v-for="(commission,i) in commissions" :key="i">
-        <div class="time">{{commission.created_at}}</div>
+        <div class="time">{{formatDate(commission.created_at)}}</div>
         <div class="order">
           <div class="order-user">
             购买人：{{commission.buyer}}
@@ -36,6 +36,7 @@
 
 <script>
   import { mapActions } from 'vuex';
+  import { formatDate } from '@/utils';
   export default {
     data() {
       return {
@@ -52,6 +53,7 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      formatDate,
       getCommissions() {
         this.pageInfo = {
           currentPage: this.pageInfo.currentPage + 1,

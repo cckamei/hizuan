@@ -9,16 +9,16 @@
     </div>
     <div class="panel-content">
 
-      <div class="detail mt-10" v-if="commission.money">
+      <div class="detail mt-10" v-if="commission.buyer">
         <span>最近提成：￥ {{commission.money}}</span>
       </div>
       <div class="detail mt-10" v-else>
         <span>最近提成：暂无提成记录</span>
       </div>
-      <div class="detail" v-if="commission.money">
+      <div class="detail" v-if="commission.buyer">
         <span>购买人：{{commission.buyer}}</span>
       </div>
-      <div class="detail" v-if="commission.money">
+      <div class="detail" v-if="commission.buyer">
         <span>提成时间：{{formatDate(commission.created_at)}}</span>
       </div>
     </div>
