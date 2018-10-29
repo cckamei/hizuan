@@ -191,29 +191,21 @@ Date.prototype.format = function(fmt) {
   }
   return fmt;
 };
-function formatDateNS(date) {
-  date = new Date(date);
-  var y = date.getFullYear();
-  var m = date.getMonth() + 1;
-  var d = date.getDate();
-  var h = date.getHours();
-  var m1 = date.getMinutes();
-  var s = date.getSeconds();
-  m = m < 10 ? '0' + m : m;
-  d = d < 10 ? '0' + d : d;
-  return y + '-' + m + '-' + d + ' ' + h + ':' + m1 + ':' + s;
-}
+
 //格式化日期
 export function formatDate(nS, format) {
   //日期格式化
   if (!nS) {
     return '';
   }
-  if (typeof nS == 'object') {
-    nS = formatDateNS(nS);
-  }
   format = format || 'yyyy-MM-dd hh:mm:ss';
-  return new Date(nS.replace(/-/g, '/')).format(format);
+  if (typeof nS == 'string') {
+    nS = nS.replace(/-/g, '/');
+    if (nS.indexOf('.') != -1) {
+      nS = nS.substr(0, nS.indexOf('.'));
+    }
+  }
+  return new Date(nS).format(format);
 }
 
 //验证手机号码
