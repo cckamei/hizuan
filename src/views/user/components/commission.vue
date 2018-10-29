@@ -1,5 +1,5 @@
 <template>
-  <div class="commission">
+  <div class="commission" @click="$router.push({ name: 'commissions' })">
     <div class="panel-header" @click="$router.push({ name: 'commissions' })">
       <span>我的提成</span>
       <div class="more">
@@ -9,17 +9,14 @@
     </div>
     <div class="panel-content">
 
-      <div class="detail mt-10" v-if="commission.money">
+      <div class="detail mt-10" v-if="commission.buyer">
         <span>最近提成：￥ {{commission.money}}</span>
       </div>
       <div class="detail mt-10" v-else>
         <span>最近提成：暂无提成记录</span>
       </div>
-      <div class="detail" v-if="commission.money">
-        <span>购买人：{{commission.buyer}}</span>
-      </div>
-      <div class="detail" v-if="commission.money">
-        <span>提成时间：{{formatDate(commission.created_at)}}</span>
+      <div class="detail" v-if="commission.buyer">
+        <span>提成时间：{{formatDate(commission.created_at,'yyyy-MM-dd hh:mm:ss')}}</span>
       </div>
     </div>
   </div>
@@ -57,7 +54,7 @@
   .commission {
     background: #fff;
     width: 710px;
-    margin: 20px auto 0;
+    margin: 20px auto 50px;
     border-radius: 10px;
     .panel-content {
       padding: 20px 20px;
