@@ -34,20 +34,14 @@
         return this[val] === 'function';
       },
       backHandler() {
-        if(this.isDefined('back')) {
-          if(this.isFunction('back')) {
-            this.back();
-          } else {
-            if(this.gocancel) {
-              this.$router.push({ name: 'cancelList' });
-            } else if(this.godetail) {
-              this.$router.push({ name: 'orderdetail' });
-            } else if(this.mypage) {
-              this.$router.push({ name: 'mypage' });
-            } else {
-              this.$router.go(-1);
-            }
-          }
+        if(this.gocancel) {
+          this.$router.push({ name: 'cancelList' });
+        } else if(this.godetail) {
+          this.$router.push({ name: 'orderdetail' });
+        } else if(this.mypage) {
+          this.$router.push({ name: 'mypage' });
+        } else {
+          this.$router.go(-1);
         }
       }
     }

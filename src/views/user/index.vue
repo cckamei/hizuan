@@ -28,11 +28,17 @@
     computed: {
       ...mapGetters(['getUserInfo'])
     },
-    mixins: [mixin]
+    mixins: [mixin],
+    created() {
+      this.setOrderType(-1);
+    },
+    methods: {
+      ...mapMutations(['setOrderType'])
+    }
   };
 </script>
 <style lang="less" scoped>
   .mypage {
-      background: #f0f0f0;
+    background: #f0f0f0;
   }
 </style>

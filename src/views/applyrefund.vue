@@ -31,10 +31,10 @@
             <p :class="{active: lines==1}">发起退款</p>
           </li>
           <li>
-            <p :class="{active: lines==2}">审核不通过</p>
+            <p :class="{active: lines==1}">审核不通过</p>
           </li>
           <li>
-            <p :class="{active: lines==3}">退款成功</p>
+            <p :class="{active: lines==1}">退款成功</p>
           </li>
         </ul>
       </div>

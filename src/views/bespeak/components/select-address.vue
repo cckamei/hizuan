@@ -7,9 +7,9 @@
       <li @click="active = 2;districtId='';district='';">{{city}}
         <i v-if="active==2"></i>
       </li>
-      <li @click="active = 3&&districts.length">{{district}}
+      <!-- <li @click="active = 3&&districts.length">{{district}}
         <i v-if="active==3&&districts.length"></i>
-      </li>
+      </li> -->
     </ul>
     <ul class="addList" v-if="active==1&&provinces.length">
       <li v-for="(item,index) in provinces" :key="index" :class="{actived: provinceId==item}" @click="chooseProvice(item)">{{item}}</li>
@@ -17,9 +17,9 @@
     <ul class="addList" v-if="active==2 &&citys.length">
       <li v-for="(item,index) in citys" :key="index" :class="{actived: cityId==item}" @click="chooseCity(item)">{{item}}</li>
     </ul>
-    <ul class="addList" v-if="active==3&&districts.length">
+    <!-- <ul class="addList" v-if="active==3&&districts.length">
       <li v-for="(item,index) in districts" :key="index" :class="{actived: districtId==item}" @click="districtId=item;district=item">{{item}}</li>
-    </ul>
+    </ul> -->
   </v-slide-up>
 </template>
 
@@ -32,14 +32,14 @@
         ivisible: false,
         provinces: [],
         citys: [],
-        districts: [],
+        // districts: [],
         active: 1,
         provinceId: '',
         cityId: '',
-        districtId: '',
+        // districtId: '',
         province: '',
         city: '',
-        district: '',
+        // district: '',
         stores: []
       };
     },
@@ -82,17 +82,17 @@
         });
         this.citys = Array.from(set);
       },
-      getDistrict() {
-        let districtsset = new Set();
-        this.stores.forEach(element => {
-          if(element.province == this.province && element.city == this.city) {
-            if(element.street) {
-              districtsset.add(element.street);
-            }
-          }
-        });
-        this.districts = Array.from(districtsset);
-      },
+      // getDistrict() {
+      //   let districtsset = new Set();
+      //   this.stores.forEach(element => {
+      //     if(element.province == this.province && element.city == this.city) {
+      //       if(element.street) {
+      //         districtsset.add(element.street);
+      //       }
+      //     }
+      //   });
+      //   this.districts = Array.from(districtsset);
+      // },
       chooseProvice(item) {
         this.province = item;
         this.provinceId = item;
@@ -102,16 +102,16 @@
       chooseCity(item) {
         this.city = item;
         this.cityId = item;
-        this.active = 3;
-        this.getDistrict();
+        // this.active = 3;
+        // this.getDistrict();
       },
       confirm() {
-        let address = this.province + (this.city.length ? ('-' + this.city) : '') + (this.district.length ? ('-' + this.district) : '');
+        let address = this.province + (this.city.length ? ('-' + this.city) : '');
         this.$emit('confirm', {
           address,
-          provinceId: this.provinceId,
-          cityId: this.cityId,
-          districtId: this.districtId
+          provinceId: this.province,
+          cityId: this.city
+          // districtId: this.districtId
         });
       },
       getValue(keyname, arrs, keyvalue) {

@@ -1,6 +1,6 @@
 <template>
   <div class="pt">
-    <v-header>订单列表</v-header>
+    <v-header :mypage="true">订单列表</v-header>
     <div class="content">
       <div class="listitem" v-for="(order,i) in orders">
         <div class="itemtitle" @click="goDetail()">
