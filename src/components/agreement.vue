@@ -1,7 +1,7 @@
 <template>
   <div class="agreement flex" @click="checked = !checked">
     <div class="checkbox" :class="{active: checked}"></div>
-    <span class="label">我已阅读并同意</span><span class="protocol" @click="$router.push({name: 'agreement'})">《CC卡美珠宝微信商城用户注册和使用协议》</span>
+    <span class="label">我已阅读并同意</span><span class="protocol" @click="$router.push({name: 'agreement'})">  《用户注册和使用协议》</span>
   </div>
 </template>
 
