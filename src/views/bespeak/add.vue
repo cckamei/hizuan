@@ -166,7 +166,7 @@
           console.log(this.getAppointment.appointment);
           this.reqData = {
             name: this.getAppointment.appointment.name,
-            address: this.getAppointment.appointment.store.province + this.getAppointment.appointment.store.city + this.getAppointment.appointment.store.street,
+            address: this.getAppointment.appointment.store.province + this.getAppointment.appointment.store.city,
             gender: this.getAppointment.appointment.sex,
             tel: this.getAppointment.appointment.phone,
             birthday: this.getAppointment.appointment.birthday,
@@ -175,7 +175,7 @@
             occupation: occupation,
             time: this.getAppointment.appointment.appoint_time,
             shop: shopIndex,
-            districtId: '210321', //1:省份选择; 2:市区； 3：地区
+            // districtId: '210321', //1:省份选择; 2:市区； 3：地区
             provinceId: '210000', //选择的省份id
             cityId: '210300' //选择的市id
           };
@@ -188,14 +188,14 @@
       confirm(address) {
         this.reqData.provinceId = address.provinceId;
         this.reqData.cityId = address.cityId;
-        this.reqData.districtId = address.districtId;
+        // this.reqData.districtId = address.districtId;
         this.reqData.address = address.address;
         this.ajax({
           name: 'getStore'
         }).then(res => {
           this.shops = [];
           let shops = res.filter(ele => {
-            return ele.province == address.provinceId || ele.city == address.cityId || ele.street == address.districtId;
+            return ele.province == address.provinceId || ele.city == address.cityId;
           });
           shops.forEach(element => {
             this.shops.push({

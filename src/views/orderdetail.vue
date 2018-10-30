@@ -1,6 +1,6 @@
 <template>
   <div class="orderdetailpage pt">
-    <v-header :gocancel="true">订单详情</v-header>
+    <v-header :gocancel="getGoCancel">订单详情</v-header>
     <!-- 订单地址、收货人、物流信息 -->
     <div class="content">
       <div class="logistics" @click="gotLogistics()">
@@ -188,7 +188,14 @@
       this.getorderDetail(orderId);
     },
     computed: {
-      ...mapGetters(['getOrderId'])
+      ...mapGetters(['getOrderId']),
+      getGoCancel: function() {
+        if(this.order.status === 4 || this.order.status === 6 || this.order.status === 8) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     },
     methods: {
       ...mapMutations(['setCommon', 'setPayOrder', 'setOrderType', 'setAppointment']),

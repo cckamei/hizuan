@@ -15,7 +15,7 @@
         <div class="goods">
           <div class="goods-header">
             <div class="title">商品（售价）</div>
-            <div class="price">提成价</div>
+            <div class="price">提成额</div>
           </div>
           <div class="good" v-for="(good ,j) in commission.info" :key="j">
             <div class="title">{{good.goods_name}}（￥{{good.subtotal}}）</div>

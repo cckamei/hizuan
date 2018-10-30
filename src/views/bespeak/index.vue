@@ -1,6 +1,6 @@
 <template>
   <div class="bespeak">
-    <v-header>我的预约
+    <v-header :mypage="true">我的预约
       <div slot="headright">
         <span class="add-btn" @click="add">新增</span>
       </div>
@@ -49,6 +49,9 @@
           this.appointments = res;
           this.appointments = this.appointments.filter(ele => {
             return ele.status == 0;
+          });
+          this.appointments = this.appointments.sort(function(a, b) {
+            return a.appoint_time > b.appoint_time ? 1 : -1;
           });
         });
       },
