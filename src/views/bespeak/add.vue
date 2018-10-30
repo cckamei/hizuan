@@ -92,7 +92,9 @@
           detail: '',
           occupation: 1,
           time: '',
-          shop: -1
+          shop: -1,
+          provinceId: '', //选择的省份id
+          cityId: '' //选择的市id
         },
         isEdit: true,
         visible: false,
@@ -100,7 +102,7 @@
       };
     },
     computed: {
-      ...mapGetters(['getAppointment']),
+      ...mapGetters(['getAppointment', 'getUserInfo']),
       isActive() {
         if(this.reqData.address) {
           return this.reqData.address.length && this.reqData.name.length && this.reqData.tel.length;
@@ -111,6 +113,11 @@
     },
     mounted() {
       if(this.getAppointment.edit == 1) {
+        this.reqData.name = this.getUserInfo.name;
+        this.reqData.gender = this.getUserInfo.gender;
+        this.reqData.birthday = this.getUserInfo.birthday;
+        this.reqData.tel = this.getUserInfo.phone;
+        this.reqData.occupation = this.occupations.indexOf(this.getUserInfo.career);
         if(this.getAppointment.type !== 1) {
           this.reqData.type = 0;
         } else {
@@ -125,6 +132,7 @@
       if(this.getAppointment.edit == 0) {
         this.getAppointmentDetail();
       }
+      console.log(this.getUserInfo);
     },
     methods: {
       ...mapMutations(['setAppointment']),
@@ -163,7 +171,6 @@
               occupation = i;
             }
           });
-          console.log(this.getAppointment.appointment);
           this.reqData = {
             name: this.getAppointment.appointment.name,
             address: this.getAppointment.appointment.store.province + this.getAppointment.appointment.store.city,
@@ -176,8 +183,8 @@
             time: this.getAppointment.appointment.appoint_time,
             shop: shopIndex,
             // districtId: '210321', //1:省份选择; 2:市区； 3：地区
-            provinceId: '210000', //选择的省份id
-            cityId: '210300' //选择的市id
+            provinceId: '', //选择的省份id
+            cityId: '' //选择的市id
           };
         });
 
@@ -203,6 +210,8 @@
               value: element.id
             });
           });
+          this.reqData.shop = -1;
+          console.log(this.reqData.shop);
         });
       },
       submit() {

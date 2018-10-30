@@ -109,8 +109,8 @@
         let address = this.province + (this.city.length ? ('-' + this.city) : '');
         this.$emit('confirm', {
           address,
-          provinceId: this.provinceId,
-          cityId: this.cityId
+          provinceId: this.province,
+          cityId: this.city
           // districtId: this.districtId
         });
       },
