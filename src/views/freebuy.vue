@@ -1,17 +1,17 @@
 <template>
   <div class="freebuy">
     <div class="appointment" @click="$router.push({'name':'bespeak'})">
-      <img src="~assets/payment/card1.png" alt="" srcset="">
+      <img :src="getUserInfo._YUYUE" alt="" srcset="">
     </div>
     <div class="instalments" @click="goPage">
-      <img src="~assets/payment/card2.png" alt="" srcset="">
+      <img :src="getUserInfo.fenqi" alt="" srcset="">
     </div>
     <div class="buttons flex">
       <div class="btn" @click="$router.push({name:'index'})"><img src="~assets/home/button_home_b.png" alt=""></div>
       <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
       <button class="btn-txt btn-txt2">无忧购</button>
       <div class="btn" @click="gomypage">
-        <img :src="getUserInfo.avatar || 'http://pd1957kyq.bkt.clouddn.com/new_avatar.png'" alt="">
+        <img :src="getUserInfo.avatar" alt="">
       </div>
     </div>
   </div>

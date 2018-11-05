@@ -46,6 +46,10 @@ if (location.href.indexOf('from=wechat') == -1) {
   }
 }
 
+store.dispatch('ajax', { name: 'images' }).then(res => {
+  store.commit('setUserInfo', res);
+});
+
 new Vue({
   data: {
     eventHub: new Vue() //事件中心

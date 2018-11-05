@@ -48,7 +48,8 @@ let api = {
   forgetPwd: { url: 'api/v1/forget_password' }, //忘记密码
   resetPwd: { url: 'api/v1/reset_password' }, //重置密码
   buyNow: { url: 'api/v1/buy_now' }, //立即购买
-  goodsStock: { url: 'api/v1/goods_stock', method: 'get' } //获取某个sku的库存
+  goodsStock: { url: 'api/v1/goods_stock', method: 'get' }, //获取某个sku的库存
+  images: { url: 'api/v1/preset_png', method: 'get' } //获取默认图
 };
 
 for (var k in api) {

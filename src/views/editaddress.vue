@@ -202,6 +202,11 @@
         color: #999999;
         &.address {
           padding: 0 16px;
+          font-size: 16px;
+          color: #666;
+          input {
+            font-size: 16px;
+          }
         }
         &:last-child {
           border-bottom: 0;
