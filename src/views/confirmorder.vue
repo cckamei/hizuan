@@ -227,6 +227,11 @@
           return false;
         }
 
+        if(!this.reqData.logitics_id) {
+          this.toast('没有设置收货地址');
+          return false;
+        }
+
         //修改
         if(this.getPayOrder.order_id) {
           this.ajax({
@@ -341,8 +346,8 @@
           .img {
             width: 200px;
             height: 240px;
-            padding-top:20px;
-            padding-bottom:20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
             margin-right: 30px;
             flex-shrink: 0;
             // background-color: #f5f5f5;
@@ -520,7 +525,8 @@
     .row > .flex {
       padding-left: 0;
     }
-    .summary .label, .remark .label {
+    .summary .label,
+    .remark .label {
       color: #999 !important;
     }
   }
