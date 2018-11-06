@@ -110,6 +110,9 @@
         }
       };
     },
+    created() {
+      this.pageInit();
+    },
     computed: {
       isActive() {
         return this.reqData.nick_name.length && this.reqData.name.length && this.reqData.gender !== -1 && this.reqData.birthday.length && this.reqData.career !== -1;
@@ -117,6 +120,19 @@
     },
     methods: {
       ...mapActions(['ajax']),
+      pageInit() {
+        this.ajax({
+          name: 'getUserInfo'
+        }).then(res => {
+          let data = res;
+          this.careerList.forEach((item, index) => {
+            if(item == data.career) {
+              this.career = index;
+            }
+          });
+          this.reqData = data;
+        });
+      },
       confirm() {
         this.reqData.career = this.careerList[this.career];
         this.ajax({

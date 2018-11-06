@@ -202,10 +202,10 @@
         color: #999999;
         &.address {
           padding: 0 16px;
-          font-size: 16px;
+          font-size: 24px;
           color: #666;
           input {
-            font-size: 16px;
+            font-size: 24px;
           }
         }
         &:last-child {

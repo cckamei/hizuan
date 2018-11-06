@@ -114,7 +114,7 @@
     },
     computed: {
       isActive() {
-        return this.reqData.nick_name.length && this.reqData.name.length && this.reqData.gender !== -1 && this.reqData.birthday.length && this.reqData.idcard.length && this.reqData.career !== -1;
+        return this.reqData.nick_name.length && this.reqData.name.length && this.reqData.gender !== -1 && this.reqData.birthday.length && this.reqData.career !== -1;
       }
     },
     created() {
