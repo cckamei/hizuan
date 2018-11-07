@@ -6,10 +6,10 @@
     </div>
     <div class="popup-content">
       <ul>
-        <li v-for="(item, index) in goods.goods" :key="index" class="flex">
+        <li v-for="(item, index) in goods.goods" :key="index" class="flex" @click="goGoodsDetail(item.goods_id)">
           <div class="img"><img :src="item.img" alt=""></div>
           <div class="detail flex-auto flex">
-            <span @click="goGoodsDetail(item.goods_id)" class="name">{{item.goods_title}}</span>
+            <span class="name">{{item.goods_title}}</span>
             <span class="desc">{{item.sub_title}}</span>
             <span class="price"><span>￥</span>{{item.price | currency}}</span>
           </div>

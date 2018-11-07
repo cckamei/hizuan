@@ -12,7 +12,7 @@
               <v-form-input label="姓名*" v-model="reqData.name" maxlength="4" placeholder="请填写您的真实姓名"></v-form-input>
             </li>
             <li>
-              <v-form-select :arrow="true" label="性别*" title="性别选择" v-model="reqData.gender" :list="['男', '女']" placeholder="请选择您的性别"></v-form-select>
+              <v-form-select :arrow="true" label="性别*" title="性别选择" v-model="reqData.gender" :list="['女', '男']" placeholder="请选择您的性别"></v-form-select>
             </li>
             <li>
               <v-form-datepicker :arrow="true" label="生日*" title="生日日期" v-model="reqData.birthday" format="yyyy-MM-dd" yearFormat="{value} 年" monthFormat="{value} 月" dateFormat="{value} 日" placeholder="请选择生日"></v-form-datepicker>

@@ -26,7 +26,9 @@
           <i>￥</i>{{(sku.price || res.price) | currency}}
           <img v-if="0" @click="clickShare" class="right" src="~assets/goods/button_share.png" alt="">
         </div>
-        <button class="tag">{{res.tag}}</button>
+        <div class="flex tag" v-if="res.tag">
+          <button class="tag-btn" v-for="item in res.tag.split(',')">{{item}}</button>
+        </div>
         <div class="name">{{res.goods_title}}</div>
         <div class="desc">{{res.sub_title}}</div>
         <ul class="mark flex">
@@ -259,7 +261,7 @@
           merchantCode: '',
           price: 0,
           defaultSKU: '',
-          defaultMerchantCode:'',
+          defaultMerchantCode: '',
           defaultPrice: 0,
           limit: 99,
           count: 1,
@@ -295,11 +297,11 @@
       if(!this.goodsId) {
         this.$router.push({ name: 'goodslist' });
       } else {
-         this.setCommon({goodsId: this.goodsId});
+        this.setCommon({ goodsId: this.goodsId });
       }
 
       if(this.emp_id) {
-        this.setCommon({emp_id: this.emp_id});
+        this.setCommon({ emp_id: this.emp_id });
       }
 
       this.fetchGoodsDetail();
@@ -392,7 +394,7 @@
               this.sku.defaultMerchantCode = item.merchant_code;
               this.getGoodsStock(item.sku_id, stock => {
                 this.sku.stock = stock;
-            });
+              });
             }
             if(this.isZuan) {
               if(item.zhuzuanfenshu) {
@@ -671,13 +673,18 @@
       }
     }
     .tag {
-      color: #fff;
-      background-color: #faa0a0;
-      border-radius: 20px;
-      font-size: 16px;
-      height: 30px;
-      line-height: 30px;
-      padding: 0 12px;
+      flex-wrap: wrap;
+      .tag-btn {
+        color: #fff;
+        background-color: #faa0a0;
+        border-radius: 20px;
+        font-size: 16px;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 12px;
+        margin-right: 20px;
+        margin-top: 10px;
+      }
     }
     .name {
       padding-top: 30px;
