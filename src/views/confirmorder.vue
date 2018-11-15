@@ -228,7 +228,7 @@
         }
 
         if(!this.reqData.address_id) {
-          this.toast('没有设置收货地址');
+          this.toast('亲，您还未设置收货地址！');
           return false;
         }
 
