@@ -227,7 +227,7 @@
           return false;
         }
 
-        if(!this.reqData.logitics_id) {
+        if(!this.reqData.address_id) {
           this.toast('没有设置收货地址');
           return false;
         }

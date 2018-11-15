@@ -19,7 +19,7 @@
           <input type="text" v-model="address" placeholder="请选择收货人所在地区" readonly @click="visible = true">
         </li>
         <li>
-          <v-form-input label="详细地址" v-model="reqData.street" maxlength="6" placeholder="请填写街道、楼牌号等信息"></v-form-input>
+          <v-form-input label="详细地址" v-model="reqData.street" maxlength="50" placeholder="请填写街道、楼牌号等信息"></v-form-input>
         </li>
         <li class="address">
           <label>设为默认</label>
