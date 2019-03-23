@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/proxy': {
-        target: 'http://shop.cc-jewel.com',
+        target: 'http://hi.cc-jewel.com',
         changeOrigin: true,
         pathRewrite: {
           '^/proxy': ''
