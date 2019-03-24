@@ -7,6 +7,6 @@
     wxproxy: 'http://hi.cc-jewel.com/wx.proxy.html',
     iswxproxy: true,
     wxconfig: ['hideOptionMenu', 'showOptionMenu', 'checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'openLocation', 'getLocation', 'chooseWXPay', 'addCard', 'chooseCard', 'openCard', 'scanQRCode'],
-    appName: 'Hi钻珠宝'
+    appName: '嗨钻珠宝'
   };
 })(window);
