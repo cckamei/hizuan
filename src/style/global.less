@@ -1,0 +1,58 @@
+@import './vars.less';
+
+body {
+  color: #333;
+}
+
+.container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 10;
+}
+
+.pt {
+  padding-top: 96px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pb {
+  padding-bottom: 96px;
+}
+
+.btns {
+  padding: 30px;
+
+  .btn {
+    height: 68px;
+    font-size: 32px;
+    width: 100%;
+    border: none;
+    color: #fff;
+    border-radius: 45px;
+    background-color: #ccc;
+
+    &.active {
+      background-color: @color5;
+    }
+  }
+}
