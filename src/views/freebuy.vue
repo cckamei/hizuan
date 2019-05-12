@@ -3,7 +3,7 @@
     <div class="appointment" @click="$router.push({'name':'bespeak'})">
       <img :src="getUserInfo._YUYUE" alt="" srcset="">
     </div>
-    <div class="instalments" @click="goPage">
+    <div v-if="0" class="instalments" @click="goPage">
       <img :src="getUserInfo.fenqi" alt="" srcset="">
     </div>
     <div class="buttons flex">

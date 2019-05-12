@@ -132,7 +132,7 @@
   };
 </script>
 <style lang="less" scoped>
-  @import "~@/style/vars.less";
+  @import '~@/style/vars.less';
   .applyrefundPage {
     overflow-y: auto;
     .pagecontent {
@@ -191,7 +191,7 @@
       }
       p {
         margin-top: 20px;
-        color: @color4;
+        color: #9dc8be;
         font-size: 20px;
         border-bottom: 2px solid #f0f0f0;
         padding-bottom: 30px;
