@@ -20,7 +20,7 @@ module.exports = {
     // 设置代理
     proxy: {
       '/api': {
-        target: 'http://shop.fenix-world.com',
+        target: 'http://hi.cc-jewel.com',
         changeOrigin: true,
         pathRewrite: {
           '^/proxy': ''

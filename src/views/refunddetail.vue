@@ -191,7 +191,7 @@
       }
       p {
         margin-top: 20px;
-        color: #9dc8be;
+        color: @color4;
         font-size: 20px;
         border-bottom: 2px solid #f0f0f0;
         padding-bottom: 30px;
