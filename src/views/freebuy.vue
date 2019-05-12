@@ -9,7 +9,7 @@
     <div class="buttons flex">
       <div class="btn" @click="$router.push({name:'index'})"><img src="~assets/home/button_home_b.png" alt=""></div>
       <button class="btn-txt btn-txt1" @click="goGoodsList()">全部作品</button>
-      <button class="btn-txt btn-txt2">无忧购</button>
+      <button v-if="0" class="btn-txt btn-txt2">无忧购</button>
       <div class="btn" @click="gomypage">
         <img :src="getUserInfo.avatar" alt="">
       </div>
@@ -71,13 +71,13 @@
         overflow: hidden;
       }
       .btn-txt {
-        width: 160px;
+        width: 280px;
         height: 60px;
         border-radius: 30px;
         background-color: rgba(255, 255, 255, 0.6);
         border: 0;
         &1 {
-          margin: 0 24px 0 91px;
+          margin: 0 91px 0 91px;
         }
         &2 {
           margin: 0 91px 0 24px;
