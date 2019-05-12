@@ -1,17 +1,14 @@
 // https://eslint.org/docs/user-guide/configuring
+
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
-  parserOptions: {
-    parser: 'module'
-  },
   env: {
-    browser: true,
-    node: true,
-    es6: true
+    node: true
   },
-  extends: 'vue',
-  plugins: ['html'],
+  'extends': [
+    'plugin:vue/essential',
+    '@vue/standard'
+  ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -110,6 +107,7 @@ module.exports = {
       args: 'after-used'
     }], //不能有声明后未被使用的变量或参数
     'no-use-before-define': 2, //未定义前不能使用
+    'vue/no-use-v-if-with-v-for': 0,
     'no-useless-call': 2, //禁止不必要的call和apply
     'no-void': 2, //禁用void操作符
     'no-var': 0, //禁用var，用let和const代替
@@ -201,5 +199,7 @@ module.exports = {
     'yoda': [2, 'never'], //禁止尤达条件
     'keyword-spacing': 0 //确保字符前后空格的一致性
   },
-
-};
+  parserOptions: {
+    parser: 'babel-eslint'
+  }
+}

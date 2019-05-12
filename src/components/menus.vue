@@ -1,6 +1,6 @@
 <template>
   <ul class="menus" v-show="value">
-    <li class="flex" v-for="(item, index) in menus" @click="go(item)">
+    <li class="flex" v-for="(item, index) in menus" :key="index" @click="go(item)">
       <template v-if="item === 'home'">
         <img src="@/assets/goods/icon_home.png" alt="">首页
       </template>

@@ -3,7 +3,7 @@
     <div class="title flex"><span>{{title}}</span></div>
     <div class="recommend-content">
       <ul class="flex">
-        <li v-for="(item, index) in list">
+        <li v-for="(item, index) in list" :key="index">
           <div class="recommend-item" @click="goGoodsDetail(item.goods_id)">
             <img :src="item.img" alt="">
             <div class="name">{{item.goods_title}}</div>
